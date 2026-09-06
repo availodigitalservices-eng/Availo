@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Availo Digital Services - Smart Access. Total Control.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284C7;
+      --primary-dark: #0369A1;
+      --accent: #F59E0B;
+      --dark-bg: #0B1120;
+      --card-dark: #131E32;
+      --border-dark: #1E293B;
+      --text-light: #F8FAFC;
+      --text-dim: #94A3B8;
+      --green-glow: #10B981;
+      --purple-glow: #8B5CF6;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Telugu', sans-serif;
+      scroll-behavior: smooth;
+    }
+    body {
+      background: var(--dark-bg);
+      color: var(--text-light);
+      line-height: 1.6;
+      padding-bottom: 70px;
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(11, 17, 32, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 10px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid #38BDF8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+      object-fit: cover;
+      display: block;
+      background: #0F172A;
+    }
+    .brand-text h1 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+    .brand-slogan {
+      font-size: 0.6rem;
+      color: #38BDF8;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      display: block;
+    }
+
+    /* LANGUAGE SWITCHER */
+    .lang-toggle {
+      display: flex;
+      background: #1E293B;
+      border-radius: 20px;
+      padding: 2px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lang-btn.active {
+      background: var(--primary);
+      color: #FFFFFF;
+      box-shadow: 0 0 8px rgba(2, 132, 199, 0.5);
+    }
+
+    /* NAVIGATION BAR */
+    nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    nav a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      transition: 0.2s ease;
+    }
+    nav a:hover, nav a:active {
+      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 35px 20px 25px;
+      text-align: center;
+      background: radial-gradient(circle at top, #1E293B 0%, var(--dark-bg) 80%);
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.12);
+      color: #38BDF8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    .hero h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+    .hero h2 span {
+      background: linear-gradient(90deg, #38BDF8, #818CF8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      margin-bottom: 22px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-whatsapp-hero {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #FFFFFF;
+      width: 100%;
+      max-width: 320px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    /* GENERAL SECTION */
+    .section {
+      padding: 30px 18px;
+    }
+    .sec-tag {
+      color: #38BDF8;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .sec-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #F8FAFC;
+      margin-bottom: 6px;
+    }
+    .sec-sub {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+
+    /* CARDS */
+    .feature-card {
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .feature-card h4 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #38BDF8;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .feature-card p {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.45;
+    }
+
+    /* PROCESS STEPS */
+    .step-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .step-card {
+      background: var(--card-dark);
+      border-left: 4px solid #0284C7;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .step-number {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #38BDF8;
+      min-width: 24px;
+    }
+
+    /* HYPERLOCAL SERVICES GRID */
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .service-tile {
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+    .tile-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .tile-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .tile-desc {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.35;
+    }
+
+    /* NRI CARE PLANS */
+    .plan-box {
+      background: var(--card-dark);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 20px 16px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .plan-box.popular {
+      border-color: #10B981;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+    }
+    .plan-box.elite {
+      border-color: #8B5CF6;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+    .badge-pop {
+      position: absolute;
+      top: -12px;
+      right: 16px;
+      background: #10B981;
+      color: #000;
+      font-weight: 800;
+      font-size: 0.68rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .badge-elite {
+      position: absolute;
+      top: -12px;
+      right: 16px;
+      background: #8B5CF6;
+      color: #FFF;
+      font-weight: 800;
+      font-size: 0.68rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .plan-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+    .plan-cost {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #38BDF8;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 8px;
+    }
+    .plan-cost span {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-dim);
+    }
+    .plan-list {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+    .plan-list li {
+      font-size: 0.8rem;
+      color: #CBD5E1;
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+      line-height: 1.4;
+    }
+    .btn-plan {
+      display: block;
+      text-align: center;
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .plan-box.popular .btn-plan {
+      background: #10B981;
+      color: #000;
+      border: none;
+    }
+    .plan-box.elite .btn-plan {
+      background: #8B5CF6;
+      color: #FFF;
+      border: none;
+    }
+
+    /* POLICY BANNER */
+    .policy-card {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      color: #FDE68A;
+      line-height: 1.5;
+      margin-top: 15px;
+    }
+
+    /* ABOUT SECTION */
+    .about-box {
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 8px;
+    }
+    .about-box p {
+      font-size: 0.84rem;
+      color: #CBD5E1;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .about-points {
+      list-style: none;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+    .about-points li {
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+    }
+
+    /* UPCOMING SECTION */
+    .upcoming-box {
+      background: linear-gradient(135deg, #1E1B4B 0%, #0F172A 100%);
+      border: 1.5px dashed #6366F1;
+      border-radius: 18px;
+      padding: 22px 18px;
+      margin-bottom: 14px;
+    }
+    .badge-upcoming {
+      background: #6366F1;
+      color: #FFF;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    /* CONTACT SECTION */
+    .contact-card {
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+    .contact-card h4 {
+      font-size: 1.1rem;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+    .btn-call {
+      display: inline-block;
+      background: #0284C7;
+      color: #FFFFFF;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border-dark);
+      text-align: center;
+      padding: 30px 18px;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+    .footer-slogan {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #38BDF8;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .msme-pill {
+      display: inline-block;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #94A3B8;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.68rem;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-top">
+      <a href="#home" class="brand-wrap">
+        <img src="logo.png" 
+             alt="Availo Logo" 
+             class="brand-logo" 
+             onerror="this.onerror=null; this.src='https://images.weserv.nl/?url=https://i.ibb.co/6cKxG2X/283730.png';">
+        <div class="brand-text">
+          <h1>Availo Digital Services</h1>
+          <span class="brand-slogan">Smart Access. Total Control.</span>
+        </div>
+      </a>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-te" onclick="setLanguage('te')">తెలుగు</button>
+        <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+      </div>
+    </div>
+
+    <!-- NAVIGATION MENU -->
+    <nav>
+      <a href="#home" data-key="nav-home">హోమ్</a>
+      <a href="#about" data-key="nav-about">అబౌట్</a>
+      <a href="#services" data-key="nav-services">సర్వీసెస్</a>
+      <a href="#contact" data-key="nav-contact">కాంటాక్ట్</a>
+    </nav>
+  </header>
+
+  <!-- 1. HOME / HERO SECTION -->
+  <section id="home" class="hero">
+    <div class="hero-badge" data-key="hero-badge">🛡️ Zero-App Hyperlocal System</div>
+    <h2 id="hero-title">యాప్ డౌన్‌లోడ్ వద్దు..<br><span>వాయిస్ నోట్</span> ఇస్తే చాలు!</h2>
+    <p data-key="hero-desc">గేట్ సెక్యూరిటీ, లోకల్ కాన్సియర్జ్ & ఎన్‌ఆర్‌ఐ పేరెంట్స్ కేర్ — విజయవాడ & గుంటూరు రీజియన్ల కోసం.</p>
+    <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20want%20to%20order" target="_blank" class="btn-whatsapp-hero" data-key="hero-cta">
+      🎙️ ఆర్డర్ ఇవ్వండి (WhatsApp)
+    </a>
+  </section>
+
+  <!-- 2. ABOUT SECTION -->
+  <section id="about" class="section" style="background: rgba(255,255,255,0.01);">
+    <span class="sec-tag" data-key="about-tag">About Us</span>
+    <h3 class="sec-title" data-key="about-title">🛡️ అవైలో డిజిటల్ సర్వీసెస్</h3>
+    <p class="sec-sub" data-key="about-sub">విజయవాడ & గుంటూరు నగరాల్లో సరికొత్త జీరో-యాప్ డిజిటల్ విప్లవం.</p>
+
+    <div class="about-box">
+      <p data-key="about-desc1">
+        <strong>Availo Digital Services</strong> (MSME Registered) అనేది స్థానిక నివాసితులు, గేటెడ్ కమ్యూనిటీలు మరియు ఎన్‌ఆర్‌ఐ కుటుంబాలకు సాంకేతిక సహకారాన్ని అందించే నమ్మకమైన సంస్థ. సంక్లిష్టమైన యాప్‌లు డౌన్‌లోడ్ చేసుకోకుండానే, సుపరిచితమైన <strong>వాట్సాప్ (WhatsApp)</strong> ద్వారా రోజువారీ భద్రత మరియు పనులను పూర్తి చేయడమే మా ప్రత్యేకత.
+      </p>
+      <ul class="about-points">
+        <li data-key="about-pt1">🔒 <strong>ప్రైవసీ మొదటి ప్రాధాన్యత:</strong> ఫోన్ నంబర్ మాస్కింగ్ ద్వారా మహిళల మరియు రెసిడెంట్ల వ్యక్తిగత వివరాలకు సంపూర్ణ రక్షణ.</li>
+        <li data-key="about-pt2">🤝 <strong>స్థానిక గ్రౌండ్ సపోర్ట్:</strong> విజయవాడ & గుంటూరు వ్యాప్తంగా క్షేత్రస్థాయిలో నమ్మకమైన వెరిఫైడ్ సిబ్బంది.</li>
+        <li data-key="about-pt3">⚖️ <strong>పారదర్శక విధానం:</strong> అసలైన బిల్లులతో మాత్రమే సరుకుల డెలివరీ మరియు సేవల నిర్వహణ.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS (3 STEPS) -->
+  <section class="section" style="background: rgba(255,255,255,0.02);">
+    <span class="sec-tag" data-key="how-tag">How It Works</span>
+    <h3 class="sec-title" data-key="how-title">⚡ 3 స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు</h3>
+    <div class="step-grid">
+      <div class="step-card">
+        <div class="step-number">01</div>
+        <div>
+          <strong style="font-size: 0.9rem;" data-key="step1-title">స్కాన్ చేయండి (Scan)</strong>
+          <p style="font-size: 0.78rem; color: var(--text-dim);" data-key="step1-desc">లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">02</div>
+        <div>
+          <strong style="font-size: 0.9rem;" data-key="step2-title">మాట్లాడండి (Speak)</strong>
+          <p style="font-size: 0.78rem; color: var(--text-dim);" data-key="step2-desc">వాట్సాప్‌లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి వాయిస్ నోట్ ఇవ్వండి.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">03</div>
+        <div>
+          <strong style="font-size: 0.9rem;" data-key="step3-title">డోర్ డెలివరీ (Get)</strong>
+          <p style="font-size: 0.78rem; color: var(--text-dim);" data-key="step3-desc">వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SERVICES SECTION -->
+  <div id="services">
+    <!-- Active Service 1: Gate -->
+    <section class="section">
+      <span class="sec-tag" data-key="sec1-tag">Active Service 01</span>
+      <h3 class="sec-title" data-key="sec1-title">🏢 Apartment & Gate Management</h3>
+      <p class="sec-sub" data-key="sec1-sub">యాప్ డౌన్‌లోడ్ అవసరం లేకుండా వాట్సాప్ ద్వారానే సంపూర్ణ భద్రత.</p>
+
+      <div class="feature-card">
+        <h4 data-key="f1-title">🛡️ Zero-App WhatsApp Gate Pass</h4>
+        <p data-key="f1-desc">లిఫ్ట్ లేదా గేట్ దగ్గర QR స్కాన్ చేయగానే విజిటర్ స్నాప్ & వెరిఫికేషన్ వివరాలు నేరుగా వాట్సాప్‌లోకి వస్తాయి.</p>
+      </div>
+
+      <div class="feature-card">
+        <h4 data-key="f2-title">🔒 Women Privacy Shield</h4>
+        <p data-key="f2-desc">రెసిడెంట్ల ఫోన్ నంబర్లు బహిర్గతం కాకుండా ఆటో-మాస్కింగ్ (XXXXXX1234) ద్వారా మహిళల వ్యక్తిగత వివరాలకు పూర్తి రక్షణ.</p>
+      </div>
+
+      <div class="feature-card">
+        <h4 data-key="f3-title">📋 Centralized President Log</h4>
+        <p data-key="f3-desc">ఫ్లాట్ ఓనర్లకు వేధింపులు లేకుండా, సొసైటీ కమిటీ/సెక్రటరీ పర్యవేక్షణ కోసం ఆటోమేటెడ్ రియల్-టైమ్ లాగ్ షీట్.</p>
+      </div>
+
+      <div class="feature-card" style="border-left: 3px solid #10B981; background: rgba(16, 185, 129, 0.05);">
+        <h4 style="color: #10B981;" data-key="f4-title">🎁 7-Day Free Society Pilot</h4>
+        <p data-key="f4-desc">విజయవాడ & గుంటూరులోని అపార్ట్‌మెంట్లలో ఉచితంగా 7 రోజుల ట్రయల్ రన్ ప్రారంభించండి. వాటర్‌ప్రూఫ్ బోర్డులు & వాచ్‌మెన్ ట్రైనింగ్ ఉచితం.</p>
+        <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20want%20to%20book%207-Day%20Free%20Pilot%20for%20our%20Apartment" target="_blank" style="color: #38BDF8; font-size: 0.8rem; font-weight: 700; text-decoration: none; display: inline-block; margin-top: 8px;" data-key="pilot-link">పైలట్ బుక్ చేసుకోండి ➔</a>
+      </div>
+    </section>
+
+    <!-- Active Service 2: Essentials -->
+    <section class="section">
+      <span class="sec-tag" data-key="sec2-tag">Active Service 02</span>
+      <h3 class="sec-title" data-key="sec2-title">🛍️ డైలీ ఎసెన్షియల్స్ & ఎర్రాండ్స్</h3>
+      <p class="sec-sub" data-key="sec2-sub">స్థానిక షాపుల నుండే అసలైన బిల్లుతో డోర్‌స్టెప్ సేవలు.</p>
+
+      <div class="service-grid">
+        <div class="service-tile">
+          <div class="tile-icon">🛒</div>
+          <div class="tile-title" data-key="srv1-t">కిరాణా & కూరగాయలు</div>
+          <div class="tile-desc" data-key="srv1-d">ఒరిజినల్ షాప్ బిల్లుతో నాణ్యమైన తాజా సరుకులు</div>
+        </div>
+        <div class="service-tile">
+          <div class="tile-icon">🍗</div>
+          <div class="tile-title" data-key="srv2-t">ఆదివారం నాన్-వెజ్</div>
+          <div class="tile-desc" data-key="srv2-d">చికెన్, మటన్, చేపలు పరిశుభ్రంగా కట్ చేయించి</div>
+        </div>
+        <div class="service-tile">
+          <div class="tile-icon">👗</div>
+          <div class="tile-title" data-key="srv3-t">బోటిక్ & టైలరింగ్</div>
+          <div class="tile-desc" data-key="srv3-d">బ్లౌజ్ స్టిచ్చింగ్, ఆల్టరేషన్స్ పికప్ & డ్రాప్</div>
+        </div>
+        <div class="service-tile">
+          <div class="tile-icon">💅</div>
+          <div class="tile-title" data-key="srv4-t">డోర్‌స్టెప్ బ్యూటీషియన్</div>
+          <div class="tile-desc" data-key="srv4-d">సర్టిఫైడ్ లేడీ బ్యూటీషియన్ హోమ్ సర్వీస్</div>
+        </div>
+        <div class="service-tile">
+          <div class="tile-icon">🔧</div>
+          <div class="tile-title" data-key="srv5-t">20-Min హోమ్ రిపేర్స్</div>
+          <div class="tile-desc" data-key="srv5-d">వెరిఫైడ్ ప్లంబర్, ఎలక్ట్రీషియన్ సపోర్ట్</div>
+        </div>
+        <div class="service-tile">
+          <div class="tile-icon">♻️</div>
+          <div class="tile-title" data-key="srv6-t">డోర్‌స్టెప్ స్క్రాప్</div>
+          <div class="tile-desc" data-key="srv6-d">పాత పేపర్లు, ప్లాస్టిక్ బల్క్ తూకం పికప్</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Active Service 3: NRI Care -->
+    <section class="section" style="background: rgba(15, 23, 42, 0.6); border-radius: 24px; margin: 0 10px;">
+      <span class="sec-tag" style="color: #F59E0B;" data-key="sec3-tag">Active Service 03</span>
+      <h3 class="sec-title" data-key="sec3-title">👵 NRI Parents Care</h3>
+      <p class="sec-sub" data-key="sec3-sub">విదేశాల్లో పిల్లలకు మనశ్శాంతి — విజయవాడ & గుంటూరులోని పేరెంట్స్‌కు ఆత్మీయ సంరక్షణ!</p>
+
+      <!-- Plan 1 -->
+      <div class="plan-box">
+        <div class="plan-name">💙 AVAILO Care</div>
+        <div class="plan-cost">₹2,499 <span data-key="per-month">/ నెల</span></div>
+        <ul class="plan-list">
+          <li>🏠 <strong data-key="p1-l1-t">Home Check-in:</strong> <span data-key="p1-l1-d">నెలకు 1 సారి క్షేమ సమాచార విజిట్</span></li>
+          <li>🏥 <strong data-key="p1-l2-t">Hospital Escort:</strong> <span data-key="p1-l2-d">నెలకు 1 సారి (గరిష్ఠం 3 గంటలు)</span></li>
+          <li>🛵 <strong data-key="p1-l3-t">Delivery Tasks:</strong> <span data-key="p1-l3-d">నెలకు 2 సార్లు (మందులు / కిరాణా)</span></li>
+          <li>🚨 <strong data-key="p1-l4-t">Target Response:</strong> <span data-key="p1-l4-d">45 నిమిషాల్లోపు ప్రయారిటీ సాయం</span></li>
+        </ul>
+        <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20am%20interested%20in%20Care%20Plan%20(2499)" target="_blank" class="btn-plan" data-key="p1-btn">Care ప్లాన్ ఎంచుకోండి</a>
+      </div>
+
+      <!-- Plan 2 -->
+      <div class="plan-box popular">
+        <div class="badge-pop">MOST POPULAR</div>
+        <div class="plan-name" style="color: #10B981;">💙 AVAILO Plus</div>
+        <div class="plan-cost" style="color: #10B981;">₹4,999 <span data-key="per-month">/ నెల</span></div>
+        <ul class="plan-list">
+          <li>🏠 <strong data-key="p2-l1-t">Home Check-in:</strong> <span data-key="p2-l1-d">నెలకు 2 సార్లు (Bi-weekly విజిట్స్)</span></li>
+          <li>🏥 <strong data-key="p2-l2-t">Hospital Escort:</strong> <span data-key="p2-l2-d">నెలకు 2 సార్లు (గరిష్ఠం 4 గంటలు)</span></li>
+          <li>🛵 <strong data-key="p2-l3-t">Delivery Tasks:</strong> <span data-key="p2-l3-d">నెలకు 4 సార్లు (మందులు / బిల్లులు)</span></li>
+          <li>🚨 <strong data-key="p2-l4-t">Target Response:</strong> <span data-key="p2-l4-d">30 నిమిషాల్లోపు హై-ప్రయారిటీ సాయం</span></li>
+        </ul>
+        <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20am%20interested%20in%20Plus%20Plan%20(4999)" target="_blank" class="btn-plan" data-key="p2-btn">Plus ప్లాన్ ఎంచుకోండి</a>
+      </div>
+
+      <!-- Plan 3 -->
+      <div class="plan-box elite">
+        <div class="badge-elite">VIP DEDICATED</div>
+        <div class="plan-name" style="color: #C084FC;">💜 AVAILO Elite</div>
+        <div class="plan-cost" style="color: #C084FC;">₹9,999 <span data-key="per-month">/ నెల</span></div>
+        <ul class="plan-list">
+          <li>🏠 <strong data-key="p3-l1-t">Home Check-in:</strong> <span data-key="p3-l1-d">నెలకు 4 సార్లు (వారానికి 1 పక్కా విజిట్)</span></li>
+          <li>🏥 <strong data-key="p3-l2-t">Hospital Escort:</strong> <span data-key="p3-l2-d">నెలకు 4 సార్లు (Unlimited Hours)</span></li>
+          <li>🛵 <strong data-key="p3-l3-t">Delivery & Errands:</strong> <span data-key="p3-l3-d">నెలకు 8 టాస్క్‌లు (Flexible Usage)</span></li>
+          <li>🔄 <strong data-key="p3-l4-t">Carry Forward:</strong> <span data-key="p3-l4-d">ఉపయోగించని టాస్క్‌లు 2 నెలల వరకు Carry Forward</span></li>
+          <li>🚨 <strong data-key="p3-l5-t">Target Response:</strong> <span data-key="p3-l5-d">15–20 నిమిషాల టాప్ ప్రయారిటీ</span></li>
+        </ul>
+        <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20am%20interested%20in%20Elite%20Plan%20(9999)" target="_blank" class="btn-plan" data-key="p3-btn">Elite VIP ప్లాన్ ఎంచుకోండి</a>
+      </div>
+
+      <!-- POLICY NOTE -->
+      <div class="policy-card" id="policy-content">
+        ⚠️ <strong>సర్వీస్ & ఎక్స్‌పెన్స్ పాలసీ:</strong><br>
+        • మేము సర్వీస్ & ఎగ్జిక్యూషన్ మాత్రమే అందిస్తాము (Service Fee Only).<br>
+        • మందులు, కిరాణా సరుకులు, డాక్టర్ ఫీజులు, హాస్పిటల్ ఛార్జీలు మరియు క్యాబ్/రవాణా వాస్తవ ఖర్చులు కస్టమర్/NRI పిల్లలు నేరుగా భరించాలి.<br>
+        • ఒక డెలివరీ లేదా పని అంటే ఒక సింగిల్ రన్/విజిట్‌గా పరిగణించబడుతుంది.<br>
+        • రెస్పాన్స్ సమయాలు గ్రౌండ్ పరిస్థితులకు లోబడి ప్రాధాన్యత ఆధారంగా (Priority Target) ఉంటాయి.
+      </div>
+    </section>
+
+    <!-- Upcoming Services -->
+    <section class="section">
+      <span class="sec-tag" style="color: #818CF8;" data-key="sec4-tag">Roadmap</span>
+      <h3 class="sec-title" data-key="sec4-title">🚀 Upcoming Services</h3>
+      <p class="sec-sub" data-key="sec4-sub">త్వరలో విజయవాడ & గుంటూరులలో ప్రారంభం కానున్న సరికొత్త సేవలు.</p>
+
+      <!-- Upcoming 1: Campus Safety -->
+      <div class="upcoming-box">
+        <span class="badge-upcoming">COMING SOON</span>
+        <h3 style="font-size: 1.15rem; color: #FFF; margin-bottom: 6px;" data-key="up1-title">🏫 School & Campus Safety</h3>
+        <p style="font-size: 0.8rem; color: #C7D2FE; margin-bottom: 12px;" data-key="up1-sub">విద్యార్థుల భద్రత కోసం పాఠశాలలు & కళాశాలల్లో స్మార్ట్ గేట్ ఎకోసిస్టమ్.</p>
+        
+        <ul style="list-style: none; font-size: 0.78rem; color: #E0E7FF; line-height: 1.6;">
+          <li data-key="up1-p1">• <strong>Pickup Authorization:</strong> స్కూల్ ముగిశాక పిల్లలను తీసుకెళ్లడానికి వచ్చే వారి వాట్సాప్ & QR వెరిఫికేషన్.</li>
+          <li data-key="up1-p2">• <strong>Gate Attendance Alerts:</strong> విద్యార్థి గేట్ దాటగానే తల్లిదండ్రుల మొబైల్‌కు తక్షణ ఆటో-అలర్ట్.</li>
+          <li data-key="up1-p3">• <strong>Digital Gate Logs:</strong> ప్రిన్సిపాల్ & మేనేజ్‌మెంట్ కోసం ఆటోమేటెడ్ PDF డైలీ రిపోర్ట్స్.</li>
+        </ul>
+      </div>
+
+      <!-- Upcoming 2: Smart NFC & Digital Identity -->
+      <div class="upcoming-box" style="border-color: #38BDF8; background: linear-gradient(135deg, #0F2A4A 0%, #0B1120 100%);">
+        <span class="badge-upcoming" style="background: #0284C7;">COMING SOON</span>
+        <h3 style="font-size: 1.15rem; color: #FFF; margin-bottom: 6px;" data-key="up2-title">💼 Smart NFC & Digital Identity</h3>
+        <p style="font-size: 0.8rem; color: #BAE6FD; margin-bottom: 12px;" data-key="up2-sub">పేపర్‌లెస్ నెట్‌వర్కింగ్ మరియు సురక్షిత సిబ్బంది వెరిఫికేషన్ సాధనాలు.</p>
+        
+        <ul style="list-style: none; font-size: 0.78rem; color: #E0F2FE; line-height: 1.6;">
+          <li data-key="up2-p1">• <strong>Smart NFC Business Cards:</strong> మొబైల్‌కి ఒక్క ట్యాప్ చేస్తే మీ ప్రొఫైల్, వాట్సాప్ కాంటాక్ట్ వివరాలు తక్షణమే సేవ్.</li>
+          <li data-key="up2-p2">• <strong>Verified Staff Digital Badges:</strong> అపార్ట్‌మెంట్లలో పనిచేసే సిబ్బంది మరియు వర్కర్ల కోసం ప్రత్యేక డిజిటల్ గుర్తింపు బ్యాడ్జ్‌లు.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- 4. CONTACT SECTION -->
+  <section id="contact" class="section">
+    <span class="sec-tag" data-key="contact-tag">Get in Touch</span>
+    <h3 class="sec-title" data-key="contact-title">📞 మమ్మల్ని సంప్రదించండి</h3>
+    <p class="sec-sub" data-key="contact-sub">విజయవాడ & గుంటూరు రీజియన్‌లో ఏ సమయంలోనైనా సహాయం కోసం.</p>
+
+    <div class="contact-card">
+      <h4 data-key="contact-card-title">Availo Digital Services Support</h4>
+      <p style="font-size: 0.84rem; color: var(--text-dim); margin-bottom: 8px;" data-key="contact-card-sub">మా కస్టమర్ కేర్ ఎగ్జిక్యూటివ్‌తో నేరుగా మాట్లాడండి లేదా వాట్సాప్ చేయండి.</p>
+      
+      <a href="tel:+919966157369" class="btn-call">📞 కాల్ చేయండి: +91 9966157369</a><br>
+      
+      <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20have%20an%20enquiry" target="_blank" class="btn-whatsapp-hero" style="font-size: 0.85rem; padding: 12px 18px;" data-key="contact-card-wa">
+        💬 WhatsApp లో మెసేజ్ చేయండి
+      </a>
+      
+      <div style="margin-top: 16px; font-size: 0.78rem; color: #94A3B8;" data-key="contact-hours">
+        ⏰ సర్వీస్ వేళలు: 24/7 వాట్సాప్ సపోర్ట్ (ఎమర్జెన్సీ రెస్పాన్స్)
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-slogan">Smart Access. Total Control.</span>
+    <strong style="color: #FFF; font-size: 0.9rem;">Availo Digital Services</strong><br>
+    <span data-key="footer-loc">విజయవాడ & గుంటూరు రీజియన్</span><br>
+    📞 WhatsApp: +91 9966157369<br>
+    <div><span class="msme-pill">MSME Registered</span></div>
+    <div style="margin-top: 15px; opacity: 0.5; font-size: 0.7rem;">
+      © 2026 Availo Digital Services. All Rights Reserved.
+    </div>
+  </footer>
+
+  <!-- SCRIPT FOR DYNAMIC LANGUAGE SWITCHING -->
+  <script>
+    const translations = {
+      te: {
+        "nav-home": "హోమ్",
+        "nav-about": "అబౌట్",
+        "nav-services": "సర్వీసెస్",
+        "nav-contact": "కాంటాక్ట్",
+        "hero-badge": "🛡️ Zero-App Hyperlocal System",
+        "hero-desc": "గేట్ సెక్యూరిటీ, లోకల్ కాన్సియర్జ్ & ఎన్‌ఆర్‌ఐ పేరెంట్స్ కేర్ — విజయవాడ & గుంటూరు రీజియన్ల కోసం.",
+        "hero-cta": "🎙️ ఆర్డర్ ఇవ్వండి (WhatsApp)",
+        "about-tag": "About Us",
+        "about-title": "🛡️ అవైలో డిజిటల్ సర్వీసెస్",
+        "about-sub": "విజయవాడ & గుంటూరు నగరాల్లో సరికొత్త జీరో-యాప్ డిజిటల్ విప్లవం.",
+        "about-desc1": "<strong>Availo Digital Services</strong> (MSME Registered) అనేది స్థానిక నివాసితులు, గేటెడ్ కమ్యూనిటీలు మరియు ఎన్‌ఆర్‌ఐ కుటుంబాలకు సాంకేతిక సహకారాన్ని అందించే నమ్మకమైన సంస్థ. సంక్లిష్టమైన యాప్‌లు డౌన్‌లోడ్ చేసుకోకుండానే, సుపరిచితమైన <strong>వాట్సాప్ (WhatsApp)</strong> ద్వారా రోజువారీ భద్రత మరియు పనులను పూర్తి చేయడమే మా ప్రత్యేకత.",
+        "about-pt1": "🔒 <strong>ప్రైవసీ మొదటి ప్రాధాన్యత:</strong> ఫోన్ నంబర్ మాస్కింగ్ ద్వారా మహిళల మరియు రెసిడెంట్ల వ్యక్తిగత వివరాలకు సంపూర్ణ రక్షణ.",
+        "about-pt2": "🤝 <strong>స్థానిక గ్రౌండ్ సపోర్ట్:</strong> విజయవాడ & గుంటూరు వ్యాప్తంగా క్షేత్రస్థాయిలో నమ్మకమైన వెరిఫైడ్ సిబ్బంది.",
+        "about-pt3": "⚖️ <strong>పారదర్శక విధానం:</strong> అసలైన బిల్లులతో మాత్రమే సరుకుల డెలివరీ మరియు సేవల నిర్వహణ.",
+        "sec1-tag": "Active Service 01",
+        "sec1-title": "🏢 Apartment & Gate Management",
+        "sec1-sub": "యాప్ డౌన్‌లోడ్ అవసరం లేకుండా వాట్సాప్ ద్వారానే సంపూర్ణ భద్రత.",
+        "f1-title": "🛡️ Zero-App WhatsApp Gate Pass",
+        "f1-desc": "లిఫ్ట్ లేదా గేట్ దగ్గర QR స్కాన్ చేయగానే విజిటర్ స్నాప్ & వెరిఫికేషన్ వివరాలు నేరుగా వాట్సాప్‌లోకి వస్తాయి.",
+        "f2-title": "🔒 Women Privacy Shield",
+        "f2-desc": "రెసిడెంట్ల ఫోన్ నంబర్లు బహిర్గతం కాకుండా ఆటో-మాస్కింగ్ (XXXXXX1234) ద్వారా మహిళల వ్యక్తిగత వివరాలకు పూర్తి రక్షణ.",
+        "f3-title": "📋 Centralized President Log",
+        "f3-desc": "ఫ్లాట్ ఓనర్లకు వేధింపులు లేకుండా, సొసైటీ కమిటీ/సెక్రటరీ పర్యవేక్షణ కోసం ఆటోమేటెడ్ రియల్-టైమ్ లాగ్ షీట్.",
+        "f4-title": "🎁 7-Day Free Society Pilot",
+        "f4-desc": "విజయవాడ & గుంటూరులోని అపార్ట్‌మెంట్లలో ఉచితంగా 7 రోజుల ట్రయల్ రన్ ప్రారంభించండి. వాటర్‌ప్రూఫ్ బోర్డులు & వాచ్‌మెన్ ట్రైనింగ్ ఉచితం.",
+        "pilot-link": "పైలట్ బుక్ చేసుకోండి ➔",
+        "how-tag": "How It Works",
+        "how-title": "⚡ 3 స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు",
+        "step1-title": "స్కాన్ చేయండి (Scan)",
+        "step1-desc": "లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి.",
+        "step2-title": "మాట్లాడండి (Speak)",
+        "step2-desc": "వాట్సాప్‌లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి వాయిస్ నోట్ ఇవ్వండి.",
+        "step3-title": "డోర్ డెలివరీ (Get)",
+        "step3-desc": "వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు.",
+        "sec2-tag": "Active Service 02",
+        "sec2-title": "🛍️ డైలీ ఎసెన్షియల్స్ & ఎర్రాండ్స్",
+        "sec2-sub": "స్థానిక షాపుల నుండే అసలైన బిల్లుతో డోర్‌స్టెప్ సేవలు.",
+        "srv1-t": "కిరాణా & కూరగాయలు",
+        "srv1-d": "ఒరిజినల్ షాప్ బిల్లుతో నాణ్యమైన తాజా సరుకులు",
+        "srv2-t": "ఆదివారం నాన్-వెజ్",
+        "srv2-d": "చికెన్, మటన్, చేపలు పరిశుభ్రంగా కట్ చేయించి",
+        "srv3-t": "బోటిక్ & టైలరింగ్",
+        "srv3-d": "బ్లౌజ్ స్టిచ్చింగ్, ఆల్టరేషన్స్ పికప్ & డ్రాప్",
+        "srv4-t": "డోర్‌స్టెప్ బ్యూటీషియన్",
+        "srv4-d": "సర్టిఫైడ్ లేడీ బ్యూటీషియన్ హోమ్ సర్వీస్",
+        "srv5-t": "20-Min హోమ్ రిపేర్స్",
+        "srv5-d": "వెరిఫైడ్ ప్లంబర్, ఎలక్ట్రీషియన్ సపోర్ట్",
+        "srv6-t": "డోర్‌స్టెప్ స్క్రాప్",
+        "srv6-d": "పాత పేపర్లు, ప్లాస్టిక్ బల్క్ తూకం పికప్",
+        "sec3-tag": "Active Service 03",
+        "sec3-title": "👵 NRI Parents Care",
+        "sec3-sub": "విదేశాల్లో పిల్లలకు మనశ్శాంతి — విజయవాడ & గుంటూరులోని పేరెంట్స్‌కు ఆత్మీయ సంరక్షణ!",
+        "per-month": "/ నెల",
+        "p1-l1-t": "Home Check-in:",
+        "p1-l1-d": "నెలకు 1 సారి క్షేమ సమాచార విజిట్",
+        "p1-l2-t": "Hospital Escort:",
+        "p1-l2-d": "నెలకు 1 సారి (గరిష్ఠం 3 గంటలు)",
+        "p1-l3-t": "Delivery Tasks:",
+        "p1-l3-d": "నెలకు 2 సార్లు (మందులు / కిరాణా)",
+        "p1-l4-t": "Target Response:",
+        "p1-l4-d": "45 నిమిషాల్లోపు ప్రయారిటీ సాయం",
+        "p1-btn": "Care ప్లాన్ ఎంచుకోండి",
+        "p2-l1-t": "Home Check-in:",
+        "p2-l1-d": "నెలకు 2 సార్లు (Bi-weekly విజిట్స్)",
+        "p2-l2-t": "Hospital Escort:",
+        "p2-l2-d": "నెలకు 2 సార్లు (గరిష్ఠం 4 గంటలు)",
+        "p2-l3-t": "Delivery Tasks:",
+        "p2-l3-d": "నెలకు 4 సార్లు (మందులు / bills)",
+        "p2-l4-t": "Target Response:",
+        "p2-l4-d": "30 నిమిషాల్లోపు హై-ప్రయారిటీ సాయం",
+        "p2-btn": "Plus ప్లాన్ ఎంచుకోండి",
+        "p3-l1-t": "Home Check-in:",
+        "p3-l1-d": "నెలకు 4 సార్లు (వారానికి 1 పక్కా విజిట్)",
+        "p3-l2-t": "Hospital Escort:",
+        "p3-l2-d": "నెలకు 4 సార్లు (Unlimited Hours)",
+        "p3-l3-t": "Delivery & Errands:",
+        "p3-l3-d": "నెలకు 8 టాస్క్‌లు (Flexible Usage)",
+        "p3-l4-t": "Carry Forward:",
+        "p3-l4-d": "ఉపయోగించని టాస్క్‌లు 2 నెలల వరకు Carry Forward",
+        "p3-l5-t": "Target Response:",
+        "p3-l5-d": "15–20 నిమిషాల టాప్ ప్రయారిటీ",
+        "p3-btn": "Elite VIP ప్లాన్ ఎంచుకోండి",
+        "sec4-tag": "Roadmap",
+        "sec4-title": "🚀 Upcoming Services",
+        "sec4-sub": "త్వరలో విజయవాడ & గుంటూరులలో ప్రారంభం కానున్న సరికొత్త సేవలు.",
+        "up1-title": "🏫 School & Campus Safety",
+        "up1-sub": "విద్యార్థుల భద్రత కోసం పాఠశాలలు & కళాశాలల్లో స్మార్ట్ గేట్ ఎకోసిస్టమ్.",
+        "up1-p1": "• <strong>Pickup Authorization:</strong> స్కూల్ ముగిశాక పిల్లలను తీసుకెళ్లడానికి వచ్చే వారి వాట్సాప్ & QR వెరిఫికేషన్.",
+        "up1-p2": "• <strong>Gate Attendance Alerts:</strong> విద్యార్థి గేట్ దాటగానే తల్లిదండ్రుల మొబైల్‌కు తక్షణ ఆటో-అలర్ట్.",
+        "up1-p3": "• <strong>Digital Gate Logs:</strong> ప్రిన్సిపాల్ & మేనేజ్‌మెంట్ కోసం ఆటోమేటెడ్ PDF డైలీ రిపోర్ట్స్.",
+        "up2-title": "💼 Smart NFC & Digital Identity",
+        "up2-sub": "పేపర్‌లెస్ నెట్‌వర్కింగ్ మరియు సురక్షిత సిబ్బంది వెరిఫికేషన్ సాధనాలు.",
+        "up2-p1": "• <strong>Smart NFC Business Cards:</strong> మొబైల్‌కి ఒక్క ట్యాప్ చేస్తే మీ ప్రొఫైల్, వాట్సాప్ కాంటాక్ట్ వివరాలు తక్షణమే సేవ్.",
+        "up2-p2": "• <strong>Verified Staff Digital Badges:</strong> అపార్ట్‌మెంట్లలో పనిచేసే సిబ్బంది మరియు వర్కర్ల కోసం ప్రత్యేక డిజిటల్ గుర్తింపు బ్యాడ్జ్‌లు.",
+        "contact-tag": "Get in Touch",
+        "contact-title": "📞 మమ్మల్ని సంప్రదించండి",
+        "contact-sub": "విజయవాడ & గుంటూరు రీజియన్‌లో ఏ సమయంలోనైనా సహాయం కోసం.",
+        "contact-card-title": "Availo Digital Services Support",
+        "contact-card-sub": "మా కస్టమర్ కేర్ ఎగ్జిక్యూటివ్‌తో నేరుగా మాట్లాడండి లేదా వాట్సాప్ చేయండి.",
+        "contact-card-wa": "💬 WhatsApp లో మెసేజ్ చేయండి",
+        "contact-hours": "⏰ సర్వీస్ వేళలు: 24/7 వాట్సాప్ సపోర్ట్ (ఎమర్జెన్సీ రెస్పాన్స్)",
+        "footer-loc": "విజయవాడ & గుంటూరు రీజియన్"
+      },
+      en: {
+        "nav-home": "Home",
+        "nav-about": "About",
+        "nav-services": "Services",
+        "nav-contact": "Contact",
+        "hero-badge": "🛡️ Zero-App Hyperlocal System",
+        "hero-desc": "Gate Security, Local Concierge & NRI Parent Care — Exclusively for Vijayawada & Guntur.",
+        "hero-cta": "🎙️ Order Now (WhatsApp)",
+        "about-tag": "About Us",
+        "about-title": "🛡️ Availo Digital Services",
+        "about-sub": "Pioneering the Zero-App smart convenience ecosystem across Vijayawada & Guntur.",
+        "about-desc1": "<strong>Availo Digital Services</strong> (MSME Registered) is a trusted concierge and security provider dedicated to residents, gated communities, and NRI families. We eliminate app fatigue by delivering cutting-edge gate security and daily essentials entirely through <strong>WhatsApp</strong>.",
+        "about-pt1": "🔒 <strong>Privacy First:</strong> Automated phone masking safeguards the privacy of women and residents.",
+        "about-pt2": "🤝 <strong>Local Ground Support:</strong> Verified and trained field concierge personnel across Vijayawada and Guntur.",
+        "about-pt3": "⚖️ <strong>Transparent Pricing:</strong> Transparent errands billed strictly against authentic local store receipts.",
+        "sec1-tag": "Active Service 01",
+        "sec1-title": "🏢 Apartment & Gate Management",
+        "sec1-sub": "Complete security operated seamlessly through WhatsApp without app downloads.",
+        "f1-title": "🛡️ Zero-App WhatsApp Gate Pass",
+        "f1-desc": "Scan QR at the gate or lift; visitor snapshots and entry logs arrive straight to your WhatsApp.",
+        "f2-title": "🔒 Women Privacy Shield",
+        "f2-desc": "Protects residents' personal details through automated phone masking (XXXXXX1234).",
+        "f3-title": "📋 Centralized President Log",
+        "f3-desc": "Real-time automated logging sheet for apartment associations and committee presidents.",
+        "f4-title": "🎁 7-Day Free Society Pilot",
+        "f4-desc": "Start a risk-free 7-day trial in Vijayawada & Guntur apartments. Free weatherproof QR boards and watchman training included.",
+        "pilot-link": "Book Free Pilot ➔",
+        "how-tag": "How It Works",
+        "how-title": "⚡ 3 Simple Steps to Your Doorstep",
+        "step1-title": "Scan",
+        "step1-desc": "Scan the Availo QR code at your lift or gate with your smartphone.",
+        "step2-title": "Speak",
+        "step2-desc": "Send a simple voice note on WhatsApp stating what groceries or tasks you need.",
+        "step3-title": "Get",
+        "step3-desc": "Receive your order at your flat door with verified gate entry alerts.",
+        "sec2-tag": "Active Service 02",
+        "sec2-title": "🛍️ Daily Essentials & Errands",
+        "sec2-sub": "Doorstep deliveries directly from trusted local shops with actual printed bills.",
+        "srv1-t": "Groceries & Veggies",
+        "srv1-d": "Fresh produce & daily provisions with original store receipt",
+        "srv2-t": "Sunday Non-Veg",
+        "srv2-d": "Hygienically cut and cleaned chicken, mutton & seafood",
+        "srv3-t": "Boutique & Tailoring",
+        "srv3-d": "Blouse stitching & alterations with doorstep pickup & drop",
+        "srv4-t": "Doorstep Beautician",
+        "srv4-d": "Certified lady beautician home visits",
+        "srv5-t": "20-Min Home Repairs",
+        "srv5-d": "Verified local electricians, plumbers & technicians",
+        "srv6-t": "Doorstep Scrap Pickup",
+        "srv6-d": "Bulk paper & plastic scrap collection at fair weights",
+        "sec3-tag": "Active Service 03",
+        "sec3-title": "👵 NRI Parents Care",
+        "sec3-sub": "Peace of mind for kids abroad — dedicated, caring support for parents in Vijayawada & Guntur.",
+        "per-month": "/ month",
+        "p1-l1-t": "Home Check-in:",
+        "p1-l1-d": "1 Visit / month for wellness checks",
+        "p1-l2-t": "Hospital Escort:",
+        "p1-l2-d": "1 Time / month (Up to 3 hours)",
+        "p1-l3-t": "Delivery Tasks:",
+        "p1-l3-d": "2 Tasks / month (Medicines / Groceries)",
+        "p1-l4-t": "Target Response:",
+        "p1-l4-d": "Priority support within 45 mins",
+        "p1-btn": "Select Care Plan",
+        "p2-l1-t": "Home Check-in:",
+        "p2-l1-d": "2 Visits / month (Bi-weekly check-ins)",
+        "p2-l2-t": "Hospital Escort:",
+        "p2-l2-d": "2 Times / month (Up to 4 hours)",
+        "p2-l3-t": "Delivery Tasks:",
+        "p2-l3-d": "4 Tasks / month (Medicines / Utility Bills)",
+        "p2-l4-t": "Target Response:",
+        "p2-l4-d": "High priority support within 30 mins",
+        "p2-btn": "Select Plus Plan",
+        "p3-l1-t": "Home Check-in:",
+        "p3-l1-d": "4 Visits / month (Weekly scheduled visits)",
+        "p3-l2-t": "Hospital Escort:",
+        "p3-l2-d": "4 Times / month (Unlimited Hours)",
+        "p3-l3-t": "Delivery & Errands:",
+        "p3-l3-d": "8 Tasks / month (Flexible usage)",
+        "p3-l4-t": "Carry Forward:",
+        "p3-l4-d": "Unused tasks carry forward up to 2 months",
+        "p3-l5-t": "Target Response:",
+        "p3-l5-d": "Top priority support within 15–20 mins",
+        "p3-btn": "Select Elite VIP Plan",
+        "sec4-tag": "Roadmap",
+        "sec4-title": "🚀 Upcoming Services",
+        "sec4-sub": "Next-generation digital services launching soon across Vijayawada & Guntur.",
+        "up1-title": "🏫 School & Campus Safety",
+        "up1-sub": "Smart campus gate ecosystem prioritizing student safety.",
+        "up1-p1": "• <strong>Pickup Authorization:</strong> Verified parent & driver WhatsApp QR authentication.",
+        "up1-p2": "• <strong>Gate Attendance Alerts:</strong> Instant gate exit alerts delivered to parents' phones.",
+        "up1-p3": "• <strong>Digital Gate Logs:</strong> Automated PDF reports for school administrators.",
+        "up2-title": "💼 Smart NFC & Digital Identity",
+        "up2-sub": "Paperless modern networking and verified personnel identity tags.",
+        "up2-p1": "• <strong>Smart NFC Business Cards:</strong> One-tap contact sharing without printed cards.",
+        "up2-p2": "• <strong>Verified Staff Digital Badges:</strong> Tamper-proof digital ID badges for society domestic staff.",
+        "contact-tag": "Get in Touch",
+        "contact-title": "📞 Contact Us",
+        "contact-sub": "24/7 dedicated support across Vijayawada & Guntur.",
+        "contact-card-title": "Availo Digital Services Support",
+        "contact-card-sub": "Speak directly to our customer care executive or drop a WhatsApp note.",
+        "contact-card-wa": "💬 Chat with Us on WhatsApp",
+        "contact-hours": "⏰ Service Hours: 24/7 WhatsApp Emergency Support",
+        "footer-loc": "Vijayawada & Guntur Region"
+      }
+    };
+
+    function setLanguage(lang) {
+      document.getElementById('btn-te').classList.toggle('active', lang === 'te');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+      const heroTitle = document.getElementById('hero-title');
+      if (lang === 'en') {
+        heroTitle.innerHTML = 'Skip App Downloads..<br>Just Send a <span>Voice Note!</span>';
+      } else {
+        heroTitle.innerHTML = 'యాప్ డౌన్‌లోడ్ వద్దు..<br><span>వాయిస్ నోట్</span> ఇస్తే చాలు!';
+      }
+
+      const policyBox = document.getElementById('policy-content');
+      if (lang === 'en') {
+        policyBox.innerHTML = `⚠️ <strong>Service & Expense Policy:</strong><br>
+        • Availo acts solely as an execution & concierge provider (Service Fee Only).<br>
+        • All actual purchases (medicines, groceries, doctor/hospital charges, cab fares) are paid directly by the customer/NRI family.<br>
+        • An errand task is defined as a single run/visit.<br>
+        • Emergency response times are priority targets subject to real-world ground conditions.`;
+      } else {
+        policyBox.innerHTML = `⚠️ <strong>సర్వీస్ & ఎక్స్‌పెన్స్ పాలసీ:</strong><br>
+        • మేము సర్వీస్ & ఎగ్జిక్యూషన్ మాత్రమే అందిస్తాము (Service Fee Only).<br>
+        • మందులు, కిరాణా సరుకులు, డాక్టర్ ఫీజులు, హాస్పిటల్ ఛార్జీలు మరియు క్యాబ్/రవాణా వాస్తవ ఖర్చులు కస్టమర్/NRI పిల్లలు నేరుగా భరించాలి.<br>
+        • ఒక డెలివరీ లేదా పని అంటే ఒక సింగిల్ రన్/విజిట్‌గా పరిగణించబడుతుంది.<br>
+        • రెస్పాన్స్ సమయాలు గ్రౌండ్ పరిస్థితులకు లోబడి ప్రాధాన్యత ఆధారంగా (Priority Target) ఉంటాయి.`;
+      }
+
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
+
