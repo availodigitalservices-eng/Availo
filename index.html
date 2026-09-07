@@ -15,7 +15,6 @@
       --text-light: #F8FAFC;
       --text-dim: #94A3B8;
       --green: #10B981;
-      --purple: #8B5CF6;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', 'Noto Sans Telugu', sans-serif; }
     body { background: var(--dark-bg); color: var(--text-light); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
@@ -67,7 +66,6 @@
     .tile-title { font-size: 0.85rem; font-weight: 700; color: #FFFFFF; margin-bottom: 4px; }
     .tile-desc { font-size: 0.7rem; color: var(--text-dim); line-height: 1.35; }
 
-    /* UPCOMING SERVICES */
     .upcoming-box {
       background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(2, 132, 199, 0.08) 100%);
       border: 1px dashed rgba(139, 92, 246, 0.4);
@@ -88,17 +86,8 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .upcoming-box h4 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #E2E8F0;
-      margin-bottom: 4px;
-    }
-    .upcoming-box p {
-      font-size: 0.78rem;
-      color: #94A3B8;
-      line-height: 1.4;
-    }
+    .upcoming-box h4 { font-size: 0.95rem; font-weight: 700; color: #E2E8F0; margin-bottom: 4px; }
+    .upcoming-box p { font-size: 0.78rem; color: #94A3B8; line-height: 1.4; }
     
     .plan-box { background: var(--card-dark); border: 1.5px solid var(--border-dark); border-radius: 16px; padding: 20px 16px; margin-bottom: 16px; position: relative; }
     .plan-box.popular { border-color: #10B981; }
@@ -118,9 +107,90 @@
     .contact-card { background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 24px 18px; text-align: center; }
     .btn-call { display: inline-block; background: #0284C7; color: #FFFFFF; padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; text-decoration: none; margin-top: 14px; margin-bottom: 12px; width: 100%; max-width: 320px; }
     
-    footer { border-top: 1px solid var(--border-dark); text-align: center; padding: 24px 16px; font-size: 0.78rem; color: var(--text-dim); background: #090E1A; }
+    footer { border-top: 1px solid var(--border-dark); text-align: center; padding: 24px 16px; font-size: 0.78rem; color: var(--text-dim); background: #090E1A; margin-bottom: 70px; }
     .footer-slogan { font-size: 0.85rem; font-weight: 700; color: #38BDF8; letter-spacing: 1px; margin-bottom: 6px; display: block; }
     .msme-pill { display: inline-block; border: 1px solid rgba(56, 189, 248, 0.3); color: #94A3B8; padding: 2px 10px; border-radius: 12px; font-size: 0.68rem; margin-top: 6px; }
+
+    /* ===================================================
+       MAYURA PEACOCK BLOOM & TALKING WIDGET
+    =================================================== */
+    .mayura-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 16px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      cursor: pointer;
+    }
+    .mayura-bubble {
+      background: #1E293B;
+      border: 1.5px solid #38BDF8;
+      border-radius: 16px 16px 4px 16px;
+      padding: 10px 14px;
+      color: #FFF;
+      font-size: 0.8rem;
+      font-weight: 600;
+      max-width: 250px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      margin-bottom: 8px;
+      display: none;
+      animation: popIn 0.3s ease-out forwards;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .mayura-avatar-box {
+      width: 68px;
+      height: 68px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .peacock-center-body {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #0B1120;
+      border: 2px solid #38BDF8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+      position: absolute;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s ease;
+    }
+    /* Peacock Feathers (Initially Hidden / Folded) */
+    .peacock-feathers {
+      position: absolute;
+      top: -10px;
+      width: 100px;
+      height: 100px;
+      z-index: 1;
+      pointer-events: none;
+      transform-origin: center bottom;
+      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform: scale(0.2) rotate(180deg);
+      opacity: 0;
+    }
+    /* When Bloom is Active: Feathers Fan Out Fully */
+    .mayura-widget.bloomed .peacock-feathers {
+      transform: scale(1.1) rotate(0deg);
+      opacity: 1;
+    }
+    .mayura-widget.bloomed .peacock-center-body {
+      border-color: #10B981;
+      box-shadow: 0 0 22px rgba(16, 185, 129, 0.8);
+      animation: gentleFloat 2s infinite ease-in-out;
+    }
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
   </style>
 </head>
 <body>
@@ -363,7 +433,7 @@
       </div>
     </div>
 
-    <!-- 5. UPCOMING SERVICES (ONLY 2 AGREED SERVICES) -->
+    <!-- 5. UPCOMING SERVICES -->
     <div style="margin-top: 30px;">
       <span class="sec-tag" style="color: #A855F7;" data-key="up-tag">Future Innovations</span>
       <h4 style="font-size: 1.15rem; color: #FFF; margin-bottom: 6px;" data-key="up-head">🚀 త్వరలో రాబోయే సేవలు (Upcoming Services)</h4>
@@ -406,6 +476,49 @@
     </div>
   </main>
 
+  <!-- MAYURA PEACOCK BLOOM & TALKING WIDGET -->
+  <div class="mayura-widget" id="mayuraWidget" onclick="triggerMayuraBloomAndSpeak()">
+    <div class="mayura-bubble" id="mayuraBubble">
+      నమస్కారం! నేను మీ అవైలో మయూరను 🦚
+    </div>
+    <div class="mayura-avatar-box">
+      <!-- Animated Peacock Feathers (Blooms outward) -->
+      <svg class="peacock-feathers" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="featherGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#38BDF8"/>
+            <stop offset="60%" stop-color="#0284C7"/>
+            <stop offset="100%" stop-color="#10B981"/>
+          </linearGradient>
+        </defs>
+        <!-- Fan-out Peacock Plumes -->
+        <path d="M50 85 C30 50, 10 30, 15 15 C25 20, 45 60, 50 85 Z" fill="url(#featherGrad)" opacity="0.9"/>
+        <path d="M50 85 C38 45, 25 20, 32 8 C42 16, 48 55, 50 85 Z" fill="url(#featherGrad)"/>
+        <path d="M50 85 C45 40, 42 12, 50 4 C58 12, 55 40, 50 85 Z" fill="url(#featherGrad)"/>
+        <path d="M50 85 C55 45, 68 20, 68 8 C75 16, 62 55, 50 85 Z" fill="url(#featherGrad)"/>
+        <path d="M50 85 C70 50, 90 30, 85 15 C75 20, 55 60, 50 85 Z" fill="url(#featherGrad)" opacity="0.9"/>
+        <!-- Feather Eye Dots -->
+        <circle cx="20" cy="20" r="3" fill="#F59E0B"/>
+        <circle cx="35" cy="12" r="3.5" fill="#F59E0B"/>
+        <circle cx="50" cy="8" r="4" fill="#F59E0B"/>
+        <circle cx="65" cy="12" r="3.5" fill="#F59E0B"/>
+        <circle cx="80" cy="20" r="3" fill="#F59E0B"/>
+      </svg>
+      <!-- Center Peacock Shield Head -->
+      <div class="peacock-center-body">
+        <svg viewBox="0 0 100 100" width="30" height="30">
+          <ellipse cx="50" cy="45" rx="14" ry="18" fill="#0369A1" stroke="#38BDF8" stroke-width="2"/>
+          <ellipse cx="50" cy="45" rx="9" ry="12" fill="#10B981"/>
+          <ellipse cx="50" cy="45" rx="5" ry="7" fill="#0B1120"/>
+          <circle cx="48" cy="43" r="2" fill="#38BDF8"/>
+          <circle cx="42" cy="22" r="2.5" fill="#F59E0B"/>
+          <circle cx="50" cy="18" r="2.5" fill="#38BDF8"/>
+          <circle cx="58" cy="22" r="2.5" fill="#F59E0B"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer>
     <span class="footer-slogan">Smart Access. Total Control.</span>
@@ -418,13 +531,52 @@
   </footer>
 
   <script>
+    let currentLang = 'te';
+    let hasBloomed = false;
+
     function switchTab(tabName) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(view => view.classList.remove('active'));
       document.getElementById('tab-' + tabName).classList.add('active');
       document.getElementById('view-' + tabName).classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Trigger peacock bloom and talk on tapping Services
+      if (tabName === 'services' && !hasBloomed) {
+        triggerMayuraBloomAndSpeak();
+      }
     }
+
+    // PEACOCK BLOOM & VOICE ENGINE
+    function triggerMayuraBloomAndSpeak() {
+      const widget = document.getElementById('mayuraWidget');
+      const bubble = document.getElementById('mayuraBubble');
+      
+      widget.classList.add('bloomed');
+      bubble.style.display = 'block';
+      hasBloomed = true;
+
+      const teMsg = "నమస్కారం! నేను మీ అవైలో మయూరను. విజయవాడ మరియు గుంటూరులో మీకు ఎలాంటి హోమ్ సర్వీసులు, గేట్ పాస్ లేదా కేర్ ప్లాన్స్ కావాలన్నా నేను సిద్ధంగా ఉన్నాను!";
+      const enMsg = "Hello! I am Availo Mayura. How can I help you today with home repairs, gate passes, or parent care in Vijayawada and Guntur?";
+
+      bubble.innerText = currentLang === 'te' ? "నమస్కారం! నేను మీ అవైలో మయూరను 🦚" : "Hello! I am Availo Mayura 🦚";
+
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(currentLang === 'te' ? teMsg : enMsg);
+        utterance.lang = currentLang === 'te' ? 'te-IN' : 'en-IN';
+        utterance.rate = 0.95;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // Trigger on first touch anywhere on screen
+    document.addEventListener('click', function onFirstTouch() {
+      if (!hasBloomed) {
+        triggerMayuraBloomAndSpeak();
+      }
+      document.removeEventListener('click', onFirstTouch);
+    }, { once: true });
 
     const translations = {
       te: {
@@ -602,6 +754,7 @@
     };
 
     function setLanguage(lang) {
+      currentLang = lang;
       document.getElementById('btn-te').classList.toggle('active', lang === 'te');
       document.getElementById('btn-en').classList.toggle('active', lang === 'en');
       const heroTitle = document.getElementById('hero-title');
