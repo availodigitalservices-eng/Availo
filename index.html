@@ -8,17 +8,18 @@
   <style>
     :root {
       --primary: #0284C7;
-      --primary-dark: #0369A1;
       --accent: #F59E0B;
       --dark-bg: #0B1120;
       --card-dark: #131E32;
       --border-dark: #1E293B;
       --text-light: #F8FAFC;
       --text-dim: #94A3B8;
-      --green-glow: #10B981;
+      --green: #10B981;
+      --purple: #8B5CF6;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', 'Noto Sans Telugu', sans-serif; }
     body { background: var(--dark-bg); color: var(--text-light); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+    
     header { background: rgba(11, 17, 32, 0.98); backdrop-filter: blur(10px); padding: 12px 16px 6px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-dark); }
     .header-top { display: flex; justify-content: space-between; align-items: center; }
     .brand-wrap { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; }
@@ -28,35 +29,77 @@
     .lang-toggle { display: flex; background: #1E293B; border-radius: 20px; padding: 2px; border: 1px solid rgba(255,255,255,0.1); }
     .lang-btn { background: transparent; border: none; color: var(--text-dim); padding: 4px 10px; font-size: 0.72rem; font-weight: 700; border-radius: 16px; cursor: pointer; }
     .lang-btn.active { background: var(--primary); color: #FFFFFF; }
+    
     nav.tab-nav { display: flex; justify-content: space-around; align-items: center; margin-top: 10px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); }
     .tab-btn { background: none; border: none; color: var(--text-dim); font-size: 0.82rem; font-weight: 700; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
     .tab-btn.active { color: #38BDF8; background: rgba(56, 189, 248, 0.12); border-bottom: 2px solid #38BDF8; }
+    
     .tab-content { display: none; padding: 24px 18px 40px; animation: fadeIn 0.25s ease-in-out; }
     .tab-content.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    
     .hero { padding: 20px 10px 25px; text-align: center; }
     .hero-badge { display: inline-block; background: rgba(56, 189, 248, 0.12); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 15px; }
     .hero h2 { font-size: 1.65rem; font-weight: 800; line-height: 1.35; margin-bottom: 12px; }
     .hero h2 span { background: linear-gradient(90deg, #38BDF8, #818CF8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero p { font-size: 0.88rem; color: var(--text-dim); margin-bottom: 22px; max-width: 480px; margin-left: auto; margin-right: auto; }
-    .btn-whatsapp-hero { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: #FFFFFF; width: 100%; max-width: 320px; padding: 14px 20px; border-radius: 14px; font-weight: 700; font-size: 0.95rem; text-decoration: none; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4); }
+    .btn-whatsapp-hero { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: #FFFFFF; width: 100%; max-width: 320px; padding: 14px 20px; border-radius: 14px; font-weight: 700; font-size: 0.95rem; text-decoration: none; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4); margin: 0 auto; }
+    
     .sec-tag { color: #38BDF8; font-size: 0.72rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; display: block; }
     .sec-title { font-size: 1.35rem; font-weight: 800; color: #F8FAFC; margin-bottom: 6px; }
     .sec-sub { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 20px; }
+    
     .feature-card { background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
     .feature-card h4 { font-size: 0.98rem; font-weight: 700; color: #38BDF8; margin-bottom: 6px; }
     .feature-card p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.45; }
+    
     .step-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
     .step-card { background: var(--card-dark); border-left: 4px solid #0284C7; border-radius: 10px; padding: 14px; display: flex; gap: 12px; align-items: center; }
     .step-number { font-size: 1.2rem; font-weight: 800; color: #38BDF8; min-width: 24px; }
+    
     .about-card { background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 18px; margin-bottom: 16px; }
     .about-card h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
     .about-card p { font-size: 0.84rem; color: #CBD5E1; line-height: 1.6; }
+    
     .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
     .service-tile { background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 14px; padding: 16px 12px; text-align: center; }
     .tile-icon { font-size: 1.8rem; margin-bottom: 6px; display: inline-block; }
     .tile-title { font-size: 0.85rem; font-weight: 700; color: #FFFFFF; margin-bottom: 4px; }
     .tile-desc { font-size: 0.7rem; color: var(--text-dim); line-height: 1.35; }
+
+    /* UPCOMING SERVICES */
+    .upcoming-box {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(2, 132, 199, 0.08) 100%);
+      border: 1px dashed rgba(139, 92, 246, 0.4);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .badge-soon {
+      display: inline-block;
+      background: rgba(139, 92, 246, 0.25);
+      color: #C084FC;
+      border: 1px solid rgba(139, 92, 246, 0.5);
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .upcoming-box h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #E2E8F0;
+      margin-bottom: 4px;
+    }
+    .upcoming-box p {
+      font-size: 0.78rem;
+      color: #94A3B8;
+      line-height: 1.4;
+    }
+    
     .plan-box { background: var(--card-dark); border: 1.5px solid var(--border-dark); border-radius: 16px; padding: 20px 16px; margin-bottom: 16px; position: relative; }
     .plan-box.popular { border-color: #10B981; }
     .plan-box.elite { border-color: #F59E0B; background: linear-gradient(180deg, #131E32 0%, #1c1917 100%); }
@@ -71,8 +114,10 @@
     .plan-box.popular .btn-plan { background: #10B981; color: #000; border: none; }
     .plan-box.elite .btn-plan { background: #F59E0B; color: #000; border: none; }
     .plan-rule-note { background: rgba(2, 132, 199, 0.08); border: 1px dashed rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 12px; margin-top: 15px; font-size: 0.74rem; color: #94A3B8; line-height: 1.45; }
+    
     .contact-card { background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 24px 18px; text-align: center; }
     .btn-call { display: inline-block; background: #0284C7; color: #FFFFFF; padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; text-decoration: none; margin-top: 14px; margin-bottom: 12px; width: 100%; max-width: 320px; }
+    
     footer { border-top: 1px solid var(--border-dark); text-align: center; padding: 24px 16px; font-size: 0.78rem; color: var(--text-dim); background: #090E1A; }
     .footer-slogan { font-size: 0.85rem; font-weight: 700; color: #38BDF8; letter-spacing: 1px; margin-bottom: 6px; display: block; }
     .msme-pill { display: inline-block; border: 1px solid rgba(56, 189, 248, 0.3); color: #94A3B8; padding: 2px 10px; border-radius: 12px; font-size: 0.68rem; margin-top: 6px; }
@@ -115,7 +160,6 @@
       </div>
     </div>
 
-    <!-- TABS -->
     <nav class="tab-nav">
       <button class="tab-btn active" id="tab-home" onclick="switchTab('home')">🏠 <span data-key="nav-home">హోమ్</span></button>
       <button class="tab-btn" id="tab-about" onclick="switchTab('about')">🎯 <span data-key="nav-about">అబౌట్ అస్</span></button>
@@ -211,7 +255,7 @@
       <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20want%20Free%20Society%20Pilot" target="_blank" style="color: #10B981; font-weight: 700; font-size: 0.82rem; text-decoration: none; display: inline-block; margin-top: 6px;" data-key="f1-pilot">🎁 7-Day Free Society Pilot బుక్ చేసుకోండి ➔</a>
     </div>
 
-    <!-- 2. Home Repairs & Maintenance -->
+    <!-- 2. Home Maintenance & Appliances -->
     <div style="margin-top: 22px;">
       <span class="sec-tag" data-key="sec2-tag">Active Service 02</span>
       <h4 style="font-size: 1.1rem; color: #FFF; margin-bottom: 12px;" data-key="sec2-title">🛠️ హోమ్ రిపేర్స్ & మెయింటెనెన్స్</h4>
@@ -316,6 +360,25 @@
           • వస్తువులు, మందులు లేదా హాస్పిటల్ అసలైన ఖర్చులు కస్టమర్ భరించాలి (ఒరిజినల్ బిల్లులు అందజేస్తాము).<br>
           • Elite ప్లాన్ మిగిలిన టాస్క్‌లు గరిష్టంగా 2 నెలల వరకు మాత్రమే వర్తిస్తాయి.
         </span>
+      </div>
+    </div>
+
+    <!-- 5. UPCOMING SERVICES (ONLY 2 AGREED SERVICES) -->
+    <div style="margin-top: 30px;">
+      <span class="sec-tag" style="color: #A855F7;" data-key="up-tag">Future Innovations</span>
+      <h4 style="font-size: 1.15rem; color: #FFF; margin-bottom: 6px;" data-key="up-head">🚀 త్వరలో రాబోయే సేవలు (Upcoming Services)</h4>
+      <p class="sec-sub" data-key="up-sub">గేటెడ్ సొసైటీలను మరింత స్మార్ట్‌గా మార్చే భవిష్యత్ ఫీచర్లు.</p>
+
+      <div class="upcoming-box">
+        <span class="badge-soon" data-key="up-badge">Coming Soon</span>
+        <h4 data-key="up1-t">🚌 1. స్మార్ట్ స్కూల్ వ్యాన్ & చైల్డ్ సేఫ్టీ ట్రాకర్</h4>
+        <p data-key="up1-d">పిల్లలు స్కూల్ వ్యాన్ ఎక్కినా, అపార్ట్‌మెంట్ గేట్ వద్ద దిగినా వెంటనే తల్లిదండ్రుల వాట్సాప్‌కి ఆటోమేటిక్ గేట్ అలర్ట్ వస్తుంది.</p>
+      </div>
+
+      <div class="upcoming-box">
+        <span class="badge-soon" data-key="up-badge">Coming Soon</span>
+        <h4 data-key="up2-t">🏷️ 2. NFC స్మార్ట్ కీ ట్యాగ్ ఎంట్రీ</h4>
+        <p data-key="up2-d">స్మార్ట్‌ఫోన్ లేదా ఇంటర్నెట్ లేని వృద్ధులు మరియు వాకింగ్ వెళ్లేవారి కోసం సింపుల్ ట్యాప్-అండ్-ఎంటర్ స్మార్ట్ కీచెయిన్ ట్యాగ్స్.</p>
       </div>
     </div>
   </main>
@@ -434,6 +497,14 @@
         "p3-btn": "Elite VIP ప్లాన్ ఎంచుకోండి",
         "rule-title": "📌 టాస్క్ నిబంధన (Task Definition):",
         "rule-desc": "• 1 టాస్క్ = ఒక రౌండ్ ట్రిప్/విజిట్ (ఉదా: మందుల పికప్ ఒక టాస్క్; కిరాణా పికప్ మరొక టాస్క్).<br>• వస్తువులు, మందులు లేదా హాస్పిటల్ అసలైన ఖర్చులు కస్టమర్ భరించాలి (ఒరిజినల్ బిల్లులు అందజేస్తాము).<br>• Elite ప్లాన్ మిగిలిన టాస్క్‌లు గరిష్టంగా 2 నెలల వరకు మాత్రమే వర్తిస్తాయి.",
+        "up-tag": "Future Innovations",
+        "up-head": "🚀 త్వరలో రాబోయే సేవలు (Upcoming Services)",
+        "up-sub": "గేటెడ్ సొసైటీలను మరింత స్మార్ట్‌గా మార్చే భవిష్యత్ ఫీచర్లు.",
+        "up-badge": "Coming Soon",
+        "up1-t": "🚌 1. స్మార్ట్ స్కూల్ వ్యాన్ & చైల్డ్ సేఫ్టీ ట్రాకర్",
+        "up1-d": "పిల్లలు స్కూల్ వ్యాన్ ఎక్కినా, అపార్ట్‌మెంట్ గేట్ వద్ద దిగినా వెంటనే తల్లిదండ్రుల వాట్సాప్‌కి ఆటోమేటిక్ గేట్ అలర్ట్ వస్తుంది.",
+        "up2-t": "🏷️ 2. NFC స్మార్ట్ కీ ట్యాగ్ ఎంట్రీ",
+        "up2-d": "స్మార్ట్‌ఫోన్ లేదా ఇంటర్నెట్ లేని వృద్ధులు మరియు వాకింగ్ వెళ్లేవారి కోసం సింపుల్ ట్యాప్-అండ్-ఎంటర్ స్మార్ట్ కీచెయిన్ ట్యాగ్స్.",
         "cnt-tag": "Get In Touch",
         "cnt-head": "📞 మమ్మల్ని సంప్రదించండి",
         "cnt-sub": "విజయవాడ & గుంటూరులో ఎలాంటి సాయం కోసమైనా మేము అందుబాటులో ఉంటాము.",
@@ -512,6 +583,14 @@
         "p3-btn": "Select Elite VIP Plan",
         "rule-title": "📌 Task Definition & Policy:",
         "rule-desc": "• 1 Task = 1 Round Trip / Visit (e.g., medicine pickup is 1 task; grocery pickup is another task).<br>• Actual purchase/hospital expenses are borne by the client (original bills provided).<br>• Elite plan unused tasks expire after a rolling 2-month window.",
+        "up-tag": "Future Innovations",
+        "up-head": "🚀 Upcoming Services",
+        "up-sub": "Next-generation smart automation for gated communities.",
+        "up-badge": "Coming Soon",
+        "up1-t": "🚌 1. Smart School Van & Child Safety Tracker",
+        "up1-d": "Instant automated WhatsApp alerts for parents when kids board or alight from school vans at the society gate.",
+        "up2-t": "🏷️ 2. NFC Smart Key Tag Gate Access",
+        "up2-d": "Effortless tap-and-enter keychain tags for elderly walkers and domestic staff without requiring smartphones.",
         "cnt-tag": "Get In Touch",
         "cnt-head": "📞 Contact Us",
         "cnt-sub": "We are available 24/7 for dedicated support in Vijayawada & Guntur.",
@@ -535,754 +614,3 @@
   </script>
 </body>
 </html>
-
-    /* APP-LIKE NAVIGATION BAR */
-    nav.tab-nav {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-top: 10px;
-      padding-top: 6px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .tab-btn {
-      background: none;
-      border: none;
-      color: var(--text-dim);
-      font-size: 0.82rem;
-      font-weight: 700;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .tab-btn.active {
-      color: #38BDF8;
-      background: rgba(56, 189, 248, 0.12);
-      border-bottom: 2px solid #38BDF8;
-    }
-
-    /* TAB CONTENT SECTIONS */
-    .tab-content {
-      display: none;
-      padding: 24px 18px 40px;
-      animation: fadeIn 0.25s ease-in-out;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* COMMON STYLING */
-    .hero {
-      padding: 20px 10px 25px;
-      text-align: center;
-    }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(56, 189, 248, 0.12);
-      color: #38BDF8;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 5px 14px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      margin-bottom: 15px;
-    }
-    .hero h2 {
-      font-size: 1.65rem;
-      font-weight: 800;
-      line-height: 1.35;
-      margin-bottom: 12px;
-    }
-    .hero h2 span {
-      background: linear-gradient(90deg, #38BDF8, #818CF8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero p {
-      font-size: 0.88rem;
-      color: var(--text-dim);
-      margin-bottom: 22px;
-      max-width: 480px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .btn-whatsapp-hero {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-      color: #FFFFFF;
-      width: 100%;
-      max-width: 320px;
-      padding: 14px 20px;
-      border-radius: 14px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      text-decoration: none;
-      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
-    }
-    .sec-tag {
-      color: #38BDF8;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-      display: block;
-    }
-    .sec-title {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #F8FAFC;
-      margin-bottom: 6px;
-    }
-    .sec-sub {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      margin-bottom: 20px;
-    }
-
-    /* CARDS */
-    .feature-card {
-      background: var(--card-dark);
-      border: 1px solid var(--border-dark);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 12px;
-    }
-    .feature-card h4 {
-      font-size: 0.98rem;
-      font-weight: 700;
-      color: #38BDF8;
-      margin-bottom: 6px;
-    }
-    .feature-card p {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      line-height: 1.45;
-    }
-
-    /* STEPS */
-    .step-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    .step-card {
-      background: var(--card-dark);
-      border-left: 4px solid #0284C7;
-      border-radius: 10px;
-      padding: 14px;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .step-number {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #38BDF8;
-      min-width: 24px;
-    }
-
-    /* ABOUT US SPECIFIC (AIM / VISION / MISSION) */
-    .about-card {
-      background: var(--card-dark);
-      border: 1px solid var(--border-dark);
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 16px;
-    }
-    .about-card h4 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .about-card p {
-      font-size: 0.84rem;
-      color: #CBD5E1;
-      line-height: 1.6;
-    }
-
-    /* HYPERLOCAL GRID */
-    .service-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 25px;
-    }
-    .service-tile {
-      background: var(--card-dark);
-      border: 1px solid var(--border-dark);
-      border-radius: 14px;
-      padding: 16px 12px;
-      text-align: center;
-    }
-    .tile-icon {
-      font-size: 2rem;
-      margin-bottom: 8px;
-      display: inline-block;
-    }
-    .tile-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-bottom: 4px;
-    }
-    .tile-desc {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      line-height: 1.35;
-    }
-
-    /* NRI PLANS */
-    .plan-box {
-      background: var(--card-dark);
-      border: 1.5px solid var(--border-dark);
-      border-radius: 16px;
-      padding: 20px 16px;
-      margin-bottom: 16px;
-      position: relative;
-    }
-    .plan-box.popular {
-      border-color: #10B981;
-    }
-    .plan-box.elite {
-      border-color: #8B5CF6;
-    }
-    .badge-pop {
-      position: absolute;
-      top: -12px;
-      right: 16px;
-      background: #10B981;
-      color: #000;
-      font-weight: 800;
-      font-size: 0.68rem;
-      padding: 3px 10px;
-      border-radius: 20px;
-    }
-    .badge-elite {
-      position: absolute;
-      top: -12px;
-      right: 16px;
-      background: #8B5CF6;
-      color: #FFF;
-      font-weight: 800;
-      font-size: 0.68rem;
-      padding: 3px 10px;
-      border-radius: 20px;
-    }
-    .plan-name {
-      font-size: 1.15rem;
-      font-weight: 800;
-      margin-bottom: 2px;
-    }
-    .plan-cost {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #38BDF8;
-      margin-bottom: 14px;
-      border-bottom: 1px solid var(--border-dark);
-      padding-bottom: 8px;
-    }
-    .plan-cost span {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--text-dim);
-    }
-    .plan-list {
-      list-style: none;
-      margin-bottom: 16px;
-    }
-    .plan-list li {
-      font-size: 0.8rem;
-      color: #CBD5E1;
-      margin-bottom: 8px;
-      display: flex;
-      gap: 8px;
-      line-height: 1.4;
-    }
-    .btn-plan {
-      display: block;
-      text-align: center;
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 10px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.85rem;
-    }
-    .plan-box.popular .btn-plan {
-      background: #10B981;
-      color: #000;
-      border: none;
-    }
-    .plan-box.elite .btn-plan {
-      background: #8B5CF6;
-      color: #FFF;
-      border: none;
-    }
-
-    /* CONTACT SECTION */
-    .contact-card {
-      background: var(--card-dark);
-      border: 1px solid var(--border-dark);
-      border-radius: 16px;
-      padding: 24px 18px;
-      text-align: center;
-    }
-    .btn-call {
-      display: inline-block;
-      background: #0284C7;
-      color: #FFFFFF;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-decoration: none;
-      margin-top: 14px;
-      margin-bottom: 12px;
-      width: 100%;
-      max-width: 320px;
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border-dark);
-      text-align: center;
-      padding: 24px 16px;
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      background: #090E1A;
-    }
-    .footer-slogan {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #38BDF8;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-      display: block;
-    }
-    .msme-pill {
-      display: inline-block;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      color: #94A3B8;
-      padding: 2px 10px;
-      border-radius: 12px;
-      font-size: 0.68rem;
-      margin-top: 6px;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- HEADER -->
-  <header>
-    <div class="header-top">
-      <div class="brand-wrap" onclick="switchTab('home')" style="cursor: pointer;">
-        <!-- EMBEDDED PEACOCK SHIELD LOGO (Vector - Zero Failure) -->
-        <div class="brand-logo-svg">
-          <svg viewBox="0 0 100 100" width="32" height="32">
-            <defs>
-              <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#0284C7"/>
-                <stop offset="50%" stop-color="#0F172A"/>
-                <stop offset="100%" stop-color="#10B981"/>
-              </linearGradient>
-              <linearGradient id="featherGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#38BDF8"/>
-                <stop offset="50%" stop-color="#10B981"/>
-                <stop offset="100%" stop-color="#F59E0B"/>
-              </linearGradient>
-            </defs>
-            <!-- Shield Outline -->
-            <path d="M50 8 L84 22 V52 C84 72 50 92 50 92 C50 92 16 72 16 52 V22 Z" fill="url(#shieldGrad)" stroke="#38BDF8" stroke-width="3"/>
-            <!-- Peacock Feather Eyes -->
-            <ellipse cx="50" cy="38" rx="14" ry="18" fill="#0369A1" stroke="#38BDF8" stroke-width="2"/>
-            <ellipse cx="50" cy="38" rx="9" ry="12" fill="#10B981"/>
-            <ellipse cx="50" cy="38" rx="5" ry="7" fill="#0B1120"/>
-            <circle cx="48" cy="36" r="2" fill="#38BDF8"/>
-            <!-- Crown / Crest plume -->
-            <path d="M50 56 V78" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="42" cy="18" r="2.5" fill="#F59E0B"/>
-            <circle cx="50" cy="15" r="2.5" fill="#38BDF8"/>
-            <circle cx="58" cy="18" r="2.5" fill="#F59E0B"/>
-          </svg>
-        </div>
-        <div class="brand-text">
-          <h1>Availo Digital Services</h1>
-          <span class="brand-slogan">Smart Access. Total Control.</span>
-        </div>
-      </div>
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="btn-te" onclick="setLanguage('te')">తెలుగు</button>
-        <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
-      </div>
-    </div>
-
-    <!-- APP-STYLE TABS -->
-    <nav class="tab-nav">
-      <button class="tab-btn active" id="tab-home" onclick="switchTab('home')">🏠 <span data-key="nav-home">హోమ్</span></button>
-      <button class="tab-btn" id="tab-about" onclick="switchTab('about')">🎯 <span data-key="nav-about">అబౌట్ అస్</span></button>
-      <button class="tab-btn" id="tab-services" onclick="switchTab('services')">⚡ <span data-key="nav-services">సర్వీసెస్</span></button>
-      <button class="tab-btn" id="tab-contact" onclick="switchTab('contact')">📞 <span data-key="nav-contact">కాంటాక్ట్</span></button>
-    </nav>
-  </header>
-
-  <!-- MAIN CONTENT: SEPARATE TABS -->
-
-  <!-- 1. HOME TAB -->
-  <main id="view-home" class="tab-content active">
-    <div class="hero">
-      <div class="hero-badge" data-key="hero-badge">🛡️ Zero-App Hyperlocal System</div>
-      <h2 id="hero-title">యాప్ డౌన్‌లోడ్ వద్దు..<br><span>వాయిస్ నోట్</span> ఇస్తే చాలు!</h2>
-      <p data-key="hero-desc">గేట్ సెక్యూరిటీ, లోకల్ కాన్సియర్జ్ & ఎన్‌ఆర్‌ఐ పేరెంట్స్ కేర్ — విజయవాడ & గుంటూరు కోసం.</p>
-      <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20want%20to%20order" target="_blank" class="btn-whatsapp-hero" data-key="hero-cta">
-        🎙️ ఆర్డర్ ఇవ్వండి (WhatsApp)
-      </a>
-    </div>
-
-    <div style="margin-top: 25px;">
-      <span class="sec-tag" data-key="how-tag">How It Works</span>
-      <h3 class="sec-title" data-key="how-title">⚡ 3 స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు</h3>
-      <div class="step-grid">
-        <div class="step-card">
-          <div class="step-number">01</div>
-          <div>
-            <strong style="font-size: 0.9rem;" data-key="step1-title">స్కాన్ చేయండి (Scan)</strong>
-            <p style="font-size: 0.78rem; color: var(--text-dim);" data-key="step1-desc">లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి.</p>
-          </div>
-        </div>
-        <div class="step-card">
-          <div class="step-number">02</div>
-          <div>
-            <strong style="font-size: 0.9rem;" data-key="step2-title">మాట్లాడండి (Speak)</strong>
-            <p style="font-size: 0.78rem; color: var(--text-dim);" data-key="step2-desc">వాట్సాప్‌లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి వాయిస్ నోట్ ఇవ్వండి.</p>
-          </div>
-        </div>
-        <div class="step-card">
-          <div class="step-number">03</div>
-          <div>
-            <strong style="font-size: 0.9rem;" data-key="step3-title">డోర్ డెలివరీ (Get)</strong>
-            <p style="font-size: 0.78rem; color: var(--text-dim);" data-key="step3-desc">వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- 2. ABOUT US TAB (AIM / GOAL / VISION) -->
-  <main id="view-about" class="tab-content">
-    <span class="sec-tag" data-key="ab-tag">About Company</span>
-    <h3 class="sec-title" data-key="ab-head">🛡️ మన లక్ష్యం & గోల్ (Vision & Aim)</h3>
-    <p class="sec-sub" data-key="ab-sub">అవైలో డిజిటల్ సర్వీసెస్ (Availo Digital Services) ప్రారంభం వెనుక ఉన్న అసలైన ఉద్దేశం.</p>
-
-    <!-- Aim -->
-    <div class="about-card" style="border-left: 4px solid #38BDF8;">
-      <h4 style="color: #38BDF8;" data-key="aim-title">🎯 మన ప్రధాన లక్ష్యం (Our Aim)</h4>
-      <p data-key="aim-desc">
-        సాధారణ ప్రజలను, ముఖ్యంగా పెద్దవారిని మరియు గృహిణులను సంక్లిష్టమైన మొబైల్ యాప్‌ల డౌన్‌లోడ్‌లు, పాస్‌వర్డ్‌లు, ఓటీపీల ఇబ్బందుల నుండి విముక్తి చేయడం. రోజూ అందరూ వాడే <strong>WhatsApp</strong> ద్వారానే గేట్ సెక్యూరిటీని, అవసరమైన సరుకులను మరియు కుటుంబ సంరక్షణను అత్యంత సులభంగా అందించడమే మన ప్రధాన ధ్యేయం.
-      </p>
-    </div>
-
-    <!-- Goal -->
-    <div class="about-card" style="border-left: 4px solid #10B981;">
-      <h4 style="color: #10B981;" data-key="goal-title">🚀 మన గోల్ (Our Goal)</h4>
-      <p data-key="goal-desc">
-        విజయవాడ & గుంటూరు జంట నగరాల్లోని ప్రతి గేటెడ్ కమ్యూనిటీ, అపార్ట్‌మెంట్ సొసైటీకి 100% నమ్మకమైన డిజిటల్ కేర్ పార్ట్‌నర్‌గా మారడం. మహిళల ప్రైవసీని కాపాడుతూ, విదేశాల్లో ఉండే ఎన్‌ఆర్‌ఐ (NRI) బిడ్డలకు వారి వృద్ధ తల్లిదండ్రుల ఆరోగ్యం మరియు భద్రతపై సంపూర్ణ భరోసా కల్పించడం.
-      </p>
-    </div>
-
-    <!-- Core Values -->
-    <div class="about-card" style="border-left: 4px solid #F59E0B;">
-      <h4 style="color: #F59E0B;" data-key="val-title">💎 మన ముఖ్య విలువలు (Core Values)</h4>
-      <p data-key="val-desc">
-        • <strong>జీరో-యాప్ సౌలభ్యం:</strong> ఫోన్ స్టోరేజ్ నింపే యాప్‌లు అవసరం లేదు.<br>
-        • <strong>మహిళల ప్రైవసీ రక్షణ:</strong> డెలివరీ సిబ్బందికి ఫోన్ నంబర్లు వెళ్లకుండా మాస్కింగ్ ప్రొటెక్షన్.<br>
-        • <strong>పారదర్శకత:</strong> స్థానిక షాపుల ఒరిజినల్ బిల్లుల ఆధారంగానే సేవల నిర్వహణ.
-      </p>
-    </div>
-
-    <div style="text-align: center; margin-top: 15px;">
-      <span class="msme-pill">Govt MSME Registered Entity</span>
-    </div>
-  </main>
-
-  <!-- 3. SERVICES TAB -->
-  <main id="view-services" class="tab-content">
-    <span class="sec-tag" data-key="srv-tag">Our Offerings</span>
-    <h3 class="sec-title" data-key="srv-head">⚡ అవైలో సర్వీసెస్ కేటలాగ్</h3>
-    <p class="sec-sub" data-key="srv-sub">విజయవాడ & గుంటూరు కోసం ప్రత్యేకంగా రూపొందించిన సేవలు.</p>
-
-    <!-- 1. Gate -->
-    <div class="feature-card">
-      <h4 data-key="f1-t">🏢 1. Zero-App WhatsApp Gate Pass</h4>
-      <p data-key="f1-d">QR స్కాన్ చేయగానే విజిటర్ ఫోటో & వివరాలు రెసిడెంట్ వాట్సాప్‌లోకి వస్తాయి. మహిళల ఫోన్ నంబర్లు మాస్కింగ్ చేయబడతాయి.</p>
-      <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20want%20Free%20Society%20Pilot" target="_blank" style="color: #10B981; font-weight: 700; font-size: 0.82rem; text-decoration: none; display: inline-block; margin-top: 6px;" data-key="f1-pilot">🎁 7-Day Free Society Pilot బుక్ చేసుకోండి ➔</a>
-    </div>
-
-    <!-- 2. Essentials Grid -->
-    <div style="margin-top: 20px;">
-      <span class="sec-tag" data-key="sec2-tag">Active Service 02</span>
-      <h4 style="font-size: 1.1rem; color: #FFF; margin-bottom: 12px;" data-key="sec2-title">🛍️ డైలీ ఎసెన్షియల్స్ & ఎర్రాండ్స్</h4>
-      <div class="service-grid">
-        <div class="service-tile">
-          <div class="tile-icon">🛒</div>
-          <div class="tile-title" data-key="srv1-t">కిరాణా & కూరగాయలు</div>
-          <div class="tile-desc" data-key="srv1-d">ఒరిజినల్ షాప్ బిల్లుతో నాణ్యమైన తాజా సరుకులు</div>
-        </div>
-        <div class="service-tile">
-          <div class="tile-icon">🍗</div>
-          <div class="tile-title" data-key="srv2-t">ఆదివారం నాన్-వెజ్</div>
-          <div class="tile-desc" data-key="srv2-d">చికెన్, మటన్, చేపలు పరిశుభ్రంగా కట్ చేయించి</div>
-        </div>
-        <div class="service-tile">
-          <div class="tile-icon">👗</div>
-          <div class="tile-title" data-key="srv3-t">బోటిక్ & టైలరింగ్</div>
-          <div class="tile-desc" data-key="srv3-d">బ్లౌజ్ స్టిచ్చింగ్, ఆల్టరేషన్స్ పికప్ & డ్రాప్</div>
-        </div>
-        <div class="service-tile">
-          <div class="tile-icon">🔧</div>
-          <div class="tile-title" data-key="srv5-t">హోమ్ రిపేర్స్</div>
-          <div class="tile-desc" data-key="srv5-d">వెరిఫైడ్ ప్లంబర్, ఎలక్ట్రీషియన్ సపోర్ట్</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. NRI Care Plans -->
-    <div style="margin-top: 20px;">
-      <span class="sec-tag" style="color: #F59E0B;" data-key="sec3-tag">Active Service 03</span>
-      <h4 style="font-size: 1.1rem; color: #FFF; margin-bottom: 12px;" data-key="sec3-title">👵 NRI Parents Care Plans</h4>
-
-      <div class="plan-box">
-        <div class="plan-name">💙 AVAILO Care</div>
-        <div class="plan-cost">₹2,499 <span data-key="per-month">/ నెల</span></div>
-        <ul class="plan-list">
-          <li>🏠 <strong>Home Check-in:</strong> <span data-key="p1-l1">నెలకు 1 సారి క్షేమ సమాచార విజిట్</span></li>
-          <li>🏥 <strong>Hospital Escort:</strong> <span data-key="p1-l2">నెలకు 1 సారి (3 గంటల వరకు)</span></li>
-          <li>🛵 <strong>Delivery Tasks:</strong> <span data-key="p1-l3">నెలకు 2 సార్లు (మందులు / కిరాణా)</span></li>
-        </ul>
-        <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20am%20interested%20in%20Care%20Plan" target="_blank" class="btn-plan" data-key="p1-btn">Care ప్లాన్ ఎంచుకోండి</a>
-      </div>
-
-      <div class="plan-box popular">
-        <div class="badge-pop">MOST POPULAR</div>
-        <div class="plan-name" style="color: #10B981;">💙 AVAILO Plus</div>
-        <div class="plan-cost" style="color: #10B981;">₹4,999 <span data-key="per-month">/ నెల</span></div>
-        <ul class="plan-list">
-          <li>🏠 <strong>Home Check-in:</strong> <span data-key="p2-l1">నెలకు 2 సార్లు (Bi-weekly విజిట్స్)</span></li>
-          <li>🏥 <strong>Hospital Escort:</strong> <span data-key="p2-l2">నెలకు 2 సార్లు (4 గంటల వరకు)</span></li>
-          <li>🛵 <strong>Delivery Tasks:</strong> <span data-key="p2-l3">నెలకు 4 సార్లు (మందులు / బిల్స్)</span></li>
-        </ul>
-        <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20am%20interested%20in%20Plus%20Plan" target="_blank" class="btn-plan" data-key="p2-btn">Plus ప్లాన్ ఎంచుకోండి</a>
-      </div>
-    </div>
-  </main>
-
-  <!-- 4. CONTACT TAB -->
-  <main id="view-contact" class="tab-content">
-    <span class="sec-tag" data-key="cnt-tag">Get In Touch</span>
-    <h3 class="sec-title" data-key="cnt-head">📞 మమ్మల్ని సంప్రదించండి</h3>
-    <p class="sec-sub" data-key="cnt-sub">విజయవాడ & గుంటూరులో ఎలాంటి సాయం కోసమైనా మేము అందుబాటులో ఉంటాము.</p>
-
-    <div class="contact-card">
-      <h4 style="font-size: 1.15rem; color: #FFF; margin-bottom: 6px;">Availo Digital Services</h4>
-      <p style="font-size: 0.85rem; color: var(--text-dim);" data-key="cnt-loc">విజయవాడ & గుంటూరు రీజియన్</p>
-      
-      <a href="tel:+919966157369" class="btn-call">📞 నేరుగా కాల్ చేయండి: 9966157369</a>
-      <br>
-      <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20have%20an%20enquiry" target="_blank" class="btn-whatsapp-hero" style="font-size: 0.88rem; padding: 12px 18px;" data-key="cnt-wa">
-        💬 WhatsApp లో మెసేజ్ చేయండి
-      </a>
-
-      <div style="margin-top: 24px; padding-top: 15px; border-top: 1px solid var(--border-dark); font-size: 0.8rem; color: #94A3B8;">
-        <strong style="color: #38BDF8;" data-key="cnt-hrs-t">⏰ వర్కింగ్ అవర్స్:</strong><br>
-        <span data-key="cnt-hrs-d">డైలీ సర్వీస్: ఉదయం 7:00 నుండి రాత్రి 9:00 వరకు<br>NRI ఎమర్జెన్సీ: 24/7 వాట్సాప్ రెస్పాన్స్</span>
-      </div>
-    </div>
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <span class="footer-slogan">Smart Access. Total Control.</span>
-    <strong style="color: #FFF;">Availo Digital Services</strong><br>
-    <span>Vijayawada & Guntur Region</span><br>
-    <div><span class="msme-pill">MSME Registered</span></div>
-    <div style="margin-top: 10px; opacity: 0.5; font-size: 0.7rem;">
-      © 2026 Availo Digital Services. All Rights Reserved.
-    </div>
-  </footer>
-
-  <!-- SCRIPT FOR TABS & DYNAMIC LANGUAGE -->
-  <script>
-    // TAB SWITCHING FUNCTION
-    function switchTab(tabName) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(view => view.classList.remove('active'));
-
-      document.getElementById('tab-' + tabName).classList.add('active');
-      document.getElementById('view-' + tabName).classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // MULTILINGUAL DICTIONARY
-    const translations = {
-      te: {
-        "nav-home": "హోమ్",
-        "nav-about": "అబౌట్ అస్",
-        "nav-services": "సర్వీసెస్",
-        "nav-contact": "కాంటాక్ట్",
-        "hero-badge": "🛡️ Zero-App Hyperlocal System",
-        "hero-desc": "గేట్ సెక్యూరిటీ, లోకల్ కాన్సియర్జ్ & ఎన్‌ఆర్‌ఐ పేరెంట్స్ కేర్ — విజయవాడ & గుంటూరు కోసం.",
-        "hero-cta": "🎙️ ఆర్డర్ ఇవ్వండి (WhatsApp)",
-        "how-tag": "How It Works",
-        "how-title": "⚡ 3 స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు",
-        "step1-title": "స్కాన్ చేయండి (Scan)",
-        "step1-desc": "లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి.",
-        "step2-title": "మాట్లాడండి (Speak)",
-        "step2-desc": "వాట్సాప్‌లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి వాయిస్ నోట్ ఇవ్వండి.",
-        "step3-title": "డోర్ డెలివరీ (Get)",
-        "step3-desc": "వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు.",
-        "ab-tag": "About Company",
-        "ab-head": "🛡️ మన లక్ష్యం & గోల్ (Vision & Aim)",
-        "ab-sub": "అవైలో డిజిటల్ సర్వీసెస్ ప్రారంభం వెనుక ఉన్న అసలైన ఉద్దేశం.",
-        "aim-title": "🎯 మన ప్రధాన లక్ష్యం (Our Aim)",
-        "aim-desc": "సాధారణ ప్రజలను, ముఖ్యంగా పెద్దవారిని మరియు గృహిణులను సంక్లిష్టమైన మొబైల్ యాప్‌ల డౌన్‌లోడ్‌లు, పాస్‌వర్డ్‌లు, ఓటీపీల ఇబ్బందుల నుండి విముక్తి చేయడం. రోజూ అందరూ వాడే WhatsApp ద్వారానే గేట్ సెక్యూరిటీని, అవసరమైన సరుకులను మరియు కుటుంబ సంరక్షణను అత్యంత సులభంగా అందించడమే మన ప్రధాన ధ్యేయం.",
-        "goal-title": "🚀 మన గోల్ (Our Goal)",
-        "goal-desc": "విజయవాడ & గుంటూరు జంట నగరాల్లోని ప్రతి గేటెడ్ కమ్యూనిటీ, అపార్ట్‌మెంట్ సొసైటీకి 100% నమ్మకమైన డిజిటల్ కేర్ పార్ట్‌నర్‌గా మారడం. మహిళల ప్రైవసీని కాపాడుతూ, విదేశాల్లో ఉండే ఎన్‌ఆర్‌ఐ (NRI) బిడ్డలకు వారి వృద్ధ తల్లిదండ్రుల ఆరోగ్యం మరియు భద్రతపై సంపూర్ణ భరోసా కల్పించడం.",
-        "val-title": "💎 మన ముఖ్య విలువలు (Core Values)",
-        "val-desc": "• <strong>జీరో-యాప్ సౌలభ్యం:</strong> ఫోన్ స్టోరేజ్ నింపే యాప్‌లు అవసరం లేదు.<br>• <strong>మహిళల ప్రైవసీ రక్షణ:</strong> డెలివరీ సిబ్బందికి ఫోన్ నంబర్లు వెళ్లకుండా మాస్కింగ్ ప్రొటెక్షన్.<br>• <strong>పారదర్శకత:</strong> స్థానిక షాపుల ఒరిజినల్ బిల్లుల ఆధారంగానే సేవల నిర్వహణ.",
-        "srv-tag": "Our Offerings",
-        "srv-head": "⚡ అవైలో సర్వీసెస్ కేటలాగ్",
-        "srv-sub": "విజయవాడ & గుంటూరు కోసం ప్రత్యేకంగా రూపొందించిన సేవలు.",
-        "f1-t": "🏢 1. Zero-App WhatsApp Gate Pass",
-        "f1-d": "QR స్కాన్ చేయగానే విజిటర్ ఫోటో & వివరాలు రెసిడెంట్ వాట్సాప్‌లోకి వస్తాయి. మహిళల ఫోన్ నంబర్లు మాస్కింగ్ చేయబడతాయి.",
-        "f1-pilot": "🎁 7-Day Free Society Pilot బుక్ చేసుకోండి ➔",
-        "sec2-tag": "Active Service 02",
-        "sec2-title": "🛍️ డైలీ ఎసెన్షియల్స్ & ఎర్రాండ్స్",
-        "srv1-t": "కిరాణా & కూరగాయలు",
-        "srv1-d": "ఒరిజినల్ షాప్ బిల్లుతో నాణ్యమైన తాజా సరుకులు",
-        "srv2-t": "ఆదివారం నాన్-వెజ్",
-        "srv2-d": "చికెన్, మటన్, చేపలు పరిశుభ్రంగా కట్ చేయించి",
-        "srv3-t": "బోటిక్ & టైలరింగ్",
-        "srv3-d": "బ్లౌజ్ స్టిచ్చింగ్, ఆల్టరేషన్స్ పికప్ & డ్రాప్",
-        "srv5-t": "హోమ్ రిపేర్స్",
-        "srv5-d": "వెరిఫైడ్ ప్లంబర్, ఎలక్ట్రీషియన్ సపోర్ట్",
-        "sec3-tag": "Active Service 03",
-        "sec3-title": "👵 NRI Parents Care Plans",
-        "per-month": "/ నెల",
-        "p1-l1": "నెలకు 1 సారి క్షేమ సమాచార విజిట్",
-        "p1-l2": "నెలకు 1 సారి (3 గంటల వరకు)",
-        "p1-l3": "నెలకు 2 సార్లు (మందులు / కిరాణా)",
-        "p1-btn": "Care ప్లాన్ ఎంచుకోండి",
-        "p2-l1": "నెలకు 2 సార్లు (Bi-weekly విజిట్స్)",
-        "p2-l2": "నెలకు 2 సార్లు (4 గంటల వరకు)",
-        "p2-l3": "నెలకు 4 సార్లు (మందులు / బిల్స్)",
-        "p2-btn": "Plus ప్లాన్ ఎంచుకోండి",
-        "cnt-tag": "Get In Touch",
-        "cnt-head": "📞 మమ్మల్ని సంప్రదించండి",
-        "cnt-sub": "విజయవాడ & గుంటూరులో ఎలాంటి సాయం కోసమైనా మేము అందుబాటులో ఉంటాము.",
-        "cnt-loc": "విజయవాడ & గుంటూరు రీజియన్",
-        "cnt-wa": "💬 WhatsApp లో మెసేజ్ చేయండి",
-        "cnt-hrs-t": "⏰ వర్కింగ్ అవర్స్:",
-        "cnt-hrs-d": "డైలీ సర్వీస్: ఉదయం 7:00 నుండి రాత్రి 9:00 వరకు<br>NRI ఎమర్జెన్సీ: 24/7 వాట్సాప్ రెస్పాన్స్"
-      },
-      en: {
-        "nav-home": "Home",
-        "nav-about": "About Us",
-        "nav-services": "Services",
-        "nav-contact": "Contact",
-        "hero-badge": "🛡️ Zero-App Hyperlocal System",
-        "hero-desc": "Gate Security, Local Concierge & NRI Parent Care — Exclusively for Vijayawada & Guntur.",
-        "hero-cta": "🎙️ Order Now (WhatsApp)",
-        "how-tag": "How It Works",
-        "how-title": "⚡ 3 Simple Steps to Your Doorstep",
-        "step1-title": "Scan",
-        "step1-desc": "Scan the Availo QR code at your lift or gate with your smartphone.",
-        "step2-title": "Speak",
-        "step2-desc": "Send a simple voice note on WhatsApp stating what you need.",
-        "step3-title": "Get",
-        "step3-desc": "Receive doorstep delivery with verified gate entry alerts.",
-        "ab-tag": "About Company",
-        "ab-head": "🛡️ Our Purpose & Vision",
-        "ab-sub": "The driving mission behind founding Availo Digital Services.",
-        "aim-title": "🎯 Our Core Aim",
-        "aim-desc": "To free residents, senior citizens, and homemakers from app fatigue, downloads, and complex setups. We bring enterprise gate security and daily concierge straight into WhatsApp with zero app installations.",
-        "goal-title": "🚀 Our Goal",
-        "goal-desc": "To be the most trusted hyperlocal security and concierge partner across Vijayawada & Guntur, safeguarding women's privacy and providing overseas NRI children complete peace of mind regarding their elderly parents.",
-        "val-title": "💎 Core Values",
-        "val-desc": "• <strong>Zero-App Freedom:</strong> No phone storage clutter or app logins.<br>• <strong>Women Privacy Shield:</strong> Automated phone masking prevents resident number exposure.<br>• <strong>Strict Transparency:</strong> Errands billed strictly against authentic local store receipts.",
-        "srv-tag": "Our Offerings",
-        "srv-head": "⚡ Availo Service Catalog",
-        "srv-sub": "Tailored digital concierge services for Vijayawada & Guntur.",
-        "f1-t": "🏢 1. Zero-App WhatsApp Gate Pass",
-        "f1-d": "Instant visitor snapshots on WhatsApp upon scanning. Resident phone masking enabled.",
-        "f1-pilot": "🎁 Book 7-Day Free Society Pilot ➔",
-        "sec2-tag": "Active Service 02",
-        "sec2-title": "🛍️ Daily Essentials & Errands",
-        "srv1-t": "Groceries & Veggies",
-        "srv1-d": "Fresh local produce with original printed store receipts",
-        "srv2-t": "Sunday Non-Veg",
-        "srv2-d": "Hygienically cut and cleaned chicken, mutton & seafood",
-        "srv3-t": "Boutique & Tailoring",
-        "srv3-d": "Blouse stitching & alteration doorstep pickup & drop",
-        "srv5-t": "Home Repairs",
-        "srv5-d": "Verified local electricians, plumbers & technicians",
-        "sec3-tag": "Active Service 03",
-        "sec3-title": "👵 NRI Parents Care Plans",
-        "per-month": "/ month",
-        "p1-l1": "1 Visit / month for wellness checks",
-        "p1-l2": "1 Escort / month (Up to 3 hours)",
-        "p1-l3": "2 Tasks / month (Medicines / Groceries)",
-        "p1-btn": "Select Care Plan",
-        "p2-l1": "2 Visits / month (Bi-weekly check-ins)",
-        "p2-l2": "2 Escorts / month (Up to 4 hours)",
-        "p2-l3": "4 Tasks / month (Medicines / Utility Bills)",
-        "p2-btn": "Select Plus Plan",
-        "cnt-tag": "Get In Touch",
-        "cnt-head": "📞 Contact Us",
-        "cnt-sub": "We are available 24/7 for dedicated support in Vijayawada & Guntur.",
-        "cnt-loc": "Vijayawada & Guntur Region",
-        "cnt-wa": "💬 Chat with Us on WhatsApp",
-        "cnt-hrs-t": "⏰ Working Hours:",
-        "cnt-hrs-d": "Daily Services: 7:00 AM to 9:00 PM<br>NRI Emergency Support: 24/7 on WhatsApp"
-      }
-    };
-
-    function setLanguage(lang) {
-      document.getElementById('btn-te').classList.toggle('active', lang === 'te');
-      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-
-      const heroTitle = document.getElementById('hero-title');
-      if (lang === 'en') {
-        heroTitle.innerHTML = 'Skip App Downloads..<br>Just Send a <span>Voice Note!</span>';
-      } else {
-        heroTitle.innerHTML = 'యాప్ డౌన్‌లోడ్ వద్దు..<br><span>వాయిస్ నోట్</span> ఇస్తే చాలు!';
-      }
-
-      document.querySelectorAll('[data-key]').forEach(el => {
-        const key = el.getAttribute('data-key');
-        if (translations[lang][key]) {
-          el.innerHTML = translations[lang][key];
-        }
-      });
-    }
-  </script>
-</body>
-</html>
-
-
