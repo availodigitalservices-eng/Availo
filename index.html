@@ -15,6 +15,7 @@
       --text-light: #F8FAFC;
       --text-dim: #94A3B8;
       --green: #10B981;
+      --purple: #8B5CF6;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', 'Noto Sans Telugu', sans-serif; }
     body { background: var(--dark-bg); color: var(--text-light); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
@@ -30,14 +31,52 @@
     .lang-btn.active { background: var(--primary); color: #FFFFFF; }
     
     nav.tab-nav { display: flex; justify-content: space-around; align-items: center; margin-top: 10px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); }
-    .tab-btn { background: none; border: none; color: var(--text-dim); font-size: 0.82rem; font-weight: 700; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+    .tab-btn { background: none; border: none; color: var(--text-dim); font-size: 0.76rem; font-weight: 700; padding: 8px 6px; border-radius: 8px; cursor: pointer; }
     .tab-btn.active { color: #38BDF8; background: rgba(56, 189, 248, 0.12); border-bottom: 2px solid #38BDF8; }
+    .tab-btn.partner-tab { color: #F59E0B; }
+    .tab-btn.partner-tab.active { color: #F59E0B; background: rgba(245, 158, 11, 0.15); border-bottom: 2px solid #F59E0B; }
     
     .tab-content { display: none; padding: 24px 18px 40px; animation: fadeIn 0.25s ease-in-out; }
     .tab-content.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     
-    .hero { padding: 20px 10px 25px; text-align: center; }
+    /* FAST ENTRY ROLE SWITCHER BAR */
+    .role-banner {
+      background: linear-gradient(90deg, #0369A1, #0f766e);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .role-btn-primary {
+      flex: 1;
+      background: #10B981;
+      color: #000;
+      font-weight: 800;
+      font-size: 0.8rem;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .role-btn-partner {
+      flex: 1;
+      background: #F59E0B;
+      color: #000;
+      font-weight: 800;
+      font-size: 0.8rem;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .hero { padding: 10px 10px 20px; text-align: center; }
     .hero-badge { display: inline-block; background: rgba(56, 189, 248, 0.12); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 15px; }
     .hero h2 { font-size: 1.65rem; font-weight: 800; line-height: 1.35; margin-bottom: 12px; }
     .hero h2 span { background: linear-gradient(90deg, #38BDF8, #818CF8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -103,6 +142,50 @@
     .plan-box.popular .btn-plan { background: #10B981; color: #000; border: none; }
     .plan-box.elite .btn-plan { background: #F59E0B; color: #000; border: none; }
     .plan-rule-note { background: rgba(2, 132, 199, 0.08); border: 1px dashed rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 12px; margin-top: 15px; font-size: 0.74rem; color: #94A3B8; line-height: 1.45; }
+
+    /* PARTNER ONBOARDING STYLES */
+    .partner-card {
+      background: var(--card-dark);
+      border: 1.5px solid #F59E0B;
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .form-group {
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #E2E8F0;
+      margin-bottom: 6px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      background: #0B1120;
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      color: #FFF;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .form-control:focus {
+      border-color: #F59E0B;
+    }
+    .btn-submit-partner {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      color: #000;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      margin-top: 10px;
+    }
     
     .contact-card { background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 24px 18px; text-align: center; }
     .btn-call { display: inline-block; background: #0284C7; color: #FFFFFF; padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; text-decoration: none; margin-top: 14px; margin-bottom: 12px; width: 100%; max-width: 320px; }
@@ -111,9 +194,7 @@
     .footer-slogan { font-size: 0.85rem; font-weight: 700; color: #38BDF8; letter-spacing: 1px; margin-bottom: 6px; display: block; }
     .msme-pill { display: inline-block; border: 1px solid rgba(56, 189, 248, 0.3); color: #94A3B8; padding: 2px 10px; border-radius: 12px; font-size: 0.68rem; margin-top: 6px; }
 
-    /* ===================================================
-       MAYURA PEACOCK BLOOM & TALKING WIDGET
-    =================================================== */
+    /* MAYURA WIDGET */
     .mayura-widget {
       position: fixed;
       bottom: 20px;
@@ -142,55 +223,12 @@
       from { opacity: 0; transform: translateY(10px) scale(0.9); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
-    .mayura-avatar-box {
-      width: 68px;
-      height: 68px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .peacock-center-body {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: #0B1120;
-      border: 2px solid #38BDF8;
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
-      position: absolute;
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s ease;
-    }
-    /* Peacock Feathers (Initially Hidden / Folded) */
-    .peacock-feathers {
-      position: absolute;
-      top: -10px;
-      width: 100px;
-      height: 100px;
-      z-index: 1;
-      pointer-events: none;
-      transform-origin: center bottom;
-      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-      transform: scale(0.2) rotate(180deg);
-      opacity: 0;
-    }
-    /* When Bloom is Active: Feathers Fan Out Fully */
-    .mayura-widget.bloomed .peacock-feathers {
-      transform: scale(1.1) rotate(0deg);
-      opacity: 1;
-    }
-    .mayura-widget.bloomed .peacock-center-body {
-      border-color: #10B981;
-      box-shadow: 0 0 22px rgba(16, 185, 129, 0.8);
-      animation: gentleFloat 2s infinite ease-in-out;
-    }
-    @keyframes gentleFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
+    .mayura-avatar-box { width: 68px; height: 68px; position: relative; display: flex; align-items: center; justify-content: center; }
+    .peacock-center-body { width: 48px; height: 48px; border-radius: 50%; background: #0B1120; border: 2px solid #38BDF8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.5); position: absolute; z-index: 3; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; }
+    .peacock-feathers { position: absolute; top: -10px; width: 100px; height: 100px; z-index: 1; pointer-events: none; transform-origin: center bottom; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); transform: scale(0.2) rotate(180deg); opacity: 0; }
+    .mayura-widget.bloomed .peacock-feathers { transform: scale(1.1) rotate(0deg); opacity: 1; }
+    .mayura-widget.bloomed .peacock-center-body { border-color: #10B981; box-shadow: 0 0 22px rgba(16, 185, 129, 0.8); animation: gentleFloat 2s infinite ease-in-out; }
+    @keyframes gentleFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
   </style>
 </head>
 <body>
@@ -230,16 +268,24 @@
       </div>
     </div>
 
+    <!-- 5 TABS INCLUDING PARTNER -->
     <nav class="tab-nav">
       <button class="tab-btn active" id="tab-home" onclick="switchTab('home')">🏠 <span data-key="nav-home">హోమ్</span></button>
-      <button class="tab-btn" id="tab-about" onclick="switchTab('about')">🎯 <span data-key="nav-about">అబౌట్ అస్</span></button>
       <button class="tab-btn" id="tab-services" onclick="switchTab('services')">⚡ <span data-key="nav-services">సర్వీసెస్</span></button>
+      <button class="tab-btn partner-tab" id="tab-partner" onclick="switchTab('partner')">🤝 <span data-key="nav-partner">పార్ట్‌నర్ జాయిన్</span></button>
+      <button class="tab-btn" id="tab-about" onclick="switchTab('about')">🎯 <span data-key="nav-about">అబౌట్</span></button>
       <button class="tab-btn" id="tab-contact" onclick="switchTab('contact')">📞 <span data-key="nav-contact">కాంటాక్ట్</span></button>
     </nav>
   </header>
 
   <!-- 1. HOME TAB -->
   <main id="view-home" class="tab-content active">
+    <!-- TWO ROADS BANNER (INSTANT CHOOSE) -->
+    <div class="role-banner">
+      <button class="role-btn-primary" onclick="switchTab('services')">🛒 నాకు సర్వీస్ కావాలి</button>
+      <button class="role-btn-partner" onclick="switchTab('partner')">👨‍🔧 నేను పని చేస్తాను</button>
+    </div>
+
     <div class="hero">
       <div class="hero-badge" data-key="hero-badge">🛡️ Zero-App Hyperlocal System</div>
       <h2 id="hero-title">యాప్ డౌన్‌లోడ్ వద్దు..<br><span>వాయిస్ నోట్</span> ఇస్తే చాలు!</h2>
@@ -249,7 +295,7 @@
       </a>
     </div>
 
-    <div style="margin-top: 25px;">
+    <div style="margin-top: 15px;">
       <span class="sec-tag" data-key="how-tag">How It Works</span>
       <h3 class="sec-title" data-key="how-title">⚡ 3 స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు</h3>
       <div class="step-grid">
@@ -278,54 +324,20 @@
     </div>
   </main>
 
-  <!-- 2. ABOUT US TAB -->
-  <main id="view-about" class="tab-content">
-    <span class="sec-tag" data-key="ab-tag">About Company</span>
-    <h3 class="sec-title" data-key="ab-head">🛡️ మన లక్ష్యం & గోల్ (Vision & Aim)</h3>
-    <p class="sec-sub" data-key="ab-sub">అవైలో డిజిటల్ సర్వీసెస్ ప్రారంభం వెనుక ఉన్న అసలైన ఉద్దేశం.</p>
-
-    <div class="about-card" style="border-left: 4px solid #38BDF8;">
-      <h4 style="color: #38BDF8;" data-key="aim-title">🎯 మన ప్రధాన లక్ష్యం (Our Aim)</h4>
-      <p data-key="aim-desc">
-        సాధారణ ప్రజలను, ముఖ్యంగా పెద్దవారిని మరియు గృహిణులను సంక్లిష్టమైన మొబైల్ యాప్‌ల డౌన్‌లోడ్‌లు, పాస్‌వర్డ్‌లు, ఓటీపీల ఇబ్బందుల నుండి విముక్తి చేయడం. రోజూ అందరూ వాడే <strong>WhatsApp</strong> ద్వారానే గేట్ సెక్యూరిటీని, అవసరమైన సరుకులను మరియు కుటుంబ సంరక్షణను అత్యంత సులభంగా అందించడమే మన ప్రధాన ధ్యేయం.
-      </p>
-    </div>
-
-    <div class="about-card" style="border-left: 4px solid #10B981;">
-      <h4 style="color: #10B981;" data-key="goal-title">🚀 మన గోల్ (Our Goal)</h4>
-      <p data-key="goal-desc">
-        విజయవాడ & గుంటూరు జంట నగరాల్లోని ప్రతి గేటెడ్ కమ్యూనిటీ, అపార్ట్‌మెంట్ సొసైటీకి 100% నమ్మకమైన డిజిటల్ కేర్ పార్ట్‌నర్‌గా మారడం. మహిళల ప్రైవసీని కాపాడుతూ, విదేశాల్లో ఉండే ఎన్‌ఆర్‌ఐ (NRI) బిడ్డలకు వారి వృద్ధ తల్లిదండ్రుల ఆరోగ్యం మరియు భద్రతపై సంపూర్ణ భరోసా కల్పించడం.
-      </p>
-    </div>
-
-    <div class="about-card" style="border-left: 4px solid #F59E0B;">
-      <h4 style="color: #F59E0B;" data-key="val-title">💎 మన ముఖ్య విలువలు (Core Values)</h4>
-      <p data-key="val-desc">
-        • <strong>జీరో-యాప్ సౌలభ్యం:</strong> ఫోన్ స్టోరేజ్ నింపే యాప్‌లు అవసరం లేదు.<br>
-        • <strong>మహిళల ప్రైవసీ రక్షణ:</strong> డెలివరీ సిబ్బందికి ఫోన్ నంబర్లు వెళ్లకుండా మాస్కింగ్ ప్రొటెక్షన్.<br>
-        • <strong>పారదర్శకత:</strong> స్థానిక షాపుల ఒరిజినల్ బిల్లుల ఆధారంగానే సేవల నిర్వహణ.
-      </p>
-    </div>
-
-    <div style="text-align: center; margin-top: 15px;">
-      <span class="msme-pill">Govt MSME Registered Entity</span>
-    </div>
-  </main>
-
-  <!-- 3. SERVICES TAB -->
+  <!-- 2. SERVICES TAB -->
   <main id="view-services" class="tab-content">
     <span class="sec-tag" data-key="srv-tag">Our Offerings</span>
     <h3 class="sec-title" data-key="srv-head">⚡ అవైలో సర్వీసెస్ కేటలాగ్</h3>
     <p class="sec-sub" data-key="srv-sub">విజయవాడ & గుంటూరు కోసం ప్రత్యేకంగా రూపొందించిన సేవలు.</p>
 
-    <!-- 1. Gate Pass -->
+    <!-- Gate Pass -->
     <div class="feature-card">
       <h4 data-key="f1-t">🏢 1. Zero-App WhatsApp Gate Pass</h4>
       <p data-key="f1-d">QR స్కాన్ చేయగానే విజిటర్ ఫోటో & వివరాలు రెసిడెంట్ వాట్సాప్‌లోకి వస్తాయి. మహిళల ఫోన్ నంబర్లు మాస్కింగ్ చేయబడతాయి.</p>
       <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20want%20Free%20Society%20Pilot" target="_blank" style="color: #10B981; font-weight: 700; font-size: 0.82rem; text-decoration: none; display: inline-block; margin-top: 6px;" data-key="f1-pilot">🎁 7-Day Free Society Pilot బుక్ చేసుకోండి ➔</a>
     </div>
 
-    <!-- 2. Home Maintenance & Appliances -->
+    <!-- Home Maintenance -->
     <div style="margin-top: 22px;">
       <span class="sec-tag" data-key="sec2-tag">Active Service 02</span>
       <h4 style="font-size: 1.1rem; color: #FFF; margin-bottom: 12px;" data-key="sec2-title">🛠️ హోమ్ రిపేర్స్ & మెయింటెనెన్స్</h4>
@@ -353,7 +365,7 @@
       </div>
     </div>
 
-    <!-- 3. Daily Errands -->
+    <!-- Daily Errands -->
     <div style="margin-top: 15px;">
       <span class="sec-tag" data-key="sec3-tag">Active Service 03</span>
       <h4 style="font-size: 1.1rem; color: #FFF; margin-bottom: 12px;" data-key="sec3-title">🛍️ డైలీ ఎసెన్షియల్స్ & ఆన్-డిమాండ్ ఎర్రాండ్స్</h4>
@@ -381,7 +393,7 @@
       </div>
     </div>
 
-    <!-- 4. NRI Care Plans -->
+    <!-- NRI Care Plans -->
     <div style="margin-top: 25px;">
       <span class="sec-tag" style="color: #F59E0B;" data-key="sec4-tag">Active Service 04</span>
       <h4 style="font-size: 1.1rem; color: #FFF; margin-bottom: 12px;" data-key="sec4-title">👵 NRI Parents Care Plans</h4>
@@ -433,7 +445,7 @@
       </div>
     </div>
 
-    <!-- 5. UPCOMING SERVICES -->
+    <!-- Upcoming Services -->
     <div style="margin-top: 30px;">
       <span class="sec-tag" style="color: #A855F7;" data-key="up-tag">Future Innovations</span>
       <h4 style="font-size: 1.15rem; color: #FFF; margin-bottom: 6px;" data-key="up-head">🚀 త్వరలో రాబోయే సేవలు (Upcoming Services)</h4>
@@ -453,7 +465,101 @@
     </div>
   </main>
 
-  <!-- 4. CONTACT TAB -->
+  <!-- 3. PARTNER ONBOARDING TAB (ZERO-APP TECHNICIAN REGISTRATION) -->
+  <main id="view-partner" class="tab-content">
+    <span class="sec-tag" style="color: #F59E0B;">Partner With Us</span>
+    <h3 class="sec-title">🤝 అవైలో పార్ట్‌నర్‌గా చేరండి</h3>
+    <p class="sec-sub">యాప్ డౌన్‌లోడ్ అవసరం లేదు. మీ వాట్సాప్‌కే నేరుగా అపార్ట్‌మెంట్ కస్టమర్ల వర్క్ ఆర్డర్స్ వస్తాయి.</p>
+
+    <div class="partner-card">
+      <form id="partnerForm" onsubmit="handlePartnerSubmit(event)">
+        <div class="form-group">
+          <label>మీ పేరు (Your Name):</label>
+          <input type="text" id="pName" class="form-control" placeholder="ఉదా: రాము" required>
+        </div>
+
+        <div class="form-group">
+          <label>మీ వాట్సాప్ ఫోన్ నంబర్ (WhatsApp Number):</label>
+          <input type="tel" id="pPhone" class="form-control" placeholder="10 అంకెల ఫోన్ నంబర్" required>
+        </div>
+
+        <div class="form-group">
+          <label>మీరు అందించే సర్వీస్ (Your Skill / Trade):</label>
+          <select id="pSkill" class="form-control" required>
+            <option value="">ఎంచుకోండి...</option>
+            <option value="Electrician & Plumber">ఎలక్ట్రీషియన్ / ప్లంబర్</option>
+            <option value="AC & Fridge Repair">A/C & ఫ్రిజ్ టెక్నీషియన్</option>
+            <option value="RO Water Purifier">RO వాటర్ ప్యూరిఫైయర్ సర్వీస్</option>
+            <option value="Deep Cleaning">హోమ్ & వాటర్ ట్యాంక్ డీప్ క్లీనింగ్</option>
+            <option value="Ladies Boutique & Tailor">బోటిక్ / టైలరింగ్</option>
+            <option value="Grocery & Vegetable Vendor">కిరాణా / కూరగాయల వెండర్</option>
+            <option value="Driver / Delivery Agent">డ్రైవర్ / డెలివరీ అసిస్టెంట్</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>మీరు పని చేసే ఏరియా (Operating City & Area):</label>
+          <select id="pLocation" class="form-control" required>
+            <option value="">ప్రాంతాన్ని ఎంచుకోండి...</option>
+            <option value="Vijayawada - Kanuru / Poranki / Auto Nagar">విజయవాడ (కానూరు, పోరంకి, ఆటోనగర్, పటమట)</option>
+            <option value="Vijayawada - Benz Circle / MG Road / Governorpet">విజయవాడ (బెంజ్ సర్కిల్, MG రోడ్, గవర్నర్‌పేట)</option>
+            <option value="Vijayawada - Bhavanipuram / Gollapudi">విజయవాడ (భవానిపురం, గొల్లపూడి)</option>
+            <option value="Guntur - Brodipet / Arundelpet">గుంటూరు (బ్రాడీపేట, అరుండల్‌పేట)</option>
+            <option value="Guntur - Vidyanagar / Pattabhipuram">గుంటూరు (విద్యానగర్, పట్టాభిపురం)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit-partner">
+          📲 వాట్సాప్‌లో వివరాలు పంపండి (Join Now)
+        </button>
+      </form>
+    </div>
+
+    <div style="margin-top: 20px; background: rgba(245, 158, 11, 0.08); border-radius: 12px; padding: 14px; border: 1px solid rgba(245, 158, 11, 0.3);">
+      <strong style="color: #F59E0B; font-size: 0.85rem;">✨ పార్ట్‌నర్ బెనిఫిట్స్:</strong>
+      <p style="font-size: 0.76rem; color: #CBD5E1; margin-top: 4px; line-height: 1.5;">
+        • ఎలాంటి జాయినింగ్ ఫీజు లేదు.<br>
+        • కొత్త యాప్‌లు వాడక్కర్లేదు, పనులు నేరుగా వాట్సాప్‌లో వస్తాయి.<br>
+        • గేటెడ్ కమ్యూనిటీల నుండి రెగ్యులర్ ఆదాయం.
+      </p>
+    </div>
+  </main>
+
+  <!-- 4. ABOUT US TAB -->
+  <main id="view-about" class="tab-content">
+    <span class="sec-tag" data-key="ab-tag">About Company</span>
+    <h3 class="sec-title" data-key="ab-head">🛡️ మన లక్ష్యం & గోల్ (Vision & Aim)</h3>
+    <p class="sec-sub" data-key="ab-sub">అవైలో డిజిటల్ సర్వీసెస్ ప్రారంభం వెనుక ఉన్న అసలైన ఉద్దేశం.</p>
+
+    <div class="about-card" style="border-left: 4px solid #38BDF8;">
+      <h4 style="color: #38BDF8;" data-key="aim-title">🎯 మన ప్రధాన లక్ష్యం (Our Aim)</h4>
+      <p data-key="aim-desc">
+        సాధారణ ప్రజలను, ముఖ్యంగా పెద్దవారిని మరియు గృహిణులను సంక్లిష్టమైన మొబైల్ యాప్‌ల డౌన్‌లోడ్‌లు, పాస్‌వర్డ్‌లు, ఓటీపీల ఇబ్బందుల నుండి విముక్తి చేయడం. రోజూ అందరూ వాడే <strong>WhatsApp</strong> ద్వారానే గేట్ సెక్యూరిటీని, అవసరమైన సరుకులను మరియు కుటుంబ సంరక్షణను అత్యంత సులభంగా అందించడమే మన ప్రధాన ధ్యేయం.
+      </p>
+    </div>
+
+    <div class="about-card" style="border-left: 4px solid #10B981;">
+      <h4 style="color: #10B981;" data-key="goal-title">🚀 మన గోల్ (Our Goal)</h4>
+      <p data-key="goal-desc">
+        విజయవాడ & గుంటూరు జంట నగరాల్లోని ప్రతి గేటెడ్ కమ్యూనిటీ, అపార్ట్‌మెంట్ సొసైటీకి 100% నమ్మకమైన డిజిటల్ కేర్ పార్ట్‌నర్‌గా మారడం. మహిళల ప్రైవసీని కాపాడుతూ, విదేశాల్లో ఉండే ఎన్‌ఆర్‌ఐ (NRI) బిడ్డలకు వారి వృద్ధ తల్లిదండ్రుల ఆరోగ్యం మరియు భద్రతపై సంపూర్ణ భరోసా కల్పించడం.
+      </p>
+    </div>
+
+    <div class="about-card" style="border-left: 4px solid #F59E0B;">
+      <h4 style="color: #F59E0B;" data-key="val-title">💎 మన ముఖ్య విలువలు (Core Values)</h4>
+      <p data-key="val-desc">
+        • <strong>జీరో-యాప్ సౌలభ్యం:</strong> ఫోన్ స్టోరేజ్ నింపే యాప్‌లు అవసరం లేదు.<br>
+        • <strong>మహిళల ప్రైవసీ రక్షణ:</strong> డెలివరీ సిబ్బందికి ఫోన్ నంబర్లు వెళ్లకుండా మాస్కింగ్ ప్రొటెక్షన్.<br>
+        • <strong>పారదర్శకత:</strong> స్థానిక షాపుల ఒరిజినల్ బిల్లుల ఆధారంగానే సేవల నిర్వహణ.
+      </p>
+    </div>
+
+    <div style="text-align: center; margin-top: 15px;">
+      <span class="msme-pill">Govt MSME Registered Entity</span>
+    </div>
+  </main>
+
+  <!-- 5. CONTACT TAB -->
   <main id="view-contact" class="tab-content">
     <span class="sec-tag" data-key="cnt-tag">Get In Touch</span>
     <h3 class="sec-title" data-key="cnt-head">📞 మమ్మల్ని సంప్రదించండి</h3>
@@ -477,12 +583,11 @@
   </main>
 
   <!-- MAYURA PEACOCK BLOOM & TALKING WIDGET -->
-  <div class="mayura-widget" id="mayuraWidget" onclick="triggerMayuraBloomAndSpeak()">
+  <div class="mayura-widget" id="mayuraWidget" onclick="triggerMayuraBloomAndSpeak()" ontouchstart="triggerMayuraBloomAndSpeak()">
     <div class="mayura-bubble" id="mayuraBubble">
       నమస్కారం! నేను మీ అవైలో మయూరను 🦚
     </div>
     <div class="mayura-avatar-box">
-      <!-- Animated Peacock Feathers (Blooms outward) -->
       <svg class="peacock-feathers" viewBox="0 0 100 100">
         <defs>
           <linearGradient id="featherGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -491,20 +596,17 @@
             <stop offset="100%" stop-color="#10B981"/>
           </linearGradient>
         </defs>
-        <!-- Fan-out Peacock Plumes -->
         <path d="M50 85 C30 50, 10 30, 15 15 C25 20, 45 60, 50 85 Z" fill="url(#featherGrad)" opacity="0.9"/>
         <path d="M50 85 C38 45, 25 20, 32 8 C42 16, 48 55, 50 85 Z" fill="url(#featherGrad)"/>
         <path d="M50 85 C45 40, 42 12, 50 4 C58 12, 55 40, 50 85 Z" fill="url(#featherGrad)"/>
         <path d="M50 85 C55 45, 68 20, 68 8 C75 16, 62 55, 50 85 Z" fill="url(#featherGrad)"/>
         <path d="M50 85 C70 50, 90 30, 85 15 C75 20, 55 60, 50 85 Z" fill="url(#featherGrad)" opacity="0.9"/>
-        <!-- Feather Eye Dots -->
         <circle cx="20" cy="20" r="3" fill="#F59E0B"/>
         <circle cx="35" cy="12" r="3.5" fill="#F59E0B"/>
         <circle cx="50" cy="8" r="4" fill="#F59E0B"/>
         <circle cx="65" cy="12" r="3.5" fill="#F59E0B"/>
         <circle cx="80" cy="20" r="3" fill="#F59E0B"/>
       </svg>
-      <!-- Center Peacock Shield Head -->
       <div class="peacock-center-body">
         <svg viewBox="0 0 100 100" width="30" height="30">
           <ellipse cx="50" cy="45" rx="14" ry="18" fill="#0369A1" stroke="#38BDF8" stroke-width="2"/>
@@ -541,13 +643,22 @@
       document.getElementById('view-' + tabName).classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // Trigger peacock bloom and talk on tapping Services
       if (tabName === 'services' && !hasBloomed) {
         triggerMayuraBloomAndSpeak();
       }
     }
 
-    // PEACOCK BLOOM & VOICE ENGINE
+    function handlePartnerSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('pName').value.trim();
+      const phone = document.getElementById('pPhone').value.trim();
+      const skill = document.getElementById('pSkill').value;
+      const loc = document.getElementById('pLocation').value;
+
+      const waMsg = `Hi Availo Admin, I want to join as Partner:%0A- Name: ${encodeURIComponent(name)}%0A- Phone: ${encodeURIComponent(phone)}%0A- Trade: ${encodeURIComponent(skill)}%0A- Location: ${encodeURIComponent(loc)}`;
+      window.open(`https://api.whatsapp.com/send?phone=919966157369&text=${waMsg}`, '_blank');
+    }
+
     function triggerMayuraBloomAndSpeak() {
       const widget = document.getElementById('mayuraWidget');
       const bubble = document.getElementById('mayuraBubble');
@@ -570,7 +681,6 @@
       }
     }
 
-    // Trigger on first touch anywhere on screen
     document.addEventListener('click', function onFirstTouch() {
       if (!hasBloomed) {
         triggerMayuraBloomAndSpeak();
@@ -581,8 +691,9 @@
     const translations = {
       te: {
         "nav-home": "హోమ్",
-        "nav-about": "అబౌట్ అస్",
         "nav-services": "సర్వీసెస్",
+        "nav-partner": "పార్ట్‌నర్ జాయిన్",
+        "nav-about": "అబౌట్",
         "nav-contact": "కాంటాక్ట్",
         "hero-badge": "🛡️ Zero-App Hyperlocal System",
         "hero-desc": "గేట్ సెక్యూరిటీ, లోకల్ కాన్సియర్జ్ & ఎన్‌ఆర్‌ఐ పేరెంట్స్ కేర్ — విజయవాడ & గుంటూరు కోసం.",
@@ -667,8 +778,9 @@
       },
       en: {
         "nav-home": "Home",
-        "nav-about": "About Us",
         "nav-services": "Services",
+        "nav-partner": "Partner Join",
+        "nav-about": "About",
         "nav-contact": "Contact",
         "hero-badge": "🛡️ Zero-App Hyperlocal System",
         "hero-desc": "Gate Security, Local Concierge & NRI Parent Care — Exclusively for Vijayawada & Guntur.",
