@@ -1,0 +1,10 @@
+{
+  "name": "AVAILO OneChat",
+  "short_name": "OneChat",
+  "description": "One Chat. Every Local Need - Vijayawada & Guntur",
+  "start_url": "./chat.html",
+  "display": "standalone",
+  "background_color": "#070D18",
+  "theme_color": "#0284C7"
+}
+
