@@ -18,7 +18,6 @@
       --text-dim: #94A3B8;
       --border: #1E293B;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', 'Noto Sans Telugu', sans-serif; }
     body { background: var(--bg-dark); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
@@ -44,17 +43,6 @@
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     .header-actions a { color: var(--text-dim); text-decoration: none; font-size: 0.75rem; border: 1px solid var(--border); padding: 5px 10px; border-radius: 12px; }
 
-    .install-banner {
-      background: linear-gradient(90deg, #0369A1, #065F46);
-      padding: 8px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.74rem;
-      font-weight: 700;
-    }
-    .btn-install { background: #F59E0B; color: #000; border: none; padding: 4px 10px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 0.72rem; }
-
     .chat-body {
       flex: 1;
       overflow-y: auto;
@@ -70,7 +58,7 @@
     .msg-row.user { justify-content: flex-end; }
 
     .bubble {
-      max-width: 84%;
+      max-width: 85%;
       padding: 12px 14px;
       border-radius: 16px;
       font-size: 0.85rem;
@@ -131,8 +119,6 @@
       font-size: 0.85rem;
       outline: none;
     }
-    .input-box:focus { border-color: var(--neon-blue); }
-
     .dock-btn {
       width: 42px;
       height: 42px;
@@ -174,11 +160,6 @@
 </head>
 <body>
 
-  <div class="install-banner" id="pwaBanner" style="display:none;">
-    <span>📲 యాప్‌లా హోమ్ స్క్రీన్‌పై సేవ్ చేసుకోండి</span>
-    <button class="btn-install" id="btnInstall">ADD TO SCREEN</button>
-  </div>
-
   <header class="chat-header">
     <div class="brand-group">
       <svg class="bot-avatar" viewBox="0 0 100 100">
@@ -202,7 +183,7 @@
     <div class="msg-row bot">
       <div class="bubble">
         నమస్కారం! నేను మీ <strong>అవైలో మయూరను 🦚</strong>.<br>
-        మీకు ఏ సర్వీస్ కావాలో క్రింద ఎంచుకోండి లేదా టైప్ చేయండి:
+        మీకు ఏ సర్వీస్ కావాలో క్రింద ఎంచుకోండి లేదా మాట్లాడండి:
         
         <div class="options-grid">
           <div class="opt-tile" onclick="chooseService('🛠️ హోమ్ రిపేర్స్ (Electrician/Plumber/AC)')">
@@ -228,7 +209,7 @@
 
   <div class="chat-dock">
     <button class="dock-btn btn-mic" id="btnMic" onclick="toggleVoiceInput()">🎤</button>
-    <input type="text" id="userInput" class="input-box" placeholder="మీకు ఏం కావాలో టైప్ చేయండి లేదా మాట్లాడండి..." onkeypress="handleEnter(event)">
+    <input type="text" id="userInput" class="input-box" placeholder="మీ అవసరాన్ని టైప్ చేయండి లేదా మాట్లాడండి..." onkeypress="handleEnter(event)">
     <button class="dock-btn btn-send" onclick="sendUserMessage()">➤</button>
   </div>
 
@@ -241,7 +222,6 @@
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognition = new SpeechRecognition();
       recognition.continuous = false;
-      recognition.interimResults = false;
       recognition.lang = 'te-IN';
 
       recognition.onresult = (event) => {
@@ -257,7 +237,7 @@
     function toggleVoiceInput() {
       const micBtn = document.getElementById('btnMic');
       if (!recognition) {
-        alert("మీ బ్రౌజర్ వాయిస్ రికార్డింగ్‌కు సపోర్ట్ చేయడం లేదు. దయచేసి టైప్ చేయండి.");
+        alert("మీ బ్రౌజర్ వాయిస్ రికార్డింగ్‌కు సపోర్ట్ చేయడం లేదు.");
         return;
       }
       if (!isRecording) {
@@ -278,15 +258,15 @@
       setTimeout(() => {
         let reply = "";
         if (srvName.includes('ఫుడ్')) {
-          reply = "చాలా సంతోషం! మీకు <strong>డైలీ క్యారియర్ భోజనం</strong> కావాలా? లేదా <strong>ఫంక్షన్/పూజ కోసం భోజనం/టిఫిన్</strong> కావాలా? మీ అపార్ట్‌మెంట్ పేరు, ఫ్లాట్ నంబర్‌తో వివరాలు చెప్పండి.";
+          reply = "చాలా సంతోషం! మీకు డైలీ క్యారియర్ భోజనం కావాలా? లేదా ఫంక్షన్/పూజ కోసమా? మీ అపార్ట్‌మెంట్ & ఫ్లాట్ వివరాలు చెప్పండి.";
         } else if (srvName.includes('రిపేర్స్')) {
-          reply = "తప్పకుండా! ఎలక్ట్రీషియన్, ప్లంబర్ లేదా AC రిపేరా? మీ సమస్య ఏంటో మరియు మీ ఫ్లాట్ నంబర్ ఇక్కడ చెప్పండి.";
+          reply = "తప్పకుండా! ఎలక్ట్రీషియన్, ప్లంబర్ లేదా AC రిపేరా? మీ సమస్య & ఫ్లాట్ నంబర్ ఇక్కడ చెప్పండి.";
         } else if (srvName.includes('కిరాణా')) {
-          reply = "మీకు కావాల్సిన కిరాణా సరుకులు లేదా తాజా కూరగాయల లిస్ట్ ఇక్కడ టైప్ చేయండి లేదా మైక్ నొక్కి వాయిస్ ఇవ్వండి.";
+          reply = "కావాల్సిన కిరాణా లేదా కూరగాయల వివరాలు ఇక్కడ టైప్ చేయండి లేదా మైక్ ద్వారా చెప్పండి.";
         } else {
-          reply = "విజయవాడ & గుంటూరులో ఉండే మీ తల్లిదండ్రుల కోసం కేర్ ప్లాన్ వివరాలు ఇక్కడ చెప్పండి.";
+          reply = "విజయవాడ & గుంటూరులో ఉండే మీ తల్లిదండ్రుల కేర్ వివరాలు చెప్పండి.";
         }
-        addBotReply(reply, true);
+        addBotReply(reply);
       }, 500);
     }
 
@@ -301,14 +281,14 @@
       setTimeout(() => {
         const confirmBox = `
           <div class="order-card">
-            <strong style="color: #10B981;">✅ మీ ఆర్డర్ వివరాలు సిద్ధమయ్యాయి!</strong><br>
-            <span style="font-size: 0.78rem; color: #CBD5E1;">కింది బటన్ నొక్కగానే మా స్థానిక కోఆర్డినేటర్‌కు మీ రిక్వెస్ట్ చేరుతుంది:</span>
+            <strong style="color: #10B981;">✅ మీ వివరాలు సిద్ధమయ్యాయి!</strong><br>
+            <span style="font-size: 0.78rem; color: #CBD5E1;">కింది బటన్ నొక్కి ఆర్డర్ కన్ఫర్మ్ చేయండి:</span>
             <a href="https://api.whatsapp.com/send?phone=919966157369&text=${encodeURIComponent('Hi Availo OneChat Order:\n- Service: ' + (selectedService || 'General') + '\n- Requirement: ' + text)}" target="_blank" class="btn-dispatch">
-              🚀 వాట్సాప్‌లో కన్ఫర్మ్ చేయండి (Confirm Order)
+              🚀 వాట్సాప్‌లో కన్ఫర్మ్ చేయండి
             </a>
           </div>
         `;
-        addBotReply("మీ వివరాలు అర్థమయ్యాయి! " + confirmBox, false);
+        addBotReply("సరే అర్థమైంది! " + confirmBox);
       }, 700);
     }
 
@@ -321,43 +301,18 @@
       stream.scrollTop = stream.scrollHeight;
     }
 
-    function addBotReply(htmlText, speakOut) {
+    function addBotReply(htmlText) {
       const stream = document.getElementById('chatStream');
       const row = document.createElement('div');
       row.className = 'msg-row bot';
       row.innerHTML = `<div class="bubble">${htmlText}</div>`;
       stream.appendChild(row);
       stream.scrollTop = stream.scrollHeight;
-
-      if (speakOut && 'speechSynthesis' in window) {
-        const cleanText = htmlText.replace(/<[^>]*>?/gm, '');
-        const utt = new SpeechSynthesisUtterance(cleanText);
-        utt.lang = 'te-IN';
-        window.speechSynthesis.speak(utt);
-      }
     }
 
     function handleEnter(e) {
       if (e.key === 'Enter') sendUserMessage();
     }
-
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      document.getElementById('pwaBanner').style.display = 'flex';
-    });
-
-    document.getElementById('btnInstall').addEventListener('click', () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(() => {
-          deferredPrompt = null;
-          document.getElementById('pwaBanner').style.display = 'none';
-        });
-      }
-    });
   </script>
 </body>
 </html>
-
