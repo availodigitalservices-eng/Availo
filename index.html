@@ -9,91 +9,131 @@
     :root {
       --primary: #0284C7;
       --accent: #F59E0B;
-      --dark-bg: #0B1120;
-      --card-dark: #131E32;
+      --dark-bg: #070D18;
+      --card-dark: #111B2E;
       --border-dark: #1E293B;
       --text-light: #F8FAFC;
       --text-dim: #94A3B8;
       --green: #10B981;
-      --purple: #8B5CF6;
+      --neon-blue: #38BDF8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', 'Noto Sans Telugu', sans-serif; }
     body { background: var(--dark-bg); color: var(--text-light); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
     
-    header { background: rgba(11, 17, 32, 0.98); backdrop-filter: blur(10px); padding: 12px 16px 6px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-dark); }
+    header { background: rgba(7, 13, 24, 0.98); backdrop-filter: blur(10px); padding: 12px 16px 6px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-dark); }
     .header-top { display: flex; justify-content: space-between; align-items: center; }
     .brand-wrap { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; }
-    .brand-logo-svg { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid #38BDF8; box-shadow: 0 0 14px rgba(56, 189, 248, 0.4); background: #091322; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .brand-logo-mini { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--neon-blue); box-shadow: 0 0 10px rgba(56, 189, 248, 0.4); object-fit: cover; }
     .brand-text h1 { font-size: 1.05rem; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px; line-height: 1.1; }
-    .brand-slogan { font-size: 0.6rem; color: #38BDF8; letter-spacing: 0.5px; font-weight: 600; display: block; }
+    .brand-slogan { font-size: 0.6rem; color: var(--neon-blue); letter-spacing: 0.5px; font-weight: 600; display: block; }
     .lang-toggle { display: flex; background: #1E293B; border-radius: 20px; padding: 2px; border: 1px solid rgba(255,255,255,0.1); }
     .lang-btn { background: transparent; border: none; color: var(--text-dim); padding: 4px 10px; font-size: 0.72rem; font-weight: 700; border-radius: 16px; cursor: pointer; }
     .lang-btn.active { background: var(--primary); color: #FFFFFF; }
     
     nav.tab-nav { display: flex; justify-content: space-around; align-items: center; margin-top: 10px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); }
     .tab-btn { background: none; border: none; color: var(--text-dim); font-size: 0.76rem; font-weight: 700; padding: 8px 6px; border-radius: 8px; cursor: pointer; }
-    .tab-btn.active { color: #38BDF8; background: rgba(56, 189, 248, 0.12); border-bottom: 2px solid #38BDF8; }
+    .tab-btn.active { color: var(--neon-blue); background: rgba(56, 189, 248, 0.12); border-bottom: 2px solid var(--neon-blue); }
     .tab-btn.partner-tab { color: #F59E0B; }
     .tab-btn.partner-tab.active { color: #F59E0B; background: rgba(245, 158, 11, 0.15); border-bottom: 2px solid #F59E0B; }
     
-    .tab-content { display: none; padding: 24px 18px 40px; animation: fadeIn 0.25s ease-in-out; }
+    .tab-content { display: none; padding: 20px 18px 40px; animation: fadeIn 0.25s ease-in-out; }
     .tab-content.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     
-    /* FAST ENTRY ROLE SWITCHER BAR */
     .role-banner {
       background: linear-gradient(90deg, #0369A1, #0f766e);
       border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 20px;
+      padding: 10px;
+      margin-bottom: 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 8px;
     }
-    .role-btn-primary {
-      flex: 1;
-      background: #10B981;
-      color: #000;
-      font-weight: 800;
-      font-size: 0.8rem;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
+    .role-btn-primary { flex: 1; background: #10B981; color: #000; font-weight: 800; font-size: 0.8rem; border: none; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; }
+    .role-btn-partner { flex: 1; background: #F59E0B; color: #000; font-weight: 800; font-size: 0.8rem; border: none; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; }
+
+    /* ===================================================
+       GRAND MAYURA CENTER LOGO & SPEAKING STAGE
+    =================================================== */
+    .mayura-hero-stage {
       text-align: center;
+      margin: 10px auto 20px;
+      position: relative;
       cursor: pointer;
     }
-    .role-btn-partner {
-      flex: 1;
-      background: #F59E0B;
-      color: #000;
-      font-weight: 800;
-      font-size: 0.8rem;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
-      text-align: center;
-      cursor: pointer;
+    .grand-peacock-wrap {
+      width: 210px;
+      height: 210px;
+      margin: 0 auto 12px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .grand-peacock-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.45), 0 0 60px rgba(2, 132, 199, 0.25);
+      border: 2px solid rgba(56, 189, 248, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: gentlePulse 3s infinite ease-in-out;
+    }
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(56, 189, 248, 0.4); }
+      50% { transform: scale(1.03); box-shadow: 0 0 45px rgba(56, 189, 248, 0.7); }
+    }
+    .tap-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--neon-blue);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .mayura-speech-bubble {
+      background: #1E293B;
+      border: 1.5px solid var(--neon-blue);
+      border-radius: 16px;
+      padding: 12px 16px;
+      color: #FFF;
+      font-size: 0.85rem;
+      font-weight: 600;
+      max-width: 320px;
+      margin: 0 auto 14px;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+      display: none;
+      animation: popBubble 0.35s ease-out forwards;
+    }
+    @keyframes popBubble {
+      from { opacity: 0; transform: translateY(-8px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    .hero { padding: 10px 10px 20px; text-align: center; }
-    .hero-badge { display: inline-block; background: rgba(56, 189, 248, 0.12); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 15px; }
-    .hero h2 { font-size: 1.65rem; font-weight: 800; line-height: 1.35; margin-bottom: 12px; }
+    .hero { text-align: center; }
+    .hero h2 { font-size: 1.6rem; font-weight: 800; line-height: 1.35; margin-bottom: 10px; }
     .hero h2 span { background: linear-gradient(90deg, #38BDF8, #818CF8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero p { font-size: 0.88rem; color: var(--text-dim); margin-bottom: 22px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .hero p { font-size: 0.86rem; color: var(--text-dim); margin-bottom: 20px; max-width: 480px; margin-left: auto; margin-right: auto; }
     .btn-whatsapp-hero { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: #FFFFFF; width: 100%; max-width: 320px; padding: 14px 20px; border-radius: 14px; font-weight: 700; font-size: 0.95rem; text-decoration: none; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4); margin: 0 auto; }
-    
-    .sec-tag { color: #38BDF8; font-size: 0.72rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; display: block; }
+
+    .sec-tag { color: var(--neon-blue); font-size: 0.72rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; display: block; }
     .sec-title { font-size: 1.35rem; font-weight: 800; color: #F8FAFC; margin-bottom: 6px; }
     .sec-sub { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 20px; }
     
     .feature-card { background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
-    .feature-card h4 { font-size: 0.98rem; font-weight: 700; color: #38BDF8; margin-bottom: 6px; }
+    .feature-card h4 { font-size: 0.98rem; font-weight: 700; color: var(--neon-blue); margin-bottom: 6px; }
     .feature-card p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.45; }
     
     .step-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
     .step-card { background: var(--card-dark); border-left: 4px solid #0284C7; border-radius: 10px; padding: 14px; display: flex; gap: 12px; align-items: center; }
-    .step-number { font-size: 1.2rem; font-weight: 800; color: #38BDF8; min-width: 24px; }
+    .step-number { font-size: 1.2rem; font-weight: 800; color: var(--neon-blue); min-width: 24px; }
     
     .about-card { background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 18px; margin-bottom: 16px; }
     .about-card h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
@@ -130,11 +170,11 @@
     
     .plan-box { background: var(--card-dark); border: 1.5px solid var(--border-dark); border-radius: 16px; padding: 20px 16px; margin-bottom: 16px; position: relative; }
     .plan-box.popular { border-color: #10B981; }
-    .plan-box.elite { border-color: #F59E0B; background: linear-gradient(180deg, #131E32 0%, #1c1917 100%); }
+    .plan-box.elite { border-color: #F59E0B; background: linear-gradient(180deg, #111B2E 0%, #1c1917 100%); }
     .badge-pop { position: absolute; top: -12px; right: 16px; background: #10B981; color: #000; font-weight: 800; font-size: 0.68rem; padding: 3px 10px; border-radius: 20px; }
     .badge-elite { position: absolute; top: -12px; right: 16px; background: #F59E0B; color: #000; font-weight: 800; font-size: 0.68rem; padding: 3px 10px; border-radius: 20px; }
     .plan-name { font-size: 1.15rem; font-weight: 800; margin-bottom: 2px; }
-    .plan-cost { font-size: 1.35rem; font-weight: 800; color: #38BDF8; margin-bottom: 14px; border-bottom: 1px solid var(--border-dark); padding-bottom: 8px; }
+    .plan-cost { font-size: 1.35rem; font-weight: 800; color: var(--neon-blue); margin-bottom: 14px; border-bottom: 1px solid var(--border-dark); padding-bottom: 8px; }
     .plan-cost span { font-size: 0.75rem; font-weight: 500; color: var(--text-dim); }
     .plan-list { list-style: none; margin-bottom: 16px; }
     .plan-list li { font-size: 0.8rem; color: #CBD5E1; margin-bottom: 8px; display: flex; gap: 8px; line-height: 1.4; }
@@ -143,92 +183,19 @@
     .plan-box.elite .btn-plan { background: #F59E0B; color: #000; border: none; }
     .plan-rule-note { background: rgba(2, 132, 199, 0.08); border: 1px dashed rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 12px; margin-top: 15px; font-size: 0.74rem; color: #94A3B8; line-height: 1.45; }
 
-    /* PARTNER ONBOARDING STYLES */
-    .partner-card {
-      background: var(--card-dark);
-      border: 1.5px solid #F59E0B;
-      border-radius: 16px;
-      padding: 20px;
-    }
-    .form-group {
-      margin-bottom: 14px;
-      text-align: left;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #E2E8F0;
-      margin-bottom: 6px;
-    }
-    .form-control {
-      width: 100%;
-      padding: 12px;
-      background: #0B1120;
-      border: 1px solid var(--border-dark);
-      border-radius: 10px;
-      color: #FFF;
-      font-size: 0.9rem;
-      outline: none;
-    }
-    .form-control:focus {
-      border-color: #F59E0B;
-    }
-    .btn-submit-partner {
-      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-      color: #000;
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 0.95rem;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+    .partner-card { background: var(--card-dark); border: 1.5px solid #F59E0B; border-radius: 16px; padding: 20px; }
+    .form-group { margin-bottom: 14px; text-align: left; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 700; color: #E2E8F0; margin-bottom: 6px; }
+    .form-control { width: 100%; padding: 12px; background: #070D18; border: 1px solid var(--border-dark); border-radius: 10px; color: #FFF; font-size: 0.9rem; outline: none; }
+    .form-control:focus { border-color: #F59E0B; }
+    .btn-submit-partner { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: #000; width: 100%; padding: 14px; border: none; border-radius: 12px; font-weight: 800; font-size: 0.95rem; cursor: pointer; margin-top: 10px; }
     
     .contact-card { background: var(--card-dark); border: 1px solid var(--border-dark); border-radius: 16px; padding: 24px 18px; text-align: center; }
     .btn-call { display: inline-block; background: #0284C7; color: #FFFFFF; padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; text-decoration: none; margin-top: 14px; margin-bottom: 12px; width: 100%; max-width: 320px; }
     
-    footer { border-top: 1px solid var(--border-dark); text-align: center; padding: 24px 16px; font-size: 0.78rem; color: var(--text-dim); background: #090E1A; margin-bottom: 70px; }
-    .footer-slogan { font-size: 0.85rem; font-weight: 700; color: #38BDF8; letter-spacing: 1px; margin-bottom: 6px; display: block; }
+    footer { border-top: 1px solid var(--border-dark); text-align: center; padding: 24px 16px; font-size: 0.78rem; color: var(--text-dim); background: #050912; margin-bottom: 20px; }
+    .footer-slogan { font-size: 0.85rem; font-weight: 700; color: var(--neon-blue); letter-spacing: 1px; margin-bottom: 6px; display: block; }
     .msme-pill { display: inline-block; border: 1px solid rgba(56, 189, 248, 0.3); color: #94A3B8; padding: 2px 10px; border-radius: 12px; font-size: 0.68rem; margin-top: 6px; }
-
-    /* MAYURA WIDGET */
-    .mayura-widget {
-      position: fixed;
-      bottom: 20px;
-      right: 16px;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      cursor: pointer;
-    }
-    .mayura-bubble {
-      background: #1E293B;
-      border: 1.5px solid #38BDF8;
-      border-radius: 16px 16px 4px 16px;
-      padding: 10px 14px;
-      color: #FFF;
-      font-size: 0.8rem;
-      font-weight: 600;
-      max-width: 250px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-      margin-bottom: 8px;
-      display: none;
-      animation: popIn 0.3s ease-out forwards;
-    }
-    @keyframes popIn {
-      from { opacity: 0; transform: translateY(10px) scale(0.9); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .mayura-avatar-box { width: 68px; height: 68px; position: relative; display: flex; align-items: center; justify-content: center; }
-    .peacock-center-body { width: 48px; height: 48px; border-radius: 50%; background: #0B1120; border: 2px solid #38BDF8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.5); position: absolute; z-index: 3; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; }
-    .peacock-feathers { position: absolute; top: -10px; width: 100px; height: 100px; z-index: 1; pointer-events: none; transform-origin: center bottom; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); transform: scale(0.2) rotate(180deg); opacity: 0; }
-    .mayura-widget.bloomed .peacock-feathers { transform: scale(1.1) rotate(0deg); opacity: 1; }
-    .mayura-widget.bloomed .peacock-center-body { border-color: #10B981; box-shadow: 0 0 22px rgba(16, 185, 129, 0.8); animation: gentleFloat 2s infinite ease-in-out; }
-    @keyframes gentleFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
   </style>
 </head>
 <body>
@@ -237,26 +204,7 @@
   <header>
     <div class="header-top">
       <div class="brand-wrap" onclick="switchTab('home')">
-        <div class="brand-logo-svg">
-          <svg viewBox="0 0 100 100" width="32" height="32">
-            <defs>
-              <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#0284C7"/>
-                <stop offset="50%" stop-color="#0F172A"/>
-                <stop offset="100%" stop-color="#10B981"/>
-              </linearGradient>
-            </defs>
-            <path d="M50 8 L84 22 V52 C84 72 50 92 50 92 C50 92 16 72 16 52 V22 Z" fill="url(#shieldGrad)" stroke="#38BDF8" stroke-width="3"/>
-            <ellipse cx="50" cy="38" rx="14" ry="18" fill="#0369A1" stroke="#38BDF8" stroke-width="2"/>
-            <ellipse cx="50" cy="38" rx="9" ry="12" fill="#10B981"/>
-            <ellipse cx="50" cy="38" rx="5" ry="7" fill="#0B1120"/>
-            <circle cx="48" cy="36" r="2" fill="#38BDF8"/>
-            <path d="M50 56 V78" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="42" cy="18" r="2.5" fill="#F59E0B"/>
-            <circle cx="50" cy="15" r="2.5" fill="#38BDF8"/>
-            <circle cx="58" cy="18" r="2.5" fill="#F59E0B"/>
-          </svg>
-        </div>
+        <img src="mayura-logo.png" alt="Availo Logo" class="brand-logo-mini" onerror="this.style.display='none'">
         <div class="brand-text">
           <h1>Availo Digital Services</h1>
           <span class="brand-slogan">Smart Access. Total Control.</span>
@@ -268,7 +216,7 @@
       </div>
     </div>
 
-    <!-- 5 TABS INCLUDING PARTNER -->
+    <!-- 5 TABS -->
     <nav class="tab-nav">
       <button class="tab-btn active" id="tab-home" onclick="switchTab('home')">🏠 <span data-key="nav-home">హోమ్</span></button>
       <button class="tab-btn" id="tab-services" onclick="switchTab('services')">⚡ <span data-key="nav-services">సర్వీసెస్</span></button>
@@ -278,16 +226,26 @@
     </nav>
   </header>
 
-  <!-- 1. HOME TAB -->
+  <!-- 1. HOME TAB (WITH GRAND CENTER LOGO) -->
   <main id="view-home" class="tab-content active">
-    <!-- TWO ROADS BANNER (INSTANT CHOOSE) -->
+    <!-- TWO ROADS BANNER -->
     <div class="role-banner">
-      <button class="role-btn-primary" onclick="switchTab('services')">🛒 నాకు సర్వీస్ కావాలి</button>
-      <button class="role-btn-partner" onclick="switchTab('partner')">👨‍🔧 నేను పని చేస్తాను</button>
+      <button class="role-btn-primary" onclick="switchTab('services')" data-key="btn-role-srv">🛒 నాకు సర్వీస్ కావాలి</button>
+      <button class="role-btn-partner" onclick="switchTab('partner')" data-key="btn-role-ptn">👨‍🔧 నేను పని చేస్తాను</button>
+    </div>
+
+    <!-- GRAND CENTER MAYURA LOGO & STAGE -->
+    <div class="mayura-hero-stage" onclick="speakMayuraVoice()">
+      <div class="tap-hint" id="tapHint" data-key="tap-hint">🦚 లోగోని టచ్ చేయండి — మయూర మాట్లాడుతుంది</div>
+      <div class="grand-peacock-wrap">
+        <img src="mayura-logo.png" alt="Availo Mayura Logo" class="grand-peacock-img" id="centerMayuraImg">
+      </div>
+      <div class="mayura-speech-bubble" id="mayuraSpeechBubble">
+        నమస్కారం! నేను మీ అవైలో మయూరను 🦚
+      </div>
     </div>
 
     <div class="hero">
-      <div class="hero-badge" data-key="hero-badge">🛡️ Zero-App Hyperlocal System</div>
       <h2 id="hero-title">యాప్ డౌన్‌లోడ్ వద్దు..<br><span>వాయిస్ నోట్</span> ఇస్తే చాలు!</h2>
       <p data-key="hero-desc">గేట్ సెక్యూరిటీ, లోకల్ కాన్సియర్జ్ & ఎన్‌ఆర్‌ఐ పేరెంట్స్ కేర్ — విజయవాడ & గుంటూరు కోసం.</p>
       <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20want%20to%20order" target="_blank" class="btn-whatsapp-hero" data-key="hero-cta">
@@ -295,7 +253,7 @@
       </a>
     </div>
 
-    <div style="margin-top: 15px;">
+    <div style="margin-top: 25px;">
       <span class="sec-tag" data-key="how-tag">How It Works</span>
       <h3 class="sec-title" data-key="how-title">⚡ 3 స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు</h3>
       <div class="step-grid">
@@ -436,7 +394,7 @@
       </div>
 
       <div class="plan-rule-note">
-        <strong style="color: #38BDF8;" data-key="rule-title">📌 టాస్క్ నిబంధన (Task Definition):</strong><br>
+        <strong style="color: var(--neon-blue);" data-key="rule-title">📌 టాస్క్ నిబంధన (Task Definition):</strong><br>
         <span data-key="rule-desc">
           • 1 టాస్క్ = ఒక రౌండ్ ట్రిప్/విజిట్ (ఉదా: మందుల పికప్ ఒక టాస్క్; కిరాణా పికప్ మరొక టాస్క్).<br>
           • వస్తువులు, మందులు లేదా హాస్పిటల్ అసలైన ఖర్చులు కస్టమర్ భరించాలి (ఒరిజినల్ బిల్లులు అందజేస్తాము).<br>
@@ -465,59 +423,59 @@
     </div>
   </main>
 
-  <!-- 3. PARTNER ONBOARDING TAB (ZERO-APP TECHNICIAN REGISTRATION) -->
+  <!-- 3. PARTNER ONBOARDING TAB -->
   <main id="view-partner" class="tab-content">
-    <span class="sec-tag" style="color: #F59E0B;">Partner With Us</span>
-    <h3 class="sec-title">🤝 అవైలో పార్ట్‌నర్‌గా చేరండి</h3>
-    <p class="sec-sub">యాప్ డౌన్‌లోడ్ అవసరం లేదు. మీ వాట్సాప్‌కే నేరుగా అపార్ట్‌మెంట్ కస్టమర్ల వర్క్ ఆర్డర్స్ వస్తాయి.</p>
+    <span class="sec-tag" style="color: #F59E0B;" data-key="ptn-tag">Partner With Us</span>
+    <h3 class="sec-title" data-key="ptn-head">🤝 అవైలో పార్ట్‌నర్‌గా చేరండి</h3>
+    <p class="sec-sub" data-key="ptn-sub">యాప్ డౌన్‌లోడ్ అవసరం లేదు. మీ వాట్సాప్‌కే నేరుగా అపార్ట్‌మెంట్ కస్టమర్ల వర్క్ ఆర్డర్స్ వస్తాయి.</p>
 
     <div class="partner-card">
       <form id="partnerForm" onsubmit="handlePartnerSubmit(event)">
         <div class="form-group">
-          <label>మీ పేరు (Your Name):</label>
+          <label data-key="ptn-lbl-name">మీ పేరు (Your Name):</label>
           <input type="text" id="pName" class="form-control" placeholder="ఉదా: రాము" required>
         </div>
 
         <div class="form-group">
-          <label>మీ వాట్సాప్ ఫోన్ నంబర్ (WhatsApp Number):</label>
+          <label data-key="ptn-lbl-phone">మీ వాట్సాప్ ఫోన్ నంబర్ (WhatsApp Number):</label>
           <input type="tel" id="pPhone" class="form-control" placeholder="10 అంకెల ఫోన్ నంబర్" required>
         </div>
 
         <div class="form-group">
-          <label>మీరు అందించే సర్వీస్ (Your Skill / Trade):</label>
+          <label data-key="ptn-lbl-skill">మీరు అందించే సర్వీస్ (Your Skill / Trade):</label>
           <select id="pSkill" class="form-control" required>
-            <option value="">ఎంచుకోండి...</option>
-            <option value="Electrician & Plumber">ఎలక్ట్రీషియన్ / ప్లంబర్</option>
-            <option value="AC & Fridge Repair">A/C & ఫ్రిజ్ టెక్నీషియన్</option>
-            <option value="RO Water Purifier">RO వాటర్ ప్యూరిఫైయర్ సర్వీస్</option>
-            <option value="Deep Cleaning">హోమ్ & వాటర్ ట్యాంక్ డీప్ క్లీనింగ్</option>
-            <option value="Ladies Boutique & Tailor">బోటిక్ / టైలరింగ్</option>
-            <option value="Grocery & Vegetable Vendor">కిరాణా / కూరగాయల వెండర్</option>
-            <option value="Driver / Delivery Agent">డ్రైవర్ / డెలివరీ అసిస్టెంట్</option>
+            <option value="" data-key="opt-select">ఎంచుకోండి...</option>
+            <option value="Electrician & Plumber">Electrician & Plumber</option>
+            <option value="AC & Fridge Repair">AC & Fridge Repair</option>
+            <option value="RO Water Purifier">RO Water Purifier</option>
+            <option value="Deep Cleaning">Deep Cleaning</option>
+            <option value="Ladies Boutique & Tailor">Boutique & Tailoring</option>
+            <option value="Grocery & Vegetable Vendor">Grocery & Vegetable Vendor</option>
+            <option value="Driver / Delivery Agent">Driver / Delivery Agent</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>మీరు పని చేసే ఏరియా (Operating City & Area):</label>
+          <label data-key="ptn-lbl-loc">మీరు పని చేసే ఏరియా (Operating City & Area):</label>
           <select id="pLocation" class="form-control" required>
-            <option value="">ప్రాంతాన్ని ఎంచుకోండి...</option>
-            <option value="Vijayawada - Kanuru / Poranki / Auto Nagar">విజయవాడ (కానూరు, పోరంకి, ఆటోనగర్, పటమట)</option>
-            <option value="Vijayawada - Benz Circle / MG Road / Governorpet">విజయవాడ (బెంజ్ సర్కిల్, MG రోడ్, గవర్నర్‌పేట)</option>
-            <option value="Vijayawada - Bhavanipuram / Gollapudi">విజయవాడ (భవానిపురం, గొల్లపూడి)</option>
-            <option value="Guntur - Brodipet / Arundelpet">గుంటూరు (బ్రాడీపేట, అరుండల్‌పేట)</option>
-            <option value="Guntur - Vidyanagar / Pattabhipuram">గుంటూరు (విద్యానగర్, పట్టాభిపురం)</option>
+            <option value="" data-key="opt-loc-select">ప్రాంతాన్ని ఎంచుకోండి...</option>
+            <option value="Vijayawada - Kanuru / Poranki / Auto Nagar">Vijayawada (Kanuru, Poranki, Auto Nagar, Patamata)</option>
+            <option value="Vijayawada - Benz Circle / MG Road / Governorpet">Vijayawada (Benz Circle, MG Road, Governorpet)</option>
+            <option value="Vijayawada - Bhavanipuram / Gollapudi">Vijayawada (Bhavanipuram, Gollapudi)</option>
+            <option value="Guntur - Brodipet / Arundelpet">Guntur (Brodipet, Arundelpet)</option>
+            <option value="Guntur - Vidyanagar / Pattabhipuram">Guntur (Vidyanagar, Pattabhipuram)</option>
           </select>
         </div>
 
-        <button type="submit" class="btn-submit-partner">
+        <button type="submit" class="btn-submit-partner" data-key="btn-ptn-submit">
           📲 వాట్సాప్‌లో వివరాలు పంపండి (Join Now)
         </button>
       </form>
     </div>
 
     <div style="margin-top: 20px; background: rgba(245, 158, 11, 0.08); border-radius: 12px; padding: 14px; border: 1px solid rgba(245, 158, 11, 0.3);">
-      <strong style="color: #F59E0B; font-size: 0.85rem;">✨ పార్ట్‌నర్ బెనిఫిట్స్:</strong>
-      <p style="font-size: 0.76rem; color: #CBD5E1; margin-top: 4px; line-height: 1.5;">
+      <strong style="color: #F59E0B; font-size: 0.85rem;" data-key="ptn-ben-t">✨ పార్ట్‌నర్ బెనిఫిట్స్:</strong>
+      <p style="font-size: 0.76rem; color: #CBD5E1; margin-top: 4px; line-height: 1.5;" data-key="ptn-ben-d">
         • ఎలాంటి జాయినింగ్ ఫీజు లేదు.<br>
         • కొత్త యాప్‌లు వాడక్కర్లేదు, పనులు నేరుగా వాట్సాప్‌లో వస్తాయి.<br>
         • గేటెడ్ కమ్యూనిటీల నుండి రెగ్యులర్ ఆదాయం.
@@ -569,64 +527,25 @@
       <h4 style="font-size: 1.15rem; color: #FFF; margin-bottom: 6px;">Availo Digital Services</h4>
       <p style="font-size: 0.85rem; color: var(--text-dim);" data-key="cnt-loc">విజయవాడ & గుంటూరు రీజియన్</p>
       
-      <a href="tel:+919966157369" class="btn-call">📞 నేరుగా కాల్ చేయండి: 9966157369</a>
+      <a href="tel:+919966157369" class="btn-call" data-key="cnt-btn-call">📞 నేరుగా కాల్ చేయండి: 9966157369</a>
       <br>
       <a href="https://api.whatsapp.com/send?phone=919966157369&text=Hi%20Availo,%20I%20have%20an%20enquiry" target="_blank" class="btn-whatsapp-hero" style="font-size: 0.88rem; padding: 12px 18px;" data-key="cnt-wa">
         💬 WhatsApp లో మెసేజ్ చేయండి
       </a>
 
       <div style="margin-top: 24px; padding-top: 15px; border-top: 1px solid var(--border-dark); font-size: 0.8rem; color: #94A3B8;">
-        <strong style="color: #38BDF8;" data-key="cnt-hrs-t">⏰ వర్కింగ్ అవర్స్:</strong><br>
+        <strong style="color: var(--neon-blue);" data-key="cnt-hrs-t">⏰ వర్కింగ్ అవర్స్:</strong><br>
         <span data-key="cnt-hrs-d">డైలీ సర్వీస్: ఉదయం 7:00 నుండి రాత్రి 9:00 వరకు<br>NRI ఎమర్జెన్సీ: 24/7 వాట్సాప్ రెస్పాన్స్</span>
       </div>
     </div>
   </main>
 
-  <!-- MAYURA PEACOCK BLOOM & TALKING WIDGET -->
-  <div class="mayura-widget" id="mayuraWidget" onclick="triggerMayuraBloomAndSpeak()" ontouchstart="triggerMayuraBloomAndSpeak()">
-    <div class="mayura-bubble" id="mayuraBubble">
-      నమస్కారం! నేను మీ అవైలో మయూరను 🦚
-    </div>
-    <div class="mayura-avatar-box">
-      <svg class="peacock-feathers" viewBox="0 0 100 100">
-        <defs>
-          <linearGradient id="featherGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#38BDF8"/>
-            <stop offset="60%" stop-color="#0284C7"/>
-            <stop offset="100%" stop-color="#10B981"/>
-          </linearGradient>
-        </defs>
-        <path d="M50 85 C30 50, 10 30, 15 15 C25 20, 45 60, 50 85 Z" fill="url(#featherGrad)" opacity="0.9"/>
-        <path d="M50 85 C38 45, 25 20, 32 8 C42 16, 48 55, 50 85 Z" fill="url(#featherGrad)"/>
-        <path d="M50 85 C45 40, 42 12, 50 4 C58 12, 55 40, 50 85 Z" fill="url(#featherGrad)"/>
-        <path d="M50 85 C55 45, 68 20, 68 8 C75 16, 62 55, 50 85 Z" fill="url(#featherGrad)"/>
-        <path d="M50 85 C70 50, 90 30, 85 15 C75 20, 55 60, 50 85 Z" fill="url(#featherGrad)" opacity="0.9"/>
-        <circle cx="20" cy="20" r="3" fill="#F59E0B"/>
-        <circle cx="35" cy="12" r="3.5" fill="#F59E0B"/>
-        <circle cx="50" cy="8" r="4" fill="#F59E0B"/>
-        <circle cx="65" cy="12" r="3.5" fill="#F59E0B"/>
-        <circle cx="80" cy="20" r="3" fill="#F59E0B"/>
-      </svg>
-      <div class="peacock-center-body">
-        <svg viewBox="0 0 100 100" width="30" height="30">
-          <ellipse cx="50" cy="45" rx="14" ry="18" fill="#0369A1" stroke="#38BDF8" stroke-width="2"/>
-          <ellipse cx="50" cy="45" rx="9" ry="12" fill="#10B981"/>
-          <ellipse cx="50" cy="45" rx="5" ry="7" fill="#0B1120"/>
-          <circle cx="48" cy="43" r="2" fill="#38BDF8"/>
-          <circle cx="42" cy="22" r="2.5" fill="#F59E0B"/>
-          <circle cx="50" cy="18" r="2.5" fill="#38BDF8"/>
-          <circle cx="58" cy="22" r="2.5" fill="#F59E0B"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-
   <!-- FOOTER -->
   <footer>
     <span class="footer-slogan">Smart Access. Total Control.</span>
     <strong style="color: #FFF;">Availo Digital Services</strong><br>
-    <span>Vijayawada & Guntur Region</span><br>
-    <div><span class="msme-pill">MSME Registered</span></div>
+    <span data-key="footer-loc">విజయవాడ & గుంటూరు రీజియన్</span><br>
+    <div><span class="msme-pill" data-key="footer-msme">MSME రిజిస్టర్డ్</span></div>
     <div style="margin-top: 10px; opacity: 0.5; font-size: 0.7rem;">
       © 2026 Availo Digital Services. All Rights Reserved.
     </div>
@@ -634,7 +553,19 @@
 
   <script>
     let currentLang = 'te';
-    let hasBloomed = false;
+    let hasSpoken = false;
+    let synth = window.speechSynthesis;
+
+    // వాయిస్ ఇంజిన్ ప్రీ-వార్మప్ (Instant Voice response)
+    function initVoiceEngine() {
+      if ('speechSynthesis' in window) {
+        synth.getVoices();
+        if (synth.onvoiceschanged !== undefined) {
+          synth.onvoiceschanged = () => { synth.getVoices(); };
+        }
+      }
+    }
+    initVoiceEngine();
 
     function switchTab(tabName) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -643,8 +574,8 @@
       document.getElementById('view-' + tabName).classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      if (tabName === 'services' && !hasBloomed) {
-        triggerMayuraBloomAndSpeak();
+      if (tabName === 'services' && !hasSpoken) {
+        speakMayuraVoice();
       }
     }
 
@@ -659,34 +590,53 @@
       window.open(`https://api.whatsapp.com/send?phone=919966157369&text=${waMsg}`, '_blank');
     }
 
-    function triggerMayuraBloomAndSpeak() {
-      const widget = document.getElementById('mayuraWidget');
-      const bubble = document.getElementById('mayuraBubble');
+    // GRAND CENTER LOGO VOICE TRIGGER
+    function speakMayuraVoice() {
+      const bubble = document.getElementById('mayuraSpeechBubble');
+      const logoImg = document.getElementById('centerMayuraImg');
       
-      widget.classList.add('bloomed');
       bubble.style.display = 'block';
-      hasBloomed = true;
+      hasSpoken = true;
 
-      const teMsg = "నమస్కారం! నేను మీ అవైలో మయూరను. విజయవాడ మరియు గుంటూరులో మీకు ఎలాంటి హోమ్ సర్వీసులు, గేట్ పాస్ లేదా కేర్ ప్లాన్స్ కావాలన్నా నేను సిద్ధంగా ఉన్నాను!";
+      // Pulse Glow Animation on Speak
+      logoImg.style.transform = 'scale(1.08)';
+      logoImg.style.boxShadow = '0 0 55px rgba(56, 189, 248, 0.9)';
+      setTimeout(() => {
+        logoImg.style.transform = 'scale(1)';
+        logoImg.style.boxShadow = '0 0 30px rgba(56, 189, 248, 0.45)';
+      }, 1000);
+
+      const teMsg = "నమస్కారం! నేను మీ అవైలో మయూరను. మీకు ఎలాంటి సర్వీసులు కావాలన్నా సహాయం చేయడానికి సిద్ధంగా ఉన్నాను!";
       const enMsg = "Hello! I am Availo Mayura. How can I help you today with home repairs, gate passes, or parent care in Vijayawada and Guntur?";
 
       bubble.innerText = currentLang === 'te' ? "నమస్కారం! నేను మీ అవైలో మయూరను 🦚" : "Hello! I am Availo Mayura 🦚";
 
       if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(currentLang === 'te' ? teMsg : enMsg);
+        synth.cancel();
+        const textToSpeak = currentLang === 'te' ? teMsg : enMsg;
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+
+        const voices = synth.getVoices();
+        const preferredVoice = voices.find(v => v.lang.startsWith(currentLang === 'te' ? 'te' : 'en') && v.localService) ||
+                               voices.find(v => v.lang.includes('IN')) || null;
+
+        if (preferredVoice) utterance.voice = preferredVoice;
         utterance.lang = currentLang === 'te' ? 'te-IN' : 'en-IN';
-        utterance.rate = 0.95;
-        window.speechSynthesis.speak(utterance);
+        utterance.rate = 1.0;
+        utterance.pitch = 1.05;
+
+        synth.speak(utterance);
       }
     }
 
-    document.addEventListener('click', function onFirstTouch() {
-      if (!hasBloomed) {
-        triggerMayuraBloomAndSpeak();
+    // మొదటి టచ్‌తోనే ఆడియో రెడీ అవ్వడం
+    document.addEventListener('touchstart', function onFirstTouch() {
+      if ('speechSynthesis' in window) {
+        const emptyUtterance = new SpeechSynthesisUtterance('');
+        synth.speak(emptyUtterance);
       }
-      document.removeEventListener('click', onFirstTouch);
-    }, { once: true });
+      document.removeEventListener('touchstart', onFirstTouch);
+    }, { passive: true });
 
     const translations = {
       te: {
@@ -695,7 +645,9 @@
         "nav-partner": "పార్ట్‌నర్ జాయిన్",
         "nav-about": "అబౌట్",
         "nav-contact": "కాంటాక్ట్",
-        "hero-badge": "🛡️ Zero-App Hyperlocal System",
+        "btn-role-srv": "🛒 నాకు సర్వీస్ కావాలి",
+        "btn-role-ptn": "👨‍🔧 నేను పని చేస్తాను",
+        "tap-hint": "🦚 లోగోని టచ్ చేయండి — మయూర మాట్లాడుతుంది",
         "hero-desc": "గేట్ సెక్యూరిటీ, లోకల్ కాన్సియర్జ్ & ఎన్‌ఆర్‌ఐ పేరెంట్స్ కేర్ — విజయవాడ & గుంటూరు కోసం.",
         "hero-cta": "🎙️ ఆర్డర్ ఇవ్వండి (WhatsApp)",
         "how-tag": "How It Works",
@@ -768,13 +720,28 @@
         "up1-d": "పిల్లలు స్కూల్ వ్యాన్ ఎక్కినా, అపార్ట్‌మెంట్ గేట్ వద్ద దిగినా వెంటనే తల్లిదండ్రుల వాట్సాప్‌కి ఆటోమేటిక్ గేట్ అలర్ట్ వస్తుంది.",
         "up2-t": "🏷️ 2. NFC స్మార్ట్ కీ ట్యాగ్ ఎంట్రీ",
         "up2-d": "స్మార్ట్‌ఫోన్ లేదా ఇంటర్నెట్ లేని వృద్ధులు మరియు వాకింగ్ వెళ్లేవారి కోసం సింపుల్ ట్యాప్-అండ్-ఎంటర్ స్మార్ట్ కీచెయిన్ ట్యాగ్స్.",
+        "ptn-tag": "Partner With Us",
+        "ptn-head": "🤝 అవైలో పార్ట్‌నర్‌గా చేరండి",
+        "ptn-sub": "యాప్ డౌన్‌లోడ్ అవసరం లేదు. మీ వాట్సాప్‌కే నేరుగా అపార్ట్‌మెంట్ కస్టమర్ల వర్క్ ఆర్డర్స్ వస్తాయి.",
+        "ptn-lbl-name": "మీ పేరు (Your Name):",
+        "ptn-lbl-phone": "మీ వాట్సాప్ ఫోన్ నంబర్ (WhatsApp Number):",
+        "ptn-lbl-skill": "మీరు అందించే సర్వీస్ (Your Skill / Trade):",
+        "opt-select": "ఎంచుకోండి...",
+        "ptn-lbl-loc": "మీరు పని చేసే ఏరియా (Operating City & Area):",
+        "opt-loc-select": "ప్రాంతాన్ని ఎంచుకోండి...",
+        "btn-ptn-submit": "📲 వాట్సాప్‌లో వివరాలు పంపండి (Join Now)",
+        "ptn-ben-t": "✨ పార్ట్‌నర్ బెనిఫిట్స్:",
+        "ptn-ben-d": "• ఎలాంటి జాయినింగ్ ఫీజు లేదు.<br>• కొత్త యాప్‌లు వాడక్కర్లేదు, పనులు నేరుగా వాట్సాప్‌లో వస్తాయి.<br>• గేటెడ్ కమ్యూనిటీల నుండి రెగ్యులర్ ఆదాయం.",
         "cnt-tag": "Get In Touch",
         "cnt-head": "📞 మమ్మల్ని సంప్రదించండి",
         "cnt-sub": "విజయవాడ & గుంటూరులో ఎలాంటి సాయం కోసమైనా మేము అందుబాటులో ఉంటాము.",
         "cnt-loc": "విజయవాడ & గుంటూరు రీజియన్",
+        "cnt-btn-call": "📞 నేరుగా కాల్ చేయండి: 9966157369",
         "cnt-wa": "💬 WhatsApp లో మెసేజ్ చేయండి",
         "cnt-hrs-t": "⏰ వర్కింగ్ అవర్స్:",
-        "cnt-hrs-d": "డైలీ సర్వీస్: ఉదయం 7:00 నుండి రాత్రి 9:00 వరకు<br>NRI ఎమర్జెన్సీ: 24/7 వాట్సాప్ రెస్పాన్స్"
+        "cnt-hrs-d": "డైలీ సర్వీస్: ఉదయం 7:00 నుండి రాత్రి 9:00 వరకు<br>NRI ఎమర్జెన్సీ: 24/7 వాట్సాప్ రెస్పాన్స్",
+        "footer-loc": "విజయవాడ & గుంటూరు రీజియన్",
+        "footer-msme": "MSME రిజిస్టర్డ్"
       },
       en: {
         "nav-home": "Home",
@@ -782,7 +749,9 @@
         "nav-partner": "Partner Join",
         "nav-about": "About",
         "nav-contact": "Contact",
-        "hero-badge": "🛡️ Zero-App Hyperlocal System",
+        "btn-role-srv": "🛒 I Want a Service",
+        "btn-role-ptn": "👨‍🔧 Join as Technician",
+        "tap-hint": "🦚 Tap the Logo — Mayura Speaks",
         "hero-desc": "Gate Security, Local Concierge & NRI Parent Care — Exclusively for Vijayawada & Guntur.",
         "hero-cta": "🎙️ Order Now (WhatsApp)",
         "how-tag": "How It Works",
@@ -855,13 +824,28 @@
         "up1-d": "Instant automated WhatsApp alerts for parents when kids board or alight from school vans at the society gate.",
         "up2-t": "🏷️ 2. NFC Smart Key Tag Gate Access",
         "up2-d": "Effortless tap-and-enter keychain tags for elderly walkers and domestic staff without requiring smartphones.",
+        "ptn-tag": "Partner With Us",
+        "ptn-head": "🤝 Join as an Availo Partner",
+        "ptn-sub": "No app download needed. Receive direct customer orders on your WhatsApp.",
+        "ptn-lbl-name": "Your Name:",
+        "ptn-lbl-phone": "WhatsApp Phone Number:",
+        "ptn-lbl-skill": "Your Skill / Trade:",
+        "opt-select": "Select your trade...",
+        "ptn-lbl-loc": "Operating City & Area:",
+        "opt-loc-select": "Select location...",
+        "btn-ptn-submit": "📲 Submit via WhatsApp (Join Now)",
+        "ptn-ben-t": "✨ Partner Benefits:",
+        "ptn-ben-d": "• Zero joining or listing fees.<br>• No apps needed, work orders come straight to WhatsApp.<br>• Consistent revenue from gated communities.",
         "cnt-tag": "Get In Touch",
         "cnt-head": "📞 Contact Us",
         "cnt-sub": "We are available 24/7 for dedicated support in Vijayawada & Guntur.",
         "cnt-loc": "Vijayawada & Guntur Region",
+        "cnt-btn-call": "📞 Call Directly: 9966157369",
         "cnt-wa": "💬 Chat with Us on WhatsApp",
         "cnt-hrs-t": "⏰ Working Hours:",
-        "cnt-hrs-d": "Daily Services: 7:00 AM to 9:00 PM<br>NRI Emergency Support: 24/7 on WhatsApp"
+        "cnt-hrs-d": "Daily Services: 7:00 AM to 9:00 PM<br>NRI Emergency Support: 24/7 on WhatsApp",
+        "footer-loc": "Vijayawada & Guntur Region",
+        "footer-msme": "MSME Registered"
       }
     };
 
@@ -879,3 +863,4 @@
   </script>
 </body>
 </html>
+
