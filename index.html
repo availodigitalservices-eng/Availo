@@ -1,1 +1,173 @@
 
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVAILO - Smart Access. Total Control.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Telugu:ital@0;1&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-navy: #0c1a30;
+            --bg-cream: #fcf9f2;
+            --gold-accent: #d4af37;
+            --text-navy: #0c1a30;
+            --text-light: #ffffff;
+            --whatsapp-green: #15803d;
+            --border-light: #e5e0d3;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tiro Telugu', 'Inter', serif; }
+        body { background-color: var(--bg-cream); color: var(--text-navy); line-height: 1.6; padding-bottom: 75px; }
+        header { background-color: var(--bg-navy); color: var(--text-light); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
+        .brand-container { display: flex; align-items: center; gap: 10px; }
+        .brand-logo { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--gold-accent); display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #0e2a47 0%, #0c1a30 100%); }
+        .brand-text h1 { font-size: 17px; font-weight: 700; letter-spacing: 1px; color: #ffffff; font-family: 'Inter', sans-serif; }
+        .brand-text p { font-size: 9.5px; color: #cbd5e1; font-family: 'Inter', sans-serif; }
+        .menu-btn { background: none; border: none; color: var(--text-light); font-size: 24px; cursor: pointer; }
+        .hero { background-color: var(--bg-navy); color: var(--text-light); padding: 25px 20px 35px; text-align: left; }
+        .tag-pill { display: inline-block; font-size: 12px; color: var(--gold-accent); margin-bottom: 8px; }
+        .hero h2 { font-size: 24px; line-height: 1.4; margin-bottom: 12px; font-weight: 600; }
+        .hero p { font-size: 13.5px; color: #cbd5e1; margin-bottom: 20px; line-height: 1.6; }
+        .btn-whatsapp { display: flex; align-items: center; justify-content: center; gap: 8px; background-color: var(--whatsapp-green); color: #ffffff; text-decoration: none; padding: 12px; border-radius: 6px; font-size: 14.5px; font-weight: 600; margin-bottom: 10px; }
+        .btn-outline { display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.3); color: #ffffff; text-decoration: none; padding: 10px; border-radius: 6px; font-size: 13.5px; }
+        .live-ticker { background: #111827; border-top: 1px solid var(--gold-accent); border-bottom: 1px solid var(--gold-accent); padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; }
+        .pulse-dot { width: 8px; height: 8px; background: #ef4444; border-radius: 50%; box-shadow: 0 0 6px #ef4444; display: inline-block; margin-right: 6px; }
+        .section-padding { padding: 24px 18px; }
+        .section-label { color: var(--whatsapp-green); font-size: 12.5px; font-weight: 600; margin-bottom: 4px; }
+        .section-title { font-size: 20px; color: var(--text-navy); margin-bottom: 16px; line-height: 1.3; }
+        .step-item { border-bottom: 1px solid var(--border-light); padding-bottom: 14px; margin-bottom: 14px; }
+        .step-num { font-size: 18px; color: var(--gold-accent); font-weight: 700; font-family: 'Inter', sans-serif; }
+        .service-list { background: #ffffff; border-radius: 8px; border: 1px solid var(--border-light); overflow: hidden; }
+        .service-card { padding: 14px 16px; border-bottom: 1px solid var(--border-light); display: flex; align-items: flex-start; gap: 12px; }
+        .service-card:last-child { border-bottom: none; }
+        .nri-card { background: var(--bg-navy); color: white; border-radius: 8px; padding: 18px; margin-top: 15px; border: 1px solid rgba(212, 175, 55, 0.4); }
+        .nri-price { font-size: 22px; color: #93c5fd; font-weight: 700; font-family: 'Inter', sans-serif; margin-bottom: 8px; }
+        footer { background-color: var(--bg-navy); color: var(--text-light); padding: 25px 18px; border-top: 1px solid rgba(212, 175, 55, 0.3); }
+        .footer-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+        .msme-badge { border: 1px solid var(--gold-accent); padding: 5px 8px; border-radius: 4px; font-size: 10.5px; color: #fef08a; white-space: nowrap; }
+        .bottom-action-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; padding: 10px 16px; border-top: 1px solid var(--border-light); display: flex; gap: 10px; z-index: 100; }
+        .bottom-bar-btn { flex: 1; text-align: center; padding: 10px; border-radius: 6px; text-decoration: none; font-size: 13.5px; font-weight: 600; }
+        .btn-call { background: #f1f5f9; color: var(--text-navy); border: 1px solid #cbd5e1; }
+        .btn-order { background: var(--whatsapp-green); color: white; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-container">
+            <div class="brand-logo">🦚</div>
+            <div class="brand-text">
+                <h1>AVAILO</h1>
+                <p>Smart Access. Total Control.</p>
+            </div>
+        </div>
+        <button class="menu-btn" onclick="location.href='availo-privacy.html'">☰</button>
+    </header>
+
+    <section class="hero">
+        <div class="tag-pill">🦚 టచ్ చేయండి — మయూర మాట్లాడుతుంది</div>
+        <h2>యాప్ డౌన్‌లోడ్ వద్దు.<br>ఒక్క వాయిస్ నోట్ ఇస్తే చాలు.</h2>
+        <p>గేట్ సెక్యూరిటీ, హోమ్ రిపేర్స్, డైలీ ఎసెన్షియల్స్ & విదేశాల్లో ఉన్న పిల్లల తరపున తల్లిదండ్రుల సంరక్షణ — అన్నీ మీ WhatsApp లోనే.</p>
+        <a href="availo-chat.html" class="btn-whatsapp">WhatsApp లో ఆర్డర్ ఇవ్వండి 💬</a>
+        <a href="#nri-section" class="btn-outline">NRI Care ప్లాన్స్ చూడండి</a>
+    </section>
+
+    <div class="live-ticker">
+        <div><span class="pulse-dot"></span><strong style="color: #fef08a;">లైవ్ అలర్ట్:</strong></div>
+        <div style="color: #e2e8f0;">రాత్రి 8:00 కి... <span style="color: #38bdf8; font-weight: 600;">'ది నాకౌట్ ఛాలెంజ్'</span> అన్‌లాక్ అవుతుంది 🥊</div>
+    </div>
+
+    <section class="section-padding">
+        <div class="section-label">ఎలా పని చేస్తుంది</div>
+        <h3 class="section-title">మూడు స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు</h3>
+        <div class="step-item">
+            <div class="step-num">01</div>
+            <h4>స్కాన్ చేయండి</h4>
+            <p>లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి — యాప్ ఇన్‌స్టాల్ అవసరం లేదు.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-num">02</div>
+            <h4>మాట్లాడండి</h4>
+            <p>WhatsApp లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి ఒక వాయిస్ నోట్ ఇవ్వండి.</p>
+        </div>
+        <div class="step-item">
+            <div class="step-num">03</div>
+            <h4>డోర్ డెలివరీ</h4>
+            <p>వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు.</p>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background-color: #f6f2e7;">
+        <div class="section-label">అవైలో సర్వీసెస్ కేటలాగ్</div>
+        <h3 class="section-title">ఇంటి పనుల నుండి ఎమర్జెన్సీ దాకా — ఒక్క మెసేజ్‌లో</h3>
+        <div class="service-list">
+            <div class="service-card">
+                <div style="font-size: 20px;">⚡</div>
+                <div>
+                    <h4>ఎలక్ట్రీషియన్ & ప్లంబర్</h4>
+                    <p style="font-size: 12.5px; color: #64748b;">లీకేజీలు, వైరింగ్ & స్విచ్ బోర్డు రిపేర్లు</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div style="font-size: 20px;">🛒</div>
+                <div>
+                    <h4>కిరాణా & కూరగాయలు</h4>
+                    <p style="font-size: 12.5px; color: #64748b;">ఒరిజినల్ షాప్ బిల్లుతో తాజా సరుకులు</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div style="font-size: 20px;">❄️</div>
+                <div>
+                    <h4>A/C & ఫ్రిజ్ సర్వీస్</h4>
+                    <p style="font-size: 12.5px; color: #64748b;">గ్యాస్ ఫిల్లింగ్, కూలింగ్ ఇష్యూస్ & క్లీనింగ్</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div style="font-size: 20px;">♻️</div>
+                <div>
+                    <h4>ఈ-వేస్ట్ & స్క్రాప్ పికప్</h4>
+                    <p style="font-size: 12.5px; color: #64748b;">పాత ఎలక్ట్రానిక్స్ ఇచ్చి ₹150 గ్రోసరీ క్రెడిట్ పొందండి</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="nri-section">
+        <div class="section-label">👵 NRI Parents Care Plans</div>
+        <h3 class="section-title">విదేశాల్లో ఉన్నా — తల్లిదండ్రుల బాగోగులు మీ కంట్రోల్‌లో</h3>
+        <div class="nri-card">
+            <div style="font-size: 13px; color: #fef08a;">💙 Care Plan</div>
+            <div class="nri-price">₹2,499/నెల</div>
+            <p style="font-size: 13px;">• Home Check-in: నెలకు 1 సారి</p>
+            <p style="font-size: 13px;">• Hospital Escort: నెలకు 1 సారి (3 గం. వరకు)</p>
+            <p style="font-size: 13px;">• Delivery Tasks: నెలకు 2 సార్లు</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div>
+                <h4 style="font-size: 16px; color: white;">AVAILO</h4>
+                <p style="font-size: 11px; color: #94a3b8;">Smart Access. Total Control.</p>
+            </div>
+            <div class="msme-badge">
+                MSME: UDYAM-AP-20-0109827
+            </div>
+        </div>
+        <p style="font-size: 11.5px; color: #94a3b8; margin-bottom: 10px;">© 2026 Availo Digital Services. విజయవాడ & గుంటూరు రీజియన్.</p>
+        <div style="font-size: 12px; display: flex; gap: 12px;">
+            <a href="availo-privacy.html" style="color: #cbd5e1; text-decoration: none;">Privacy Policy</a>
+            <span style="color: #64748b;">•</span>
+            <a href="tel:9966157369" style="color: #cbd5e1; text-decoration: none;">Call Support</a>
+        </div>
+    </footer>
+
+    <div class="bottom-action-bar">
+        <a href="tel:9966157369" class="bottom-bar-btn btn-call">📞 కాల్ చేయండి</a>
+        <a href="availo-chat.html" class="bottom-bar-btn btn-order">💬 ఆర్డర్ చేయండి</a>
+    </div>
+
+</body>
+</html>
