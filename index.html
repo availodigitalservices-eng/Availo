@@ -4,818 +4,410 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AVAILO - Smart Access. Total Control.</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tiro+Telugu:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@600;700&family=Ramabhadra&family=Suranna&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-navy: #0c1a30;
-            --bg-cream: #fcf9f2;
-            --card-cream: #ffffff;
-            --gold-accent: #d4af37;
-            --text-navy: #0c1a30;
-            --text-light: #ffffff;
-            --whatsapp-green: #15803d;
-            --border-light: #e5e0d3;
-            --danger-red: #ef4444;
+            --bg-dark: #030b1e;
+            --panel-bg: #071530;
+            --cyan-glow: #00e5ff;
+            --gold-glow: #eab308;
+            --text-main: #ffffff;
+            --text-sub: #94a3b8;
+            --green-wa: #16a34a;
+            --border-glow: 1px solid rgba(0, 229, 255, 0.35);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Tiro Telugu', 'Inter', serif;
-            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-cream);
-            color: var(--text-navy);
-            line-height: 1.6;
-            padding-bottom: 80px;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            padding-bottom: 75px;
+        }
+
+        .te-heading {
+            font-family: 'Ramabhadra', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .te-body {
+            font-family: 'Suranna', serif;
         }
 
         /* Top Header */
         header {
-            background-color: var(--bg-navy);
-            color: var(--text-light);
+            background: rgba(7, 21, 48, 0.95);
+            backdrop-filter: blur(8px);
             padding: 12px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border-bottom: var(--border-glow);
             position: sticky;
             top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            z-index: 100;
         }
 
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .brand-logo {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            border: 1.5px solid var(--gold-accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle, #0e2a47 0%, #0c1a30 100%);
-            cursor: pointer;
-            animation: pulse-ring 2s infinite;
-        }
-
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5); }
-            70% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
-        }
-
-        .brand-text h1 {
-            font-size: 17px;
+        .brand-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 22px;
             font-weight: 700;
-            letter-spacing: 1.2px;
             color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            line-height: 1.1;
+            letter-spacing: 2px;
+            line-height: 1;
         }
 
-        .brand-text p {
+        .brand-sub {
             font-size: 9.5px;
-            color: #cbd5e1;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--gold-accent);
-            color: #fef08a;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            cursor: pointer;
-            font-weight: 600;
+            color: var(--cyan-glow);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .menu-btn {
             background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 24px;
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            color: var(--cyan-glow);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 18px;
             cursor: pointer;
         }
 
-        /* Slide-in Navigation Drawer */
+        /* Hero View */
+        .hero {
+            padding: 30px 18px 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Center Mayura Logo Ring */
+        .mayura-container {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 2px solid var(--cyan-glow);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.4), inset 0 0 20px rgba(0, 229, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, #0e2a47 0%, #030b1e 100%);
+            margin-bottom: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .mayura-symbol {
+            font-size: 50px;
+            user-select: none;
+        }
+
+        .pulse-badge {
+            display: inline-block;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .main-te-title {
+            font-size: 24px;
+            color: #ffffff;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        .main-te-desc {
+            font-size: 14px;
+            color: var(--text-sub);
+            max-width: 330px;
+            margin-bottom: 24px;
+        }
+
+        /* Dual Action Options */
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            max-width: 360px;
+            margin-bottom: 20px;
+        }
+
+        .action-card {
+            background: var(--panel-bg);
+            border: var(--border-glow);
+            border-radius: 8px;
+            padding: 14px 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .action-card:active {
+            border-color: var(--gold-glow);
+        }
+
+        .action-card h3 {
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        .action-card small {
+            font-size: 10.5px;
+            color: var(--cyan-glow);
+            display: block;
+        }
+
+        /* Service Cards Section */
+        .section-box {
+            padding: 18px;
+        }
+
+        .sec-title {
+            font-size: 16px;
+            color: var(--cyan-glow);
+            border-left: 3px solid var(--cyan-glow);
+            padding-left: 8px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .service-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .service-row {
+            background: var(--panel-bg);
+            border: var(--border-glow);
+            border-radius: 8px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .service-row-icon {
+            font-size: 22px;
+            color: var(--cyan-glow);
+        }
+
+        .service-row h4 {
+            font-size: 14px;
+            color: #ffffff;
+        }
+
+        .service-row p {
+            font-size: 11.5px;
+            color: var(--text-sub);
+        }
+
+        /* Navigation Overlay Drawer */
         .nav-drawer {
             position: fixed;
             top: 0;
-            right: -280px;
-            width: 270px;
+            left: 0;
+            width: 100%;
             height: 100%;
-            background-color: var(--bg-navy);
-            box-shadow: -4px 0 15px rgba(0, 0, 0, 0.4);
-            transition: right 0.3s ease;
-            z-index: 1001;
-            display: flex;
+            background: rgba(3, 11, 30, 0.98);
+            z-index: 200;
+            display: none;
             flex-direction: column;
-            padding: 24px 18px;
+            padding: 20px;
         }
 
         .nav-drawer.open {
-            right: 0;
-        }
-
-        .nav-drawer-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            padding-bottom: 14px;
-            margin-bottom: 16px;
         }
 
-        .close-btn {
+        .drawer-close {
+            align-self: flex-end;
             background: none;
             border: none;
             color: #ffffff;
-            font-size: 26px;
+            font-size: 28px;
             cursor: pointer;
         }
 
         .drawer-links {
+            list-style: none;
+            margin-top: 25px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 18px;
         }
 
         .drawer-links a {
-            color: #f8fafc;
-            text-decoration: none;
-            font-size: 14.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .drawer-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            z-index: 1000;
-        }
-
-        .drawer-overlay.show {
-            display: block;
-        }
-
-        /* Hero Section */
-        .hero {
-            background-color: var(--bg-navy);
-            color: var(--text-light);
-            padding: 28px 18px 36px;
-            text-align: left;
-            position: relative;
-        }
-
-        .mayura-trigger {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: var(--gold-accent);
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 5px 10px;
-            border-radius: 20px;
-            margin-bottom: 14px;
-            cursor: pointer;
-        }
-
-        .hero h2 {
-            font-size: 23px;
-            line-height: 1.4;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .hero p {
-            font-size: 13.5px;
-            color: #cbd5e1;
-            margin-bottom: 22px;
-            line-height: 1.6;
-        }
-
-        /* Dual Path Selection */
-        .choice-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .btn-choice {
-            padding: 12px 10px;
-            border-radius: 8px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 13px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-
-        .btn-need-service {
-            background-color: var(--whatsapp-green);
             color: #ffffff;
-            box-shadow: 0 4px 10px rgba(21, 128, 61, 0.3);
-        }
-
-        .btn-be-partner {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--gold-accent);
-            color: #fef08a;
-        }
-
-        /* Mystery Ticker */
-        .live-ticker {
-            background: #111827;
-            border-top: 1.5px solid var(--gold-accent);
-            border-bottom: 1.5px solid var(--gold-accent);
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 12.5px;
-        }
-
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--danger-red);
-            border-radius: 50%;
-            box-shadow: 0 0 6px var(--danger-red);
-            display: inline-block;
-            margin-right: 6px;
-        }
-
-        /* Section Scaffolding */
-        .section-padding {
-            padding: 24px 18px;
-        }
-
-        .section-label {
-            color: var(--whatsapp-green);
-            font-size: 12.5px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .section-title {
-            font-size: 20px;
-            color: var(--text-navy);
-            margin-bottom: 16px;
-            line-height: 1.3;
-        }
-
-        .step-item {
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 14px;
-            margin-bottom: 14px;
-        }
-
-        .step-num {
-            font-size: 18px;
-            color: var(--gold-accent);
-            font-weight: 700;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Service Cards */
-        .service-list {
-            background: #ffffff;
-            border-radius: 8px;
-            border: 1px solid var(--border-light);
-            overflow: hidden;
-        }
-
-        .service-card {
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--border-light);
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .service-card:last-child {
-            border-bottom: none;
-        }
-
-        /* NRI Box */
-        .nri-card {
-            background: var(--bg-navy);
-            color: white;
-            border-radius: 8px;
-            padding: 18px;
-            margin-top: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-        }
-
-        .nri-price {
-            font-size: 22px;
-            color: #93c5fd;
-            font-weight: 700;
-            font-family: 'Inter', sans-serif;
-            margin-bottom: 8px;
-        }
-
-        /* Partner Form Container */
-        .form-box {
-            background: #ffffff;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 18px;
-            margin-top: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            color: #475569;
-            margin-bottom: 4px;
-            font-weight: 600;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border-light);
-            border-radius: 6px;
-            font-size: 13.5px;
-            background: #f8fafc;
-            color: var(--text-navy);
-            outline: none;
-        }
-
-        .btn-submit-partner {
-            width: 100%;
-            background: var(--bg-navy);
-            color: #fef08a;
-            border: 1px solid var(--gold-accent);
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* Privacy & Terms Box */
-        .privacy-box {
-            background: #ffffff;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 18px;
-            margin-top: 12px;
-        }
-
-        .highlight-box {
-            background: #f1f5f9;
-            border-left: 3.5px solid var(--whatsapp-green);
-            padding: 10px 12px;
-            margin: 12px 0;
-            font-size: 13px;
-        }
-
-        /* Contact Details Grid */
-        .contact-box {
-            background: #ffffff;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 18px;
-            margin-top: 10px;
-        }
-
-        .contact-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .contact-row a {
-            color: var(--text-navy);
             text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--bg-navy);
-            color: var(--text-light);
-            padding: 25px 18px;
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .footer-top {
+            font-size: 16px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
-        .msme-badge {
-            border: 1px solid var(--gold-accent);
-            padding: 5px 8px;
-            border-radius: 4px;
-            font-size: 10.5px;
-            color: #fef08a;
-            white-space: nowrap;
-        }
-
-        /* Bottom Sticky CTA */
-        .bottom-action-bar {
+        /* Sticky Action Bar */
+        .sticky-footer {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: #ffffff;
+            background: #071530;
+            border-top: var(--border-glow);
             padding: 10px 16px;
-            border-top: 1px solid var(--border-light);
             display: flex;
             gap: 10px;
-            z-index: 999;
+            z-index: 90;
         }
 
-        .bottom-bar-btn {
+        .sticky-btn {
             flex: 1;
-            text-align: center;
             padding: 11px;
             border-radius: 6px;
+            text-align: center;
             text-decoration: none;
             font-size: 13.5px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .btn-call {
-            background: #f1f5f9;
-            color: var(--text-navy);
-            border: 1px solid #cbd5e1;
+            background: #1e293b;
+            color: #ffffff;
+            border: 1px solid #475569;
         }
 
         .btn-order {
-            background: var(--whatsapp-green);
-            color: white;
+            background: var(--green-wa);
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
-        <div class="brand-container">
-            <div class="brand-logo" onclick="speakMayura()" title="మయూరతో మాట్లాడండి">🦚</div>
-            <div class="brand-text">
-                <h1>AVAILO</h1>
-                <p>Smart Access. Total Control.</p>
-            </div>
+        <div>
+            <div class="brand-title">AVAILO</div>
+            <div class="brand-sub">Smart Access. Total Control.</div>
         </div>
-        <div class="header-actions">
-            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">EN | తె</button>
-            <button class="menu-btn" onclick="openNav()">☰</button>
-        </div>
+        <button class="menu-btn" onclick="toggleNav()">☰</button>
     </header>
 
-    <!-- Slide Navigation Drawer -->
-    <div class="drawer-overlay" id="overlay" onclick="closeNav()"></div>
-    <div class="nav-drawer" id="drawer">
-        <div class="nav-drawer-header">
-            <span style="color: #fef08a; font-size: 16px; font-weight: bold;">AVAILO MENU</span>
-            <button class="close-btn" onclick="closeNav()">✕</button>
-        </div>
-        <div class="drawer-links">
-            <a href="#home" onclick="closeNav()">🏠 <span data-te="హోమ్" data-en="Home">హోమ్</span></a>
-            <a href="#services" onclick="closeNav()">⚡ <span data-te="సర్వీసెస్ కేటలాగ్" data-en="Services">సర్వీసెస్ కేటలాగ్</span></a>
-            <a href="#aim" onclick="closeNav()">🎯 <span data-te="మన లక్ష్యం & గోల్" data-en="Our Aim">మన లక్ష్యం & గోల్</span></a>
-            <a href="#nri-section" onclick="closeNav()">👴 <span data-te="NRI పేరెంట్స్ కేర్" data-en="NRI Care Plans">NRI పేరెంట్స్ కేర్</span></a>
-            <a href="#partner-section" onclick="closeNav()">🤝 <span data-te="పార్ట్‌నర్‌గా చేరండి" data-en="Join as Partner">పార్ట్‌నర్‌గా చేరండి</span></a>
-            <a href="#privacy-section" onclick="closeNav()">🔒 <span data-te="ప్రైవసీ & నిబంధనలు" data-en="Privacy & Terms">ప్రైవసీ & నిబంధనలు</span></a>
-            <a href="#contact-section" onclick="closeNav()">📞 <span data-te="సంప్రదించండి" data-en="Contact Us">సంప్రదించండి</span></a>
-        </div>
+    <!-- Nav Overlay -->
+    <div class="nav-drawer" id="navDrawer">
+        <button class="drawer-close" onclick="toggleNav()">✕</button>
+        <ul class="drawer-links">
+            <li><a href="index.html"><span class="te-heading">హోమ్ (Home)</span> <span>›</span></a></li>
+            <li><a href="chat.html"><span class="te-heading">OneChat AI అసిస్టెంట్</span> <span>›</span></a></li>
+            <li><a href="#services"><span class="te-heading">సర్వీసెస్ కేటలాగ్</span> <span>›</span></a></li>
+            <li><a href="privacy.html"><span class="te-heading">ప్రైవసీ నిబంధనలు (Privacy)</span> <span>›</span></a></li>
+            <li><a href="tel:9966157369"><span class="te-heading">సంప్రదించండి (9966157369)</span> <span>›</span></a></li>
+        </ul>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="mayura-trigger" onclick="speakMayura()">
-            <span>🦚</span> <span id="mayuraPrompt" data-te="టచ్ చేయండి — మయూర మాట్లాడుతుంది" data-en="Touch here — Mayura speaks">టచ్ చేయండి — మయూర మాట్లాడుతుంది</span>
+    <main class="hero">
+        <div class="pulse-badge te-heading" onclick="speakMayura()">
+            🦚 టచ్ చేయండి — మయూర మాట్లాడుతుంది
         </div>
-        <h2 id="heroTitle" data-te="యాప్ డౌన్‌లోడ్ వద్దు.<br>ఒక్క వాయిస్ నోట్ ఇస్తే చాలు." data-en="No App Download Needed.<br>Just Send a Voice Note.">
-            యాప్ డౌన్‌లోడ్ వద్దు.<br>ఒక్క వాయిస్ నోట్ ఇస్తే చాలు.
-        </h2>
-        <p id="heroSub" data-te="గేట్ సెక్యూరిటీ, హోమ్ రిపేర్స్, గ్రోసరీస్ & విదేశాల్లో ఉన్న పిల్లల తరపున తల్లిదండ్రుల సంరక్షణ — అన్నీ మీ WhatsApp లోనే." data-en="Gate security, home repairs, daily groceries & parents care for NRIs — all inside your WhatsApp.">
-            గేట్ సెక్యూరిటీ, హోమ్ రిపేర్స్, గ్రోసరీస్ & విదేశాల్లో ఉన్న పిల్లల తరపున తల్లిదండ్రుల సంరక్షణ — అన్నీ మీ WhatsApp లోనే.
-        </p>
 
-        <!-- Two Clear Pathways -->
-        <div class="choice-container">
-            <a href="https://wa.me/919966157369?text=హాయ్%20అవైలో,%20నాకు%20సర్వీస్%20కావాలి" class="btn-choice btn-need-service">
-                <span style="font-size: 18px;">🛒</span>
-                <span data-te="సర్వీస్ కావాలి" data-en="Need Service">సర్వీస్ కావాలి</span>
-                <small style="font-size: 10px; opacity: 0.9;" data-te="(WhatsApp ఆర్డర్)" data-en="(Order on WhatsApp)">(WhatsApp ఆర్డర్)</small>
+        <div class="mayura-container" onclick="speakMayura()">
+            <div class="mayura-symbol">🦚</div>
+        </div>
+
+        <div style="color: var(--cyan-glow); font-size: 12px; margin-bottom: 6px; letter-spacing: 1px;">VIJAYAWADA & GUNTUR</div>
+        <h2 class="main-te-title te-heading">యాప్ డౌన్‌లోడ్ వద్దు.<br>ఒక్క వాయిస్ నోట్ ఇస్తే చాలు.</h2>
+        <p class="main-te-desc te-body">గేట్ సెక్యూరిటీ, హోమ్ రిపేర్స్, గ్రోసరీస్ & తల్లిదండ్రుల సంరక్షణ — అన్నీ మీ WhatsApp లోనే.</p>
+
+        <div class="action-grid">
+            <a href="chat.html" class="action-card">
+                <span style="font-size: 22px;">🛒</span>
+                <h3 class="te-heading">సర్వీస్ కావాలి</h3>
+                <small>WhatsApp Order</small>
             </a>
-            <a href="#partner-section" class="btn-choice btn-be-partner">
-                <span style="font-size: 18px;">🤝</span>
-                <span data-te="సర్వీస్ ప్రొవైడర్" data-en="Join as Partner">సర్వీస్ ప్రొవైడర్</span>
-                <small style="font-size: 10px; opacity: 0.9;" data-te="(పని కావాలి)" data-en="(Get Work)">(పని కావాలి)</small>
+            <a href="https://wa.me/919966157369?text=పార్ట్‌నర్‌గా%20చేరాలనుకుంటున్నాను" class="action-card">
+                <span style="font-size: 22px;">🤝</span>
+                <h3 class="te-heading">సర్వీస్ ప్రొవైడర్</h3>
+                <small>Join As Partner</small>
             </a>
         </div>
-    </section>
+    </main>
 
-    <!-- Live Knockout Alert Ticker -->
-    <div class="live-ticker">
-        <div><span class="pulse-dot"></span><strong style="color: #fef08a;" data-te="లైవ్ అలర్ట్:" data-en="Live Alert:">లైవ్ అలర్ట్:</strong></div>
-        <div style="color: #e2e8f0;" data-te="సరిగ్గా రాత్రి 8:00 కి... 'ది నాకౌట్ ఛాలెంజ్' అన్‌లాక్ అవుతుంది 🥊" data-en="Sharp at 8:00 PM... 'The Knockout Challenge' unlocks 🥊">
-            సరిగ్గా రాత్రి 8:00 కి... <span style="color: #38bdf8; font-weight: 600;">'ది నాకౌట్ ఛాలెంజ్'</span> అన్‌లాక్ అవుతుంది 🥊
-        </div>
-    </div>
-
-    <!-- 3 Simple Steps -->
-    <section class="section-padding">
-        <div class="section-label" data-te="ఎలా పని చేస్తుంది" data-en="How It Works">ఎలా పని చేస్తుంది</div>
-        <h3 class="section-title" data-te="మూడు స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు" data-en="Services at Your Doorstep in 3 Steps">మూడు స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు</h3>
-        
-        <div class="step-item">
-            <div class="step-num">01</div>
-            <h4 data-te="స్కాన్ చేయండి" data-en="Scan QR">స్కాన్ చేయండి</h4>
-            <p data-te="లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు." data-en="Scan the QR near lifts or gate with your phone — no app download needed.">లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు.</p>
-        </div>
-
-        <div class="step-item">
-            <div class="step-num">02</div>
-            <h4 data-te="మాట్లాడండి" data-en="Send Voice Note">మాట్లాడండి</h4>
-            <p data-te="WhatsApp లో మీకు కావాల్సిన గ్రోసరీ లేదా పనుల గురించి ఒక్క వాయిస్ నోట్ పంపండి." data-en="Send a quick voice note on WhatsApp about your grocery or home repair needs.">WhatsApp లో మీకు కావాల్సిన గ్రోసరీ లేదా పనుల గురించి ఒక్క వాయిస్ నోట్ పంపండి.</p>
-        </div>
-
-        <div class="step-item">
-            <div class="step-num">03</div>
-            <h4 data-te="డోర్ డెలివరీ" data-en="Doorstep Delivery">డోర్ డెలివరీ</h4>
-            <p data-te="వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు." data-en="Our verified local executive reaches your doorstep with verified gate alerts.">వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు.</p>
-        </div>
-    </section>
-
-    <!-- Services Catalog -->
-    <section class="section-padding" style="background-color: #f6f2e7;" id="services">
-        <div class="section-label" data-te="అవైలో సర్వీసెస్" data-en="AVAILO Services">అవైలో సర్వీసెస్</div>
-        <h3 class="section-title" data-te="ఇంటి పనుల నుండి నిత్యావసరాల దాకా" data-en="From Home Repairs to Daily Groceries">ఇంటి పనుల నుండి నిత్యావసరాల దాకా</h3>
-
+    <section class="section-box" id="services">
+        <div class="sec-title te-heading">సర్వీసెస్ కేటలాగ్ (Live Services)</div>
         <div class="service-list">
-            <div class="service-card">
-                <div style="font-size: 20px;">⚡</div>
+            <div class="service-row">
+                <div class="service-row-icon">⚡</div>
                 <div>
-                    <h4 data-te="ఎలక్ట్రీషియన్ & ప్లంబర్" data-en="Electrician & Plumber">ఎలక్ట్రీషియన్ & ప్లంబర్</h4>
-                    <p style="font-size: 12.5px; color: #64748b;" data-te="లీకేజీలు, వైరింగ్ & స్విచ్ బోర్డు రిపేర్లు" data-en="Leakages, wiring & switchboard fixes">లీకేజీలు, వైరింగ్ & స్విచ్ బోర్డు రిపేర్లు</p>
+                    <h4 class="te-heading">ఎలక్ట్రీషియన్ & ప్లంబర్</h4>
+                    <p class="te-body">లీకేజీలు, వైరింగ్ & స్విచ్ బోర్డు రిపేర్లు</p>
                 </div>
             </div>
-
-            <div class="service-card">
-                <div style="font-size: 20px;">🛒</div>
+            <div class="service-row">
+                <div class="service-row-icon">🛒</div>
                 <div>
-                    <h4 data-te="కిరాణా & కూరగాయలు" data-en="Groceries & Vegetables">కిరాణా & కూరగాయలు</h4>
-                    <p style="font-size: 12.5px; color: #64748b;" data-te="ఒరిజినల్ షాప్ బిల్లుతో స్థానిక తాజా సరుకులు" data-en="Fresh groceries delivered with original store bills">ఒరిజినల్ షాప్ బిల్లుతో స్థానిక తాజా సరుకులు</p>
+                    <h4 class="te-heading">కిరాణా & కూరగాయలు</h4>
+                    <p class="te-body">ఒరిజినల్ షాప్ బిల్లుతో స్థానిక తాజా సరుకులు</p>
                 </div>
             </div>
-
-            <div class="service-card">
-                <div style="font-size: 20px;">❄️</div>
+            <div class="service-row">
+                <div class="service-row-icon">❄️</div>
                 <div>
-                    <h4 data-te="A/C & ఫ్రిజ్ సర్వీస్" data-en="A/C & Fridge Care">A/C & ఫ్రిజ్ సర్వీస్</h4>
-                    <p style="font-size: 12.5px; color: #64748b;" data-te="గ్యాస్ ఫిల్లింగ్, కూలింగ్ సమస్యలు & క్లీనింగ్" data-en="Gas filling, cooling inspection & filter cleaning">గ్యాస్ ఫిల్లింగ్, కూలింగ్ సమస్యలు & క్లీనింగ్</p>
+                    <h4 class="te-heading">A/C & ఫ్రిజ్ సర్వీస్</h4>
+                    <p class="te-body">గ్యాస్ ఫిల్లింగ్, కూలింగ్ ఇష్యూస్ & సర్వీసింగ్</p>
                 </div>
             </div>
-
-            <div class="service-card">
-                <div style="font-size: 20px;">♻️</div>
+            <div class="service-row">
+                <div class="service-row-icon">♻️</div>
                 <div>
-                    <h4 data-te="ఈ-వేస్ట్ & స్క్రాప్ పికప్" data-en="E-Waste & Scrap Pickup">ఈ-వేస్ట్ & స్క్రాప్ పికప్</h4>
-                    <p style="font-size: 12.5px; color: #64748b;" data-te="పాడైన మిక్సీలు, వైర్లు, బ్యాటరీలు క్లీన్ చేయండి" data-en="Recycle dead electronics, wires & old appliances">పాడైన మిక్సీలు, వైర్లు, బ్యాటరీలు క్లీన్ చేయండి</p>
+                    <h4 class="te-heading">ఈ-వేస్ట్ & స్క్రాప్ పికప్</h4>
+                    <p class="te-body">పాడైన ఎలక్ట్రానిక్స్ & స్క్రాప్ సురక్షిత పికప్</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Aim & Goal Section -->
-    <section class="section-padding" id="aim">
-        <div class="section-label" data-te="మన లక్ష్యం & గోల్" data-en="Our Aim & Mission">మన లక్ష్యం & గోల్</div>
-        <h3 class="section-title" data-te="అవైలో ప్రారంభం వెనుక అసలైన ఉద్దేశం" data-en="Why We Built AVAILO">అవైలో ప్రారంభం వెనుక అసలైన ఉద్దేశం</h3>
-        <p style="font-size: 13.5px; color: #475569; margin-bottom: 14px;" data-te="సాధారణ ప్రజలను, ముఖ్యంగా పెద్దవారిని మరియు గృహిణులను సంక్లిష్టమైన మొబైల్ యాప్ డౌన్‌లోడ్‌లు, పాస్‌వర్డ్‌లు, OTP ఇబ్బందుల నుండి విముక్తి చేయడం. రోజూ వాడే WhatsApp ద్వారానే గేట్ సెక్యూరిటీని, అవసరమైన సరుకులను, కుటుంబ సంరక్షణను సులభంగా అందించడమే మన ధ్యేయం." data-en="Freeing seniors and homemakers from bulky app downloads, passwords, and OTP hassles. Providing gate security, fresh groceries, and eldercare using the WhatsApp they already use every day.">
-            సాధారణ ప్రజలను, ముఖ్యంగా పెద్దవారిని మరియు గృహిణులను సంక్లిష్టమైన మొబైల్ యాప్ డౌన్‌లోడ్‌లు, పాస్‌వర్డ్‌లు, OTP ఇబ్బందుల నుండి విముక్తి చేయడం. రోజూ వాడే WhatsApp ద్వారానే గేట్ సెక్యూరిటీని, అవసరమైన సరుకులను, కుటుంబ సంరక్షణను సులభంగా అందించడమే మన ధ్యేయం.
-        </p>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px;">
-            <div style="border-left: 3px solid var(--gold-accent); padding-left: 10px;">
-                <div style="font-size: 20px; font-weight: bold; font-family: 'Inter', sans-serif;">2 Cities</div>
-                <div style="font-size: 12px; color: #64748b;">Vijayawada & Guntur</div>
-            </div>
-            <div style="border-left: 3px solid var(--gold-accent); padding-left: 10px;">
-                <div style="font-size: 20px; font-weight: bold; font-family: 'Inter', sans-serif;">MSME</div>
-                <div style="font-size: 12px; color: #64748b;">Govt. Registered</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NRI Parents Care Section -->
-    <section class="section-padding" style="background-color: #fdfbf7;" id="nri-section">
-        <div class="section-label" data-te="👴 NRI Parents Care Plans" data-en="👴 NRI Parents Care Plans">👴 NRI Parents Care Plans</div>
-        <h3 class="section-title" data-te="విదేశాల్లో ఉన్నా — తల్లిదండ్రుల బాగోగులు మీ కంట్రోల్‌లో" data-en="Abroad? Stay in Control of Your Parents' Care">విదేశాల్లో ఉన్నా — తల్లిదండ్రుల బాగోగులు మీ కంట్రోల్‌లో</h3>
-        <p style="font-size: 13px; color: #64748b;" data-te="అన్ని ప్లాన్లలో వెరిఫైడ్ లోకల్ ఎగ్జిక్యూటివ్ మరియు WhatsApp అప్‌డేట్లు ఉంటాయి." data-en="All plans include verified local executives & dedicated WhatsApp updates.">అన్ని ప్లాన్లలో వెరిఫైడ్ లోకల్ ఎగ్జిక్యూటివ్ మరియు WhatsApp అప్‌డేట్లు ఉంటాయి.</p>
-        
-        <div class="nri-card">
-            <div style="font-size: 13px; color: #fef08a;">💙 Care Plan</div>
-            <div class="nri-price">₹2,499 / <span style="font-size: 14px; font-weight: normal;" data-te="నెల" data-en="month">నెల</span></div>
-            <p style="font-size: 13px; margin-bottom: 6px;" data-te="• Home Check-in: నెలకు 1 సారి" data-en="• Home Check-in: Once a month">• Home Check-in: నెలకు 1 సారి</p>
-            <p style="font-size: 13px; margin-bottom: 6px;" data-te="• Hospital Escort: నెలకు 1 సారి (3 గంటల వరకు)" data-en="• Hospital Escort: Once a month (Up to 3 hrs)">• Hospital Escort: నెలకు 1 సారి (3 గంటల వరకు)</p>
-            <p style="font-size: 13px;" data-te="• Delivery Tasks: నెలకు 2 సార్లు (మందులు/గ్రోసరీ)" data-en="• Delivery Tasks: 2 times/month (Medicines/Grocery)">• Delivery Tasks: నెలకు 2 సార్లు (మందులు/గ్రోసరీ)</p>
-        </div>
-    </section>
-
-    <!-- Join as Service Provider Section -->
-    <section class="section-padding" id="partner-section">
-        <div class="section-label" data-te="అవైలో పార్ట్‌నర్‌గా చేరండి" data-en="Join as a Service Partner">అవైలో పార్ట్‌నర్‌గా చేరండి</div>
-        <h3 class="section-title" data-te="పనులు నేరుగా మీ WhatsApp కే — జీరో ఫీజు" data-en="Orders Directly on WhatsApp — Zero Joining Fee">పనులు నేరుగా మీ WhatsApp కే — జీరో ఫీజు</h3>
-        <p style="font-size: 13px; color: #475569;" data-te="గేటెడ్ కమ్యూనిటీల నుండి క్రమం తప్పకుండా పనులు పొందండి. ఎలాంటి జాయినింగ్ ఫీజు లేదు." data-en="Get daily orders from premium gated communities. No app learning needed.">గేటెడ్ కమ్యూనిటీల నుండి క్రమం తప్పకుండా పనులు పొందండి. ఎలాంటి జాయినింగ్ ఫీజు లేదు.</p>
-
-        <div class="form-box">
-            <div class="form-group">
-                <label data-te="మీ పేరు" data-en="Your Full Name">మీ పేరు</label>
-                <input type="text" id="partnerName" placeholder="ఉదా: రాము">
-            </div>
-            <div class="form-group">
-                <label data-te="WhatsApp మొబైల్ నంబర్" data-en="WhatsApp Mobile Number">WhatsApp మొబైల్ నంబర్</label>
-                <input type="tel" id="partnerPhone" placeholder="10-digit నంబర్">
-            </div>
-            <div class="form-group">
-                <label data-te="మీరు అందించే సర్వీస్" data-en="Your Service Profession">మీరు అందించే సర్వీస్</label>
-                <select id="partnerSkill">
-                    <option value="Electrician">ఎలక్ట్రీషియన్ (Electrician)</option>
-                    <option value="Plumber">ప్లంబర్ (Plumber)</option>
-                    <option value="AC Technician">ఏసీ టెక్నీషియన్ (A/C Care)</option>
-                    <option value="Kirana Hub">కిరాణా స్టోర్ పార్ట్‌నర్ (Retail Hub)</option>
-                    <option value="Delivery Partner">డెలివరీ బాయ్ (Field Executive)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label data-te="పని చేయదలిచిన ఏరియా" data-en="Preferred Area">పని చేయదలిచిన ఏరియా</label>
-                <input type="text" id="partnerArea" placeholder="ఉదా: కానూరు, విజయవాడ">
-            </div>
-            <button class="btn-submit-partner" onclick="submitPartner()" data-te="పార్ట్‌నర్‌గా రిజిస్టర్ అవ్వండి" data-en="Register as AVAILO Partner">పార్ట్‌నర్‌గా రిజిస్టర్ అవ్వండి</button>
-        </div>
-    </section>
-
-    <!-- Privacy & Conditions Section -->
-    <section class="section-padding" style="background-color: #f8fafc;" id="privacy-section">
-        <div class="privacy-box">
-            <h3 style="font-size: 16px; margin-bottom: 8px; color: var(--text-navy);" data-te="🔒 ప్రైవసీ నిబంధనలు & భద్రత" data-en="🔒 Privacy & Protection Policies">🔒 ప్రైవసీ నిబంధనలు & భద్రత</h3>
-            <p style="font-size: 11.5px; color: #64748b; margin-bottom: 12px;">Availo Digital Services • MSME: UDYAM-AP-20-0109827</p>
-
-            <div class="highlight-box">
-                <strong data-te="మహిళల ప్రైవసీ రక్షణ:" data-en="Women's Privacy Shield:">మహిళల ప్రైవసీ రక్షణ:</strong>
-                <span data-te=" గేట్ పాస్ మరియు డెలివరీ సర్వీసుల్లో మహిళా రెసిడెంట్ల ఫోన్ నంబర్లు డెలివరీ సిబ్బందికి ఎప్పుడూ చూపించబడవు. మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది." data-en=" Women residents' phone numbers are strictly masked and never visible to delivery executives.">
-                    గేట్ పాస్ మరియు డెలివరీ సర్వీసుల్లో మహిళా రెసిడెంట్ల ఫోన్ నంబర్లు డెలివరీ సిబ్బందికి ఎప్పుడూ చూపించబడవు. మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది.
-                </span>
-            </div>
-
-            <div class="highlight-box" style="border-left-color: var(--danger-red);">
-                <strong data-te="డేటా రక్షణ వాగ్దానం:" data-en="Zero-Spam Promise:">డేటా రక్షణ వాగ్దానం:</strong>
-                <span data-te=" మేము మీ వ్యక్తిగత సమాచారాన్ని మార్కెటింగ్ ప్రయోజనాల కోసం ఏ మూడో పార్టీకి అమ్మము." data-en=" We never sell or share your personal data to third parties for marketing.">
-                    మేము మీ వ్యక్తిగత సమాచారాన్ని మార్కెటింగ్ ప్రయోజనాల కోసం ఏ మూడో పార్టీకి అమ్మము.
-                </span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Us Section -->
-    <section class="section-padding" id="contact-section">
-        <div class="section-label" data-te="మమ్మల్ని సంప్రదించండి" data-en="Contact Support">మమ్మల్ని సంప్రదించండి</div>
-        <h3 class="section-title" data-te="విజయవాడ & గుంటూరులో ఎలాంటి సాయం కోసం అయినా" data-en="Get in Touch in Vijayawada & Guntur">విజయవాడ & గుంటూరులో ఎలాంటి సాయం కోసం అయినా</h3>
-        
-        <div class="contact-box">
-            <div class="contact-row">
-                <span>📞</span>
-                <div>
-                    <div style="font-size: 11px; color: #64748b;" data-te="కాల్ సపోర్ట్" data-en="Call Us">కాల్ సపోర్ట్</div>
-                    <a href="tel:9966157369">9966157369</a>
-                </div>
-            </div>
-            <div class="contact-row">
-                <span>💬</span>
-                <div>
-                    <div style="font-size: 11px; color: #64748b;" data-te="WhatsApp హెల్ప్‌లైన్" data-en="WhatsApp Help">WhatsApp హెల్ప్‌లైన్</div>
-                    <a href="https://wa.me/919966157369" style="color: var(--whatsapp-green);">WhatsApp లో మెసేజ్ చేయండి</a>
-                </div>
-            </div>
-            <div style="font-size: 12px; color: #64748b; margin-top: 10px; border-top: 1px solid var(--border-light); padding-top: 10px;">
-                ⏰ వర్కింగ్ అవర్స్: ఉదయం 7:00 – రాత్రి 9:00 (NRI 24/7 Response)
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-top">
-            <div>
-                <h4 style="font-size: 16px; color: white;">AVAILO</h4>
-                <p style="font-size: 11px; color: #94a3b8;">Smart Access. Total Control.</p>
-            </div>
-            <div class="msme-badge">
-                MSME: UDYAM-AP-20-0109827
-            </div>
-        </div>
-        <p style="font-size: 11px; color: #94a3b8; margin-bottom: 12px;">© 2026 Availo Digital Services. విజయవాడ & గుంటూరు రీజియన్.</p>
-    </footer>
-
-    <!-- Fixed Bottom Sticky Bar -->
-    <div class="bottom-action-bar">
-        <a href="tel:9966157369" class="bottom-bar-btn btn-call" data-te="📞 కాల్ చేయండి" data-en="📞 Call Us">📞 కాల్ చేయండి</a>
-        <a href="https://wa.me/919966157369?text=హాయ్%20అవైలో,%20నాకు%20సహాయం%20కావాలి" class="bottom-bar-btn btn-order" data-te="💬 WhatsApp ఆర్డర్" data-en="💬 Order on WhatsApp">💬 WhatsApp ఆర్డర్</a>
+    <div class="sticky-footer">
+        <a href="tel:9966157369" class="sticky-btn btn-call te-heading">📞 కాల్ చేయండి</a>
+        <a href="chat.html" class="sticky-btn btn-order te-heading">💬 OneChat ఆర్డర్</a>
     </div>
 
-    <!-- Interactive Scripts -->
     <script>
-        let currentLang = 'te';
-
-        function openNav() {
-            document.getElementById("drawer").classList.add("open");
-            document.getElementById("overlay").classList.add("show");
+        function toggleNav() {
+            document.getElementById('navDrawer').classList.toggle('open');
         }
 
-        function closeNav() {
-            document.getElementById("drawer").classList.remove("open");
-            document.getElementById("overlay").classList.remove("show");
-        }
-
-        /* Bilingual Switcher */
-        function toggleLanguage() {
-            currentLang = currentLang === 'te' ? 'en' : 'te';
-            document.getElementById("langBtn").innerText = currentLang === 'te' ? 'EN | తె' : 'తె | EN';
-            
-            document.querySelectorAll('[data-te]').forEach(el => {
-                const text = el.getAttribute(`data-${currentLang}`);
-                if (text) el.innerHTML = text;
-            });
-        }
-
-        /* Voice Mayura Assistant */
         function speakMayura() {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const speechText = currentLang === 'te' 
-                    ? "నమస్కారం! నేను మీ అవైలో మయూరను. యాప్ డౌన్‌లోడ్ లేకుండానే వాట్సాప్ ద్వారా సర్వీసులు ఆర్డర్ చేయడానికి క్రింది బటన్ నొక్కండి."
-                    : "Welcome to AVAILO! I am your assistant Mayura. You don't need to download any app. Just order your services through WhatsApp below.";
-                
-                const utterance = new SpeechSynthesisUtterance(speechText);
+                const text = "నమస్కారం! నేను మీ అవైలో మయూరను. కిరాణా సరుకులు మరియు హోమ్ సర్వీసుల కోసం క్రింది బటన్ నొక్కండి.";
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'te-IN';
                 utterance.rate = 0.95;
-                utterance.lang = currentLang === 'te' ? 'te-IN' : 'en-IN';
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert(currentLang === 'te' ? "నమస్కారం! అవైలోకి స్వాగతం. WhatsApp ఆర్డర్ కోసం క్రింది బటన్ నొక్కండి." : "Welcome to AVAILO! Please click order to chat on WhatsApp.");
+                alert("నమస్కారం! అవైలోకి స్వాగతం.");
             }
-        }
-
-        /* Service Partner Registration via WhatsApp */
-        function submitPartner() {
-            const name = document.getElementById('partnerName').value.trim();
-            const phone = document.getElementById('partnerPhone').value.trim();
-            const skill = document.getElementById('partnerSkill').value;
-            const area = document.getElementById('partnerArea').value.trim();
-
-            if (!name || !phone) {
-                alert(currentLang === 'te' ? "దయచేసి మీ పేరు మరియు ఫోన్ నంబర్ నమోదు చేయండి." : "Please enter your name and phone number.");
-                return;
-            }
-
-            const msg = `నమస్తే అవైలో, నేను సర్వీస్ ప్రొవైడర్‌గా చేరాలనుకుంటున్నాను:%0A- పేరు: ${name}%0A- ఫోన్: ${phone}%0A- పని: ${skill}%0A- ఏరియా: ${area}`;
-            window.location.href = `https://wa.me/919966157369?text=${msg}`;
         }
     </script>
 </body>
