@@ -1,11 +1,21 @@
 {
-  "name": "AVAILO OneChat",
-  "short_name": "OneChat",
-  "description": "One Chat. Every Local Need - Vijayawada & Guntur",
-  "start_url": "./chat.html",
+  "name": "AVAILO Digital Services",
+  "short_name": "AVAILO",
+  "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#070D18",
-  "theme_color": "#0284C7"
+  "background_color": "#030b1e",
+  "theme_color": "#071530",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
-
-  
