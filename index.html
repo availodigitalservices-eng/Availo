@@ -196,7 +196,7 @@
             margin-bottom: 16px;
         }
 
-        /* Two Major Buttons */
+        /* Dual Choice Buttons */
         .dual-cta-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -229,7 +229,7 @@
             border: 1px solid var(--brand-cyan);
         }
 
-        /* Banner Strip */
+        /* Orange Banner Strip */
         .orange-banner-strip {
             background: var(--brand-orange);
             color: #ffffff;
@@ -387,7 +387,7 @@
             gap: 6px;
         }
 
-        /* Navigation Drawer */
+        /* Drawer Overlay */
         .drawer-overlay {
             position: fixed;
             top: 0;
@@ -439,7 +439,7 @@
             cursor: pointer;
         }
 
-        /* Fixed Bottom Call/Chat Bar */
+        /* Bottom Fixed Call/Chat Bar */
         .fixed-call-hub {
             position: fixed;
             bottom: 0;
@@ -506,7 +506,8 @@
             <button onclick="toggleDrawer(); openModal('aimModal');"><span class="te-heading" data-te="మన లక్ష్యం & గోల్" data-en="Our Aim & Goal">మన లక్ష్యం & గోల్</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openModal('faqModal');"><span class="te-heading" data-te="FAQ (తరచుగా అడిగే ప్రశ్నలు)" data-en="FAQ">FAQ</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openModal('partnerModal');"><span class="te-heading" data-te="పార్ట్‌నర్‌గా చేరండి" data-en="Join as Partner">పార్ట్‌నర్‌గా చేరండి</span> <span>›</span></button>
-            <a href="chat.html"><span class="te-heading" style="color: var(--brand-cyan);">OneChat AI అసిస్టెంట్</span> <span>›</span></a>
+            <button onclick="toggleDrawer(); openModal('contactModal');"><span class="te-heading" data-te="సంప్రదించండి (Contact Us)" data-en="Contact Us">సంప్రదించండి (Contact Us)</span> <span>›</span></button>
+            <a href="chat.html"><span class="te-heading" style="color: var(--brand-cyan);" data-te="OneChat AI అసిస్టెంట్" data-en="OneChat AI Assistant">OneChat AI అసిస్టెంట్</span> <span>›</span></a>
             <a href="privacy.html"><span class="te-heading" data-te="ప్రైవసీ నిబంధనలు" data-en="Privacy Policy">ప్రైవసీ నిబంధనలు</span> <span>›</span></a>
         </div>
     </div>
@@ -590,10 +591,10 @@
                 <div class="card-label-btn te-heading" data-te="రిఫ్రిజిరేటర్" data-en="Refrigerator">Refrigerator</div>
             </a>
 
-            <!-- 5. Water Purifier (RO) - High Quality Guaranteed Image -->
+            <!-- 5. Water Purifier (RO) - Updated High Quality Direct RO Link -->
             <a href="https://wa.me/919966157369?text=వాటర్%20ప్యూరిఫైయర్%20సర్వీస్%20కావాలి" class="service-card">
                 <div class="img-container">
-                    <img src="https://images.unsplash.com/photo-1527409341081-789a8039c3e9?w=400&auto=format&fit=crop&q=60" alt="Water Purifier">
+                    <img src="https://images.unsplash.com/photo-1584771145729-0bd9fda6529b?w=400&auto=format&fit=crop&q=60" alt="Water Purifier">
                 </div>
                 <div class="card-label-btn te-heading" data-te="వాటర్ ప్యూరిఫైయర్" data-en="Water Purifier">Water Purifier</div>
             </a>
@@ -675,21 +676,21 @@
 
     <!-- Footer Links Cloud -->
     <footer style="background: #ffffff; padding: 20px 14px; border-top: 2px solid var(--brand-orange); text-align: center;">
-        <div style="background: var(--brand-orange); color: #ffffff; padding: 8px 12px; font-weight: 700; border-radius: 4px; margin-bottom: 12px;" class="te-heading">
+        <div style="background: var(--brand-orange); color: #ffffff; padding: 8px 12px; font-weight: 700; border-radius: 4px; margin-bottom: 12px;" class="te-heading" data-te="మా అన్ని సర్వీసుల లింక్స్" data-en="Our all services links">
             Our all services links
         </div>
         <div style="color: #1d4ed8; font-size: 13px; line-height: 2;">
             Electrical Services | Plumbing Work | Ac Mechanics | Ac Shifting | Refrigerator Repair | Washing Machine Service | Water Purifier RO | Groceries Delivery | Sunday Non-Veg | Cleaning Services | Pest Control | Painting Services | Packers and Movers | CCTV Installation | E-Waste Pickup
         </div>
         <div style="margin-top: 14px; font-size: 11.5px; color: var(--text-muted);">
-            © 2026 Availo Digital Services • MSME: UDYAM-AP-20-0109827 • <a href="privacy.html" style="color: var(--brand-blue);">Privacy Policy</a>
+            © 2026 Availo Digital Services • MSME: UDYAM-AP-20-0109827 • Vijayawada & Guntur Region • <a href="privacy.html" style="color: var(--brand-blue);" data-te="ప్రైవసీ పాలసీ" data-en="Privacy Policy">Privacy Policy</a>
         </div>
     </footer>
 
     <!-- Fixed Bottom Call/Chat Bar -->
     <div class="fixed-call-hub">
-        <a href="tel:9966157369" class="hub-btn btn-call-now te-heading">Call Now</a>
-        <a href="chat.html" class="hub-btn btn-chat-now te-heading">OneChat ఆర్డర్</a>
+        <a href="tel:9966157369" class="hub-btn btn-call-now te-heading" data-te="Call Now" data-en="Call Now">Call Now</a>
+        <a href="chat.html" class="hub-btn btn-chat-now te-heading" data-te="OneChat ఆర్డర్" data-en="OneChat Order">OneChat ఆర్డర్</a>
     </div>
 
     <!-- ================= MODALS (POP-UP DETAILS) ================= -->
@@ -698,45 +699,45 @@
     <div class="modal-overlay" id="nriModal">
         <div class="modal-window">
             <div class="modal-header">
-                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;">AVAILO NRI Parents Care</h3>
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;" data-te="AVAILO NRI Parents Care" data-en="AVAILO NRI Parents Care">AVAILO NRI Parents Care</h3>
                 <button class="modal-close-btn" onclick="closeModal('nriModal')">✕</button>
             </div>
             <div class="modal-body">
                 <div class="nri-card">
                     <strong style="color: var(--brand-blue);">💙 AVAILO CARE</strong>
-                    <div class="nri-price">₹2,499 / నెల</div>
+                    <div class="nri-price">₹2,499 / <span data-te="నెల" data-en="Month">నెల</span></div>
                     <ul>
-                        <li>🏠 Home Check-in: నెలకు 1 సారి</li>
-                        <li>🏥 Hospital Escort: నెలకు 1 సారి (గరిష్ఠం 3 గంటలు)</li>
-                        <li>🛵 Delivery Tasks: నెలకు 2 సార్లు (మందులు/గ్రోసరీ)</li>
-                        <li>🚨 Priority Response: 45 నిమిషాల్లోపు (Target)</li>
+                        <li data-te="🏠 Home Check-in: నెలకు 1 సారి" data-en="🏠 Home Check-in: 1 time/month">🏠 Home Check-in: నెలకు 1 సారి</li>
+                        <li data-te="🏥 Hospital Escort: నెలకు 1 సారి (గరిష్ఠం 3 గంటలు)" data-en="🏥 Hospital Escort: 1 time/month (Max 3 hrs)">🏥 Hospital Escort: నెలకు 1 సారి (గరిష్ఠం 3 గంటలు)</li>
+                        <li data-te="🛵 Delivery Tasks: నెలకు 2 సార్లు (మందులు/గ్రోసరీ)" data-en="🛵 Delivery Tasks: 2 times/month (Medicines/Grocery)">🛵 Delivery Tasks: నెలకు 2 సార్లు (మందులు/గ్రోసరీ)</li>
+                        <li data-te="🚨 Priority Response: 45 నిమిషాల్లోపు (Target)" data-en="🚨 Priority Response: Within 45 mins (Target)">🚨 Priority Response: 45 నిమిషాల్లోపు (Target)</li>
                     </ul>
                 </div>
 
                 <div class="nri-card highlight">
-                    <strong style="color: var(--brand-blue);">💙 AVAILO PLUS (Most Popular ⭐)</strong>
-                    <div class="nri-price">₹4,999 / నెల</div>
+                    <strong style="color: var(--brand-blue);" data-te="💙 AVAILO PLUS (Most Popular ⭐)" data-en="💙 AVAILO PLUS (Most Popular ⭐)">💙 AVAILO PLUS (Most Popular ⭐)</strong>
+                    <div class="nri-price">₹4,999 / <span data-te="నెల" data-en="Month">నెల</span></div>
                     <ul>
-                        <li>🏠 Home Check-in: నెలకు 2 సార్లు (Bi-weekly)</li>
-                        <li>🏥 Hospital Escort: నెలకు 2 సార్లు (గరిష్ఠం 4 గంటలు)</li>
-                        <li>🛵 Delivery Tasks: నెలకు 4 సార్లు (మందులు/బిల్స్)</li>
-                        <li>🚨 Priority Response: 30 నిమిషాల్లోపు (Target)</li>
+                        <li data-te="🏠 Home Check-in: నెలకు 2 సార్లు (Bi-weekly)" data-en="🏠 Home Check-in: 2 times/month (Bi-weekly)">🏠 Home Check-in: నెలకు 2 సార్లు (Bi-weekly)</li>
+                        <li data-te="🏥 Hospital Escort: నెలకు 2 సార్లు (గరిష్ఠం 4 గంటలు)" data-en="🏥 Hospital Escort: 2 times/month (Max 4 hrs)">🏥 Hospital Escort: నెలకు 2 సార్లు (గరిష్ఠం 4 గంటలు)</li>
+                        <li data-te="🛵 Delivery Tasks: నెలకు 4 సార్లు (మందులు/బిల్స్)" data-en="🛵 Delivery Tasks: 4 times/month (Medicines/Bills)">🛵 Delivery Tasks: నెలకు 4 సార్లు (మందులు/బిల్స్)</li>
+                        <li data-te="🚨 Priority Response: 30 నిమిషాల్లోపు (Target)" data-en="🚨 Priority Response: Within 30 mins (Target)">🚨 Priority Response: 30 నిమిషాల్లోపు (Target)</li>
                     </ul>
                 </div>
 
                 <div class="nri-card vip">
-                    <strong style="color: #7c3aed;">💜 AVAILO ELITE (👑 VIP Dedicated)</strong>
-                    <div class="nri-price" style="color: #7c3aed;">₹9,999 / నెల</div>
+                    <strong style="color: #7c3aed;" data-te="💜 AVAILO ELITE (👑 VIP Dedicated)" data-en="💜 AVAILO ELITE (👑 VIP Dedicated)">💜 AVAILO ELITE (👑 VIP Dedicated)</strong>
+                    <div class="nri-price" style="color: #7c3aed;">₹9,999 / <span data-te="నెల" data-en="Month">నెల</span></div>
                     <ul>
-                        <li>🏠 Home Check-in: నెలకు 4 సార్లు (వారానికి 1 సారి)</li>
-                        <li>🏥 Hospital Escort: నెలకు 4 సార్లు (Unlimited hours)</li>
-                        <li>🛵 Delivery Tasks: నెలకు 8 టాస్క్‌లు (Flexible Usage)</li>
-                        <li>🔄 Carry Forward: ఉపయోగించని టాస్క్‌లు 2 నెలల వరకు Carry Forward</li>
-                        <li>🚨 Priority Response: 15–20 నిమిషాలు (Top Priority)</li>
+                        <li data-te="🏠 Home Check-in: నెలకు 4 సార్లు (వారానికి 1 సారి)" data-en="🏠 Home Check-in: 4 times/month (Weekly once)">🏠 Home Check-in: నెలకు 4 సార్లు (వారానికి 1 సారి)</li>
+                        <li data-te="🏥 Hospital Escort: నెలకు 4 సార్లు (Unlimited hours)" data-en="🏥 Hospital Escort: 4 times/month (Unlimited hours)">🏥 Hospital Escort: నెలకు 4 సార్లు (Unlimited hours)</li>
+                        <li data-te="🛵 Delivery Tasks: నెలకు 8 టాస్క్‌లు (Flexible Usage)" data-en="🛵 Delivery Tasks: 8 tasks/month (Flexible Usage)">🛵 Delivery Tasks: నెలకు 8 టాస్క్‌లు (Flexible Usage)</li>
+                        <li data-te="🔄 Carry Forward: ఉపయోగించని టాస్క్‌లు 2 నెలల వరకు Carry Forward" data-en="🔄 Carry Forward: Unused tasks roll over up to 2 months">🔄 Carry Forward: ఉపయోగించని టాస్క్‌లు 2 నెలల వరకు Carry Forward</li>
+                        <li data-te="🚨 Priority Response: 15–20 నిమిషాలు (Top Priority)" data-en="🚨 Priority Response: 15–20 mins (Top Priority)">🚨 Priority Response: 15–20 నిమిషాలు (Top Priority)</li>
                     </ul>
                 </div>
 
-                <div style="background: #fffbeb; border-left: 3.5px solid var(--brand-gold); padding: 10px; font-size: 12px; color: #78350f; border-radius: 0 4px 4px 0;">
+                <div style="background: #fffbeb; border-left: 3.5px solid var(--brand-gold); padding: 10px; font-size: 12px; color: #78350f; border-radius: 0 4px 4px 0;" data-te="⚠️ Expense Policy: Actual ఖర్చులు (మందులు, బిల్లులు, ఫీజులు) కస్టమర్‌వే. 1 టాస్క్ = 1 విజిట్." data-en="⚠️ Expense Policy: Actual expenses (medicines, hospital/utility bills) borne by customer. 1 Task = 1 Round trip.">
                     ⚠️ <strong>Expense Policy:</strong> Actual ఖర్చులు (మందులు, బిల్లులు, ఫీజులు) కస్టమర్‌వే. 1 టాస్క్ = 1 విజిట్.
                 </div>
             </div>
@@ -747,21 +748,21 @@
     <div class="modal-overlay" id="howItWorksModal">
         <div class="modal-window">
             <div class="modal-header">
-                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;">ఎలా పని చేస్తుంది (3 Steps)</h3>
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;" data-te="ఎలా పని చేస్తుంది (3 Steps)" data-en="How It Works (3 Steps)">ఎలా పని చేస్తుంది (3 Steps)</h3>
                 <button class="modal-close-btn" onclick="closeModal('howItWorksModal')">✕</button>
             </div>
             <div class="modal-body">
                 <div style="margin-bottom: 14px;">
-                    <strong style="color: var(--brand-orange); font-size: 16px;">01. స్కాన్ చేయండి</strong>
-                    <p style="font-size: 13.5px; color: #475569;">లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు.</p>
+                    <strong style="color: var(--brand-orange); font-size: 16px;" data-te="01. స్కాన్ చేయండి" data-en="01. Scan QR">01. స్కాన్ చేయండి</strong>
+                    <p style="font-size: 13.5px; color: #475569;" data-te="లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు." data-en="Scan the QR near lifts or gate with your phone — no app download needed.">లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు.</p>
                 </div>
                 <div style="margin-bottom: 14px;">
-                    <strong style="color: var(--brand-orange); font-size: 16px;">02. మాట్లాడండి</strong>
-                    <p style="font-size: 13.5px; color: #475569;">WhatsApp లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి ఒక చిన్న వాయిస్ నోట్ ఇవ్వండి.</p>
+                    <strong style="color: var(--brand-orange); font-size: 16px;" data-te="02. మాట్లాడండి" data-en="02. Send Voice Note">02. మాట్లాడండి</strong>
+                    <p style="font-size: 13.5px; color: #475569;" data-te="WhatsApp లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి ఒక చిన్న వాయిస్ నోట్ ఇవ్వండి." data-en="Send a quick voice note on WhatsApp about your grocery or home repair needs.">WhatsApp లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి ఒక చిన్న వాయిస్ నోట్ ఇవ్వండి.</p>
                 </div>
                 <div>
-                    <strong style="color: var(--brand-orange); font-size: 16px;">03. డోర్ డెలివరీ</strong>
-                    <p style="font-size: 13.5px; color: #475569;">వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు.</p>
+                    <strong style="color: var(--brand-orange); font-size: 16px;" data-te="03. డోర్ డెలివరీ" data-en="03. Doorstep Delivery">03. డోర్ డెలివరీ</strong>
+                    <p style="font-size: 13.5px; color: #475569;" data-te="వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు." data-en="Our verified local executive reaches your doorstep with verified gate alerts.">వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు.</p>
                 </div>
             </div>
         </div>
@@ -771,11 +772,11 @@
     <div class="modal-overlay" id="aimModal">
         <div class="modal-window">
             <div class="modal-header">
-                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;">మన లక్ష్యం & గోల్</h3>
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;" data-te="మన లక్ష్యం & గోల్" data-en="Our Aim & Goal">మన లక్ష్యం & గోల్</h3>
                 <button class="modal-close-btn" onclick="closeModal('aimModal')">✕</button>
             </div>
             <div class="modal-body">
-                <p style="font-size: 14px; color: #334155; margin-bottom: 14px;">
+                <p style="font-size: 14px; color: #334155; margin-bottom: 14px;" data-te="సాధారణ ప్రజలను, ముఖ్యంగా పెద్దవారిని మరియు గృహిణులను సంక్లిష్టమైన మొబైల్ యాప్ డౌన్‌లోడ్‌లు, పాస్‌వర్డ్‌లు, OTP ఇబ్బందుల నుండి విముక్తి చేయడం. రోజూ అందరూ వాడే WhatsApp ద్వారానే గేట్ సెక్యూరిటీని, అవసరమైన సరుకులను, కుటుంబ సంరక్షణను సులభంగా అందించడమే మన ధ్యేయం." data-en="Freeing seniors and homemakers from bulky app downloads, passwords, and OTP hassles. Providing gate security, fresh groceries, and eldercare using WhatsApp.">
                     సాధారణ ప్రజలను, ముఖ్యంగా పెద్దవారిని మరియు గృహిణులను సంక్లిష్టమైన మొబైల్ యాప్ డౌన్‌లోడ్‌లు, పాస్‌వర్డ్‌లు, OTP ఇబ్బందుల నుండి విముక్తి చేయడం. రోజూ అందరూ వాడే WhatsApp ద్వారానే గేట్ సెక్యూరిటీని, అవసరమైన సరుకులను, కుటుంబ సంరక్షణను సులభంగా అందించడమే మన ధ్యేయం.
                 </p>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -785,7 +786,7 @@
                     </div>
                     <div style="background: #f8fafc; border-left: 3px solid var(--brand-gold); padding: 10px;">
                         <strong style="font-size: 16px;">MSME</strong>
-                        <div style="font-size: 11px; color: #64748b;">Govt. Registered</div>
+                        <div style="font-size: 11px; color: #64748b;">Govt. Registered Entity</div>
                     </div>
                 </div>
             </div>
@@ -796,13 +797,13 @@
     <div class="modal-overlay" id="faqModal">
         <div class="modal-window">
             <div class="modal-header">
-                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;">తరచుగా అడిగే ప్రశ్నలు (FAQ)</h3>
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;" data-te="తరచుగా అడిగే ప్రశ్నలు (FAQ)" data-en="Frequently Asked Questions (FAQ)">తరచుగా అడిగే ప్రశ్నలు (FAQ)</h3>
                 <button class="modal-close-btn" onclick="closeModal('faqModal')">✕</button>
             </div>
             <div class="modal-body" style="font-size: 13.5px;">
-                <p><strong>Q: Hospital escort సమయం దాటితే ఏమవుతుంది?</strong><br>A: నిర్ణీత గంటలు దాటితే అదనపు సమయానికి స్వల్ప రుసుము వర్తిస్తుంది.</p>
+                <p><strong data-te="Q: Hospital escort సమయం దాటితే ఏమవుతుంది?" data-en="Q: What happens if hospital escort exceeds duration?">Q: Hospital escort సమయం దాటితే ఏమవుతుంది?</strong><br><span data-te="A: నిర్ణీత గంటలు దాటితే అదనపు సమయానికి స్వల్ప రుసుము వర్తిస్తుంది." data-en="A: A nominal hourly charge applies for extended escort hours.">A: నిర్ణీత గంటలు దాటితే అదనపు సమయానికి స్వల్ప రుసుము వర్తిస్తుంది.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid #e2e8f0;">
-                <p><strong>Q: మా డేటా సురక్షితమా?</strong><br>A: ఖచ్చితంగా! మహిళల నంబర్లు డెలివరీ సిబ్బందికి కనిపించకుండా మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది.</p>
+                <p><strong data-te="Q: మా డేటా సురక్షితమా?" data-en="Q: Is our data safe and secure?">Q: మా డేటా సురక్షితమా?</strong><br><span data-te="A: ఖచ్చితంగా! మహిళల నంబర్లు డెలివరీ సిబ్బందికి కనిపించకుండా మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది." data-en="A: Absolutely! Complete phone number masking to safeguard women's privacy.">A: ఖచ్చితంగా! మహిళల నంబర్లు డెలివరీ సిబ్బందికి కనిపించకుండా మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది.</span></p>
             </div>
         </div>
     </div>
@@ -811,20 +812,20 @@
     <div class="modal-overlay" id="partnerModal">
         <div class="modal-window">
             <div class="modal-header">
-                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;">అవైలో పార్ట్‌నర్‌గా చేరండి</h3>
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;" data-te="అవైలో పార్ట్‌నర్‌గా చేరండి" data-en="Join as AVAILO Partner">అవైలో పార్ట్‌నర్‌గా చేరండి</h3>
                 <button class="modal-close-btn" onclick="closeModal('partnerModal')">✕</button>
             </div>
             <div class="modal-body">
                 <div style="margin-bottom: 10px;">
-                    <label style="font-size: 12px; font-weight: 600;">మీ పూర్తి పేరు</label>
+                    <label style="font-size: 12px; font-weight: 600;" data-te="మీ పూర్తి పేరు" data-en="Full Name">మీ పూర్తి పేరు</label>
                     <input type="text" id="pName" placeholder="ఉదా: రాము" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
                 </div>
                 <div style="margin-bottom: 10px;">
-                    <label style="font-size: 12px; font-weight: 600;">WhatsApp నంబర్</label>
+                    <label style="font-size: 12px; font-weight: 600;" data-te="WhatsApp నంబర్" data-en="WhatsApp Mobile">WhatsApp నంబర్</label>
                     <input type="tel" id="pPhone" placeholder="10-digit number" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
                 </div>
                 <div style="margin-bottom: 10px;">
-                    <label style="font-size: 12px; font-weight: 600;">సర్వీస్</label>
+                    <label style="font-size: 12px; font-weight: 600;" data-te="సర్వీస్" data-en="Profession">సర్వీస్</label>
                     <select id="pSkill" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
                         <option value="Electrical">ఎలక్ట్రికల్ (Electrical)</option>
                         <option value="Plumbing">ప్లంబింగ్ (Plumbing)</option>
@@ -834,10 +835,43 @@
                     </select>
                 </div>
                 <div style="margin-bottom: 14px;">
-                    <label style="font-size: 12px; font-weight: 600;">పని చేసే ఏరియా</label>
-                    <input type="text" id="pArea" placeholder="ఉదా: కానూరు, విజయవాడ" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="పని చేసే ఏరియా (విజయవాడ / గుంటూరు)" data-en="Service Area (Vijayawada / Guntur)">పని చేసే ఏరియా (విజయవాడ / గుంటూరు)</label>
+                    <input type="text" id="pArea" placeholder="ఉదా: విజయవాడ" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
                 </div>
-                <button onclick="submitPartnerForm()" style="width: 100%; background: var(--brand-blue); color: white; padding: 10px; border: none; border-radius: 4px; font-weight: 700;">పార్ట్‌నర్‌గా రిజిస్టర్ అవ్వండి</button>
+                <button onclick="submitPartnerForm()" style="width: 100%; background: var(--brand-blue); color: white; padding: 10px; border: none; border-radius: 4px; font-weight: 700;" data-te="పార్ట్‌నర్‌గా రిజిస్టర్ అవ్వండి" data-en="Register as Partner">పార్ట్‌నర్‌గా రిజిస్టర్ అవ్వండి</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Contact Details Modal -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;" data-te="సంప్రదించండి (Contact Details)" data-en="Contact Details">సంప్రదించండి (Contact Details)</h3>
+                <button class="modal-close-btn" onclick="closeModal('contactModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 20px;">📞</span>
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted);" data-te="కాల్ హెల్ప్‌లైన్" data-en="Direct Call Helpline">కాల్ హెల్ప్‌లైన్</div>
+                        <a href="tel:9966157369" style="font-size: 16px; font-weight: 700; color: var(--brand-blue); text-decoration: none;">9966157369</a>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 20px;">💬</span>
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted);" data-te="WhatsApp సపోర్ట్" data-en="WhatsApp Support">WhatsApp సపోర్ట్</div>
+                        <a href="https://wa.me/919966157369" style="font-size: 15px; font-weight: 700; color: var(--call-green); text-decoration: none;" data-te="WhatsApp లో మెసేజ్ చేయండి" data-en="Message on WhatsApp">WhatsApp లో మెసేజ్ చేయండి</a>
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; margin-top: 10px;">
+                    <p style="font-size: 12.5px; color: #334155; margin-bottom: 4px;" data-te="⏰ డైలీ సర్వీస్ సమయం: ఉదయం 7:00 – రాత్రి 9:00" data-en="⏰ Daily Hours: 7:00 AM – 9:00 PM">⏰ <strong>డైలీ సర్వీస్:</strong> ఉదయం 7:00 – రాత్రి 9:00</p>
+                    <p style="font-size: 12.5px; color: #334155; margin-bottom: 4px;" data-te="🚨 NRI ఎమర్జెన్సీ రెస్పాన్స్: 24/7" data-en="🚨 NRI Emergency Response: 24/7">🚨 <strong>NRI ఎమర్జెన్సీ:</strong> 24/7</p>
+                    <p style="font-size: 12.5px; color: #334155;" data-te="📍 ప్రాంతం: విజయవాడ & గుంటూరు రీజియన్" data-en="📍 Location: Vijayawada & Guntur Region">📍 <strong>ప్రాంతం:</strong> విజయవాడ & గుంటూరు రీజియన్</p>
+                </div>
             </div>
         </div>
     </div>
@@ -889,10 +923,10 @@
             const name = document.getElementById('pName').value.trim();
             const phone = document.getElementById('pPhone').value.trim();
             const skill = document.getElementById('pSkill').value;
-            const area = document.getElementById('pArea').value.trim();
+            const area = document.getElementById('pArea').value.trim() || 'Vijayawada';
 
             if (!name || !phone) {
-                alert("దయచేసి పేరు మరియు ఫోన్ నంబర్ ఇవ్వండి.");
+                alert(currentLang === 'te' ? "దయచేసి పేరు మరియు ఫోన్ నంబర్ ఇవ్వండి." : "Please enter your name and phone number.");
                 return;
             }
 
