@@ -1,80 +1,138 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - AVAILO</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tiro+Telugu:ital@0;1&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@600;700&family=Ramabhadra&family=Suranna&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-navy: #0c1a30;
-            --bg-cream: #fcf9f2;
-            --gold-accent: #d4af37;
-            --text-navy: #0c1a30;
-            --whatsapp-green: #15803d;
-            --border-light: #e5e0d3;
+            --bg-dark: #030b1e;
+            --panel-bg: #071530;
+            --cyan-glow: #00e5ff;
+            --text-sub: #94a3b8;
+            --border-glow: 1px solid rgba(0, 229, 255, 0.35);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tiro Telugu', 'Inter', serif; }
-        body { background-color: var(--bg-cream); color: var(--text-navy); line-height: 1.6; }
-        header { background-color: var(--bg-navy); color: #ffffff; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
-        .back-home { color: #cbd5e1; text-decoration: none; font-size: 13.5px; }
-        .content-box { padding: 24px 18px; max-width: 650px; margin: 0 auto; }
-        h1 { font-size: 24px; color: var(--text-navy); font-family: 'Inter', sans-serif; margin-bottom: 4px; }
-        .sub-date { font-size: 11.5px; color: #64748b; margin-bottom: 20px; }
-        .sec-title { font-size: 17px; color: var(--text-navy); border-bottom: 1.5px solid var(--gold-accent); padding-bottom: 4px; margin: 20px 0 10px; }
-        p, li { font-size: 13.5px; color: #334155; margin-bottom: 8px; }
-        ul { padding-left: 20px; }
-        .highlight-box { background: #f1f5f9; border-left: 3.5px solid var(--whatsapp-green); padding: 10px 14px; margin: 14px 0; border-radius: 0 6px 6px 0; }
-        footer { background-color: var(--bg-navy); color: #ffffff; padding: 25px 18px; margin-top: 30px; text-align: center; font-size: 12px; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        .te-heading { font-family: 'Ramabhadra', sans-serif; }
+        .te-body { font-family: 'Suranna', serif; }
+
+        header {
+            background: var(--panel-bg);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: var(--border-glow);
+        }
+
+        .back-link {
+            color: var(--cyan-glow);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .container {
+            padding: 22px 18px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: var(--cyan-glow);
+            margin-bottom: 4px;
+        }
+
+        .sub-meta {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+        }
+
+        .block-card {
+            background: var(--panel-bg);
+            border: var(--border-glow);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .block-card h3 {
+            font-size: 15px;
+            color: var(--cyan-glow);
+            margin-bottom: 8px;
+        }
+
+        .block-card p, .block-card li {
+            font-size: 13.5px;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+
+        ul { padding-left: 18px; }
+
+        .shield-highlight {
+            border-left: 3px solid #22c55e;
+            padding-left: 10px;
+            margin: 10px 0;
+            background: rgba(34, 197, 94, 0.08);
+            padding: 8px 10px;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div style="font-size: 16px; font-weight: bold; font-family: 'Inter', sans-serif;">AVAILO</div>
-        <a href="availo-index.html" class="back-home">‹ హోమ్‌కి వెళ్లండి</a>
+        <div class="te-heading" style="color: #fff; font-size: 16px;">AVAILO LEGAL</div>
+        <a href="index.html" class="back-link te-heading">‹ హోమ్‌కి వెళ్లండి</a>
     </header>
 
-    <div class="content-box">
-        <h1>Privacy Policy</h1>
-        <div class="sub-date">చివరిగా అప్‌డేట్ చేయబడింది: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)</div>
+    <div class="container">
+        <h1 class="te-heading">Privacy Policy</h1>
+        <div class="sub-meta">చివరిగా అప్‌డేట్ చేయబడింది: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)</div>
 
-        <div class="sec-title">మేము ఏమి సేకరిస్తాము</div>
-        <p>మీరు మా WhatsApp సేవలను ఉపయోగించినప్పుడు లేదా వెబ్‌సైట్‌లో ఆర్డర్ ఇచ్చినప్పుడు ఈ కింది సమాచారాన్ని సేకరిస్తాము:</p>
-        <ul>
-            <li>పేరు & WhatsApp మొబైల్ నంబర్</li>
-            <li>అపార్ట్‌మెంట్ / ఇంటి చిరునామా (సర్వీస్ డెలివరీ కోసం మాత్రమే)</li>
-            <li>మీరు అభ్యర్థించిన సర్వీస్ వివరాలు (గ్రోసరీ లిస్ట్, రిపేర్ సమస్యలు)</li>
-            <li>NRI Parent Care ప్లాన్లలో — తల్లిదండ్రుల ప్రాథమిక సంరక్షణ కోసం మీరు స్వచ్ఛందంగా తెలిపిన వివరాలు</li>
-        </ul>
-
-        <div class="sec-title">మహిళల ప్రైవసీ రక్షణ (Safety First)</div>
-        <div class="highlight-box">
-            గేట్ పాస్ మరియు డెలివరీ సర్వీసుల్లో, మహిళా రెసిడెంట్ల ఫోన్ నంబర్లు ఫీల్డ్ ఎగ్జిక్యూటివ్‌లకు లేదా డెలివరీ సిబ్బందికి ఎప్పుడూ ప్రత్యక్షంగా చూపించబడవు. ఇవి మాస్కింగ్ సిస్టమ్ ద్వారా రక్షించబడతాయి. కమ్యూనికేషన్ అంతా మా సెంట్రల్ WhatsApp నంబర్ ద్వారానే సాగుతుంది.
+        <div class="block-card">
+            <h3 class="te-heading">మేము ఏమి సేకరిస్తాము</h3>
+            <p class="te-body">సర్వీస్ నిర్వహణ కోసం కింది సమాచారాన్ని మాత్రమే సేకరిస్తాము:</p>
+            <ul class="te-body">
+                <li>పేరు మరియు WhatsApp మొబైల్ నంబర్</li>
+                <li>అపార్ట్‌మెంట్ / ఇంటి చిరునామా (డెలివరీ ప్రయోజనాలకు మాత్రమే)</li>
+                <li>మీరు కోరిన గ్రోసరీ మరియు హోమ్ రిపేర్ రిక్వెస్ట్ వివరాలు</li>
+            </ul>
         </div>
 
-        <div class="sec-title">డేటాను ఎవరితో పంచుకుంటాము</div>
-        <p>మీ సర్వీస్‌ని పూర్తి చేయడానికి అవసరమైన మేరకు మాత్రమే — మీ ఫ్లాట్‌కి డెలివరీ చేసే స్థానిక ఫీల్డ్ ఎగ్జిక్యూటివ్‌తో కేవలం అడ్రస్ మరియు ఆర్డర్ వివరాలు పంచుకుంటాము.</p>
-        
-        <div class="highlight-box" style="border-left-color: #ef4444;">
-            <strong>మేము మీ డేటాను ఎప్పుడూ మార్కెటింగ్ కోసం మూడో పార్టీలకు అమ్మము.</strong>
+        <div class="block-card">
+            <h3 class="te-heading">మహిళల ప్రైవసీ రక్షణ</h3>
+            <div class="shield-highlight te-body">
+                గేట్ పాస్ మరియు డెలివరీ సర్వీసుల్లో మహిళా రెసిడెంట్ల ఫోన్ నంబర్లు డెలివరీ సిబ్బందికి ఎప్పుడూ కనిపించవు. పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది.
+            </div>
         </div>
 
-        <div class="sec-title">డేటా తొలగింపు & భద్రత</div>
-        <p>మీ సమాచారం WhatsApp Business API మరియు మా అంతర్గత రికార్డుల్లో భద్రంగా ఉంటుంది. మీ రికార్డులను తొలగించమని కోరే హక్కు మీకు ఉంది. దీని కోసం మా WhatsApp నంబర్‌కు రిక్వెస్ట్ పంపితే సరిపోతుంది.</p>
+        <div class="block-card">
+            <h3 class="te-heading">డేటా భద్రత & వాగ్దానం</h3>
+            <p class="te-body">మేము మీ వ్యక్తిగత సమాచారాన్ని మార్కెటింగ్ లేదా ప్రచారాల కోసం ఎలాంటి మూడో పార్టీలకు అమ్మము.</p>
+        </div>
 
-        <div class="sec-title">మమ్మల్ని సంప్రదించండి</div>
-        <p>ఈ పాలసీపై ఏవైనా సందేహాలుంటే సంప్రదించగలరు:</p>
-        <p>📞 ఫోన్: <strong><a href="tel:9966157369" style="color: var(--text-navy); text-decoration: none;">9966157369</a></strong></p>
-        <p>💬 WhatsApp: <strong><a href="https://wa.me/919966157369" style="color: var(--whatsapp-green); text-decoration: none;">WhatsApp లో మెసేజ్ చేయండి</a></strong></p>
+        <div class="block-card">
+            <h3 class="te-heading">మమ్మల్ని సంప్రదించండి</h3>
+            <p class="te-body">ఫోన్: <strong>9966157369</strong></p>
+            <p class="te-body">ప్రాంతం: కానూరు, విజయవాడ & గుంటూరు రీజియన్</p>
+        </div>
     </div>
-
-    <footer>
-        <p>© 2026 Availo Digital Services • MSME రిజిస్టర్డ్ (UDYAM-AP-20-0109827)</p>
-        <p style="color: #94a3b8; font-size: 11px; margin-top: 4px;">విజయవాడ & గుంటూరు రీజియన్</p>
-    </footer>
 
 </body>
 </html>
