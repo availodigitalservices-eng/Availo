@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AVAILO - Book Your Service</title>
+    <title>AVAILO - Smart Access. Total Control.</title>
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Rajdhani:wght@600;700;800&family=Ramabhadra&family=Suranna&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Ramabhadra&family=Tenali+Ramakrishna&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            --brand-navy: #041026;
             --brand-blue: #094098;
-            --brand-accent-blue: #0b57d0;
+            --brand-cyan: #00e5ff;
+            --brand-gold: #f59e0b;
             --brand-orange: #f37021;
             --btn-blue: #0b63a4;
-            --call-green: #22c55e;
-            --bg-page: #f4f7fa;
+            --call-green: #16a34a;
+            --bg-page: #f1f5f9;
             --card-white: #ffffff;
-            --text-dark: #1e293b;
+            --text-dark: #0f172a;
             --text-muted: #64748b;
-            --gold-vip: #f59e0b;
-            --purple-elite: #7c3aed;
         }
 
         * {
@@ -28,71 +28,69 @@
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
-            scroll-behavior: smooth;
         }
 
         body {
             background-color: var(--bg-page);
             color: var(--text-dark);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Tenali Ramakrishna', 'Inter', sans-serif;
             line-height: 1.5;
             padding-bottom: 75px;
         }
 
-        .te-title {
+        .te-heading {
             font-family: 'Ramabhadra', sans-serif;
             letter-spacing: 0.5px;
         }
 
-        .te-body {
-            font-family: 'Suranna', serif;
-        }
-
-        /* Top Blue Header */
+        /* Top Header */
         header {
-            background-color: var(--brand-blue);
-            color: #ffffff;
-            padding: 14px 18px;
+            background: var(--brand-navy);
+            padding: 12px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            border-bottom: 2px solid var(--brand-cyan);
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.15);
         }
 
-        .brand-box {
+        .brand-logo-area {
             display: flex;
             flex-direction: column;
         }
 
-        .brand-box h1 {
+        .brand-logo-area h1 {
             font-family: 'Rajdhani', sans-serif;
             font-size: 24px;
             font-weight: 800;
+            color: var(--brand-cyan);
             letter-spacing: 2px;
             line-height: 1;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
 
-        .brand-box span {
-            font-size: 10px;
-            color: #93c5fd;
+        .brand-logo-area span {
+            font-size: 9.5px;
+            color: var(--brand-gold);
             letter-spacing: 1px;
             text-transform: uppercase;
+            font-weight: 600;
         }
 
-        .header-controls {
+        .header-actions {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .lang-btn {
-            background: #ffffff;
-            color: var(--brand-blue);
-            border: none;
-            padding: 5px 10px;
+            background: rgba(0, 229, 255, 0.15);
+            border: 1px solid var(--brand-cyan);
+            color: var(--brand-cyan);
+            padding: 4px 8px;
             border-radius: 4px;
             font-size: 11px;
             font-weight: 700;
@@ -101,7 +99,7 @@
 
         .menu-btn {
             background: none;
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: #ffffff;
             padding: 4px 10px;
             border-radius: 4px;
@@ -109,60 +107,38 @@
             cursor: pointer;
         }
 
-        /* Sub-Header Banner (Book Your Service) */
-        .page-banner {
-            background: var(--brand-blue);
+        /* Hero Mayura Stage */
+        .mayura-hero {
+            background: radial-gradient(circle at 50% 30%, #0d2859 0%, #041026 85%);
             color: #ffffff;
             text-align: center;
-            padding: 10px 14px 16px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .page-banner h2 {
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        .orange-strip {
-            background: var(--brand-orange);
-            color: #ffffff;
-            text-align: center;
-            padding: 8px 12px;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        /* Center Mayura Stage */
-        .hero-mayura-stage {
-            background: #ffffff;
-            padding: 24px 16px 20px;
-            text-align: center;
+            padding: 22px 16px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 2px solid var(--brand-orange);
         }
 
         .mayura-mic-badge {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            color: var(--brand-blue);
-            padding: 5px 14px;
+            background: rgba(0, 229, 255, 0.12);
+            border: 1px solid var(--brand-cyan);
+            color: var(--brand-cyan);
+            padding: 4px 14px;
             border-radius: 20px;
             font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
-        .radar-mayura-wrapper {
+        /* Large Centered Radar */
+        .radar-box {
             position: relative;
-            width: 120px;
-            height: 120px;
+            width: 125px;
+            height: 125px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -175,337 +151,310 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 2px dashed var(--brand-orange);
-            animation: spinRing 16s linear infinite;
+            border: 2px dashed var(--brand-cyan);
+            animation: spinRadar 16s linear infinite;
         }
 
-        @keyframes spinRing { 100% { transform: rotate(360deg); } }
+        @keyframes spinRadar { 100% { transform: rotate(360deg); } }
 
         .radar-core {
-            width: 85px;
-            height: 85px;
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
-            background: radial-gradient(circle, #094098 0%, #031b4e 100%);
-            border: 3px solid #ffffff;
-            box-shadow: 0 4px 15px rgba(9, 64, 152, 0.4);
+            background: radial-gradient(circle, #007791 0%, #041026 80%);
+            border: 2.5px solid var(--brand-cyan);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 38px;
+            font-size: 40px;
+            user-select: none;
             transition: transform 0.2s;
         }
 
         .radar-core:active { transform: scale(0.92); }
 
+        .city-tag {
+            color: var(--brand-gold);
+            font-size: 11.5px;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
         .hero-title {
-            font-size: 22px;
-            color: var(--brand-blue);
+            font-size: 21px;
+            color: #ffffff;
             line-height: 1.35;
             margin-bottom: 8px;
         }
 
-        .hero-subtitle {
+        .hero-desc {
             font-size: 13.5px;
-            color: var(--text-muted);
+            color: #94a3b8;
             max-width: 320px;
             margin-bottom: 16px;
         }
 
-        /* Dual Path Selection */
+        /* Two Major Buttons */
         .dual-cta-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             width: 100%;
-            max-width: 350px;
+            max-width: 340px;
         }
 
-        .cta-box {
-            padding: 12px 10px;
-            border-radius: 8px;
+        .cta-btn {
+            padding: 11px 8px;
+            border-radius: 6px;
             text-align: center;
             text-decoration: none;
             color: #ffffff;
-            font-weight: 700;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
+            gap: 2px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+            border: none;
         }
 
         .cta-order {
             background: var(--call-green);
-            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
         }
 
-        .cta-join {
+        .cta-partner {
             background: var(--brand-blue);
-            box-shadow: 0 4px 10px rgba(9, 64, 152, 0.3);
+            border: 1px solid var(--brand-cyan);
         }
 
-        /* 2-Column Visual Services Grid (Matching Screenshot) */
-        .services-section {
-            padding: 16px 12px;
+        /* Banner Strip */
+        .orange-banner-strip {
+            background: var(--brand-orange);
+            color: #ffffff;
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* 2-Column Photo Service Grid */
+        .services-wrapper {
+            padding: 14px 10px;
         }
 
         .service-photo-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .service-photo-card {
+        .service-card {
             background: var(--card-white);
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: transform 0.2s, box-shadow 0.2s;
             text-decoration: none;
+            border: 1px solid #e2e8f0;
         }
 
-        .service-photo-card:active {
-            transform: scale(0.98);
-        }
+        .service-card:active { transform: scale(0.98); }
 
-        .card-img-wrap {
+        .img-container {
             width: 100%;
-            height: 110px;
-            background-color: #e2e8f0;
+            height: 105px;
+            background-color: #cbd5e1;
             overflow: hidden;
         }
 
-        .card-img-wrap img {
+        .img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
 
-        .card-btn-label {
+        .card-label-btn {
             background: var(--btn-blue);
             color: #ffffff;
             text-align: center;
-            padding: 9px 6px;
-            margin: 8px;
+            padding: 8px 4px;
+            margin: 6px;
             border-radius: 4px;
             font-size: 13px;
             font-weight: 700;
+            min-height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 38px;
         }
 
-        /* NRI Parents Care (3 Accurate Plans) */
-        .nri-section-wrap {
-            padding: 16px 12px;
-            background: #ffffff;
-            border-top: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
-            margin-top: 10px;
-        }
-
-        .section-header-title {
-            font-size: 19px;
-            color: var(--brand-blue);
-            margin-bottom: 4px;
-        }
-
-        .nri-tier-card {
-            background: #f8fafc;
-            border: 1.5px solid #cbd5e1;
-            border-radius: 10px;
+        /* Pop-up Modal System */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(4, 16, 38, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
             padding: 16px;
-            margin-top: 14px;
-            position: relative;
         }
 
-        .nri-tier-card.featured {
-            border: 2px solid var(--brand-blue);
-            box-shadow: 0 4px 15px rgba(9, 64, 152, 0.15);
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-window {
             background: #ffffff;
-        }
-
-        .nri-tier-card.elite {
-            border: 2px solid var(--purple-elite);
-            background: #ffffff;
-        }
-
-        .popular-tag {
-            position: absolute;
-            top: -10px;
-            right: 14px;
-            background: var(--brand-blue);
-            color: #ffffff;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .elite-tag {
-            position: absolute;
-            top: -10px;
-            right: 14px;
-            background: var(--purple-elite);
-            color: #ffffff;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .tier-price-val {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--brand-blue);
-            margin: 6px 0 10px;
-        }
-
-        .tier-list-ul {
-            list-style: none;
+            width: 100%;
+            max-width: 480px;
+            max-height: 85vh;
+            border-radius: 12px;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 2px solid var(--brand-cyan);
             display: flex;
             flex-direction: column;
-            gap: 7px;
-            font-size: 13px;
-            color: #334155;
         }
 
-        .expense-policy-box {
-            background: #fffbeb;
-            border-left: 4px solid var(--gold-vip);
-            padding: 12px;
-            border-radius: 0 6px 6px 0;
-            margin-top: 14px;
-            font-size: 12.5px;
-            color: #78350f;
-        }
-
-        /* 3 Steps Process */
-        .steps-block {
-            padding: 20px 14px;
-            background: #ffffff;
-            margin-top: 10px;
-        }
-
-        .step-row-item {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-
-        .step-badge-num {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--brand-orange);
-            background: #fff7ed;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            border: 1px solid #fed7aa;
-        }
-
-        /* Partner Form Block */
-        .partner-form-section {
-            padding: 20px 14px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .form-card-white {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 16px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            margin-top: 12px;
-        }
-
-        .form-field-unit {
-            margin-bottom: 12px;
-        }
-
-        .form-field-unit label {
-            display: block;
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-        }
-
-        .form-field-unit input, .form-field-unit select {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 6px;
-            border: 1px solid #cbd5e1;
-            font-size: 13.5px;
-            outline: none;
-            background: #f8fafc;
-        }
-
-        .submit-partner-btn {
-            width: 100%;
-            background: var(--brand-blue);
+        .modal-header {
+            background: var(--brand-navy);
             color: #ffffff;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--brand-cyan);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modal-close-btn {
+            background: none;
             border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 14.5px;
-            font-weight: 700;
+            color: #ffffff;
+            font-size: 24px;
             cursor: pointer;
         }
 
-        /* Footer Links List (Matching Screenshot) */
-        .all-links-footer {
-            background: #ffffff;
-            padding: 20px 14px;
-            border-top: 2px solid var(--brand-orange);
+        .modal-body {
+            padding: 18px 16px;
         }
 
-        .links-strip-header {
-            background: var(--brand-orange);
-            color: #ffffff;
-            padding: 8px 12px;
-            font-weight: 700;
-            text-align: center;
-            border-radius: 4px;
-            margin-bottom: 14px;
-            font-size: 15px;
+        /* NRI Modal Cards */
+        .nri-card {
+            background: #f8fafc;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
         }
 
-        .links-cloud {
-            color: #1d4ed8;
+        .nri-card.highlight {
+            border: 2px solid var(--brand-blue);
+            background: #f0f7ff;
+        }
+
+        .nri-card.vip {
+            border: 2px solid #7c3aed;
+            background: #faf5ff;
+        }
+
+        .nri-price {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--brand-blue);
+            margin: 4px 0 8px;
+        }
+
+        .nri-card ul {
+            list-style: none;
             font-size: 13px;
-            line-height: 2;
-            text-align: center;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        /* Bottom Fixed Call/Order Bar */
-        .fixed-call-strip {
+        /* Navigation Drawer */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            display: none;
+        }
+
+        .drawer-box {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 270px;
+            height: 100%;
+            background: var(--brand-navy);
+            color: #ffffff;
+            z-index: 2001;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 16px;
+        }
+
+        .drawer-overlay.open { display: block; }
+        .drawer-box.open { right: 0; }
+
+        .drawer-menu-ul {
+            list-style: none;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .drawer-menu-ul a, .drawer-menu-ul button {
+            color: #ffffff;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* Fixed Bottom Call/Chat Bar */
+        .fixed-call-hub {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             background: #ffffff;
             border-top: 1px solid #cbd5e1;
-            padding: 10px 16px;
+            padding: 10px 14px;
             display: flex;
             gap: 10px;
             z-index: 1000;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
         }
 
-        .bar-action-btn {
+        .hub-btn {
             flex: 1;
             padding: 12px;
             border-radius: 6px;
@@ -528,384 +477,369 @@
             background: var(--brand-blue);
             color: #ffffff;
         }
-
-        /* Navigation Drawer */
-        .drawer-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 2000;
-            display: none;
-        }
-
-        .drawer-content {
-            position: fixed;
-            top: 0;
-            right: -280px;
-            width: 270px;
-            height: 100%;
-            background: var(--brand-blue);
-            color: #ffffff;
-            z-index: 2001;
-            transition: right 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 16px;
-        }
-
-        .drawer-overlay.open { display: block; }
-        .drawer-content.open { right: 0; }
-
-        .drawer-nav-list {
-            list-style: none;
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .drawer-nav-list a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: space-between;
-        }
     </style>
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <div class="brand-box">
+        <div class="brand-logo-area">
             <h1>AVAILO</h1>
             <span>Smart Access. Total Control.</span>
         </div>
-        <div class="header-controls">
+        <div class="header-actions">
             <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">EN | తె</button>
             <button class="menu-btn" onclick="toggleDrawer()">☰</button>
         </div>
     </header>
 
     <!-- Navigation Drawer -->
-    <div class="drawer-overlay" id="overlay" onclick="toggleDrawer()"></div>
-    <div class="drawer-content" id="drawer">
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+    <div class="drawer-box" id="drawerBox">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 12px;">
-            <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 18px;">AVAILO MENU</h3>
+            <h3 style="font-family: 'Rajdhani', sans-serif; color: var(--brand-cyan); font-size: 20px;">AVAILO CONTROLS</h3>
             <button style="background: none; border: none; color: #fff; font-size: 24px; cursor: pointer;" onclick="toggleDrawer()">✕</button>
         </div>
-        <ul class="drawer-nav-list">
-            <li><a href="#home" onclick="toggleDrawer()"><span class="te-title" data-te="హోమ్" data-en="Home">హోమ్</span> <span>›</span></a></li>
-            <li><a href="chat.html"><span class="te-title" style="color: #93c5fd;">OneChat AI అసిస్టెంట్</span> <span>›</span></a></li>
-            <li><a href="#services" onclick="toggleDrawer()"><span class="te-title" data-te="సర్వీసెస్ కేటలాగ్" data-en="Services">సర్వీసెస్ కేటలాగ్</span> <span>›</span></a></li>
-            <li><a href="#nri-plans" onclick="toggleDrawer()"><span class="te-title" data-te="NRI కేర్ ప్లాన్స్" data-en="NRI Care Plans">NRI కేర్ ప్లాన్స్</span> <span>›</span></a></li>
-            <li><a href="#partner-section" onclick="toggleDrawer()"><span class="te-title" data-te="పార్ట్‌నర్‌గా చేరండి" data-en="Join as Partner">పార్ట్‌నర్‌గా చేరండి</span> <span>›</span></a></li>
-            <li><a href="privacy.html"><span class="te-title" data-te="ప్రైవసీ నిబంధనలు" data-en="Privacy Policy">ప్రైవసీ నిబంధనలు</span> <span>›</span></a></li>
-            <li><a href="tel:9966157369"><span class="te-title" data-te="కాల్: 9966157369" data-en="Call: 9966157369">కాల్: 9966157369</span> <span>›</span></a></li>
-        </ul>
+        <div class="drawer-menu-ul">
+            <button onclick="toggleDrawer(); openModal('howItWorksModal');"><span class="te-heading" data-te="ఎలా పని చేస్తుంది" data-en="How It Works">ఎలా పని చేస్తుంది</span> <span>›</span></button>
+            <button onclick="toggleDrawer(); openModal('nriModal');"><span class="te-heading" data-te="NRI కేర్ ప్లాన్స్" data-en="NRI Care Plans">NRI కేర్ ప్లాన్స్</span> <span>›</span></button>
+            <button onclick="toggleDrawer(); openModal('aimModal');"><span class="te-heading" data-te="మన లక్ష్యం & గోల్" data-en="Our Aim & Goal">మన లక్ష్యం & గోల్</span> <span>›</span></button>
+            <button onclick="toggleDrawer(); openModal('faqModal');"><span class="te-heading" data-te="FAQ (తరచుగా అడిగే ప్రశ్నలు)" data-en="FAQ">FAQ</span> <span>›</span></button>
+            <button onclick="toggleDrawer(); openModal('partnerModal');"><span class="te-heading" data-te="పార్ట్‌నర్‌గా చేరండి" data-en="Join as Partner">పార్ట్‌నర్‌గా చేరండి</span> <span>›</span></button>
+            <a href="chat.html"><span class="te-heading" style="color: var(--brand-cyan);">OneChat AI అసిస్టెంట్</span> <span>›</span></a>
+            <a href="privacy.html"><span class="te-heading" data-te="ప్రైవసీ నిబంధనలు" data-en="Privacy Policy">ప్రైవసీ నిబంధనలు</span> <span>›</span></a>
+        </div>
     </div>
 
-    <!-- Banner (Matching Reference) -->
-    <div class="page-banner">
-        <h2 class="te-title" data-te="సర్వీస్ బుక్ చేయండి" data-en="Book Your Service">Book Your Service</h2>
-    </div>
-    <div class="orange-strip te-title" data-te="క్రింద మీకు కావాల్సిన సర్వీస్‌ను ఎంచుకోండి" data-en="Select Your Service Below">
-        Select Your Service Below
-    </div>
-
-    <!-- Center Mayura Radar Section -->
-    <section class="hero-mayura-stage" id="home">
-        <div class="mayura-mic-badge te-title" onclick="speakMayura()">
+    <!-- Center Mayura Hero Stage -->
+    <section class="mayura-hero">
+        <div class="mayura-mic-badge te-heading" onclick="speakMayura()">
             <span>🦚</span> <span id="promptTxt" data-te="టచ్ చేయండి — మయూర మాట్లాడుతుంది" data-en="Touch circle — Mayura speaks">టచ్ చేయండి — మయూర మాట్లాడుతుంది</span>
         </div>
 
-        <div class="radar-mayura-wrapper" onclick="speakMayura()">
+        <div class="radar-box" onclick="speakMayura()">
             <div class="radar-ring"></div>
             <div class="radar-core">🦚</div>
         </div>
 
-        <div style="color: var(--brand-orange); font-size: 12px; font-weight: 800; letter-spacing: 1px; margin-bottom: 4px;" data-te="విజయవాడ & గుంటూరు రీజియన్" data-en="VIJAYAWADA & GUNTUR REGION">
+        <div class="city-tag" data-te="విజయవాడ & గుంటూరు రీజియన్" data-en="VIJAYAWADA & GUNTUR REGION">
             VIJAYAWADA & GUNTUR REGION
         </div>
 
-        <h2 class="hero-title te-title" id="headTitle" data-te="యాప్ డౌన్‌లోడ్ వద్దు.<br>ఒక్క వాయిస్ నోట్ ఇస్తే చాలు." data-en="No App Download Needed.<br>Just Send a Voice Note.">
+        <h2 class="hero-title te-heading" id="headTitle" data-te="యాప్ డౌన్‌లోడ్ వద్దు.<br>ఒక్క వాయిస్ నోట్ ఇస్తే చాలు." data-en="No App Download Needed.<br>Just Send a Voice Note.">
             యాప్ డౌన్‌లోడ్ వద్దు.<br>ఒక్క వాయిస్ నోట్ ఇస్తే చాలు.
         </h2>
 
-        <p class="hero-subtitle te-body" id="headDesc" data-te="గేట్ సెక్యూరిటీ, హోమ్ రిపేర్స్, గ్రోసరీస్ & తల్లిదండ్రుల సంరక్షణ — అన్నీ మీ WhatsApp లోనే." data-en="Gate security, home repairs, daily essentials & parents care — all inside WhatsApp.">
+        <p class="hero-desc" id="headDesc" data-te="గేట్ సెక్యూరిటీ, హోమ్ రిపేర్స్, గ్రోసరీస్ & తల్లిదండ్రుల సంరక్షణ — అన్నీ మీ WhatsApp లోనే." data-en="Gate security, home repairs, daily essentials & parents care — all inside WhatsApp.">
             గేట్ సెక్యూరిటీ, హోమ్ రిపేర్స్, గ్రోసరీస్ & తల్లిదండ్రుల సంరక్షణ — అన్నీ మీ WhatsApp లోనే.
         </p>
 
-        <!-- Two Clear Pathways -->
+        <!-- Two Clear Choice Buttons -->
         <div class="dual-cta-grid">
-            <a href="chat.html" class="cta-box cta-order">
-                <span style="font-size: 20px;">🛒</span>
-                <span class="te-title" data-te="సర్వీస్ కావాలి" data-en="Need Service">సర్వీస్ కావాలి</span>
-                <small style="font-size: 10px; font-weight: normal;" data-te="(WhatsApp ఆర్డర్)" data-en="(Order on WhatsApp)">(WhatsApp ఆర్డర్)</small>
+            <a href="chat.html" class="cta-btn cta-order">
+                <span style="font-size: 18px;">🛒</span>
+                <span class="te-heading" data-te="సర్వీస్ కావాలి" data-en="Need Service">సర్వీస్ కావాలి</span>
+                <small style="font-size: 10px; opacity: 0.9;" data-te="(WhatsApp ఆర్డర్)" data-en="(Order on WhatsApp)">(WhatsApp ఆర్డర్)</small>
             </a>
-            <a href="#partner-section" class="cta-box cta-join">
-                <span style="font-size: 20px;">🤝</span>
-                <span class="te-title" data-te="సర్వీస్ ప్రొవైడర్" data-en="Join as Partner">సర్వీస్ ప్రొవైడర్</span>
-                <small style="font-size: 10px; font-weight: normal;" data-te="(పని కావాలి)" data-en="(Get Orders)">(పని కావాలి)</small>
-            </a>
+            <button class="cta-btn cta-partner" onclick="openModal('partnerModal')">
+                <span style="font-size: 18px;">🤝</span>
+                <span class="te-heading" data-te="సర్వీస్ ప్రొవైడర్" data-en="Join as Partner">సర్వీస్ ప్రొవైడర్</span>
+                <small style="font-size: 10px; opacity: 0.9;" data-te="(పని కావాలి)" data-en="(Get Orders)">(పని కావాలి)</small>
+            </button>
         </div>
     </section>
 
-    <!-- 2-Column Photo Service Grid (Exact Match to Screenshots) -->
-    <section class="services-section" id="services">
+    <!-- Orange Strip -->
+    <div class="orange-banner-strip te-heading" data-te="క్రింద మీకు కావాల్సిన సర్వీస్‌ను ఎంచుకోండి" data-en="Select Your Service Below">
+        Select Your Service Below
+    </div>
+
+    <!-- 2-Column Photo Service Grid -->
+    <section class="services-wrapper">
         <div class="service-photo-grid">
             
             <!-- 1. Electrical -->
-            <a href="https://wa.me/919966157369?text=ఎలక్ట్రికల్%20సర్వీస్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=500&auto=format&fit=crop&q=60" alt="Electrical">
+            <a href="https://wa.me/919966157369?text=ఎలక్ట్రికల్%20సర్వీస్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&auto=format&fit=crop&q=60" alt="Electrical">
                 </div>
-                <div class="card-btn-label te-title" data-te="ఎలక్ట్రికల్ (Electrical)" data-en="Electrical">Electrical</div>
+                <div class="card-label-btn te-heading" data-te="ఎలక్ట్రికల్ (Electrical)" data-en="Electrical">Electrical</div>
             </a>
 
             <!-- 2. Plumbing -->
-            <a href="https://wa.me/919966157369?text=ప్లంబింగ్%20సర్వీస్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=500&auto=format&fit=crop&q=60" alt="Plumbing">
+            <a href="https://wa.me/919966157369?text=ప్లంబింగ్%20సర్వీస్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=400&auto=format&fit=crop&q=60" alt="Plumbing">
                 </div>
-                <div class="card-btn-label te-title" data-te="ప్లంబింగ్ (Plumbing)" data-en="Plumbing">Plumbing</div>
+                <div class="card-label-btn te-heading" data-te="ప్లంబింగ్ (Plumbing)" data-en="Plumbing">Plumbing</div>
             </a>
 
             <!-- 3. Air Conditioner -->
-            <a href="https://wa.me/919966157369?text=ఏసీ%20సర్వీస్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=500&auto=format&fit=crop&q=60" alt="Air conditioner">
+            <a href="https://wa.me/919966157369?text=ఏసీ%20సర్వీస్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&auto=format&fit=crop&q=60" alt="Air Conditioner">
                 </div>
-                <div class="card-btn-label te-title" data-te="ఎయిర్ కండీషనర్" data-en="Air conditioner">Air conditioner</div>
+                <div class="card-label-btn te-heading" data-te="ఎయిర్ కండీషనర్" data-en="Air conditioner">Air conditioner</div>
             </a>
 
             <!-- 4. Refrigerator -->
-            <a href="https://wa.me/919966157369?text=ఫ్రిజ్%20సర్వీస్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=500&auto=format&fit=crop&q=60" alt="Refrigerator">
+            <a href="https://wa.me/919966157369?text=ఫ్రిజ్%20సర్వీస్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400&auto=format&fit=crop&q=60" alt="Refrigerator">
                 </div>
-                <div class="card-btn-label te-title" data-te="రిఫ్రిజిరేటర్" data-en="Refrigerator">Refrigerator</div>
+                <div class="card-label-btn te-heading" data-te="రిఫ్రిజిరేటర్" data-en="Refrigerator">Refrigerator</div>
             </a>
 
-            <!-- 5. Water Purifier -->
-            <a href="https://wa.me/919966157369?text=వాటర్%20ప్యూరిఫైయర్%20సర్వీస్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=500&auto=format&fit=crop&q=60" alt="Water Purifier">
+            <!-- 5. Water Purifier (RO) - High Quality Guaranteed Image -->
+            <a href="https://wa.me/919966157369?text=వాటర్%20ప్యూరిఫైయర్%20సర్వీస్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1527409341081-789a8039c3e9?w=400&auto=format&fit=crop&q=60" alt="Water Purifier">
                 </div>
-                <div class="card-btn-label te-title" data-te="వాటర్ ప్యూరిఫైయర్" data-en="Water Purifier">Water Purifier</div>
+                <div class="card-label-btn te-heading" data-te="వాటర్ ప్యూరిఫైయర్" data-en="Water Purifier">Water Purifier</div>
             </a>
 
             <!-- 6. Washing Machine -->
-            <a href="https://wa.me/919966157369?text=వాషింగ్%20మెషిన్%20రిపేర్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=500&auto=format&fit=crop&q=60" alt="Washing machine">
+            <a href="https://wa.me/919966157369?text=వాషింగ్%20మెషిన్%20రిపేర్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400&auto=format&fit=crop&q=60" alt="Washing machine">
                 </div>
-                <div class="card-btn-label te-title" data-te="వాషింగ్ మెషిన్" data-en="Washing machine">Washing machine</div>
+                <div class="card-label-btn te-heading" data-te="వాషింగ్ మెషిన్" data-en="Washing machine">Washing machine</div>
             </a>
 
             <!-- 7. Groceries & Essentials -->
-            <a href="https://wa.me/919966157369?text=కిరాణా%20సరుకులు%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&auto=format&fit=crop&q=60" alt="Groceries">
+            <a href="https://wa.me/919966157369?text=కిరాణా%20సరుకులు%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&auto=format&fit=crop&q=60" alt="Groceries">
                 </div>
-                <div class="card-btn-label te-title" data-te="కిరాణా & కూరగాయలు" data-en="Groceries & Essentials">Groceries & Daily</div>
+                <div class="card-label-btn te-heading" data-te="కిరాణా & కూరగాయలు" data-en="Groceries & Daily">Groceries & Daily</div>
             </a>
 
             <!-- 8. Sunday Non-Veg -->
-            <a href="https://wa.me/919966157369?text=ఆదివారం%20నాన్-వెజ్%20ఆర్డర్" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&auto=format&fit=crop&q=60" alt="Sunday Non-Veg">
+            <a href="https://wa.me/919966157369?text=ఆదివారం%20నాన్-వెజ్%20ఆర్డర్" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&auto=format&fit=crop&q=60" alt="Sunday Non-Veg">
                 </div>
-                <div class="card-btn-label te-title" data-te="ఆదివారం నాన్-వెజ్" data-en="Sunday Non-Veg">Sunday Non-Veg</div>
+                <div class="card-label-btn te-heading" data-te="ఆదివారం నాన్-వెజ్" data-en="Sunday Non-Veg">Sunday Non-Veg</div>
             </a>
 
             <!-- 9. Cleaning Services -->
-            <a href="https://wa.me/919966157369?text=క్లీనింగ్%20సర్వీస్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&auto=format&fit=crop&q=60" alt="Cleaning services">
+            <a href="https://wa.me/919966157369?text=క్లీనింగ్%20సర్వీస్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&auto=format&fit=crop&q=60" alt="Cleaning services">
                 </div>
-                <div class="card-btn-label te-title" data-te="క్లీనింగ్ సర్వీసెస్" data-en="Cleaning services">Cleaning services</div>
+                <div class="card-label-btn te-heading" data-te="క్లీనింగ్ సర్వీసెస్" data-en="Cleaning services">Cleaning services</div>
             </a>
 
             <!-- 10. Pest Control -->
-            <a href="https://wa.me/919966157369?text=పెస్ట్%20కంట్రోల్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1587582423116-ec07293f0395?w=500&auto=format&fit=crop&q=60" alt="Pest control">
+            <a href="https://wa.me/919966157369?text=పెస్ట్%20కంట్రోల్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1587582423116-ec07293f0395?w=400&auto=format&fit=crop&q=60" alt="Pest control">
                 </div>
-                <div class="card-btn-label te-title" data-te="పెస్ట్ కంట్రోల్" data-en="Pest control">Pest control</div>
+                <div class="card-label-btn te-heading" data-te="పెస్ట్ కంట్రోల్" data-en="Pest control">Pest control</div>
             </a>
 
             <!-- 11. Painting Services -->
-            <a href="https://wa.me/919966157369?text=పెయింటింగ్%20సర్వీస్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=500&auto=format&fit=crop&q=60" alt="Painting Services">
+            <a href="https://wa.me/919966157369?text=పెయింటింగ్%20సర్వీస్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&auto=format&fit=crop&q=60" alt="Painting Services">
                 </div>
-                <div class="card-btn-label te-title" data-te="పెయింటింగ్ సర్వీసెస్" data-en="Painting Services">Painting Services</div>
+                <div class="card-label-btn te-heading" data-te="పెయింటింగ్ సర్వీసెస్" data-en="Painting Services">Painting Services</div>
             </a>
 
             <!-- 12. Packers and Movers -->
-            <a href="https://wa.me/919966157369?text=ప్యాకర్స్%20అండ్%20మూవర్స్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=500&auto=format&fit=crop&q=60" alt="Packers and Movers">
+            <a href="https://wa.me/919966157369?text=ప్యాకర్స్%20అండ్%20మూవర్స్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&auto=format&fit=crop&q=60" alt="Packers and Movers">
                 </div>
-                <div class="card-btn-label te-title" data-te="ప్యాకర్స్ & మూవర్స్" data-en="Packers and Movers">Packers & Movers</div>
+                <div class="card-label-btn te-heading" data-te="ప్యాకర్స్ & మూవర్స్" data-en="Packers and Movers">Packers & Movers</div>
             </a>
 
-            <!-- 13. CCTV Repair / Installation -->
-            <a href="https://wa.me/919966157369?text=సిసిటీవి%20రిపేర్%20కావాలి" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=500&auto=format&fit=crop&q=60" alt="CCTV Repair">
+            <!-- 13. CCTV Repair / Setup -->
+            <a href="https://wa.me/919966157369?text=సిసిటీవి%20రిపేర్%20కావాలి" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=400&auto=format&fit=crop&q=60" alt="CCTV Repair">
                 </div>
-                <div class="card-btn-label te-title" data-te="CCTV ఇన్‌స్టాలేషన్" data-en="CCTV Installation">CCTV Repair / Setup</div>
+                <div class="card-label-btn te-heading" data-te="CCTV ఇన్‌స్టాలేషన్" data-en="CCTV Setup">CCTV Repair / Setup</div>
             </a>
 
-            <!-- 14. E-Waste & Scrap Pickup -->
-            <a href="https://wa.me/919966157369?text=ఈ-వేస్ట్%20స్క్రాప్%20పికప్" class="service-photo-card">
-                <div class="card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=500&auto=format&fit=crop&q=60" alt="E-Waste">
+            <!-- 14. E-Waste & Scrap -->
+            <a href="https://wa.me/919966157369?text=ఈ-వేస్ట్%20స్క్రాప్%20పికప్" class="service-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=400&auto=format&fit=crop&q=60" alt="E-Waste">
                 </div>
-                <div class="card-btn-label te-title" data-te="ఈ-వేస్ట్ & స్క్రాప్" data-en="E-Waste & Scrap">E-Waste & Scrap</div>
+                <div class="card-label-btn te-heading" data-te="ఈ-వేస్ట్ & స్క్రాప్" data-en="E-Waste & Scrap">E-Waste & Scrap</div>
             </a>
 
         </div>
     </section>
 
-    <!-- NRI Parents Care Section (3 Tiers & Safe Policy) -->
-    <section class="nri-section-wrap" id="nri-plans">
-        <div style="color: var(--brand-orange); font-size: 11px; font-weight: 800; text-transform: uppercase;">ELDERS PROTECTION</div>
-        <h3 class="section-header-title te-title" data-te="AVAILO NRI Parents Care ప్లాన్లు" data-en="AVAILO NRI Parents Care Plans">AVAILO NRI Parents Care ప్లాన్లు</h3>
-        <p class="te-body" style="font-size: 13px; color: var(--text-muted);" data-te="విదేశాల్లో ఉన్నా — తల్లిదండ్రుల బాగోగులు మీ కంట్రోల్‌లో. మీ అవసరాన్ని బట్టి ప్లాన్ ఎంచుకోండి." data-en="Living abroad? Stay in total control of your parents' well-being.">విదేశాల్లో ఉన్నా — తల్లిదండ్రుల బాగోగులు మీ కంట్రోల్‌లో.</p>
-
-        <!-- Plan 1: Care -->
-        <div class="nri-tier-card">
-            <div style="font-size: 15px; color: var(--brand-blue); font-weight: 800;">💙 AVAILO CARE</div>
-            <div class="tier-price-val">₹2,499 / <span style="font-size: 13px; font-weight: normal; color: var(--text-muted);" data-te="నెల" data-en="Month">నెల</span></div>
-            <ul class="tier-list-ul te-body">
-                <li data-te="🏠 Home Check-in: నెలకు 1 సారి" data-en="🏠 Home Check-in: 1 time/month">🏠 Home Check-in: నెలకు 1 సారి</li>
-                <li data-te="🏥 Hospital Escort: నెలకు 1 సారి (గరిష్ఠం 3 గంటలు)" data-en="🏥 Hospital Escort: 1 time/month (Max 3 hrs)">🏥 Hospital Escort: నెలకు 1 సారి (గరిష్ఠం 3 గంటలు)</li>
-                <li data-te="🛵 Delivery Tasks: నెలకు 2 సార్లు — Medicines / Groceries" data-en="🛵 Delivery Tasks: 2 times/month — Medicines / Groceries">🛵 Delivery Tasks: నెలకు 2 సార్లు — Medicines / Groceries</li>
-                <li data-te="🚨 Priority Response: 45 నిమిషాల్లోపు (Target Response)" data-en="🚨 Priority Response: Within 45 mins (Target Response)">🚨 Priority Response: 45 నిమిషాల్లోపు (Target Response)</li>
-            </ul>
+    <!-- Footer Links Cloud -->
+    <footer style="background: #ffffff; padding: 20px 14px; border-top: 2px solid var(--brand-orange); text-align: center;">
+        <div style="background: var(--brand-orange); color: #ffffff; padding: 8px 12px; font-weight: 700; border-radius: 4px; margin-bottom: 12px;" class="te-heading">
+            Our all services links
         </div>
-
-        <!-- Plan 2: Plus -->
-        <div class="nri-tier-card featured">
-            <span class="popular-tag">⭐ Most Popular</span>
-            <div style="font-size: 16px; color: var(--brand-blue); font-weight: 800;">💙 AVAILO PLUS</div>
-            <div class="tier-price-val">₹4,999 / <span style="font-size: 13px; font-weight: normal; color: var(--text-muted);" data-te="నెల" data-en="Month">నెల</span></div>
-            <ul class="tier-list-ul te-body">
-                <li data-te="🏠 Home Check-in: నెలకు 2 సార్లు — Bi-weekly" data-en="🏠 Home Check-in: 2 times/month — Bi-weekly">🏠 Home Check-in: నెలకు 2 సార్లు — Bi-weekly</li>
-                <li data-te="🏥 Hospital Escort: నెలకు 2 సార్లు — గరిష్ఠం 4 గంటలు" data-en="🏥 Hospital Escort: 2 times/month — Max 4 hrs">🏥 Hospital Escort: నెలకు 2 సార్లు — గరిష్ఠం 4 గంటలు</li>
-                <li data-te="🛵 Delivery Tasks: నెలకు 4 సార్లు — Medicines / Bills" data-en="🛵 Delivery Tasks: 4 times/month — Medicines / Bills">🛵 Delivery Tasks: నెలకు 4 సార్లు — Medicines / Bills</li>
-                <li data-te="🚨 Priority Response: 30 నిమిషాల్లోపు (Target Response)" data-en="🚨 Priority Response: Within 30 mins (Target Response)">🚨 Priority Response: 30 నిమిషాల్లోపు (Target Response)</li>
-            </ul>
+        <div style="color: #1d4ed8; font-size: 13px; line-height: 2;">
+            Electrical Services | Plumbing Work | Ac Mechanics | Ac Shifting | Refrigerator Repair | Washing Machine Service | Water Purifier RO | Groceries Delivery | Sunday Non-Veg | Cleaning Services | Pest Control | Painting Services | Packers and Movers | CCTV Installation | E-Waste Pickup
         </div>
-
-        <!-- Plan 3: Elite -->
-        <div class="nri-tier-card elite">
-            <span class="elite-tag">👑 VIP Dedicated</span>
-            <div style="font-size: 16px; color: var(--purple-elite); font-weight: 800;">💜 AVAILO ELITE</div>
-            <div class="tier-price-val" style="color: var(--purple-elite);">₹9,999 / <span style="font-size: 13px; font-weight: normal; color: var(--text-muted);" data-te="నెల" data-en="Month">నెల</span></div>
-            <ul class="tier-list-ul te-body">
-                <li data-te="🏠 Home Check-in: నెలకు 4 సార్లు — వారానికి 1 సారి" data-en="🏠 Home Check-in: 4 times/month — Weekly once">🏠 Home Check-in: నెలకు 4 సార్లు — వారానికి 1 సారి</li>
-                <li data-te="🏥 Hospital Escort: నెలకు 4 సార్లు — Unlimited hours" data-en="🏥 Hospital Escort: 4 times/month — Unlimited hours">🏥 Hospital Escort: నెలకు 4 సార్లు — Unlimited hours</li>
-                <li data-te="🛵 Delivery & Errand Tasks: నెలకు 8 టాస్క్‌లు (Flexible Usage)" data-en="🛵 Delivery Tasks: 8 tasks/month (Flexible Usage)">🛵 Delivery & Errand Tasks: నెలకు 8 టాస్క్‌లు (Flexible Usage)</li>
-                <li data-te="🔄 Carry Forward: ఉపయోగించని టాస్క్‌లు 2 నెలల వరకు వాడుకోవచ్చు" data-en="🔄 Carry Forward: Unused tasks roll over up to 2 months">🔄 Carry Forward: ఉపయోగించని టాస్క్‌లు 2 నెలల వరకు వాడుకోవచ్చు</li>
-                <li data-te="🚨 Priority Response: 15–20 నిమిషాలు — Top Priority" data-en="🚨 Priority Response: 15–20 mins — Top Priority">🚨 Priority Response: 15–20 నిమిషాలు — Top Priority</li>
-            </ul>
-        </div>
-
-        <!-- Expense Policy Note -->
-        <div class="expense-policy-box te-body">
-            <strong>⚠️ Expense Policy (అన్ని ప్లాన్లకు):</strong> Medicines, groceries, doctor fees, hospital charges, transportation మరియు ఇతర actual expenses ప్లాన్ ఫీజులో ఉండవు. అవి తల్లిదండ్రులు/NRI కస్టమర్లే నేరుగా భరిస్తారు. Delivery/Errand task అంటే ఒక్క visit/run అని అర్థం.
-        </div>
-    </section>
-
-    <!-- 3 Steps Process Block -->
-    <section class="steps-block">
-        <div style="color: var(--brand-orange); font-size: 11px; font-weight: 800; text-transform: uppercase;">SIMPLE PROCESS</div>
-        <h3 class="section-header-title te-title" data-te="మూడు స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు" data-en="Doorstep Service in 3 Steps">మూడు స్టెప్స్‌లో సర్వీస్ మీ గుమ్మం ముందుకు</h3>
-        
-        <div class="step-row-item">
-            <div class="step-badge-num">01</div>
-            <div>
-                <h4 class="te-title" data-te="స్కాన్ చేయండి" data-en="Scan QR">స్కాన్ చేయండి</h4>
-                <p class="te-body" style="font-size: 13px; color: var(--text-muted);" data-te="లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు." data-en="Scan the QR near lifts or gate with your phone — no app download needed.">లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు.</p>
-            </div>
-        </div>
-
-        <div class="step-row-item">
-            <div class="step-badge-num">02</div>
-            <div>
-                <h4 class="te-title" data-te="మాట్లాడండి" data-en="Send Voice Note">మాట్లాడండి</h4>
-                <p class="te-body" style="font-size: 13px; color: var(--text-muted);" data-te="WhatsApp లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి ఒక చిన్న వాయిస్ నోట్ ఇవ్వండి." data-en="Send a quick voice note on WhatsApp about your grocery or home repair needs.">WhatsApp లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి ఒక చిన్న వాయిస్ నోట్ ఇవ్వండి.</p>
-            </div>
-        </div>
-
-        <div class="step-row-item">
-            <div class="step-badge-num">03</div>
-            <div>
-                <h4 class="te-title" data-te="డోర్ డెలివరీ" data-en="Doorstep Delivery">డోర్ డెలివరీ</h4>
-                <p class="te-body" style="font-size: 13px; color: var(--text-muted);" data-te="వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు." data-en="Our verified local executive reaches your doorstep with verified gate alerts.">వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Partner Registration Section -->
-    <section class="partner-form-section" id="partner-section">
-        <div style="color: var(--brand-blue); font-size: 11px; font-weight: 800; text-transform: uppercase;">BECOME A PARTNER</div>
-        <h3 class="section-header-title te-title" data-te="అవైలో పార్ట్‌నర్‌గా చేరండి" data-en="Join as an AVAILO Partner">అవైలో పార్ట్‌నర్‌గా చేరండి</h3>
-        <p class="te-body" style="font-size: 13px; color: var(--text-muted);" data-te="పనులు నేరుగా మీ WhatsApp కే — ఎలాంటి జాయినింగ్ ఫీజు లేదు." data-en="Work orders directly to your WhatsApp — Zero joining fees.">పనులు నేరుగా మీ WhatsApp కే — ఎలాంటి జాయినింగ్ ఫీజు లేదు.</p>
-
-        <div class="form-card-white">
-            <div class="form-field-unit">
-                <label class="te-title" data-te="మీ పూర్తి పేరు" data-en="Your Full Name">మీ పూర్తి పేరు</label>
-                <input type="text" id="partnerName" placeholder="ఉదా: రాము">
-            </div>
-            <div class="form-field-unit">
-                <label class="te-title" data-te="WhatsApp మొబైల్ నంబర్" data-en="WhatsApp Mobile Number">WhatsApp మొబైల్ నంబర్</label>
-                <input type="tel" id="partnerPhone" placeholder="10-digit number">
-            </div>
-            <div class="form-field-unit">
-                <label class="te-title" data-te="మీరు అందించే సర్వీస్" data-en="Your Service Profession">మీరు అందించే సర్వీస్</label>
-                <select id="partnerSkill">
-                    <option value="Electrical">ఎలక్ట్రికల్ (Electrical)</option>
-                    <option value="Plumbing">ప్లంబింగ్ (Plumbing)</option>
-                    <option value="AC / Fridge">ఏసీ & రిఫ్రిజిరేటర్ సర్వీస్</option>
-                    <option value="Water Purifier">వాటర్ ప్యూరిఫైయర్ (RO)</option>
-                    <option value="Groceries Hub">కిరాణా & డెలివరీ పార్ట్‌నర్</option>
-                    <option value="Cleaning">క్లీనింగ్ & పెస్ట్ కంట్రోల్</option>
-                    <option value="CCTV Setup">CCTV టెక్నీషియన్</option>
-                </select>
-            </div>
-            <div class="form-field-unit">
-                <label class="te-title" data-te="పని చేయదలిచిన ఏరియా" data-en="Preferred Work Area">పని చేయదలిచిన ఏరియా</label>
-                <input type="text" id="partnerArea" placeholder="ఉదా: కానూరు, పోరంకి, విజయవాడ">
-            </div>
-            <button class="submit-partner-btn te-title" onclick="submitPartner()" data-te="పార్ట్‌నర్‌గా రిజిస్టర్ అవ్వండి" data-en="Register as Partner">పార్ట్‌నర్‌గా రిజిస్టర్ అవ్వండి</button>
-        </div>
-    </section>
-
-    <!-- Footer Links Cloud (Matching Screenshot Bottom) -->
-    <footer class="all-links-footer">
-        <div class="links-strip-header te-title" data-te="మా అన్ని సర్వీసుల లింక్స్" data-en="Our all services links">Our all services links</div>
-        <div class="links-cloud">
-            Electrical Services | Plumbing Work | Ac Mechanics | Ac Repair Experts | Ac Shifting Service | Refrigerator Repair | Washing Machine Service | Water Purifier RO Service | Groceries Delivery | Sunday Non-Veg | Cleaning Services | Pest Control | Painting Services | Packers and Movers | CCTV Installation | Computer Laptop Repair | E-Waste Pickup | Vijayawada & Guntur Region
-        </div>
-        <div style="text-align: center; margin-top: 16px; font-size: 11px; color: var(--text-muted);">
+        <div style="margin-top: 14px; font-size: 11.5px; color: var(--text-muted);">
             © 2026 Availo Digital Services • MSME: UDYAM-AP-20-0109827 • <a href="privacy.html" style="color: var(--brand-blue);">Privacy Policy</a>
         </div>
     </footer>
 
-    <!-- Bottom Fixed Call/Order Strip (Exact Matching) -->
-    <div class="fixed-call-strip">
-        <a href="tel:9966157369" class="bar-action-btn btn-call-now te-title" data-te="Call Now" data-en="Call Now">Call Now</a>
-        <a href="chat.html" class="bar-action-btn btn-chat-now te-title" data-te="OneChat ఆర్డర్" data-en="OneChat Order">OneChat ఆర్డర్</a>
+    <!-- Fixed Bottom Call/Chat Bar -->
+    <div class="fixed-call-hub">
+        <a href="tel:9966157369" class="hub-btn btn-call-now te-heading">Call Now</a>
+        <a href="chat.html" class="hub-btn btn-chat-now te-heading">OneChat ఆర్డర్</a>
+    </div>
+
+    <!-- ================= MODALS (POP-UP DETAILS) ================= -->
+
+    <!-- 1. NRI Modal -->
+    <div class="modal-overlay" id="nriModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;">AVAILO NRI Parents Care</h3>
+                <button class="modal-close-btn" onclick="closeModal('nriModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="nri-card">
+                    <strong style="color: var(--brand-blue);">💙 AVAILO CARE</strong>
+                    <div class="nri-price">₹2,499 / నెల</div>
+                    <ul>
+                        <li>🏠 Home Check-in: నెలకు 1 సారి</li>
+                        <li>🏥 Hospital Escort: నెలకు 1 సారి (గరిష్ఠం 3 గంటలు)</li>
+                        <li>🛵 Delivery Tasks: నెలకు 2 సార్లు (మందులు/గ్రోసరీ)</li>
+                        <li>🚨 Priority Response: 45 నిమిషాల్లోపు (Target)</li>
+                    </ul>
+                </div>
+
+                <div class="nri-card highlight">
+                    <strong style="color: var(--brand-blue);">💙 AVAILO PLUS (Most Popular ⭐)</strong>
+                    <div class="nri-price">₹4,999 / నెల</div>
+                    <ul>
+                        <li>🏠 Home Check-in: నెలకు 2 సార్లు (Bi-weekly)</li>
+                        <li>🏥 Hospital Escort: నెలకు 2 సార్లు (గరిష్ఠం 4 గంటలు)</li>
+                        <li>🛵 Delivery Tasks: నెలకు 4 సార్లు (మందులు/బిల్స్)</li>
+                        <li>🚨 Priority Response: 30 నిమిషాల్లోపు (Target)</li>
+                    </ul>
+                </div>
+
+                <div class="nri-card vip">
+                    <strong style="color: #7c3aed;">💜 AVAILO ELITE (👑 VIP Dedicated)</strong>
+                    <div class="nri-price" style="color: #7c3aed;">₹9,999 / నెల</div>
+                    <ul>
+                        <li>🏠 Home Check-in: నెలకు 4 సార్లు (వారానికి 1 సారి)</li>
+                        <li>🏥 Hospital Escort: నెలకు 4 సార్లు (Unlimited hours)</li>
+                        <li>🛵 Delivery Tasks: నెలకు 8 టాస్క్‌లు (Flexible Usage)</li>
+                        <li>🔄 Carry Forward: ఉపయోగించని టాస్క్‌లు 2 నెలల వరకు Carry Forward</li>
+                        <li>🚨 Priority Response: 15–20 నిమిషాలు (Top Priority)</li>
+                    </ul>
+                </div>
+
+                <div style="background: #fffbeb; border-left: 3.5px solid var(--brand-gold); padding: 10px; font-size: 12px; color: #78350f; border-radius: 0 4px 4px 0;">
+                    ⚠️ <strong>Expense Policy:</strong> Actual ఖర్చులు (మందులు, బిల్లులు, ఫీజులు) కస్టమర్‌వే. 1 టాస్క్ = 1 విజిట్.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. How It Works Modal -->
+    <div class="modal-overlay" id="howItWorksModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;">ఎలా పని చేస్తుంది (3 Steps)</h3>
+                <button class="modal-close-btn" onclick="closeModal('howItWorksModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 14px;">
+                    <strong style="color: var(--brand-orange); font-size: 16px;">01. స్కాన్ చేయండి</strong>
+                    <p style="font-size: 13.5px; color: #475569;">లిఫ్ట్ లేదా గేట్ దగ్గరున్న QR కోడ్‌ను ఫోన్‌తో స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు.</p>
+                </div>
+                <div style="margin-bottom: 14px;">
+                    <strong style="color: var(--brand-orange); font-size: 16px;">02. మాట్లాడండి</strong>
+                    <p style="font-size: 13.5px; color: #475569;">WhatsApp లో మీకు కావాల్సిన సరుకులు లేదా పనుల గురించి ఒక చిన్న వాయిస్ నోట్ ఇవ్వండి.</p>
+                </div>
+                <div>
+                    <strong style="color: var(--brand-orange); font-size: 16px;">03. డోర్ డెలివరీ</strong>
+                    <p style="font-size: 13.5px; color: #475569;">వెరిఫైడ్ గేట్ అలర్ట్‌తో మా స్థానిక ఎగ్జిక్యూటివ్ మీ ఫ్లాట్ డోర్ వద్దకు చేరుస్తారు.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Aim Modal -->
+    <div class="modal-overlay" id="aimModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;">మన లక్ష్యం & గోల్</h3>
+                <button class="modal-close-btn" onclick="closeModal('aimModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 14px; color: #334155; margin-bottom: 14px;">
+                    సాధారణ ప్రజలను, ముఖ్యంగా పెద్దవారిని మరియు గృహిణులను సంక్లిష్టమైన మొబైల్ యాప్ డౌన్‌లోడ్‌లు, పాస్‌వర్డ్‌లు, OTP ఇబ్బందుల నుండి విముక్తి చేయడం. రోజూ అందరూ వాడే WhatsApp ద్వారానే గేట్ సెక్యూరిటీని, అవసరమైన సరుకులను, కుటుంబ సంరక్షణను సులభంగా అందించడమే మన ధ్యేయం.
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: #f8fafc; border-left: 3px solid var(--brand-cyan); padding: 10px;">
+                        <strong style="font-size: 16px;">2 CITIES</strong>
+                        <div style="font-size: 11px; color: #64748b;">Vijayawada & Guntur</div>
+                    </div>
+                    <div style="background: #f8fafc; border-left: 3px solid var(--brand-gold); padding: 10px;">
+                        <strong style="font-size: 16px;">MSME</strong>
+                        <div style="font-size: 11px; color: #64748b;">Govt. Registered</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. FAQ Modal -->
+    <div class="modal-overlay" id="faqModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;">తరచుగా అడిగే ప్రశ్నలు (FAQ)</h3>
+                <button class="modal-close-btn" onclick="closeModal('faqModal')">✕</button>
+            </div>
+            <div class="modal-body" style="font-size: 13.5px;">
+                <p><strong>Q: Hospital escort సమయం దాటితే ఏమవుతుంది?</strong><br>A: నిర్ణీత గంటలు దాటితే అదనపు సమయానికి స్వల్ప రుసుము వర్తిస్తుంది.</p>
+                <hr style="margin: 10px 0; border: none; border-top: 1px solid #e2e8f0;">
+                <p><strong>Q: మా డేటా సురక్షితమా?</strong><br>A: ఖచ్చితంగా! మహిళల నంబర్లు డెలివరీ సిబ్బందికి కనిపించకుండా మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Partner Modal -->
+    <div class="modal-overlay" id="partnerModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="te-heading" style="color: var(--brand-cyan); font-size: 17px;">అవైలో పార్ట్‌నర్‌గా చేరండి</h3>
+                <button class="modal-close-btn" onclick="closeModal('partnerModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;">మీ పూర్తి పేరు</label>
+                    <input type="text" id="pName" placeholder="ఉదా: రాము" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;">WhatsApp నంబర్</label>
+                    <input type="tel" id="pPhone" placeholder="10-digit number" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;">సర్వీస్</label>
+                    <select id="pSkill" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                        <option value="Electrical">ఎలక్ట్రికల్ (Electrical)</option>
+                        <option value="Plumbing">ప్లంబింగ్ (Plumbing)</option>
+                        <option value="AC/Fridge">ఏసీ & ఫ్రిజ్ రిపేర్</option>
+                        <option value="Water Purifier">వాటర్ ప్యూరిఫైయర్ RO</option>
+                        <option value="Groceries">కిరాణా డెలివరీ</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 14px;">
+                    <label style="font-size: 12px; font-weight: 600;">పని చేసే ఏరియా</label>
+                    <input type="text" id="pArea" placeholder="ఉదా: కానూరు, విజయవాడ" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                </div>
+                <button onclick="submitPartnerForm()" style="width: 100%; background: var(--brand-blue); color: white; padding: 10px; border: none; border-radius: 4px; font-weight: 700;">పార్ట్‌నర్‌గా రిజిస్టర్ అవ్వండి</button>
+            </div>
+        </div>
     </div>
 
     <!-- Interactive Scripts -->
@@ -913,8 +847,16 @@
         let currentLang = 'te';
 
         function toggleDrawer() {
-            document.getElementById('drawer').classList.toggle('open');
-            document.getElementById('overlay').classList.toggle('open');
+            document.getElementById('drawerBox').classList.toggle('open');
+            document.getElementById('drawerOverlay').classList.toggle('open');
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
         }
 
         function toggleLanguage() {
@@ -931,8 +873,8 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const speechText = currentLang === 'te'
-                    ? "నమస్కారం! నేను మీ అవైలో మయూరను. మీకు కావాల్సిన సర్వీస్ కోసం ఫోటో కార్డ్ టచ్ చేయండి లేదా క్రింది కాల్ నౌ బటన్ నొక్కండి."
-                    : "Welcome to AVAILO! I am Mayura. Tap any service card above or click Call Now below to connect.";
+                    ? "నమస్కారం! నేను మీ అవైలో మయూరను. మీకు కావాల్సిన సర్వీస్ కోసం క్రింది ఫోటో కార్డ్ టచ్ చేయండి."
+                    : "Welcome to AVAILO! I am Mayura. Tap any service card below to connect on WhatsApp.";
 
                 const utterance = new SpeechSynthesisUtterance(speechText);
                 utterance.lang = currentLang === 'te' ? 'te-IN' : 'en-IN';
@@ -943,14 +885,14 @@
             }
         }
 
-        function submitPartner() {
-            const name = document.getElementById('partnerName').value.trim();
-            const phone = document.getElementById('partnerPhone').value.trim();
-            const skill = document.getElementById('partnerSkill').value;
-            const area = document.getElementById('partnerArea').value.trim();
+        function submitPartnerForm() {
+            const name = document.getElementById('pName').value.trim();
+            const phone = document.getElementById('pPhone').value.trim();
+            const skill = document.getElementById('pSkill').value;
+            const area = document.getElementById('pArea').value.trim();
 
             if (!name || !phone) {
-                alert(currentLang === 'te' ? "దయచేసి పేరు మరియు ఫోన్ నంబర్ ఇవ్వండి." : "Please enter your name and phone number.");
+                alert("దయచేసి పేరు మరియు ఫోన్ నంబర్ ఇవ్వండి.");
                 return;
             }
 
