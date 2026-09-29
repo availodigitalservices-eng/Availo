@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Availo Services | Smart Local Hub - Kanuru & Vijayawada</title>
+    <title>Availo Services | Smart Hyper-Local Platform</title>
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="Bv-aBAVU9UHys7RSbCjfMLYhabTyfU_wJFrrwf9qbd0" />
-    <meta name="description" content="Availo Services - హోమ్ సర్వీసెస్, NRI కేర్, హోటల్ డిజిటల్ మెనూ, పార్ట్‌నర్ నెట్‌వర్క్ మరియు కానూరు లోకల్ హబ్.">
+    <meta name="description" content="Availo Services - Home Services, NRI Care, Digital Menu, Partner Network.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -36,12 +36,12 @@
             overflow-x: hidden;
         }
 
-        /* Top Announcement */
+        /* Top Bar */
         .top-bar {
             background: linear-gradient(90deg, #0f172a, #1e3a8a);
             color: #ffffff;
             text-align: center;
-            padding: 9px 15px;
+            padding: 8px 15px;
             font-size: 0.82rem;
             font-weight: 600;
         }
@@ -87,11 +87,6 @@
             cursor: pointer;
             font-size: 1.3rem;
             color: var(--dark);
-            transition: 0.2s;
-        }
-
-        .menu-btn:hover {
-            background: #e2e8f0;
         }
 
         .logo {
@@ -107,7 +102,19 @@
 
         .header-actions {
             display: flex;
+            align-items: center;
             gap: 8px;
+        }
+
+        .lang-switch {
+            background: #e2e8f0;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--dark);
         }
 
         .btn-header {
@@ -198,9 +205,6 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .drawer-body {
@@ -249,7 +253,6 @@
             font-weight: 600;
             padding: 8px 10px;
             border-radius: 8px;
-            transition: 0.2s;
         }
 
         .drawer-links a:hover {
@@ -260,7 +263,7 @@
         .contact-card {
             background: #fafafa;
             border: 1px solid var(--border);
-            padding: 14px;
+            padding: 12px;
             border-radius: 10px;
             font-size: 0.8rem;
         }
@@ -288,7 +291,7 @@
         /* Hero */
         .hero {
             background: linear-gradient(180deg, #ffffff 0%, #eff6ff 100%);
-            padding: 30px 20px 20px;
+            padding: 30px 20px 25px;
             text-align: center;
             border-bottom: 1px solid var(--border);
         }
@@ -318,82 +321,80 @@
         .hero p {
             color: var(--muted);
             font-size: 0.9rem;
-            max-width: 620px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
-        /* Category Nav Tabs */
-        .tab-wrapper {
+        /* The 4 Main Pillars Section */
+        .pillars-section {
             max-width: 1050px;
-            margin: 20px auto 0;
+            margin: -20px auto 0;
             padding: 0 15px;
         }
 
-        .tab-grid {
+        .pillars-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 14px;
         }
 
-        .category-tab {
+        .pillar-card {
             background: var(--surface);
             border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 12px;
+            border-radius: 14px;
+            padding: 18px;
             cursor: pointer;
             transition: all 0.25s ease;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
             text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            position: relative;
         }
 
-        .category-tab.active {
+        .pillar-card:hover, .pillar-card.active-pillar {
             border-color: var(--primary-accent);
             background: #eff6ff;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -3px rgba(37, 99, 235, 0.15);
         }
 
-        .tab-icon {
-            font-size: 1.5rem;
-            background: #f1f5f9;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
+        .pillar-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
         }
 
-        .category-tab.active .tab-icon {
-            background: #ffffff;
-        }
-
-        .tab-text h4 {
-            font-size: 0.9rem;
+        .pillar-card h3 {
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--dark);
+            margin-bottom: 4px;
         }
 
-        .tab-text p {
-            font-size: 0.72rem;
+        .pillar-card p {
+            font-size: 0.8rem;
             color: var(--muted);
-            margin: 0;
+            margin-bottom: 10px;
         }
 
-        /* Main Container */
-        .container {
+        .pillar-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: inline-block;
+        }
+
+        /* Sub-Categories Container */
+        .sub-container {
             max-width: 1050px;
-            margin: 0 auto;
-            padding: 25px 15px 50px;
+            margin: 30px auto 0;
+            padding: 0 15px 50px;
         }
 
-        .service-panel {
+        .sub-panel {
             display: none;
             animation: fadeIn 0.3s ease-in-out;
         }
 
-        .service-panel.active-panel {
+        .sub-panel.active-sub {
             display: block;
         }
 
@@ -418,7 +419,7 @@
             color: var(--muted);
         }
 
-        /* Image Cards Grid */
+        /* Visual Cards Grid */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -437,8 +438,8 @@
         }
 
         .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px -2px rgba(0,0,0,0.06);
         }
 
         .card-img {
@@ -475,7 +476,7 @@
             justify-content: space-between;
         }
 
-        .card-content h3 {
+        .card-content h4 {
             font-size: 1.05rem;
             font-weight: 750;
             margin-bottom: 5px;
@@ -528,27 +529,6 @@
             color: #ffffff;
         }
 
-        /* Partner Banner */
-        .partner-banner {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #ffffff;
-            border-radius: 14px;
-            padding: 24px;
-            margin-top: 20px;
-        }
-
-        .partner-banner h4 {
-            color: #93c5fd;
-            font-size: 1.15rem;
-            margin-bottom: 8px;
-        }
-
-        .partner-banner p {
-            font-size: 0.85rem;
-            color: #cbd5e1;
-            margin-bottom: 15px;
-        }
-
         /* Footer */
         footer {
             background: var(--surface);
@@ -564,72 +544,64 @@
 
     <!-- Notification Bar -->
     <div class="top-bar">
-        <span>📍 KANURU CLUSTER</span> కానూరు పరిధిలోని హోటల్స్, అపార్ట్‌మెంట్లు & స్థానిక ప్రజల కోసం ప్రత్యేక నెట్‌వర్క్!
+        <span data-i18n="top_tag">📍 LIVE PLATFORM</span> 
+        <span data-i18n="top_text">అపార్ట్‌మెంట్లు, హోటల్స్ & లోకల్ సర్వీసుల స్మార్ట్ నెట్‌వర్క్!</span>
     </div>
 
-    <!-- Header with Hamburger Menu Button -->
+    <!-- Header -->
     <header>
         <div class="header-left">
-            <button class="menu-btn" onclick="toggleDrawer()" aria-label="Open Navigation Menu">☰</button>
+            <button class="menu-btn" onclick="toggleDrawer()" aria-label="Menu">☰</button>
             <a href="#" class="logo">Availo<span>.in</span></a>
         </div>
         <div class="header-actions">
-            <a href="https://wa.me/919491612345?text=Hello%20Availo%2C%20I%20need%20details" class="btn-header btn-wa">💬 WhatsApp</a>
-            <a href="tel:+919491612345" class="btn-header btn-tel">📞 Call</a>
+            <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">EN / తెలుగు</button>
+            <a href="javascript:void(0)" onclick="directWA('Main Header')" class="btn-header btn-wa">💬 WhatsApp</a>
+            <a href="tel:+919966157369" class="btn-header btn-tel">📞 Call</a>
         </div>
     </header>
 
-    <!-- Side Menu Drawer (Overlay & Sidebar) -->
+    <!-- Side Menu Drawer -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
 
     <aside class="side-drawer" id="sideDrawer">
         <div>
-            <!-- Drawer Header -->
             <div class="drawer-header">
                 <div>
                     <h3>Availo<span>.in</span></h3>
-                    <p style="font-size: 0.72rem; color: #94a3b8;">కానూరు మైక్రో-హబ్ ప్లాట్‌ఫామ్</p>
+                    <p style="font-size: 0.72rem; color: #94a3b8;" data-i18n="drawer_subtitle">స్మార్ట్ లోకల్ సర్వీస్ హబ్</p>
                 </div>
                 <button class="drawer-close" onclick="toggleDrawer()">✕</button>
             </div>
 
-            <!-- Drawer Body -->
             <div class="drawer-body">
-                
-                <!-- About & Vision Section -->
                 <div class="drawer-section">
-                    <div class="drawer-section-title">🌟 మన విజన్ & లక్ష్యం (Our Vision)</div>
-                    <div class="drawer-vision-box">
-                        <strong>మన విజన్:</strong> స్థానిక వ్యాపారులకు జీరో ముందస్తు ఖర్చుతో డిజిటల్ టెక్నాలజీ అందించడం, హోటల్ గెస్టులకు & అపార్ట్‌మెంట్ ప్రజలకు అవసరమైన ప్రతి సేవను 20 నిమిషాల్లో చేర్చడం.
+                    <div class="drawer-section-title" data-i18n="drawer_vision_title">🌟 మన విజన్ (Our Vision)</div>
+                    <div class="drawer-vision-box" data-i18n="drawer_vision_desc">
+                        స్థానిక వ్యాపారాలకు జీరో ముందస్తు ఖర్చుతో డిజిటల్ టెక్నాలజీ అందించడం, వినియోగదారులకు అవసరమైన ప్రతి సేవను 20 నిమిషాల్లో చేర్చడం.
                     </div>
                 </div>
 
-                <!-- Navigation Links -->
                 <div class="drawer-section">
-                    <div class="drawer-section-title">📂 సర్వీస్ విభాగాలు (Services)</div>
+                    <div class="drawer-section-title" data-i18n="drawer_pillars_title">📂 ప్రధాన విభాగాలు (Main Pillars)</div>
                     <ul class="drawer-links">
-                        <li><a href="javascript:void(0)" onclick="selectCategoryFromDrawer('home')">🏠 AVAILO Home Services</a></li>
-                        <li><a href="javascript:void(0)" onclick="selectCategoryFromDrawer('nri')">🩺 AVAILO NRI Care</a></li>
-                        <li><a href="javascript:void(0)" onclick="selectCategoryFromDrawer('menu')">🍔 AVAILO Digital Menu</a></li>
-                        <li><a href="javascript:void(0)" onclick="selectCategoryFromDrawer('partner')">🤝 AVAILO Partner Network</a></li>
+                        <li><a href="javascript:void(0)" onclick="selectPillar('home')">🏠 AVAILO Home Services</a></li>
+                        <li><a href="javascript:void(0)" onclick="selectPillar('nri')">🩺 AVAILO NRI Care</a></li>
+                        <li><a href="javascript:void(0)" onclick="selectPillar('menu')">🍔 AVAILO Digital Menu</a></li>
+                        <li><a href="javascript:void(0)" onclick="selectPillar('partner')">🤝 AVAILO Partner Network</a></li>
                     </ul>
                 </div>
 
-                <!-- Leadership & Contacts -->
                 <div class="drawer-section">
-                    <div class="drawer-section-title">📞 అధికారిక కాంటాక్ట్ & టీమ్ డీటైల్స్</div>
+                    <div class="drawer-section-title" data-i18n="drawer_contact_title">📞 కాంటాక్ట్ & సపోర్ట్</div>
                     <div class="contact-card">
                         <div class="contact-item">
-                            <span>📍</span>
-                            <div><strong>పైలట్ హబ్:</strong> కానూరు మెయిన్ రోడ్, విజయవాడ, ఏపీ - 520007</div>
-                        </div>
-                        <div class="contact-item">
                             <span>📞</span>
-                            <div><strong>డైరెక్ట్ హెల్ప్‌లైన్:</strong> <a href="tel:+919491612345" style="color: var(--primary); text-decoration: none; font-weight: 700;">+91 94916 12345</a></div>
+                            <div><strong data-i18n="helpline">హెల్ప్‌లైన్:</strong> <a href="tel:+919966157369" style="color: var(--primary); text-decoration: none; font-weight: 700;">+91 99661 57369</a></div>
                         </div>
                         <div class="contact-item">
                             <span>💬</span>
-                            <div><strong>వాట్సాప్ డెస్క్:</strong> <a href="https://wa.me/919491612345" style="color: #16a34a; text-decoration: none; font-weight: 700;">చాట్ ప్రారంభించండి</a></div>
+                            <div><strong>WhatsApp:</strong> <a href="https://wa.me/919966157369" style="color: #16a34a; text-decoration: none; font-weight: 700;">+91 99661 57369</a></div>
                         </div>
                         <div class="contact-item">
                             <span>✉️</span>
@@ -637,15 +609,13 @@
                         </div>
                         <div class="contact-item">
                             <span>⏰</span>
-                            <div><strong>సర్వీస్ టైమింగ్స్:</strong> 24/7 ఎమర్జెన్సీ & రూమ్ డెలివరీ</div>
+                            <div><strong data-i18n="timing">టైమింగ్స్:</strong> 24/7 సర్వీస్ సపోర్ట్</div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <!-- Drawer Footer -->
         <div class="drawer-footer">
             <p><strong>100% Verified Photo ID Network</strong></p>
             <p>&copy; 2026 Availo Services. All rights reserved.</p>
@@ -654,146 +624,153 @@
 
     <!-- Hero -->
     <section class="hero">
-        <div class="hero-pill">⚡ Kanuru Hyper-Local Platform</div>
-        <h1>ఒకే ఒక్క ట్యాప్‌తో <span>అవసరమైన అన్ని సేవలు</span></h1>
-        <p>క్రింది విభాగంపై క్లిక్ చేసి మీకు కావలసిన నిర్దిష్ట సర్వీస్ వివరాలు, ఫోటోలు మరియు డైరెక్ట్ ఆర్డర్ పొందండి.</p>
+        <div class="hero-pill" data-i18n="hero_pill">⚡ Hyper-Local Digital Network</div>
+        <h1 data-i18n="hero_title">ఒకే ఒక్క ట్యాప్‌తో <span>అవసరమైన అన్ని సేవలు</span></h1>
+        <p data-i18n="hero_desc">క్రింది 4 ప్రధాన విభాగాల్లో మీకు కావలసినదాన్ని ఎంచుకోండి. సంబంధిత సబ్-సర్వీసులు వెంటనే ఓపెన్ అవుతాయి.</p>
+    </section>
 
-        <!-- Category Buttons -->
-        <div class="tab-wrapper">
-            <div class="tab-grid">
-                <div class="category-tab active" id="tab-home" onclick="switchCategory('home', this)">
-                    <div class="tab-icon">🏠</div>
-                    <div class="tab-text">
-                        <h4>Home Services</h4>
-                        <p>ప్రస్తుతం ఉన్న సేవలు</p>
-                    </div>
-                </div>
+    <!-- The 4 Main Pillars Section -->
+    <section class="pillars-section">
+        <div class="pillars-grid">
+            <div class="pillar-card active-pillar" id="card-home" onclick="selectPillar('home')">
+                <div class="pillar-icon">🏠</div>
+                <h3>AVAILO Home Services</h3>
+                <p data-i18n="pillar_home_desc">నిత్యావసరాలు, రిపేర్లు & డోర్‌స్టెప్ సేవలు</p>
+                <span class="pillar-tag" data-i18n="view_sub">సబ్-సర్వీసులు చూడండి →</span>
+            </div>
 
-                <div class="category-tab" id="tab-nri" onclick="switchCategory('nri', this)">
-                    <div class="tab-icon">🩺</div>
-                    <div class="tab-text">
-                        <h4>NRI Care</h4>
-                        <p>తల్లిదండ్రుల సంరక్షణ</p>
-                    </div>
-                </div>
+            <div class="pillar-card" id="card-nri" onclick="selectPillar('nri')">
+                <div class="pillar-icon">🩺</div>
+                <h3>AVAILO NRI Care</h3>
+                <p data-i18n="pillar_nri_desc">తల్లిదండ్రుల సంరక్షణ & మెడిసిన్ సపోర్ట్</p>
+                <span class="pillar-tag" data-i18n="view_sub">సబ్-సర్వీసులు చూడండి →</span>
+            </div>
 
-                <div class="category-tab" id="tab-menu" onclick="switchCategory('menu', this)">
-                    <div class="tab-icon">🍔</div>
-                    <div class="tab-text">
-                        <h4>Digital Menu</h4>
-                        <p>హోటల్ & డైనింగ్ డెస్క్</p>
-                    </div>
-                </div>
+            <div class="pillar-card" id="card-menu" onclick="selectPillar('menu')">
+                <div class="pillar-icon">🍔</div>
+                <h3>AVAILO Digital Menu</h3>
+                <p data-i18n="pillar_menu_desc">హోటల్ రూమ్ సర్వీస్, డైనింగ్ & గ్రూమింగ్</p>
+                <span class="pillar-tag" data-i18n="view_sub">సబ్-సర్వీసులు చూడండి →</span>
+            </div>
 
-                <div class="category-tab" id="tab-partner" onclick="switchCategory('partner', this)">
-                    <div class="tab-icon">🤝</div>
-                    <div class="tab-text">
-                        <h4>Partner Network</h4>
-                        <p>వ్యాపారులు & ప్రొవైడర్లు</p>
-                    </div>
-                </div>
+            <div class="pillar-card" id="card-partner" onclick="selectPillar('partner')">
+                <div class="pillar-icon">🤝</div>
+                <h3>AVAILO Partner Network</h3>
+                <p data-i18n="pillar_partner_desc">వ్యాపారులు & ప్రొవైడర్ల ఆన్‌బోర్డింగ్</p>
+                <span class="pillar-tag" data-i18n="view_sub">సబ్-సర్వీసులు చూడండి →</span>
             </div>
         </div>
     </section>
 
-    <!-- Main Container -->
-    <main class="container">
+    <!-- Sub-Categories Panels -->
+    <main class="sub-container">
 
-        <!-- 1. Home Services Panel -->
-        <div id="panel-home" class="service-panel active-panel">
+        <!-- 1. Home Services Sub-Categories -->
+        <div id="sub-home" class="sub-panel active-sub">
             <div class="panel-header">
-                <h2>AVAILO Home Services — ప్రస్తుతం ఉన్న సేవలు</h2>
-                <p>స్థానిక ఇళ్లు మరియు గేటెడ్ అపార్ట్‌మెంట్ల కోసం తక్షణ విజువల్ సర్వీసెస్.</p>
+                <h2>AVAILO Home Services — సబ్-కేటగిరీలు</h2>
+                <p>ఇళ్లు మరియు గేటెడ్ కమ్యూనిటీల కోసం విజువల్ సర్వీస్ కార్డ్స్.</p>
             </div>
-
             <div class="cards-grid">
-                <!-- 1: Scrap -->
                 <div class="card">
                     <div class="card-img">
-                        <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" alt="Scrap Pickup">
+                        <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" alt="Scrap">
                         <span class="card-badge">ప్రతి ఆదివారం</span>
                     </div>
                     <div class="card-content">
                         <div>
-                            <h3>సండే స్క్రాప్ & పాత బట్టల పికప్</h3>
-                            <p>పాత న్యూస్ పేపర్లు, ప్లాస్టిక్ బాటిల్స్, ఇనుము మరియు పాత బట్టలు ఇంటి వద్దకే వచ్చి బరువు వేసి తీసుకుంటాం.</p>
-                            <div class="card-tagline">💰 సరసమైన మార్కెట్ ధర లేదా క్యాష్ ఆన్ స్పాట్</div>
+                            <h4>సండే స్క్రాప్ & పాత బట్టల పికప్</h4>
+                            <p>పాత న్యూస్ పేపర్లు, ప్లాస్టిక్ బాటిల్స్, ఇనుము, పాత బట్టలు ఇంటి వద్దకే వచ్చి బరువు వేసి తీసుకుంటాం.</p>
+                            <div class="card-tagline">💰 సరసమైన మార్కెట్ ధర లేదా స్పాట్ క్యాష్</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:+919491612345" class="btn-card btn-call">📞 కాల్ చేయండి</a>
-                            <a href="https://wa.me/919491612345?text=Book%20Sunday%20Scrap%20Pickup" class="btn-card btn-act">📲 పికప్ బుక్ చేయండి</a>
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Sunday Scrap Pickup')" class="btn-card btn-act">📲 WhatsApp</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2: Grocery -->
                 <div class="card">
                     <div class="card-img">
-                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80" alt="Daily Groceries">
-                        <span class="card-badge">ఫాస్ట్ డెలివరీ</span>
+                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80" alt="Groceries">
+                        <span class="card-badge">ఫ్రెష్ డెలివరీ</span>
                     </div>
                     <div class="card-content">
                         <div>
-                            <h3>తాజా కూరగాయలు & డైలీ మిల్క్</h3>
-                            <p>పాలు, పెరుగు, టమోటాలు, ఉల్లిపాయలు మరియు నిత్యావసర సరుకులు కానూరు పరిధిలోని అపార్ట్‌మెంట్లకు డెలివరీ.</p>
-                            <div class="card-tagline">🥬 100% ఫ్రెష్ లోకల్ మార్కెట్ ఐటెమ్స్</div>
+                            <h4>తాజా కూరగాయలు & డైలీ మిల్క్</h4>
+                            <p>పాలు, పెరుగు, తాజా కూరగాయలు మరియు నిత్యావసర సరుకులు మీ అపార్ట్‌మెంట్‌కు డెలివరీ చేయబడతాయి.</p>
+                            <div class="card-tagline">🥬 100% ఫ్రెష్ లోకల్ మార్కెట్ స్టాక్</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:+919491612345" class="btn-card btn-call">📞 కాల్ చేయండి</a>
-                            <a href="https://wa.me/919491612345?text=Order%20Daily%20Groceries" class="btn-card btn-act">📲 లిస్ట్ పంపండి</a>
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Daily Groceries')" class="btn-card btn-act">📲 WhatsApp</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3: Electrician / Plumbing -->
                 <div class="card">
                     <div class="card-img">
-                        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80" alt="Electrician Service">
-                        <span class="card-badge">30 నిమిషాల్లో</span>
+                        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80" alt="Electrician">
+                        <span class="card-badge">30 Mins Visit</span>
                     </div>
                     <div class="card-content">
                         <div>
-                            <h3>ఎలక్ట్రికల్ & ప్లంబింగ్ ఎక్స్‌ప్రెస్</h3>
-                            <p>ఫ్యాన్ రిపేర్, స్విచ్ బోర్డులు, పైప్ లీకేజీలు మరియు మోటార్ ప్రాబ్లమ్స్‌ను పరిష్కరించే లోకల్ నిపుణులు.</p>
-                            <div class="card-tagline">🪪 ఫోటో ఐడీ వెరిఫైడ్ టెక్నీషియన్స్</div>
+                            <h4>ఎలక్ట్రికల్ & ప్లంబింగ్ ఎక్స్‌ప్రెస్</h4>
+                            <p>ఫ్యాన్ రిపేర్, స్విచ్ బోర్డులు, వాటర్ లీకేజీలు, మోటార్ సమస్యలకు నమ్మకమైన నిపుణులు.</p>
+                            <div class="card-tagline">🪪 ఫోటో ఐడీ వెరిఫైడ్ ప్రొఫెషనల్స్</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:+919491612345" class="btn-card btn-call">📞 కాల్ చేయండి</a>
-                            <a href="https://wa.me/919491612345?text=Need%20Electrician/Plumber" class="btn-card btn-act">📲 స్లాట్ బుక్ చేయండి</a>
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Electrician or Plumber')" class="btn-card btn-act">📲 WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80" alt="Car Wash">
+                        <span class="card-badge">బేస్‌మెంట్ సర్వీస్</span>
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <h4>డోర్‌స్టెప్ కార్ & బైక్ డీటైలింగ్</h4>
+                            <p>అపార్ట్‌మెంట్ బేస్‌మెంట్‌లోనే వాటర్‌లెస్ కార్ వాష్, ఇంటీరియర్ క్లీనింగ్ & బైక్ పాలిషింగ్.</p>
+                            <div class="card-tagline">🚗 స్పాట్ సర్వీస్ & మంత్లీ ప్యాకేజీలు</div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Doorstep Car Wash')" class="btn-card btn-act">📲 WhatsApp</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. NRI Care Panel -->
-        <div id="panel-nri" class="service-panel">
+        <!-- 2. NRI Care Sub-Categories -->
+        <div id="sub-nri" class="sub-panel">
             <div class="panel-header">
-                <h2>AVAILO NRI Care — తల్లిదండ్రుల సంరక్షణ</h2>
-                <p>విదేశాల్లో లేదా ఇతర నగరాల్లో ఉండే పిల్లల కోసం, ఇక్కడి తల్లిదండ్రులకు ఆత్మీయ భరోసా.</p>
+                <h2>AVAILO NRI Care — సబ్-కేటగిరీలు</h2>
+                <p>తల్లిదండ్రులకు ఆత్మీయ భరోసా మరియు నిరంతర ఆరోగ్య పర్యవేక్షణ.</p>
             </div>
-
             <div class="cards-grid">
-                <!-- 1: Medicine -->
                 <div class="card">
                     <div class="card-img">
-                        <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" alt="Medicine Box">
+                        <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" alt="Medicine">
                         <span class="card-badge">మంత్లీ సబ్‌స్క్రిప్షన్</span>
                     </div>
                     <div class="card-content">
                         <div>
-                            <h3>మంత్లీ మెడిసిన్ డోర్‌స్టెప్ రీఫిల్</h3>
-                            <p>తల్లిదండ్రులకు అవసరమైన నెలవారీ ప్రిస్క్రిప్షన్ మందులు సమయానికి చేర్చడం మరియు రీఫిల్ అలర్ట్స్.</p>
-                            <div class="card-tagline">💊 100% జెన్యూన్ లోకల్ ఫార్మసీ స్టాక్</div>
+                            <h4>మంత్లీ మెడిసిన్ డోర్‌స్టెప్ రీఫిల్</h4>
+                            <p>తల్లిదండ్రుల నెలవారీ ప్రిస్క్రిప్షన్ మందులు సమయానికి చేర్చడం మరియు రీఫిల్ రిమైండర్స్.</p>
+                            <div class="card-tagline">💊 100% జెన్యూన్ ఫార్మసీ స్టాక్</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:+919491612345" class="btn-card btn-call">📞 మాట్లాడండి</a>
-                            <a href="https://wa.me/919491612345?text=Enroll%20Parents%20in%20Medicine%20Care" class="btn-card btn-act">📲 ప్రిస్క్రిప్షన్ పంపండి</a>
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Monthly Medicine for Parents')" class="btn-card btn-act">📲 WhatsApp</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2: Hospital Escort -->
                 <div class="card">
                     <div class="card-img">
                         <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=600&q=80" alt="Hospital Escort">
@@ -801,137 +778,142 @@
                     </div>
                     <div class="card-content">
                         <div>
-                            <h3>హాస్పిటల్ విజిట్ & ల్యాబ్ టెస్ట్ అసిస్టెన్స్</h3>
-                            <p>డాక్టర్ చెకప్‌లు, ల్యాబ్ రిపోర్టుల కోసం అసిస్టెంట్‌తో కూడిన క్యాబ్ పికప్, తోడుగా ఉండి సహాయం చేయడం.</p>
+                            <h4>హాస్పిటల్ విజిట్ & ల్యాబ్ టెస్ట్ అసిస్టెన్స్</h4>
+                            <p>డాక్టర్ చెకప్‌లు, ల్యాబ్ టెస్టుల కోసం అసిస్టెంట్‌తో కూడిన క్యాబ్ పికప్, తోడుగా ఉండి సహాయం చేయడం.</p>
                             <div class="card-tagline">📲 పిల్లలకు వాట్సాప్‌లో లైవ్ అప్‌డేట్స్</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:+919491612345" class="btn-card btn-call">📞 కాల్ చేయండి</a>
-                            <a href="https://wa.me/919491612345?text=Request%20Hospital%20Escort%20Service" class="btn-card btn-act">📲 కేర్ బుక్ చేయండి</a>
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Hospital Escort Service')" class="btn-card btn-act">📲 WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=600&q=80" alt="Health Monitoring">
+                        <span class="card-badge">వీక్లీ వైటల్స్</span>
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <h4>వీక్లీ బీపీ & షుగర్ హెల్త్ మానిటరింగ్</h4>
+                            <p>ఇంటి వద్దకే వచ్చి ప్రాథమిక హెల్త్ చెకప్ చేసి, వాట్సాప్ ద్వారా నివేదికను కుటుంబ సభ్యులకు పంపడం.</p>
+                            <div class="card-tagline">🩺 రెగ్యులర్ హెల్త్ ట్రాకింగ్ రికార్డ్స్</div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Weekly Health Checkup')" class="btn-card btn-act">📲 WhatsApp</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 3. Digital Menu Panel -->
-        <div id="panel-menu" class="service-panel">
+        <!-- 3. Digital Menu Sub-Categories -->
+        <div id="sub-menu" class="sub-panel">
             <div class="panel-header">
-                <h2>AVAILO Digital Menu — రెస్టారెంట్లు, హోటళ్లు, సెలూన్ల కోసం</h2>
-                <p>హోటల్ గదుల్లో ఉండే గెస్టుల కోసం లేట్-నైట్ డెలివరీ మరియు గ్రూమింగ్ డెస్క్.</p>
+                <h2>AVAILO Digital Menu — సబ్-కేటగిరీలు</h2>
+                <p>హోటల్ గెస్టుల కోసం లేట్-నైట్ ఫుడ్ డెలివరీ, గ్రూమింగ్ & ఎసెన్షియల్స్.</p>
             </div>
-
             <div class="cards-grid">
-                <!-- 1: Food -->
                 <div class="card">
                     <div class="card-img">
-                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80" alt="Late Night Food">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80" alt="Food Delivery">
                         <span class="card-badge">రూమ్ డెలివరీ (25 Mins)</span>
                     </div>
                     <div class="card-content">
                         <div>
-                            <h3>లేట్-నైట్ బిర్యానీ & స్టార్టర్స్</h3>
-                            <p>వేడివేడి ఆంధ్రా బిర్యానీ, చికెన్ ఫ్రై, రోటీలు నేరుగా మీ హోటల్ రూమ్‌కే వేగంగా డెలివరీ చేయబడతాయి.</p>
-                            <div class="card-tagline">🎟️ Availo గెస్ట్ పాస్ ద్వారా 10% డిస్కౌంట్</div>
+                            <h4>లేట్-నైట్ బిర్యానీ & స్టార్టర్స్</h4>
+                            <p>వేడివేడి దమ్ బిర్యానీ, చికెన్ కబాబ్స్, రోటీలు మీ హోటల్ రూమ్‌కే వేగంగా డెలివరీ చేయబడతాయి.</p>
+                            <div class="card-tagline">🎟️ Availo గెస్ట్ పాస్‌పై 10% డిస్కౌంట్</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:+919491612345" class="btn-card btn-call">📞 కాల్ చేయండి</a>
-                            <a href="https://wa.me/919491612345?text=Order%20Biryani%20to%20Room" class="btn-card btn-act">📲 ఆర్డర్ చేయండి</a>
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Order Food to Room')" class="btn-card btn-act">📲 WhatsApp</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2: Salon -->
                 <div class="card">
                     <div class="card-img">
-                        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80" alt="Salon Grooming">
+                        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80" alt="Salon">
                         <span class="card-badge">సమీప సెలూన్</span>
                     </div>
                     <div class="card-content">
                         <div>
-                            <h3>సెలూన్ హెయిర్‌కట్ & గ్రూమింగ్ స్లాట్</h3>
+                            <h4>సెలూన్ హెయిర్‌కట్ & గ్రూమింగ్</h4>
                             <p>హెయిర్ కట్, బార్డ్ సెట్టింగ్, ఫేషియల్స్ కోసం సమీప ప్రముఖ సెలూన్‌లో ప్రయారిటీ స్లాట్ బుకింగ్.</p>
-                            <div class="card-tagline">🎟️️ హోటల్ గెస్టులకు 15% ఆఫ్ కూపన్</div>
+                            <div class="card-tagline">🎟️ హోటల్ గెస్టులకు 15% ఆఫ్ కూపన్</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:+919491612345" class="btn-card btn-call">📞 కాల్ చేయండి</a>
-                            <a href="https://wa.me/919491612345?text=Book%20Salon%20Slot" class="btn-card btn-act">📲 అపాయింట్‌మెంట్</a>
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Book Salon Slot')" class="btn-card btn-act">📲 WhatsApp</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3: Emergency Meds -->
                 <div class="card">
                     <div class="card-img">
-                        <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=600&q=80" alt="Pharmacy">
-                        <span class="card-badge">24/7 రౌండ్ ది క్లాక్</span>
+                        <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=600&q=80" alt="Emergency Medicine">
+                        <span class="card-badge">24/7 అందుబాటులో</span>
                     </div>
                     <div class="card-content">
                         <div>
-                            <h3>ఎమర్జెన్సీ మెడిసిన్ రూమ్ డెలివరీ</h3>
+                            <h4>ఎమర్జెన్సీ మెడిసిన్ రూమ్ డెలివరీ</h4>
                             <p>రాత్రి సమయాల్లో తలనొప్పి, ఫీవర్, గ్యాస్ట్రిక్ లేదా అత్యవసర ప్రిస్క్రిప్షన్ మెడిసిన్ రూమ్‌కే అందుతాయి.</p>
-                            <div class="card-tagline">🚨 కానూరు పరిధిలో తక్షణ సదుపాయం</div>
+                            <div class="card-tagline">🚨 తక్షణ ఎమర్జెన్సీ ఫార్మసీ సపోర్ట్</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:+919491612345" class="btn-card btn-call">📞 కాల్ చేయండి</a>
-                            <a href="https://wa.me/919491612345?text=Urgent%20Medicine%20Needed%20at%20Hotel" class="btn-card btn-act">📲 వాట్సాప్ మెడిసిన్</a>
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Urgent Medicine at Hotel')" class="btn-card btn-act">📲 WhatsApp</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 4. Partner Network Panel -->
-        <div id="panel-partner" class="service-panel">
+        <!-- 4. Partner Network Sub-Categories -->
+        <div id="sub-partner" class="sub-panel">
             <div class="panel-header">
-                <h2>AVAILO Partner Network — వ్యాపారులు & ప్రొవైడర్ల కోసం</h2>
-                <p>హోటల్స్, రెస్టారెంట్లు మరియు స్థానిక నిపుణుల కోసం జీరో-రిస్క్ బిజినెస్ గ్రోత్.</p>
+                <h2>AVAILO Partner Network — సబ్-కేటగిరీలు</h2>
+                <p>హోటల్స్, రెస్టారెంట్లు మరియు స్థానిక నిపుణుల ఆన్‌బోర్డింగ్ డెస్క్.</p>
             </div>
-
             <div class="cards-grid">
-                <!-- 1: Smart Cube Pilot -->
                 <div class="card">
                     <div class="card-img">
-                        <img src="https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=600&q=80" alt="Smart QR Cubes">
+                        <img src="https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=600&q=80" alt="Smart Cubes">
                         <span class="card-badge">100% Free Pilot</span>
                     </div>
                     <div class="card-content">
                         <div>
-                            <h3>హోటల్స్ కోసం 1-Week Free Smart Cubes</h3>
+                            <h4>హోటల్స్ కోసం 1-Week Free Smart Cubes</h4>
                             <p>మీ హోటల్ రూమ్‌లు లేదా రెస్టారెంట్ టేబుళ్లపై అత్యాధునిక స్మార్ట్ క్యూబ్స్ 1 వారం ఉచితంగా అమరుస్తాం.</p>
                             <div class="card-tagline">🚀 కిచెన్ లేకపోయినా రూమ్ సర్వీస్ ఆటోమేషన్</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:+919491612345" class="btn-card btn-call">📞 మాట్లాడండి</a>
-                            <a href="https://wa.me/919491612345?text=Book%20Free%201-Week%20Smart%20Cube%20Pilot" class="btn-card btn-act">📲 పైలట్ బుక్ చేయండి</a>
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Book Free 1-Week Pilot')" class="btn-card btn-act">📲 WhatsApp</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2: 2KM Monopoly Ad Space -->
                 <div class="card">
                     <div class="card-img">
-                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80" alt="2KM Ad Network">
+                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80" alt="Ad Space">
                         <span class="card-badge">Monopoly Sponsorship</span>
                     </div>
                     <div class="card-content">
                         <div>
-                            <h3>2KM లోకల్ మోనోపోలీ యాడ్ స్పేస్</h3>
-                            <p>కానూరులోని ప్రముఖ లాడ్జీలు, అపార్ట్‌మెంట్లలో మీ షాప్ ఒక్కదాని యాడ్ మాత్రమే ప్రమోట్ చేసే అవకాశం.</p>
+                            <h4>2KM లోకల్ మోనోపోలీ యాడ్ స్పేస్</h4>
+                            <p>ప్రముఖ లాడ్జీలు, అపార్ట్‌మెంట్లలో మీ షాప్ ఒక్కదాని యాడ్ మాత్రమే ప్రమోట్ చేసే అవకాశం.</p>
                             <div class="card-tagline">📢 రోజుకు కేవలం ₹50 తో వేలాది రీచ్</div>
                         </div>
                         <div class="card-actions">
-                            <a href="tel:+919491612345" class="btn-card btn-call">📞 కాల్ చేయండి</a>
-                            <a href="https://wa.me/919491612345?text=Enquire%20Ad%20Space%20in%20Kanuru" class="btn-card btn-act">📲 యాడ్ స్పేస్ తీసుకోండి</a>
+                            <a href="tel:+919966157369" class="btn-card btn-call">📞 Call</a>
+                            <a href="javascript:void(0)" onclick="directWA('Enquire 2KM Ad Space')" class="btn-card btn-act">📲 WhatsApp</a>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="partner-banner">
-                <h4>🛠️️ మీరు ఎలక్ట్రీషియన్, ప్లంబర్ లేదా డ్రైవరా?</h4>
-                <p>Availo నెట్‌వర్క్‌లో వెరిఫైడ్ పార్ట్‌నర్‌గా చేరి స్థానిక అపార్ట్‌మెంట్ల నుంచి క్రమం తప్పకుండా డైరెక్ట్ వర్క్ ఆర్డర్లు పొందండి.</p>
-                <a href="https://wa.me/919491612345?text=I%20want%20to%20register%20as%20Service%20Provider" class="btn-header btn-wa" style="padding: 9px 18px;">📲 పార్ట్‌నర్‌గా రిజిస్టర్ అవ్వండి</a>
             </div>
         </div>
 
@@ -939,38 +921,101 @@
 
     <!-- Footer -->
     <footer>
-        <p><strong>Availo Services</strong> — Hyper-Local Ecosystem & Smart Desk Network.</p>
-        <p>కానూరు పైలట్ క్లస్టర్, విజయవాడ, ఆంధ్రప్రదేశ్ | హెల్ప్‌‌లైన్: +91 94916 12345</p>
+        <p><strong>Availo Services</strong> — Hyper-Local Platform & Smart Desk Network.</p>
+        <p>హెల్ప్‌‌లైన్: <a href="tel:+919966157369" style="color: var(--primary); text-decoration: none; font-weight: 700;">+91 99661 57369</a> | support@availoservices.in</p>
         <p style="margin-top: 6px; font-size: 0.75rem;">&copy; 2026 Availo Services. All rights reserved.</p>
     </footer>
 
-    <!-- Interactive Drawer & Tabs Script -->
+    <!-- Logic Script -->
     <script>
+        const MY_PHONE_NUMBER = "919966157369"; 
+
+        function directWA(serviceName) {
+            const text = encodeURIComponent(`Hello Availo, I want to know more about: ${serviceName}`);
+            window.open(`https://wa.me/${MY_PHONE_NUMBER}?text=${text}`, '_blank');
+        }
+
+        // Drawer
         function toggleDrawer() {
-            const drawer = document.getElementById('sideDrawer');
-            const overlay = document.getElementById('drawerOverlay');
-            drawer.classList.toggle('active');
-            overlay.classList.toggle('active');
+            document.getElementById('sideDrawer').classList.toggle('active');
+            document.getElementById('drawerOverlay').classList.toggle('active');
         }
 
-        function switchCategory(catKey, el) {
-            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active-panel'));
+        // Pillar Selection & Sub-Category Switching
+        function selectPillar(key) {
+            document.querySelectorAll('.pillar-card').forEach(c => c.classList.remove('active-pillar'));
+            document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active-sub'));
 
-            el.classList.add('active');
-            const targetPanel = document.getElementById('panel-' + catKey);
-            if(targetPanel) {
-                targetPanel.classList.add('active-panel');
-            }
+            const targetCard = document.getElementById('card-' + key);
+            const targetSub = document.getElementById('sub-' + key);
+
+            if(targetCard) targetCard.classList.add('active-pillar');
+            if(targetSub) targetSub.classList.add('active-sub');
+
+            // Close drawer if open
+            document.getElementById('sideDrawer').classList.remove('active');
+            document.getElementById('drawerOverlay').classList.remove('active');
+
+            // Smooth scroll to sub-categories
+            window.scrollTo({
+                top: document.querySelector('.sub-container').offsetTop - 80,
+                behavior: 'smooth'
+            });
         }
 
-        function selectCategoryFromDrawer(catKey) {
-            toggleDrawer(); // Close drawer
-            const targetTab = document.getElementById('tab-' + catKey);
-            if(targetTab) {
-                switchCategory(catKey, targetTab);
+        // Multilingual Toggle
+        let currentLang = 'te';
+        const translations = {
+            en: {
+                top_tag: "📍 LIVE PLATFORM",
+                top_text: "Smart network for Apartments, Hotels & Local Services!",
+                hero_pill: "⚡ Hyper-Local Digital Network",
+                hero_title: "Everything You Need, <span>Just One Tap Away</span>",
+                hero_desc: "Select one of the 4 main pillars below. Sub-categories with visual cards will open instantly.",
+                drawer_subtitle: "Smart Local Service Hub",
+                drawer_vision_title: "🌟 Our Vision",
+                drawer_vision_desc: "Empowering local businesses with zero upfront tech cost, and delivering every essential service to residents & guests within 20 minutes.",
+                drawer_pillars_title: "📂 Main Pillars",
+                drawer_contact_title: "📞 Contact & Support",
+                helpline: "Helpline:",
+                timing: "Timings:",
+                pillar_home_desc: "Daily essentials, repairs & doorstep pickups",
+                pillar_nri_desc: "Elderly parental care & medicine assistance",
+                pillar_menu_desc: "Hotel room service, dining & grooming desk",
+                pillar_partner_desc: "Merchant onboarding & provider network",
+                view_sub: "View Sub-Services →"
+            },
+            te: {
+                top_tag: "📍 LIVE PLATFORM",
+                top_text: "అపార్ట్‌మెంట్లు, హోటల్స్ & లోకల్ సర్వీసుల స్మార్ట్ నెట్‌వర్క్!",
+                hero_pill: "⚡ Hyper-Local Digital Network",
+                hero_title: "ఒకే ఒక్క ట్యాప్‌తో <span>అవసరమైన అన్ని సేవలు</span>",
+                hero_desc: "క్రింది 4 ప్రధాన విభాగాల్లో మీకు కావలసినదాన్ని ఎంచుకోండి. సంబంధిత సబ్-సర్వీసులు వెంటనే ఓపెన్ అవుతాయి.",
+                drawer_subtitle: "స్మార్ట్ లోకల్ సర్వీస్ హబ్",
+                drawer_vision_title: "🌟 మన విజన్ (Our Vision)",
+                drawer_vision_desc: "స్థానిక వ్యాపారాలకు జీరో ముందస్తు ఖర్చుతో డిజిటల్ టెక్నాలజీ అందించడం, వినియోగదారులకు అవసరమైన ప్రతి సేవను 20 నిమిషాల్లో చేర్చడం.",
+                drawer_pillars_title: "📂 ప్రధాన విభాగాలు (Main Pillars)",
+                drawer_contact_title: "📞 కాంటాక్ట్ & సపోర్ట్",
+                helpline: "హెల్ప్‌లైన్:",
+                timing: "టైమింగ్స్:",
+                pillar_home_desc: "నిత్యావసరాలు, రిపేర్లు & డోర్‌స్టెప్ సేవలు",
+                pillar_nri_desc: "తల్లిదండ్రుల సంరక్షణ & మెడిసిన్ సపోర్ట్",
+                pillar_menu_desc: "హోటల్ రూమ్ సర్వీస్, డైనింగ్ & గ్రూమింగ్",
+                pillar_partner_desc: "వ్యాపారులు & ప్రొవైడర్ల ఆన్‌బోర్డింగ్",
+                view_sub: "సబ్-సర్వీసులు చూడండి →"
             }
-            window.scrollTo({ top: 350, behavior: 'smooth' });
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'te' ? 'en' : 'te';
+            document.getElementById('langBtn').innerText = currentLang === 'te' ? 'EN / తెలుగు' : 'తెలుగు / EN';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
         }
     </script>
 </body>
