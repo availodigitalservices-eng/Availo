@@ -50,28 +50,43 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             background-color: #ffffff;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 99999;
+            z-index: 999999;
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
+        .spinner-box {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #e2e8f0;
-            border-top: 5px solid var(--brand-blue);
+            position: absolute;
+            width: 65px;
+            height: 65px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid var(--brand-blue);
+            border-right: 4px solid var(--brand-cyan);
             border-radius: 50%;
-            animation: spinLoader 0.8s linear infinite;
+            animation: spinLoader 0.7s linear infinite;
+        }
+
+        .spinner-icon {
+            font-size: 26px;
         }
 
         .loader-text {
-            margin-top: 16px;
+            margin-top: 18px;
             font-size: 15px;
             font-weight: 700;
             color: var(--brand-navy);
@@ -87,6 +102,7 @@
         #page-loader.loader-hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
         }
         /* ============================================================= */
 
@@ -697,7 +713,7 @@
             border: 1px solid var(--border-light);
             border-radius: 10px;
             padding: 14px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .nri-tier-card.featured {
@@ -720,6 +736,22 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+            margin-bottom: 12px;
+        }
+
+        .choose-plan-btn {
+            width: 100%;
+            padding: 9px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         /* Drawer Overlay */
@@ -810,12 +842,15 @@
 </head>
 <body>
 
-    <!-- ================= 2. PAGE PRE-LOADER SCREEN ================= -->
+    <!-- ================= 2. PAGE PRE-LOADER SCREEN (DoctorRice Style) ================= -->
     <div id="page-loader">
-        <div class="spinner"></div>
+        <div class="spinner-box">
+            <div class="spinner"></div>
+            <div class="spinner-icon">🦚</div>
+        </div>
         <p class="loader-text">AVAILO Care లోడ్ అవుతోంది...</p>
     </div>
-    <!-- ============================================================== -->
+    <!-- ================================================================================= -->
 
     <!-- Header (Jio Clean Style) -->
     <header>
@@ -844,6 +879,7 @@
             <button onclick="toggleDrawer(); openPillar('nri');"><span class="te-title" data-te="AVAILO NRI Care" data-en="AVAILO NRI Care">AVAILO NRI Care</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openPillar('menu');"><span class="te-title" data-te="AVAILO Digital Menu" data-en="AVAILO Digital Menu">AVAILO Digital Menu</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openPillar('partner');"><span class="te-title" data-te="AVAILO Partner Network" data-en="AVAILO Partner Network">AVAILO Partner Network</span> <span>›</span></button>
+            <button onclick="toggleDrawer(); openModal('nriApplyModal');"><span class="te-title" data-te="NRI కేర్ అప్లికేషన్" data-en="NRI Care Application">NRI కేర్ అప్లికేషన్</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openModal('howItWorksModal');"><span class="te-title" data-te="ఎలా పని చేస్తుంది" data-en="How It Works">ఎలా పని చేస్తుంది</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openModal('aimModal');"><span class="te-title" data-te="మన లక్ష్యం & గోల్" data-en="Our Aim & Goal">మన లక్ష్యం & గోల్</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openModal('faqModal');"><span class="te-title" data-te="FAQ ప్రశ్నలు" data-en="FAQ">FAQ ప్రశ్నలు</span> <span>›</span></button>
@@ -1063,11 +1099,11 @@
         <div id="sub-menu" class="sub-services-panel">
             <div class="service-photo-grid">
                 
-                <a href="https://wa.me/919966157369?text=హోటల్%20రూమ్%20బిర్యానీ%20ఆర్డర్" class="service-card-item">
+                <a href="https://wa.me/919966157369?text=హోటల్%20ఫుడ్%20మరియు%20డైనింగ్%20ఆర్డర్" class="service-card-item">
                     <div class="service-card-img">
-                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=60" alt="Biryani">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop&q=60" alt="Food & Dining">
                     </div>
-                    <div class="service-card-btn te-title" data-te="లేట్-నైట్ బిర్యానీ" data-en="Late Night Biryani">Late Night Biryani</div>
+                    <div class="service-card-btn te-title" data-te="ఫుడ్ & డైనింగ్ ఆర్డర్స్" data-en="Food & Dining">Food & Dining</div>
                 </a>
 
                 <a href="https://wa.me/919966157369?text=సెలూన్%20హెయిర్‌కట్%20స్లాట్%20బుకింగ్" class="service-card-item">
@@ -1203,7 +1239,7 @@
                 Our all services links
             </div>
             <div style="color: #1d4ed8; font-size: 13px; line-height: 2;">
-                Electrical Services | Plumbing Work | Ac Mechanics | Water Purifier RO | Groceries Delivery | Old Clothes & Scrap Pickup | NRI Parents Care | Hospital Escort | Late Night Biryani | Salon Grooming | 24/7 Medicine Delivery | Local Cab Auto | Smart Cubes B2B
+                Electrical Services | Plumbing Work | Ac Mechanics | Water Purifier RO | Groceries Delivery | Old Clothes & Scrap Pickup | NRI Parents Care | Hospital Escort | Food & Dining Orders | Salon Grooming | 24/7 Medicine Delivery | Local Cab Auto | Smart Cubes B2B
             </div>
             <div style="margin-top: 14px; font-size: 12.5px; font-weight: 700; color: #1e293b;">
                 © 2026 Availo. All Rights Reserved.
@@ -1228,7 +1264,7 @@
 
     <!-- ================= POP-UP MODALS ================= -->
 
-    <!-- 1. NRI Care Modal -->
+    <!-- 1. NRI Care Pricing Plans Modal -->
     <div class="modal-overlay" id="nriModal">
         <div class="modal-window">
             <div class="modal-header">
@@ -1236,6 +1272,8 @@
                 <button class="modal-close-btn" onclick="closeModal('nriModal')">✕</button>
             </div>
             <div class="modal-body-pad">
+                
+                <!-- Plan 1 -->
                 <div class="nri-tier-card">
                     <strong style="color: var(--brand-blue);">💙 AVAILO CARE</strong>
                     <div class="nri-price-txt">₹2,499 / <span data-te="నెల" data-en="Month">నెల</span></div>
@@ -1245,8 +1283,12 @@
                         <li data-te="🛵 Delivery Tasks: నెలకు 2 సార్లు (మందులు/గ్రోసరీ)" data-en="🛵 Delivery Tasks: 2 times/month (Medicines/Grocery)">🛵 Delivery Tasks: నెలకు 2 సార్లు (మందులు/గ్రోసరీ)</li>
                         <li data-te="🚨 Priority Response: 45 నిమిషాల్లోపు" data-en="🚨 Priority Response: Within 45 mins">🚨 Priority Response: 45 నిమిషాల్లోపు</li>
                     </ul>
+                    <button class="choose-plan-btn te-title" style="background: var(--brand-blue); color: white;" onclick="selectNRIPlan('AVAILO Care (₹2,499/month)')">
+                        👉 ఈ ప్లాన్ ఎంచుకోండి
+                    </button>
                 </div>
 
+                <!-- Plan 2 -->
                 <div class="nri-tier-card featured">
                     <strong style="color: var(--brand-blue);" data-te="💙 AVAILO PLUS (Most Popular ⭐)" data-en="💙 AVAILO PLUS (Most Popular ⭐)">💙 AVAILO PLUS (Most Popular ⭐)</strong>
                     <div class="nri-price-txt">₹4,999 / <span data-te="నెల" data-en="Month">నెల</span></div>
@@ -1256,8 +1298,12 @@
                         <li data-te="🛵 Delivery Tasks: నెలకు 4 సార్లు (మందులు/బిల్స్)" data-en="🛵 Delivery Tasks: 4 times/month (Medicines/Bills)">🛵 Delivery Tasks: నెలకు 4 సార్లు (మందులు/బిల్స్)</li>
                         <li data-te="🚨 Priority Response: 30 నిమిషాల్లోపు" data-en="🚨 Priority Response: Within 30 mins">🚨 Priority Response: 30 నిమిషాల్లోపు</li>
                     </ul>
+                    <button class="choose-plan-btn te-title" style="background: var(--brand-blue); color: white;" onclick="selectNRIPlan('AVAILO Plus (₹4,999/month)')">
+                        👉 ఈ ప్లాన్ ఎంచుకోండి (Popular)
+                    </button>
                 </div>
 
+                <!-- Plan 3 -->
                 <div class="nri-tier-card" style="border: 1.5px solid var(--purple-vip); background: #faf5ff;">
                     <strong style="color: #7c3aed;" data-te="💜 AVAILO ELITE (👑 VIP Dedicated)" data-en="💜 AVAILO ELITE (👑 VIP Dedicated)">💜 AVAILO ELITE (👑 VIP Dedicated)</strong>
                     <div class="nri-price-txt" style="color: #7c3aed;">₹9,999 / <span data-te="నెల" data-en="Month">నెల</span></div>
@@ -1267,7 +1313,64 @@
                         <li data-te="🛵 Delivery Tasks: నెలకు 8 టాస్క్‌లు" data-en="🛵 Delivery Tasks: 8 tasks/month">🛵 Delivery Tasks: నెలకు 8 టాస్క్‌లు</li>
                         <li data-te="🚨 Priority Response: 15–20 నిమిషాలు (Top Priority)" data-en="🚨 Priority Response: 15–20 mins (Top Priority)">🚨 Priority Response: 15–20 నిమిషాలు (Top Priority)</li>
                     </ul>
+                    <button class="choose-plan-btn te-title" style="background: var(--purple-vip); color: white;" onclick="selectNRIPlan('AVAILO Elite VIP (₹9,999/month)')">
+                        👑 ఈ VIP ప్లాన్ ఎంచుకోండి
+                    </button>
                 </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: NRI Application Form Modal -->
+    <div class="modal-overlay" id="nriApplyModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="te-title" data-te="NRI Parents Care అప్లికేషన్" data-en="NRI Care Application Form">NRI Parents Care అప్లికేషన్</h3>
+                <button class="modal-close-btn" onclick="closeModal('nriApplyModal')">✕</button>
+            </div>
+            <div class="modal-body-pad">
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;" data-te="వివరాలు నింపి సబ్మిట్ చేయండి. మా కేర్ మేనేజర్ వెంటనే WhatsApp లో కనెక్ట్ అవుతారు." data-en="Fill in details to subscribe. Our Care Manager will connect instantly.">
+                    వివరాలు నింపి సబ్మిట్ చేయండి. మా కేర్ మేనేజర్ వెంటనే WhatsApp లో కనెక్ట్ అవుతారు.
+                </p>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 700; color: #1e293b;" data-te="ఎంచుకున్న ప్లాన్" data-en="Selected Plan">ఎంచుకున్న ప్లాన్</label>
+                    <select id="nriPlanSelected" style="width: 100%; padding: 8px; border: 1.5px solid #93c5fd; border-radius: 6px; font-weight: 700; color: var(--brand-blue); background: #eff6ff;">
+                        <option value="AVAILO Plus (₹4,999/month)">AVAILO Plus (₹4,999/నెల) - Recommended</option>
+                        <option value="AVAILO Care (₹2,499/month)">AVAILO Care (₹2,499/నెల)</option>
+                        <option value="AVAILO Elite VIP (₹9,999/month)">AVAILO Elite VIP (₹9,999/నెల)</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="మీ పేరు (NRI / కుమారుడు / కుమార్తె)" data-en="Your Name (Sponsor)">మీ పేరు (NRI / కుమారుడు / కుమార్తె)</label>
+                    <input type="text" id="nriClientName" placeholder="ఉదా: సురేష్ (USA)" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="మీ WhatsApp నంబర్ (కంట్రీ కోడ్‌తో)" data-en="Your WhatsApp Mobile">మీ WhatsApp నంబర్ (కంట్రీ కోడ్‌తో)</label>
+                    <input type="tel" id="nriClientPhone" placeholder="+1 / +44 / +91 నంబర్" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="తల్లిదండ్రుల పేరు & వయస్సు" data-en="Parents Name & Age">తల్లిదండ్రుల పేరు & వయస్సు</label>
+                    <input type="text" id="nriParentsName" placeholder="ఉదా: రామారావు గారు (68 సం.)" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="అపార్ట్‌మెంట్ & ప్రాంతం (విజయవాడ/గుంటూరు)" data-en="Apartment & Location">అపార్ట్‌మెంట్ & ప్రాంతం (విజయవాడ/గుంటూరు)</label>
+                    <input type="text" id="nriAddress" placeholder="ఉదా: ఫ్లాట్ 302, రాయల్ టవర్స్, విజయవాడ" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <div style="margin-bottom: 14px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="ముఖ్యమైన అవసరాలు (Optional)" data-en="Primary Needs">ముఖ్యమైన అవసరాలు</label>
+                    <input type="text" id="nriNeeds" placeholder="ఉదా: మంత్లీ మెడిసిన్స్, బీపీ చెకప్, హాస్పిటల్ విజిట్" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <button onclick="submitNRIApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో అప్లికేషన్ పంపండి" data-en="💬 Submit on WhatsApp">
+                    💬 WhatsApp లో అప్లికేషన్ పంపండి
+                </button>
             </div>
         </div>
     </div>
@@ -1406,14 +1509,17 @@
     <!-- Interactive Scripts -->
     <script>
         // ================= 3. PRE-LOADER TIMEOUT TRIGGER =================
-        window.addEventListener("load", function() {
+        function hidePageLoader() {
             const loader = document.getElementById("page-loader");
-            if (loader) {
+            if (loader && !loader.classList.contains("loader-hidden")) {
                 setTimeout(() => {
                     loader.classList.add("loader-hidden");
-                }, 600); // 0.6 సెకన్ల తర్వాత స్మూత్‌గా మాయమవుతుంది
+                }, 400);
             }
-        });
+        }
+
+        window.addEventListener("load", hidePageLoader);
+        setTimeout(hidePageLoader, 1500);
         // =================================================================
 
         let currentLang = 'te';
@@ -1466,6 +1572,34 @@
             } else {
                 alert("నమస్కారం! AVAILO Care కి స్వాగతం.");
             }
+        }
+
+        // NRI Plan Selection & Modal Switch
+        function selectNRIPlan(planName) {
+            closeModal('nriModal');
+            document.getElementById('nriPlanSelected').value = planName;
+            openModal('nriApplyModal');
+        }
+
+        // NRI Application Form Submission via WhatsApp
+        function submitNRIApplication() {
+            const plan = document.getElementById('nriPlanSelected').value;
+            const clientName = document.getElementById('nriClientName').value.trim();
+            const clientPhone = document.getElementById('nriClientPhone').value.trim();
+            const parentsName = document.getElementById('nriParentsName').value.trim();
+            const address = document.getElementById('nriAddress').value.trim();
+            const needs = document.getElementById('nriNeeds').value.trim() || 'సాధారణ సంరక్షణ (General Care)';
+
+            if (!clientName || !clientPhone || !parentsName || !address) {
+                alert(currentLang === 'te' 
+                    ? "దయచేసి మీ పేరు, ఫోన్ నంబర్, పేరెంట్స్ పేరు మరియు అడ్రస్ తప్పకుండా నింపండి." 
+                    : "Please fill Sponsor Name, Phone, Parents Name, and Address.");
+                return;
+            }
+
+            const msg = `*AVAILO NRI Parents Care అప్లికేషన్*%0A------------------------------%0A*ప్లాన్:* ${plan}%0A*NRI స్పాన్సర్ పేరు:* ${clientName}%0A*WhatsApp మొబైల్:* ${clientPhone}%0A*తల్లిదండ్రుల పేరు & వయస్సు:* ${parentsName}%0A*అడ్రస్/ఫ్లాట్ నం:* ${address}%0A*అవసరమైన సేవలు:* ${needs}%0A------------------------------%0Aఈ ప్యాకేజీని యాక్టివేట్ చేయడానికి తదుపరి వివరాలు తెలపగలరు.`;
+
+            window.location.href = `https://wa.me/919966157369?text=${msg}`;
         }
 
         function submitPartnerForm() {
