@@ -45,6 +45,51 @@
             padding-bottom: 80px;
         }
 
+        /* ================= 1. PAGE PRE-LOADER STYLES ================= */
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e2e8f0;
+            border-top: 5px solid var(--brand-blue);
+            border-radius: 50%;
+            animation: spinLoader 0.8s linear infinite;
+        }
+
+        .loader-text {
+            margin-top: 16px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--brand-navy);
+            font-family: 'Ramabhadra', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes spinLoader {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #page-loader.loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        /* ============================================================= */
+
         .te-title {
             font-family: 'Ramabhadra', sans-serif;
             letter-spacing: 0.5px;
@@ -765,6 +810,13 @@
 </head>
 <body>
 
+    <!-- ================= 2. PAGE PRE-LOADER SCREEN ================= -->
+    <div id="page-loader">
+        <div class="spinner"></div>
+        <p class="loader-text">AVAILO Care లోడ్ అవుతోంది...</p>
+    </div>
+    <!-- ============================================================== -->
+
     <!-- Header (Jio Clean Style) -->
     <header>
         <div class="header-left">
@@ -1353,6 +1405,17 @@
 
     <!-- Interactive Scripts -->
     <script>
+        // ================= 3. PRE-LOADER TIMEOUT TRIGGER =================
+        window.addEventListener("load", function() {
+            const loader = document.getElementById("page-loader");
+            if (loader) {
+                setTimeout(() => {
+                    loader.classList.add("loader-hidden");
+                }, 600); // 0.6 సెకన్ల తర్వాత స్మూత్‌గా మాయమవుతుంది
+            }
+        });
+        // =================================================================
+
         let currentLang = 'te';
 
         function toggleDrawer() {
