@@ -7,7 +7,7 @@
     <meta name="google-site-verification" content="Bv-aBAVU9UHys7RSbCjfMLYhabTyfU_wJFrrwf9qbd0" />
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Ramabhadra&family=Suranna&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -504,20 +504,6 @@
             justify-content: center;
         }
 
-        .card-upcoming-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            background: var(--brand-orange);
-            color: #fff;
-            padding: 3px 8px;
-            font-size: 10px;
-            font-weight: 800;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            z-index: 5;
-        }
-
         .jio-support-card {
             background: var(--card-white);
             border: 1px solid var(--border-light);
@@ -810,6 +796,7 @@
         </div>
         <div class="drawer-links-group">
             <button onclick="toggleDrawer(); openServiceModal('home');"><span class="te-title" data-te="AVAILO Home Services" data-en="AVAILO Home Services">AVAILO Home Services</span> <span>›</span></button>
+            <button onclick="toggleDrawer(); openModal('trialApplyModal');"><span class="te-title" data-te="Trial / Subscription అప్లికేషన్" data-en="Trial / Subscription Application">Trial / Subscription అప్లికేషన్</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openServiceModal('nri');"><span class="te-title" data-te="AVAILO NRI Care" data-en="AVAILO NRI Care">AVAILO NRI Care</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openServiceModal('menu');"><span class="te-title" data-te="AVAILO Digital Menu" data-en="AVAILO Digital Menu">AVAILO Digital Menu</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openServiceModal('partner');"><span class="te-title" data-te="AVAILO Partner Network" data-en="AVAILO Partner Network">AVAILO Partner Network</span> <span>›</span></button>
@@ -823,7 +810,7 @@
 
     <div class="layout-container">
 
-        <!-- Scan & Get Doorstep Banner -->
+        <!-- Scan Banner -->
         <div class="scan-strip-banner">
             <div>
                 <h2 class="te-title" data-te="Scan & Get to Your Doorstep" data-en="Scan & Get to Your Doorstep">Scan & Get to Your Doorstep</h2>
@@ -898,7 +885,7 @@
             </p>
         </section>
 
-        <!-- Jio Style 3 Action List Bars -->
+        <!-- Quick Options -->
         <h2 class="section-headline-jio te-title" data-te="సర్వీస్ ఎంపిక (Quick Options)" data-en="Quick Options">
             సర్వీస్ ఎంపిక (Quick Options)
         </h2>
@@ -938,7 +925,7 @@
             </div>
         </div>
 
-        <!-- Quick Support Round Icon Hub -->
+        <!-- Quick Support Hub -->
         <h2 class="section-headline-jio te-title" data-te="త్వరిత సేవలు & వివరాలు (Quick Support)" data-en="Quick Support">
             త్వరిత సేవలు & వివరాలు (Quick Support)
         </h2>
@@ -979,7 +966,7 @@
             </div>
         </div>
 
-        <!-- Verified Footer -->
+        <!-- Footer -->
         <footer style="background: #ffffff; padding: 22px 14px; border-top: 2px solid var(--brand-orange); text-align: center; border-radius: 12px; margin-bottom: 20px;">
             <div style="background: var(--brand-orange); color: #ffffff; padding: 8px 12px; font-weight: 700; border-radius: 4px; margin-bottom: 12px;" class="te-title" data-te="మా అన్ని సర్వీసుల లింక్స్" data-en="Our Services Links">
                 Our all services links
@@ -1002,7 +989,7 @@
         🦚
     </button>
 
-    <!-- Bottom Fixed Call / WhatsApp Bar -->
+    <!-- Bottom Fixed Call Hub -->
     <div class="fixed-call-hub">
         <a href="tel:9966157369" class="hub-btn btn-call-now te-title" data-te="Call Now" data-en="Call Now">Call Now</a>
         <a href="https://wa.me/919966157369?text=Hello%20Availo" class="hub-btn btn-chat-now te-title" data-te="WhatsApp ఆర్డర్" data-en="WhatsApp Order">WhatsApp ఆర్డర్</a>
@@ -1079,28 +1066,26 @@
                     </a>
                 </div>
 
-                <!-- 4. Partner Services (Trial / Subscription with Apartment Image Fixed) -->
+                <!-- 4. Partner Services (Opens Direct Applications - No Upcoming Tags) -->
                 <div id="modal-sub-partner" class="service-photo-grid" style="display: none;">
                     
-                    <!-- 1. Trial / Subscription with Real High Quality Apartment Building Image -->
-                    <a href="https://wa.me/919966157369?text=Apartments%20Trial%20%2F%20Subscription%20వివరాలు%20కావాలి" class="service-card-item">
-                        <span class="card-upcoming-badge">Upcoming</span>
+                    <!-- 1. Trial / Subscription -> Opens Application Modal Directly -->
+                    <div class="service-card-item" onclick="closeModal('servicesViewerModal'); openModal('trialApplyModal');">
                         <div class="service-card-img">
                             <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=80" alt="Apartment Care">
                         </div>
                         <div class="service-card-btn te-title" data-te="Trial / Subscription" data-en="Trial / Subscription">Trial / Subscription</div>
-                    </a>
+                    </div>
 
-                    <!-- 2. 2KM Ad Space -->
+                    <!-- 2. 2KM Monopoly Ad Space -->
                     <a href="https://wa.me/919966157369?text=2KM%20మోనోపోలీ%20యాడ్%20స్పేస్%20వివరాలు" class="service-card-item">
-                        <span class="card-upcoming-badge">Upcoming</span>
                         <div class="service-card-img">
                             <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&auto=format&fit=crop&q=80" alt="Ad Space">
                         </div>
                         <div class="service-card-btn te-title" data-te="2KM యాడ్ స్పేస్" data-en="2KM Ad Space">2KM యాడ్ స్పేస్</div>
                     </a>
 
-                    <!-- 3. Technician Registration -->
+                    <!-- 3. Join as Provider -->
                     <div class="service-card-item" onclick="closeModal('servicesViewerModal'); openModal('partnerModal');">
                         <div class="service-card-img">
                             <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&auto=format&fit=crop&q=80" alt="Technician">
@@ -1108,7 +1093,7 @@
                         <div class="service-card-btn te-title" data-te="టెక్నీషియన్ రిజిస్ట్రేషన్" data-en="Join as Provider">టెక్నీషియన్ రిజిస్ట్రేషన్</div>
                     </div>
 
-                    <!-- 4. Direct Call B2B Team -->
+                    <!-- 4. Call B2B Team -->
                     <a href="tel:9966157369" class="service-card-item">
                         <div class="service-card-img" style="display:flex; align-items:center; justify-content:center; background:#dbeafe;">
                             <span style="font-size: 40px;">📞</span>
@@ -1122,7 +1107,65 @@
         </div>
     </div>
 
-    <!-- 1. NRI Care Pricing Plans Modal -->
+    <!-- ================= 1. TRIAL / SUBSCRIPTION APPLICATION MODAL ================= -->
+    <div class="modal-overlay" id="trialApplyModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="te-title" data-te="Trial / Subscription అప్లికేషన్" data-en="Trial / Subscription Application">Trial / Subscription అప్లికేషన్</h3>
+                <button class="modal-close-btn" onclick="closeModal('trialApplyModal')">✕</button>
+            </div>
+            <div class="modal-body-pad">
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;" data-te="మీ కేటగిరీ ఎంచుకుని వివరాలు సమర్పించండి. మా టీమ్ తక్షణమే మీతో కనెక్ట్ అవుతుంది." data-en="Select your category and submit details. Our team connects immediately.">
+                    మీ కేటగిరీ ఎంచుకుని వివరాలు సమర్పించండి. మా టీమ్ తక్షణమే మీతో కనెక్ట్ అవుతుంది.
+                </p>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 700; color: #1e293b;" data-te="కేటగిరీ ఎంపిక" data-en="Select Category">కేటగిరీ ఎంపిక</label>
+                    <select id="trialCategory" style="width: 100%; padding: 8px; border: 1.5px solid #93c5fd; border-radius: 6px; font-weight: 700; color: var(--brand-blue); background: #eff6ff;">
+                        <option value="Apartments (Smart Gate & Care)">Apartments (అపార్ట్‌మెంట్స్ గేట్ & కేర్)</option>
+                        <option value="Salons & Spa">Salons & Spa (సెలూన్స్ & స్పా)</option>
+                        <option value="Restaurants">Restaurants (రెస్టారెంట్స్)</option>
+                        <option value="Hotels & Dining">Hotels & Dining (హోటల్స్ & డైనింగ్)</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 700; color: #1e293b;" data-te="ప్లాన్ రకం" data-en="Plan Type">ప్లాన్ రకం</label>
+                    <select id="trialPlanType" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600;">
+                        <option value="Free Trial (1-Week / Pilot)">Free Trial (1-Week ఉచిత పైలట్)</option>
+                        <option value="Monthly Subscription">Monthly Subscription (నెలవారీ సబ్‌స్క్రిప్షన్)</option>
+                        <option value="Annual Business Plan">Annual Business Plan (వార్షిక ప్లాన్)</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="సంస్థ / అపార్ట్‌మెంట్ పేరు" data-en="Apartment / Business Name">సంస్థ / అపార్ట్‌మెంట్ పేరు</label>
+                    <input type="text" id="trialBusinessName" placeholder="e.g. Green Towers / Green Leaf Salon" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="మీ పేరు (Contact Person)" data-en="Contact Person Name">మీ పేరు (Contact Person)</label>
+                    <input type="text" id="trialContactName" placeholder="e.g. Ramesh" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="WhatsApp మొబైల్ నంబర్" data-en="WhatsApp Mobile Number">WhatsApp మొబైల్ నంబర్</label>
+                    <input type="tel" id="trialPhone" placeholder="10-digit mobile number" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <div style="margin-bottom: 14px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="ప్రాంతం (విజయవాడ / గుంటూరు)" data-en="Location (Vijayawada / Guntur)">ప్రాంతం (విజయవాడ / గుంటూరు)</label>
+                    <input type="text" id="trialLocation" placeholder="e.g. Benz Circle, Vijayawada" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <button onclick="submitTrialApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో అప్లికేషన్ సమర్పించండి" data-en="💬 Submit Application on WhatsApp">
+                    💬 WhatsApp లో అప్లికేషన్ సమర్పించండి
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 2. NRI CARE PRICING PLANS MODAL ================= -->
     <div class="modal-overlay" id="nriModal">
         <div class="modal-window">
             <div class="modal-header">
@@ -1169,7 +1212,7 @@
         </div>
     </div>
 
-    <!-- NRI Application Form Modal -->
+    <!-- ================= 3. NRI APPLICATION FORM MODAL ================= -->
     <div class="modal-overlay" id="nriApplyModal">
         <div class="modal-window">
             <div class="modal-header">
@@ -1211,7 +1254,7 @@
         </div>
     </div>
 
-    <!-- 2. How It Works Modal -->
+    <!-- 4. How It Works Modal -->
     <div class="modal-overlay" id="howItWorksModal">
         <div class="modal-window">
             <div class="modal-header">
@@ -1235,7 +1278,7 @@
         </div>
     </div>
 
-    <!-- 3. Our Aim Modal -->
+    <!-- 5. Our Aim Modal -->
     <div class="modal-overlay" id="aimModal">
         <div class="modal-window">
             <div class="modal-header">
@@ -1258,7 +1301,7 @@
         </div>
     </div>
 
-    <!-- 4. FAQ Modal -->
+    <!-- 6. FAQ Modal -->
     <div class="modal-overlay" id="faqModal">
         <div class="modal-window">
             <div class="modal-header">
@@ -1273,7 +1316,7 @@
         </div>
     </div>
 
-    <!-- 5. Partner Modal -->
+    <!-- 7. Partner Join Modal -->
     <div class="modal-overlay" id="partnerModal">
         <div class="modal-window">
             <div class="modal-header">
@@ -1307,7 +1350,7 @@
         </div>
     </div>
 
-    <!-- 6. Contact Details Modal -->
+    <!-- 8. Contact Details Modal -->
     <div class="modal-overlay" id="contactModal">
         <div class="modal-window">
             <div class="modal-header">
@@ -1338,7 +1381,7 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Interactive Scripts -->
     <script>
         function hidePageLoader() {
             const loader = document.getElementById("page-loader");
@@ -1422,12 +1465,32 @@
             }
         }
 
+        // 1. Submit Trial / Subscription Application
+        function submitTrialApplication() {
+            const category = document.getElementById('trialCategory').value;
+            const planType = document.getElementById('trialPlanType').value;
+            const businessName = document.getElementById('trialBusinessName').value.trim();
+            const contactName = document.getElementById('trialContactName').value.trim();
+            const phone = document.getElementById('trialPhone').value.trim();
+            const location = document.getElementById('trialLocation').value.trim() || 'Vijayawada/Guntur';
+
+            if (!businessName || !contactName || !phone) {
+                alert(currentLang === 'te' ? "దయచేసి మీ పేరు, సంస్థ పేరు మరియు వాట్సాప్ నంబర్ తప్పకుండా నింపండి." : "Please fill Business Name, Contact Name, and Phone Number.");
+                return;
+            }
+
+            const msg = `*AVAILO Trial / Subscription Application*%0A------------------------------%0A*Category:* ${category}%0A*Plan Type:* ${planType}%0A*Business/Apartment:* ${businessName}%0A*Contact Person:* ${contactName}%0A*WhatsApp:* ${phone}%0A*Location:* ${location}%0A------------------------------%0AInterested in onboarding / trial details.`;
+            window.location.href = `https://wa.me/919966157369?text=${msg}`;
+        }
+
+        // 2. Select NRI Plan & Open Application Form
         function selectNRIPlan(planName) {
             closeModal('nriModal');
             document.getElementById('nriPlanSelected').value = planName;
             openModal('nriApplyModal');
         }
 
+        // 3. Submit NRI Application
         function submitNRIApplication() {
             const plan = document.getElementById('nriPlanSelected').value;
             const clientName = document.getElementById('nriClientName').value.trim();
@@ -1445,6 +1508,7 @@
             window.location.href = `https://wa.me/919966157369?text=${msg}`;
         }
 
+        // 4. Submit Partner Form
         function submitPartnerForm() {
             const name = document.getElementById('pName').value.trim();
             const phone = document.getElementById('pPhone').value.trim();
