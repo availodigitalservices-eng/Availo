@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVAILO MAYURA - Smart Dine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&display=swap" rel="stylesheet">
+    <title>AVAILO SMART DINE - LIVE ORDER PAD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --brand-navy: #071426;
@@ -26,14 +26,14 @@
             background-color: var(--brand-navy);
             color: var(--text-light);
             font-family: 'Inter', sans-serif;
-            padding-bottom: 90px;
+            padding-bottom: 120px;
         }
 
         /* Top Stage with Robot Avatar */
         .stage-box {
             background: radial-gradient(circle at 50% 25%, #0e2f57 0%, var(--brand-navy) 85%);
             border-bottom: 1.5px solid rgba(32, 221, 224, 0.3);
-            padding: 22px 16px 18px;
+            padding: 18px 14px 14px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -44,93 +44,83 @@
             background: rgba(221, 182, 93, 0.15);
             border: 1px solid var(--brand-gold);
             color: var(--brand-gold);
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            padding: 4px 14px;
+            padding: 3px 12px;
             border-radius: 16px;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             font-family: 'Rajdhani', sans-serif;
             letter-spacing: 0.8px;
         }
 
-        /* Robot Eyes */
-        .eyes-wrap {
-            display: flex;
-            gap: 26px;
-            margin-bottom: 12px;
+        .avatar-container {
+            position: relative;
             cursor: pointer;
+            width: 110px;
+            height: 190px;
+            margin-bottom: 6px;
         }
 
-        .robot-eye {
-            width: 56px;
-            height: 40px;
-            background: #000;
-            border: 3px solid var(--brand-cyan);
-            border-radius: 50% 50% 45% 45%;
-            box-shadow: 0 0 18px rgba(32, 221, 224, 0.6);
+        .mayura-avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.2s ease;
+        }
+
+        .avatar-container.speaking .mayura-avatar {
+            animation: bounceTalk 0.5s infinite alternate;
+        }
+
+        @keyframes bounceTalk {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-4px) scale(1.02); }
+        }
+
+        /* Supervisor Live Bubble */
+        .supervisor-bubble {
+            background: rgba(7, 20, 38, 0.95);
+            border: 1.5px solid var(--brand-gold);
+            border-radius: 20px;
+            padding: 8px 16px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: transform 0.15s ease;
+            gap: 10px;
+            margin-top: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            animation: fadeIn 0.3s ease;
         }
 
-        .pupil {
-            width: 17px;
-            height: 17px;
-            background: var(--brand-cyan);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--brand-cyan);
-        }
-
-        .robot-eye.blink {
-            transform: scaleY(0.1);
-        }
-
-        .mouth-wave {
-            width: 42px;
-            height: 5px;
-            background: var(--brand-cyan);
+        .sup-badge {
+            background: var(--brand-gold);
+            color: #071426;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
             border-radius: 4px;
-            box-shadow: 0 0 8px var(--brand-cyan);
-            transition: height 0.1s ease;
         }
 
-        .mouth-wave.speaking {
-            animation: speakAnim 0.25s infinite alternate;
-        }
-
-        @keyframes speakAnim {
-            0% { height: 4px; width: 34px; }
-            100% { height: 16px; width: 52px; border-radius: 8px; }
-        }
-
-        .speech-text {
+        .sup-voice-text {
             font-family: 'Ramabhadra', sans-serif;
-            font-size: 14.5px;
-            margin-top: 14px;
-            color: #ffffff;
-            min-height: 42px;
-            max-width: 320px;
-            line-height: 1.4;
+            font-size: 13px;
+            color: #fff;
         }
 
-        /* Menu Container */
+        /* Menu Section */
         .content-wrap {
-            padding: 16px 14px;
+            padding: 14px;
             max-width: 480px;
             margin: 0 auto;
         }
 
         .menu-header {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 17px;
+            font-size: 16px;
             color: var(--brand-gold);
             font-weight: 800;
-            letter-spacing: 0.5px;
-            margin: 10px 0 12px;
+            margin: 8px 0 10px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
         }
 
         .items-list {
@@ -153,7 +143,6 @@
             font-size: 14px;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 2px;
         }
 
         .dish-desc {
@@ -166,8 +155,8 @@
             font-size: 15px;
             font-weight: 800;
             color: var(--brand-cyan);
+            margin-top: 3px;
             display: inline-block;
-            margin-top: 4px;
         }
 
         .qty-box {
@@ -185,10 +174,10 @@
             color: var(--brand-cyan);
             font-size: 18px;
             font-weight: 700;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
         }
 
         .qty-val {
@@ -199,7 +188,72 @@
             text-align: center;
         }
 
-        /* Bottom Fixed Action Bar */
+        /* LIVE ORDER BOOK PAD (సూపర్‌వైజర్ ఆర్డర్ రాసుకునే బుక్) */
+        .order-book-container {
+            margin-top: 20px;
+            background: #fffdf5;
+            border-radius: 8px;
+            padding: 16px 14px;
+            color: #1e293b;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.05);
+            border-left: 6px solid #854d0e;
+            position: relative;
+        }
+
+        .book-top-clip {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 12px;
+            background: #475569;
+            border-radius: 4px;
+        }
+
+        .book-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .writing-lines {
+            min-height: 80px;
+            font-family: 'Caveat', cursive;
+            font-size: 19px;
+            color: #0f172a;
+            line-height: 1.6;
+        }
+
+        .writing-line-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dotted #cbd5e1;
+            padding: 2px 0;
+            animation: lineWrite 0.3s ease-in;
+        }
+
+        @keyframes lineWrite {
+            0% { opacity: 0; transform: translateX(-10px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .empty-hint {
+            color: #94a3b8;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            text-align: center;
+            padding: 25px 0;
+            font-style: italic;
+        }
+
+        /* Fixed Bottom Action Bar */
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -249,35 +303,39 @@
 </head>
 <body>
 
-    <!-- 1. Robot Stage with Voice Welcome -->
+    <!-- 1. Robot Stage -->
     <div class="stage-box">
         <div class="venue-pill" id="badgeText">AMARAVATI GRAND · TABLE 01</div>
-        <div class="eyes-wrap" onclick="playVoiceGreeting()">
-            <div class="robot-eye" id="eyeL"><div class="pupil"></div></div>
-            <div class="robot-eye" id="eyeR"><div class="pupil"></div></div>
+        
+        <div class="avatar-container" id="avatarContainer" onclick="triggerSupervisorVoice('నమస్కారం అండి! మీ ఆర్డర్ చెప్పండి, నేను బుక్ లో రాసుకుంటున్నాను.')">
+            <img class="mayura-avatar" src="image_3.png" onerror="this.src='https://raw.githubusercontent.com/availodigitalservices-eng/Availo/main/image_3.png'" alt="AVAILO Robot">
         </div>
-        <div class="mouth-wave" id="botMouth"></div>
-        <p class="speech-text" id="speechDisplay">టచ్ చేయండి — మయూర మాట్లాడుతుంది 🦚</p>
+
+        <!-- Supervisor Dialog Bubble -->
+        <div class="supervisor-bubble">
+            <span class="sup-badge">SUPERVISOR</span>
+            <span class="sup-voice-text" id="supervisorText">ఆర్డర్ చెప్పండి సర్, రాసుకుంటున్నాను ✍️</span>
+        </div>
     </div>
 
     <!-- 2. Menu Items -->
     <div class="content-wrap">
         <div class="menu-header">
-            <span>POPULAR MENU</span>
-            <small style="color: #94a3b8; font-size: 11px;">DIRECT KITCHEN ORDER</small>
+            <span>SELECT DISHES</span>
+            <small style="color: #94a3b8; font-size: 11px;">TAP + TO ADD TO PAD</small>
         </div>
 
         <div class="items-list">
             <div class="dish-row">
                 <div>
                     <div class="dish-title">స్పెషల్ వెజ్ బిర్యానీ</div>
-                    <div class="dish-desc">మిర్చి కా సాలన్ & రైతాతో వస్తుంది</div>
+                    <div class="dish-desc">మిర్చి కా సాలన్ & రైతా</div>
                     <span class="dish-cost">₹220</span>
                 </div>
                 <div class="qty-box">
-                    <button class="qty-btn" onclick="updateQty('vegBiryani', -1)">-</button>
+                    <button class="qty-btn" onclick="modifyItem('vegBiryani', -1)">-</button>
                     <span class="qty-val" id="qty_vegBiryani">0</span>
-                    <button class="qty-btn" onclick="updateQty('vegBiryani', 1)">+</button>
+                    <button class="qty-btn" onclick="modifyItem('vegBiryani', 1)">+</button>
                 </div>
             </div>
 
@@ -288,9 +346,9 @@
                     <span class="dish-cost">₹180</span>
                 </div>
                 <div class="qty-box">
-                    <button class="qty-btn" onclick="updateQty('paneerButter', -1)">-</button>
+                    <button class="qty-btn" onclick="modifyItem('paneerButter', -1)">-</button>
                     <span class="qty-val" id="qty_paneerButter">0</span>
-                    <button class="qty-btn" onclick="updateQty('paneerButter', 1)">+</button>
+                    <button class="qty-btn" onclick="modifyItem('paneerButter', 1)">+</button>
                 </div>
             </div>
 
@@ -301,34 +359,52 @@
                     <span class="dish-cost">₹60</span>
                 </div>
                 <div class="qty-box">
-                    <button class="qty-btn" onclick="updateQty('butterNaan', -1)">-</button>
+                    <button class="qty-btn" onclick="modifyItem('butterNaan', -1)">-</button>
                     <span class="qty-val" id="qty_butterNaan">0</span>
-                    <button class="qty-btn" onclick="updateQty('butterNaan', 1)">+</button>
+                    <button class="qty-btn" onclick="modifyItem('butterNaan', 1)">+</button>
                 </div>
             </div>
 
             <div class="dish-row">
                 <div>
                     <div class="dish-title">మినరల్ వాటర్ (1L)</div>
-                    <div class="dish-desc">కూల్డ్ / నార్మల్ ప్యాక్డ్ వాటర్</div>
+                    <div class="dish-desc">కూల్డ్ వాటర్ బాటిల్</div>
                     <span class="dish-cost">₹25</span>
                 </div>
                 <div class="qty-box">
-                    <button class="qty-btn" onclick="updateQty('waterBottle', -1)">-</button>
+                    <button class="qty-btn" onclick="modifyItem('waterBottle', -1)">-</button>
                     <span class="qty-val" id="qty_waterBottle">0</span>
-                    <button class="qty-btn" onclick="updateQty('waterBottle', 1)">+</button>
+                    <button class="qty-btn" onclick="modifyItem('waterBottle', 1)">+</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- 3. LIVE ORDER PAD (సూపర్‌వైజర్ రాసుకునే లైవ్ బుక్) -->
+        <div class="order-book-container">
+            <div class="book-top-clip"></div>
+            <div class="book-header">
+                <span>📝 LIVE ORDER SLIP (KOT)</span>
+                <span id="bookTableLabel">TABLE 01</span>
+            </div>
+            
+            <div class="writing-lines" id="orderPadLines">
+                <div class="empty-hint">ఇంకా ఏమీ రాయలేదు... పైన ఐటమ్స్ సెలెక్ట్ చేయండి, సూపర్‌వైజర్ ఇక్కడ నోట్ చేస్తారు ✍️</div>
+            </div>
+
+            <div style="border-top: 1.5px dashed #94a3b8; padding-top: 8px; margin-top: 8px; display: flex; justify-content: space-between; font-weight: 800; font-family: 'Rajdhani', sans-serif;">
+                <span>ESTIMATED BILL:</span>
+                <span id="padTotalAmount" style="color: #16a34a; font-size: 16px;">₹0</span>
             </div>
         </div>
     </div>
 
-    <!-- 3. Bottom Action Bar -->
+    <!-- 4. Fixed Bottom Action Bar -->
     <div class="bottom-bar">
         <button class="btn-speak" onclick="listenToVoiceOrder()">
             <span>🎤</span> ఆర్డర్ చెప్పండి
         </button>
         <button class="btn-order" onclick="sendOrderWhatsApp()">
-            <span>🛒</span> ఆర్డర్ పంపండి (<span id="cartCount">0</span>)
+            <span>🛒</span> కిచెన్‌కు పంపండి (<span id="cartCount">0</span>)
         </button>
     </div>
 
@@ -339,81 +415,103 @@
         const targetWhatsApp = params.get('desk') || "919966157369";
 
         document.getElementById('badgeText').innerText = `${hotelName.toUpperCase()} · ${tableNumber.toUpperCase()}`;
+        document.getElementById('bookTableLabel').innerText = `${tableNumber.toUpperCase()}`;
 
         const menuData = {
             vegBiryani: { name: "స్పెషల్ వెజ్ బిర్యానీ", price: 220, count: 0 },
             paneerButter: { name: "పన్నీర్ బట్టర్ మసాలా", price: 180, count: 0 },
-            butterNaan: { name: "బట్టర్ నాన్ (2 Pcs)", price: 60, count: 0 },
-            waterBottle: { name: "మినరల్ వాటర్ (1L)", price: 25, count: 0 }
+            butterNaan: { name: "బట్టర్ నాన్", price: 60, count: 0 },
+            waterBottle: { name: "మినరల్ వాటర్", price: 25, count: 0 }
         };
 
-        setInterval(() => {
-            const l = document.getElementById('eyeL');
-            const r = document.getElementById('eyeR');
-            l.classList.add('blink');
-            r.classList.add('blink');
-            setTimeout(() => {
-                l.classList.remove('blink');
-                r.classList.remove('blink');
-            }, 180);
-        }, 3600);
-
-        function playVoiceGreeting() {
-            const welcomeMsg = `నమస్కారం! ${hotelName} కు స్వాగతం. నేను మీ అవైలో మయూరను. మీకు కావాల్సిన ఐటమ్స్ సెలెక్ట్ చేసుకోండి, లేదా మాట్లాడి ఆర్డర్ చెప్పండి.`;
-            document.getElementById('speechDisplay').innerText = welcomeMsg;
-
+        // వాయిస్ ఫంక్షన్
+        function triggerSupervisorVoice(text) {
+            document.getElementById('supervisorText').innerText = text;
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const mouth = document.getElementById('botMouth');
-                mouth.classList.add('speaking');
-
-                const utter = new SpeechSynthesisUtterance(welcomeMsg);
+                const utter = new SpeechSynthesisUtterance(text);
                 utter.lang = 'te-IN';
                 utter.rate = 0.95;
-                utter.onend = () => mouth.classList.remove('speaking');
                 window.speechSynthesis.speak(utter);
             }
         }
 
-        window.addEventListener('load', () => {
-            setTimeout(playVoiceGreeting, 700);
-        });
-
-        function updateQty(key, delta) {
+        // ఐటమ్ సెలెక్ట్ చేసినప్పుడు బుక్ లో రాయడం & "నెక్స్ట్ ఆర్డర్ సర్?" అనడం
+        function modifyItem(key, delta) {
             if (menuData[key]) {
+                const prevCount = menuData[key].count;
                 menuData[key].count = Math.max(0, menuData[key].count + delta);
                 document.getElementById(`qty_${key}`).innerText = menuData[key].count;
-                refreshTotalCount();
+                
+                renderOrderPad();
+
+                // కస్టమర్ కొత్తగా ఒక ఐటమ్ యాడ్ చేసినప్పుడు సూపర్‌వైజర్ రెస్పాన్స్
+                if (delta > 0) {
+                    const prompts = [
+                        `నోట్ చేసుకున్నాను సర్.. నెక్స్ట్ ఆర్డర్ సర్?`,
+                        `${menuData[key].name} రాశాను సర్.. నెక్స్ట్ ఇంకా ఏమైనా కావాలా?`,
+                        `సరే సర్, నెక్స్ట్ ఆర్డర్ చెప్పండి..`
+                    ];
+                    const randomVoice = prompts[Math.floor(Math.random() * prompts.length)];
+                    triggerSupervisorVoice(randomVoice);
+                }
             }
         }
 
-        function refreshTotalCount() {
+        // లైవ్ బుక్ (Pad) అప్‌డేట్ చేయడం
+        function renderOrderPad() {
+            const padContainer = document.getElementById('orderPadLines');
+            let linesHtml = "";
             let total = 0;
-            for (let k in menuData) total += menuData[k].count;
-            document.getElementById('cartCount').innerText = total;
+            let totalCount = 0;
+
+            for (let k in menuData) {
+                if (menuData[k].count > 0) {
+                    const itemTotal = menuData[k].count * menuData[k].price;
+                    total += itemTotal;
+                    totalCount += menuData[k].count;
+                    linesHtml += `
+                        <div class="writing-line-item">
+                            <span>✍️ ${menuData[k].name} x ${menuData[k].count}</span>
+                            <span>₹${itemTotal}</span>
+                        </div>
+                    `;
+                }
+            }
+
+            if (linesHtml === "") {
+                padContainer.innerHTML = `<div class="empty-hint">ఇంకా ఏమీ రాయలేదు... పైన ఐటమ్స్ సెలెక్ట్ చేయండి, సూపర్‌వైజర్ ఇక్కడ నోట్ చేస్తారు ✍️</div>`;
+            } else {
+                padContainer.innerHTML = linesHtml;
+            }
+
+            document.getElementById('padTotalAmount').innerText = `₹${total}`;
+            document.getElementById('cartCount').innerText = totalCount;
         }
 
+        // వాయిస్ ఆర్డర్ లిజనర్
         function listenToVoiceOrder() {
             const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) {
-                alert("వాయిస్ రికగ్నిషన్ కోసం Chrome వాడండి.");
+                alert("వాయిస్ కోసం Chrome బ్రౌజర్ వాడండి.");
                 return;
             }
             const rec = new SpeechRec();
             rec.lang = 'te-IN';
             rec.onstart = () => {
-                document.getElementById('speechDisplay').innerText = "🔴 వింటున్నాను... మీ ఆర్డర్ చెప్పండి";
+                document.getElementById('supervisorText').innerText = "🔴 వింటున్నాను సర్, మీ ఆర్డర్ చెప్పండి...";
             };
             rec.onresult = (e) => {
                 const spokenText = e.results[0][0].transcript;
-                document.getElementById('speechDisplay').innerText = `మీరు చెప్పింది: "${spokenText}"`;
+                document.getElementById('supervisorText').innerText = `రాసుకున్నాను సర్: "${spokenText}"`;
                 
-                const msg = `*AVAILO MAYURA - VOICE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0Aకిచెన్ తక్షణ ప్రిపరేషన్ కోసం పంపబడింది.`;
+                const msg = `*AVAILO SMART DINE - SUPERVISOR NOTE*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*కస్టమర్ వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0Aకిచెన్ తక్షణ తయారీ కోసం పంపబడింది.`;
                 window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
             };
             rec.start();
         }
 
+        // వాట్సాప్‌కు KOT పంపడం
         function sendOrderWhatsApp() {
             let orderLines = [];
             let grandTotal = 0;
@@ -427,16 +525,15 @@
             }
 
             if (orderLines.length === 0) {
-                alert("దయచేసి కనీసం ఒక ఐటమ్ ఎంచుకోండి లేదా మాట్లాడి ఆర్డర్ చెప్పండి.");
+                triggerSupervisorVoice("దయచేసి కనీసం ఒక ఐటమ్ అయినా చెప్పండి సర్, బుక్ లో రాసుకుంటాను.");
                 return;
             }
 
             const itemsStr = orderLines.join('%0A');
-            const msg = `*AVAILO SMART DINE - NEW ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
+            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*సూపర్‌వైజర్:* AVAILO Assistant%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
 
             window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
         }
     </script>
 </body>
 </html>
-
