@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVAILO SMART DINE - 3D ANDROID SUPERVISOR</title>
+    <title>AVAILO SMART DINE - 3D CARTOON SUPERVISOR</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -29,7 +29,7 @@
             padding-bottom: 110px;
         }
 
-        /* 1. TOP STAGE */
+        /* 1. TOP STAGE: 3D CARTOON SUPERVISOR */
         .stage-box {
             background: radial-gradient(circle at 50% 20%, #0e2f57 0%, var(--brand-navy) 85%);
             border-bottom: 1.5px solid rgba(32, 221, 224, 0.3);
@@ -56,27 +56,28 @@
         .supervisor-stage {
             position: relative;
             cursor: pointer;
-            width: 155px;
-            height: 235px;
+            width: 150px;
+            height: 240px;
             margin-bottom: 6px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .supervisor-art {
+        .supervisor-img {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 8px 20px rgba(32, 221, 224, 0.4));
+            object-fit: contain;
+            filter: drop-shadow(0 8px 22px rgba(32, 221, 224, 0.45));
             animation: supervisorIdle 3.2s ease-in-out infinite alternate;
             transform-origin: bottom center;
         }
 
-        .stage-box.speaking .supervisor-art {
+        .stage-box.speaking .supervisor-img {
             animation: supervisorTalk 0.4s ease-in-out infinite alternate;
         }
 
-        .stage-box.taking-order .supervisor-art {
+        .stage-box.taking-order .supervisor-img {
             animation: supervisorNoteWrite 0.45s ease-in-out infinite alternate;
         }
 
@@ -92,7 +93,7 @@
         }
 
         @keyframes supervisorNoteWrite {
-            0% { transform: translateY(0) rotate(1deg); }
+            0% { transform: translateY(0) rotate(1.2deg); }
             100% { transform: translateY(-3px) rotate(-1.5deg); }
         }
 
@@ -291,7 +292,7 @@
             100% { opacity: 1; transform: scale(1); }
         }
 
-        /* 5. BOTTOM BAR */
+        /* 5. BOTTOM ACTION BAR */
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -341,98 +342,12 @@
 </head>
 <body>
 
-    <!-- 1. Stage Area with Embedded 3D Stylized Android Supervisor -->
+    <!-- 1. Robot Stage with 3D Cartoon Avatar -->
     <div id="robotStage" class="stage-box">
         <div class="venue-pill" id="badgeText">AMARAVATI GRAND · TABLE 01</div>
         
         <div class="supervisor-stage" id="supStage" onclick="speakGentSupervisor('నమస్కారం సర్! నేను మీ ఆర్డర్ సూపర్‌వైజర్‌ని. మీ ఆర్డర్ చెప్పండి, నోట్ చేసుకుంటాను.')">
-            <svg class="supervisor-art" viewBox="0 0 180 250" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ffffff"/>
-                        <stop offset="60%" stop-color="#d9e2ec"/>
-                        <stop offset="100%" stop-color="#9fb3c8"/>
-                    </linearGradient>
-                    <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#20DDE0"/>
-                        <stop offset="100%" stop-color="#0284c7"/>
-                    </linearGradient>
-                    <linearGradient id="peacockCape" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#064e3b"/>
-                        <stop offset="50%" stop-color="#0f766e"/>
-                        <stop offset="100%" stop-color="#0284c7"/>
-                    </linearGradient>
-                </defs>
-
-                <!-- Peacock Cape Back -->
-                <path d="M40,115 C15,140 10,210 55,245 C75,250 85,210 65,150 Z" fill="url(#peacockCape)" stroke="#20DDE0" stroke-width="1.5"/>
-                <circle cx="35" cy="180" r="7" fill="#0284c7" stroke="#DDB65D" stroke-width="2"/>
-                <circle cx="35" cy="180" r="3" fill="#DDB65D"/>
-                
-                <path d="M140,115 C165,140 170,210 125,245 C105,250 95,210 115,150 Z" fill="url(#peacockCape)" stroke="#20DDE0" stroke-width="1.5"/>
-                <circle cx="145" cy="180" r="7" fill="#0284c7" stroke="#DDB65D" stroke-width="2"/>
-                <circle cx="145" cy="180" r="3" fill="#DDB65D"/>
-
-                <!-- Legs & Armor Boots -->
-                <path d="M68,195 L62,238 L50,244 L78,244 L78,195 Z" fill="url(#bodyGrad)" stroke="#071426" stroke-width="2"/>
-                <path d="M112,195 L118,238 L130,244 L102,244 L102,195 Z" fill="url(#bodyGrad)" stroke="#071426" stroke-width="2"/>
-                <rect x="58" y="215" width="16" height="5" rx="2" fill="#20DDE0"/>
-                <rect x="106" y="215" width="16" height="5" rx="2" fill="#20DDE0"/>
-
-                <!-- Torso Body Armor with AVAILO branding -->
-                <path d="M56,120 L124,120 L115,195 L65,195 Z" fill="url(#bodyGrad)" stroke="#071426" stroke-width="2"/>
-                <path d="M64,130 L116,130 L108,185 L72,185 Z" fill="#071426"/>
-                <rect x="66" y="136" width="48" height="22" rx="4" fill="#ffffff" stroke="#20DDE0" stroke-width="1.5"/>
-                <text x="90" y="151" font-family="'Inter', sans-serif" font-size="8" font-weight="900" fill="#071426" text-anchor="middle">AVAILO</text>
-
-                <!-- Left Hand Holding Stylus Pen -->
-                <g>
-                    <path d="M56,125 C40,135 34,145 42,165" fill="none" stroke="url(#bodyGrad)" stroke-width="10" stroke-linecap="round"/>
-                    <circle cx="42" cy="165" r="7" fill="#d9e2ec" stroke="#071426" stroke-width="1.5"/>
-                    <rect x="36" y="152" width="4" height="22" rx="2" transform="rotate(25 36 152)" fill="#DDB65D" stroke="#071426" stroke-width="1"/>
-                </g>
-
-                <!-- Right Hand Holding Glowing Digital Order Pad -->
-                <g>
-                    <path d="M124,125 C140,138 145,150 135,170" fill="none" stroke="url(#bodyGrad)" stroke-width="10" stroke-linecap="round"/>
-                    <!-- Digital Order Pad -->
-                    <rect x="110" y="145" width="42" height="55" rx="5" fill="#071426" stroke="#20DDE0" stroke-width="2"/>
-                    <line x1="116" y1="156" x2="144" y2="156" stroke="#20DDE0" stroke-width="2"/>
-                    <line x1="116" y1="164" x2="138" y2="164" stroke="#DDB65D" stroke-width="1.5"/>
-                    <line x1="116" y1="172" x2="142" y2="172" stroke="#ffffff" stroke-width="1.5"/>
-                    <line x1="116" y1="180" x2="132" y2="180" stroke="#ffffff" stroke-width="1.5"/>
-                    <circle cx="140" cy="178" r="6" fill="#d9e2ec" stroke="#071426" stroke-width="1.5"/>
-                </g>
-
-                <!-- Head & Face -->
-                <path d="M58,60 C58,32 122,32 122,60 C122,96 58,96 58,60 Z" fill="#ffd1b3" stroke="#071426" stroke-width="1.5"/>
-                
-                <!-- Anime Hair -->
-                <path d="M52,55 C52,25 75,18 90,18 C115,18 128,28 128,55 C132,42 122,28 108,24 C94,20 74,22 62,30 C54,36 50,45 52,55 Z" fill="#4a2810"/>
-                <path d="M62,45 C68,36 82,34 94,38 C90,44 80,48 70,48 Z" fill="#5c3317"/>
-
-                <!-- Peacock Feather Crown on Head -->
-                <path d="M110,22 C125,5 138,8 132,24 C126,35 116,30 110,22 Z" fill="#064e3b" stroke="#20DDE0" stroke-width="1.5"/>
-                <ellipse cx="126" cy="16" rx="5" ry="7" fill="#0284c7" stroke="#DDB65D" stroke-width="1.5"/>
-                <circle cx="126" cy="16" r="2.5" fill="#DDB65D"/>
-
-                <!-- Headset with Peacock Glow -->
-                <path d="M54,62 C50,60 48,72 52,78 L56,76 Z" fill="#071426" stroke="#20DDE0" stroke-width="2"/>
-                <path d="M126,62 C130,60 132,72 128,78 L124,76 Z" fill="#071426" stroke="#20DDE0" stroke-width="2"/>
-                <path d="M54,50 Q90,30 126,50" fill="none" stroke="#20DDE0" stroke-width="3"/>
-
-                <!-- Eyes (Big Animated Expressive Eyes) -->
-                <ellipse cx="74" cy="66" rx="7" ry="9" fill="#ffffff" stroke="#071426" stroke-width="1"/>
-                <circle cx="75" cy="66" r="4.5" fill="#0284c7"/>
-                <circle cx="76" cy="64" r="1.5" fill="#ffffff"/>
-
-                <ellipse cx="106" cy="66" rx="7" ry="9" fill="#ffffff" stroke="#071426" stroke-width="1"/>
-                <circle cx="105" cy="66" r="4.5" fill="#0284c7"/>
-                <circle cx="104" cy="64" r="1.5" fill="#ffffff"/>
-
-                <!-- Smile / Speaking Mouth -->
-                <path d="M82,82 Q90,90 98,82" fill="none" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
+            <img class="supervisor-img" src="bot.png" alt="AVAILO 3D Cartoon Supervisor">
         </div>
 
         <div class="supervisor-bubble">
