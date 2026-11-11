@@ -97,7 +97,6 @@
             100% { transform: translateY(-3px) rotate(-1.5deg); }
         }
 
-        /* Supervisor Dialog Bubble */
         .supervisor-bubble {
             background: rgba(7, 20, 38, 0.95);
             border: 1.5px solid var(--brand-cyan);
@@ -342,14 +341,14 @@
 </head>
 <body>
 
-    <!-- 1. 3D Cartoon Avatar Stage (Direct GitHub Raw CDN Integration) -->
+    <!-- 1. Top Stage (Direct bot.png with Loop Protection) -->
     <div id="robotStage" class="stage-box">
         <div class="venue-pill" id="badgeText">AMARAVATI GRAND · TABLE 01</div>
         
         <div class="supervisor-stage" id="supStage" onclick="speakGentSupervisor('నమస్కారం సర్! నేను మీ ఆర్డర్ సూపర్‌వైజర్‌ని. మీ ఆర్డర్ చెప్పండి, నోట్ చేసుకుంటాను.')">
             <img class="supervisor-img" 
-                 src="https://raw.githubusercontent.com/availodigitalservices-eng/Availo/main/bot.png" 
-                 onerror="this.src='bot.png';" 
+                 src="bot.png" 
+                 onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/availodigitalservices-eng/Availo/main/bot.png';" 
                  alt="AVAILO 3D Cartoon Supervisor">
         </div>
 
@@ -465,7 +464,6 @@
             waterBottle: { name: "మినరల్ వాటర్", price: 25, count: 0 }
         };
 
-        // గంభీరమైన జెంట్ వాయిస్
         function speakGentSupervisor(text, mode = "") {
             document.getElementById('supervisorText').innerText = text;
             
