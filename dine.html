@@ -1,1 +1,442 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AVAILO MAYURA - Smart Dine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-navy: #071426;
+            --brand-cyan: #20DDE0;
+            --brand-gold: #DDB65D;
+            --card-bg: #0d223f;
+            --text-light: #f8fafc;
+            --accent-green: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--brand-navy);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            padding-bottom: 90px;
+        }
+
+        /* Top Stage with Robot Avatar */
+        .stage-box {
+            background: radial-gradient(circle at 50% 25%, #0e2f57 0%, var(--brand-navy) 85%);
+            border-bottom: 1.5px solid rgba(32, 221, 224, 0.3);
+            padding: 22px 16px 18px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .venue-pill {
+            background: rgba(221, 182, 93, 0.15);
+            border: 1px solid var(--brand-gold);
+            color: var(--brand-gold);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.8px;
+        }
+
+        /* Robot Eyes */
+        .eyes-wrap {
+            display: flex;
+            gap: 26px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .robot-eye {
+            width: 56px;
+            height: 40px;
+            background: #000;
+            border: 3px solid var(--brand-cyan);
+            border-radius: 50% 50% 45% 45%;
+            box-shadow: 0 0 18px rgba(32, 221, 224, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s ease;
+        }
+
+        .pupil {
+            width: 17px;
+            height: 17px;
+            background: var(--brand-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--brand-cyan);
+        }
+
+        .robot-eye.blink {
+            transform: scaleY(0.1);
+        }
+
+        .mouth-wave {
+            width: 42px;
+            height: 5px;
+            background: var(--brand-cyan);
+            border-radius: 4px;
+            box-shadow: 0 0 8px var(--brand-cyan);
+            transition: height 0.1s ease;
+        }
+
+        .mouth-wave.speaking {
+            animation: speakAnim 0.25s infinite alternate;
+        }
+
+        @keyframes speakAnim {
+            0% { height: 4px; width: 34px; }
+            100% { height: 16px; width: 52px; border-radius: 8px; }
+        }
+
+        .speech-text {
+            font-family: 'Ramabhadra', sans-serif;
+            font-size: 14.5px;
+            margin-top: 14px;
+            color: #ffffff;
+            min-height: 42px;
+            max-width: 320px;
+            line-height: 1.4;
+        }
+
+        /* Menu Container */
+        .content-wrap {
+            padding: 16px 14px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .menu-header {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 17px;
+            color: var(--brand-gold);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin: 10px 0 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dish-row {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dish-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .dish-desc {
+            font-size: 11.5px;
+            color: #94a3b8;
+        }
+
+        .dish-cost {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--brand-cyan);
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .qty-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1.5px solid var(--brand-cyan);
+            background: rgba(32, 221, 224, 0.1);
+            color: var(--brand-cyan);
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .qty-val {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* Bottom Fixed Action Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #050e1a;
+            border-top: 1.5px solid rgba(32, 221, 224, 0.25);
+            padding: 10px 14px;
+            display: flex;
+            gap: 10px;
+            z-index: 999;
+        }
+
+        .btn-speak {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--brand-cyan);
+            color: var(--brand-cyan);
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-family: 'Ramabhadra', sans-serif;
+        }
+
+        .btn-order {
+            flex: 1.3;
+            background: var(--accent-green);
+            border: none;
+            color: #ffffff;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Robot Stage with Voice Welcome -->
+    <div class="stage-box">
+        <div class="venue-pill" id="badgeText">AMARAVATI GRAND · TABLE 01</div>
+        <div class="eyes-wrap" onclick="playVoiceGreeting()">
+            <div class="robot-eye" id="eyeL"><div class="pupil"></div></div>
+            <div class="robot-eye" id="eyeR"><div class="pupil"></div></div>
+        </div>
+        <div class="mouth-wave" id="botMouth"></div>
+        <p class="speech-text" id="speechDisplay">టచ్ చేయండి — మయూర మాట్లాడుతుంది 🦚</p>
+    </div>
+
+    <!-- 2. Menu Items -->
+    <div class="content-wrap">
+        <div class="menu-header">
+            <span>POPULAR MENU</span>
+            <small style="color: #94a3b8; font-size: 11px;">DIRECT KITCHEN ORDER</small>
+        </div>
+
+        <div class="items-list">
+            <div class="dish-row">
+                <div>
+                    <div class="dish-title">స్పెషల్ వెజ్ బిర్యానీ</div>
+                    <div class="dish-desc">మిర్చి కా సాలన్ & రైతాతో వస్తుంది</div>
+                    <span class="dish-cost">₹220</span>
+                </div>
+                <div class="qty-box">
+                    <button class="qty-btn" onclick="updateQty('vegBiryani', -1)">-</button>
+                    <span class="qty-val" id="qty_vegBiryani">0</span>
+                    <button class="qty-btn" onclick="updateQty('vegBiryani', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="dish-row">
+                <div>
+                    <div class="dish-title">పన్నీర్ బట్టర్ మసాలా</div>
+                    <div class="dish-desc">జీడిపప్పు రిచ్ గ్రేవీ</div>
+                    <span class="dish-cost">₹180</span>
+                </div>
+                <div class="qty-box">
+                    <button class="qty-btn" onclick="updateQty('paneerButter', -1)">-</button>
+                    <span class="qty-val" id="qty_paneerButter">0</span>
+                    <button class="qty-btn" onclick="updateQty('paneerButter', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="dish-row">
+                <div>
+                    <div class="dish-title">బట్టర్ నాన్ (2 Pcs)</div>
+                    <div class="dish-desc">తాజా రోటీ బ్రెడ్</div>
+                    <span class="dish-cost">₹60</span>
+                </div>
+                <div class="qty-box">
+                    <button class="qty-btn" onclick="updateQty('butterNaan', -1)">-</button>
+                    <span class="qty-val" id="qty_butterNaan">0</span>
+                    <button class="qty-btn" onclick="updateQty('butterNaan', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="dish-row">
+                <div>
+                    <div class="dish-title">మినరల్ వాటర్ (1L)</div>
+                    <div class="dish-desc">కూల్డ్ / నార్మల్ ప్యాక్డ్ వాటర్</div>
+                    <span class="dish-cost">₹25</span>
+                </div>
+                <div class="qty-box">
+                    <button class="qty-btn" onclick="updateQty('waterBottle', -1)">-</button>
+                    <span class="qty-val" id="qty_waterBottle">0</span>
+                    <button class="qty-btn" onclick="updateQty('waterBottle', 1)">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Bottom Action Bar -->
+    <div class="bottom-bar">
+        <button class="btn-speak" onclick="listenToVoiceOrder()">
+            <span>🎤</span> ఆర్డర్ చెప్పండి
+        </button>
+        <button class="btn-order" onclick="sendOrderWhatsApp()">
+            <span>🛒</span> ఆర్డర్ పంపండి (<span id="cartCount">0</span>)
+        </button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const hotelName = params.get('hotel') || "అమరావతి గ్రాండ్";
+        const tableNumber = params.get('table') || "Table 01";
+        const targetWhatsApp = params.get('desk') || "919966157369";
+
+        document.getElementById('badgeText').innerText = `${hotelName.toUpperCase()} · ${tableNumber.toUpperCase()}`;
+
+        const menuData = {
+            vegBiryani: { name: "స్పెషల్ వెజ్ బిర్యానీ", price: 220, count: 0 },
+            paneerButter: { name: "పన్నీర్ బట్టర్ మసాలా", price: 180, count: 0 },
+            butterNaan: { name: "బట్టర్ నాన్ (2 Pcs)", price: 60, count: 0 },
+            waterBottle: { name: "మినరల్ వాటర్ (1L)", price: 25, count: 0 }
+        };
+
+        setInterval(() => {
+            const l = document.getElementById('eyeL');
+            const r = document.getElementById('eyeR');
+            l.classList.add('blink');
+            r.classList.add('blink');
+            setTimeout(() => {
+                l.classList.remove('blink');
+                r.classList.remove('blink');
+            }, 180);
+        }, 3600);
+
+        function playVoiceGreeting() {
+            const welcomeMsg = `నమస్కారం! ${hotelName} కు స్వాగతం. నేను మీ అవైలో మయూరను. మీకు కావాల్సిన ఐటమ్స్ సెలెక్ట్ చేసుకోండి, లేదా మాట్లాడి ఆర్డర్ చెప్పండి.`;
+            document.getElementById('speechDisplay').innerText = welcomeMsg;
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const mouth = document.getElementById('botMouth');
+                mouth.classList.add('speaking');
+
+                const utter = new SpeechSynthesisUtterance(welcomeMsg);
+                utter.lang = 'te-IN';
+                utter.rate = 0.95;
+                utter.onend = () => mouth.classList.remove('speaking');
+                window.speechSynthesis.speak(utter);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(playVoiceGreeting, 700);
+        });
+
+        function updateQty(key, delta) {
+            if (menuData[key]) {
+                menuData[key].count = Math.max(0, menuData[key].count + delta);
+                document.getElementById(`qty_${key}`).innerText = menuData[key].count;
+                refreshTotalCount();
+            }
+        }
+
+        function refreshTotalCount() {
+            let total = 0;
+            for (let k in menuData) total += menuData[k].count;
+            document.getElementById('cartCount').innerText = total;
+        }
+
+        function listenToVoiceOrder() {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRec) {
+                alert("వాయిస్ రికగ్నిషన్ కోసం Chrome వాడండి.");
+                return;
+            }
+            const rec = new SpeechRec();
+            rec.lang = 'te-IN';
+            rec.onstart = () => {
+                document.getElementById('speechDisplay').innerText = "🔴 వింటున్నాను... మీ ఆర్డర్ చెప్పండి";
+            };
+            rec.onresult = (e) => {
+                const spokenText = e.results[0][0].transcript;
+                document.getElementById('speechDisplay').innerText = `మీరు చెప్పింది: "${spokenText}"`;
+                
+                const msg = `*AVAILO MAYURA - VOICE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0Aకిచెన్ తక్షణ ప్రిపరేషన్ కోసం పంపబడింది.`;
+                window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+            };
+            rec.start();
+        }
+
+        function sendOrderWhatsApp() {
+            let orderLines = [];
+            let grandTotal = 0;
+
+            for (let k in menuData) {
+                if (menuData[k].count > 0) {
+                    const cost = menuData[k].count * menuData[k].price;
+                    orderLines.push(`• ${menuData[k].name} x ${menuData[k].count} = ₹${cost}`);
+                    grandTotal += cost;
+                }
+            }
+
+            if (orderLines.length === 0) {
+                alert("దయచేసి కనీసం ఒక ఐటమ్ ఎంచుకోండి లేదా మాట్లాడి ఆర్డర్ చెప్పండి.");
+                return;
+            }
+
+            const itemsStr = orderLines.join('%0A');
+            const msg = `*AVAILO SMART DINE - NEW ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
+
+            window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+        }
+    </script>
+</body>
+</html>
 
