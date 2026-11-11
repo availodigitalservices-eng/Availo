@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVAILO SMART DINE - LIVE ORDER PAD</title>
+    <title>AVAILO - Smart Dine Android Supervisor</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -26,14 +26,14 @@
             background-color: var(--brand-navy);
             color: var(--text-light);
             font-family: 'Inter', sans-serif;
-            padding-bottom: 120px;
+            padding-bottom: 110px;
         }
 
-        /* Top Stage with Robot Avatar */
+        /* 1. TOP STAGE: SUPERVISOR ROBOT */
         .stage-box {
-            background: radial-gradient(circle at 50% 25%, #0e2f57 0%, var(--brand-navy) 85%);
+            background: radial-gradient(circle at 50% 20%, #0e2f57 0%, var(--brand-navy) 85%);
             border-bottom: 1.5px solid rgba(32, 221, 224, 0.3);
-            padding: 18px 14px 14px;
+            padding: 16px 14px 12px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -48,65 +48,86 @@
             font-weight: 700;
             padding: 3px 12px;
             border-radius: 16px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-family: 'Rajdhani', sans-serif;
             letter-spacing: 0.8px;
         }
 
-        .avatar-container {
+        /* Humanoid Android Supervisor Area */
+        .supervisor-stage {
             position: relative;
             cursor: pointer;
-            width: 110px;
-            height: 190px;
+            width: 140px;
+            height: 220px;
             margin-bottom: 6px;
         }
 
-        .mayura-avatar {
+        .supervisor-robot {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            transition: transform 0.2s ease;
+            animation: supervisorIdle 3s ease-in-out infinite alternate;
+            transform-origin: bottom center;
+            filter: drop-shadow(0 8px 16px rgba(32, 221, 224, 0.35));
         }
 
-        .avatar-container.speaking .mayura-avatar {
-            animation: bounceTalk 0.5s infinite alternate;
+        /* ఆర్డర్ రాసుకునేటప్పుడు & మాట్లాడేటప్పుడు వచ్చే లైవ్ యాక్షన్స్ */
+        .supervisor-stage.taking-order .supervisor-robot {
+            animation: supervisorWriteNote 0.5s ease-in-out infinite alternate;
         }
 
-        @keyframes bounceTalk {
-            0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-4px) scale(1.02); }
+        .supervisor-stage.speaking .supervisor-robot {
+            animation: supervisorTalkGent 0.35s ease-in-out infinite alternate;
         }
 
-        /* Supervisor Live Bubble */
+        @keyframes supervisorIdle {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-4px) rotate(0.8deg); }
+            100% { transform: translateY(0px) rotate(-0.8deg); }
+        }
+
+        @keyframes supervisorTalkGent {
+            0% { transform: scale(1) translateY(0); }
+            100% { transform: scale(1.03) translateY(-5px); }
+        }
+
+        @keyframes supervisorWriteNote {
+            0% { transform: translateY(0) rotate(1deg); }
+            100% { transform: translateY(-3px) rotate(-1.5deg); }
+        }
+
+        /* Supervisor Live Dialog Bubble */
         .supervisor-bubble {
             background: rgba(7, 20, 38, 0.95);
-            border: 1.5px solid var(--brand-gold);
-            border-radius: 20px;
+            border: 1.5px solid var(--brand-cyan);
+            border-radius: 18px;
             padding: 8px 16px;
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-top: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            animation: fadeIn 0.3s ease;
+            margin-top: 6px;
+            box-shadow: 0 4px 15px rgba(32, 221, 224, 0.25);
+            max-width: 90%;
         }
 
         .sup-badge {
-            background: var(--brand-gold);
+            background: var(--brand-cyan);
             color: #071426;
             font-size: 10px;
             font-weight: 800;
-            padding: 2px 6px;
+            padding: 2px 7px;
             border-radius: 4px;
+            letter-spacing: 0.5px;
         }
 
         .sup-voice-text {
             font-family: 'Ramabhadra', sans-serif;
-            font-size: 13px;
+            font-size: 13.5px;
             color: #fff;
+            line-height: 1.3;
         }
 
-        /* Menu Section */
+        /* 2. MENU ITEMS */
         .content-wrap {
             padding: 14px;
             max-width: 480px;
@@ -188,25 +209,25 @@
             text-align: center;
         }
 
-        /* LIVE ORDER BOOK PAD (సూపర్‌వైజర్ ఆర్డర్ రాసుకునే బుక్) */
+        /* 3. REAL-TIME ORDER PAD (బుక్ రాసుకునే డిస్ప్లే) */
         .order-book-container {
-            margin-top: 20px;
+            margin-top: 18px;
             background: #fffdf5;
             border-radius: 8px;
             padding: 16px 14px;
             color: #1e293b;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
             border-left: 6px solid #854d0e;
             position: relative;
         }
 
         .book-top-clip {
             position: absolute;
-            top: -10px;
+            top: -9px;
             left: 50%;
             transform: translateX(-50%);
             width: 70px;
-            height: 12px;
+            height: 10px;
             background: #475569;
             border-radius: 4px;
         }
@@ -215,7 +236,7 @@
             display: flex;
             justify-content: space-between;
             border-bottom: 2px dashed #94a3b8;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             margin-bottom: 10px;
             font-family: 'Rajdhani', sans-serif;
             font-weight: 800;
@@ -224,7 +245,7 @@
         }
 
         .writing-lines {
-            min-height: 80px;
+            min-height: 75px;
             font-family: 'Caveat', cursive;
             font-size: 19px;
             color: #0f172a;
@@ -236,11 +257,11 @@
             justify-content: space-between;
             border-bottom: 1px dotted #cbd5e1;
             padding: 2px 0;
-            animation: lineWrite 0.3s ease-in;
+            animation: writeSlipLine 0.3s ease-out;
         }
 
-        @keyframes lineWrite {
-            0% { opacity: 0; transform: translateX(-10px); }
+        @keyframes writeSlipLine {
+            0% { opacity: 0; transform: translateX(-15px); }
             100% { opacity: 1; transform: translateX(0); }
         }
 
@@ -249,11 +270,28 @@
             font-family: 'Inter', sans-serif;
             font-size: 12px;
             text-align: center;
-            padding: 25px 0;
+            padding: 22px 0;
             font-style: italic;
         }
 
-        /* Fixed Bottom Action Bar */
+        /* 4. LIVE KITCHEN STATUS TRACKER (ఆర్డర్ తర్వాత వచ్చే కార్డ్) */
+        .tracker-card {
+            background: #0d223f;
+            border: 2px solid var(--brand-cyan);
+            border-radius: 14px;
+            padding: 22px 16px;
+            text-align: center;
+            margin-top: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            animation: trackerFadeIn 0.4s ease-out;
+        }
+
+        @keyframes trackerFadeIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* 5. BOTTOM ACTION BAR */
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -307,19 +345,18 @@
     <div class="stage-box">
         <div class="venue-pill" id="badgeText">AMARAVATI GRAND · TABLE 01</div>
         
-        <div class="avatar-container" id="avatarContainer" onclick="triggerSupervisorVoice('నమస్కారం అండి! మీ ఆర్డర్ చెప్పండి, నేను బుక్ లో రాసుకుంటున్నాను.')">
-            <img class="mayura-avatar" src="image_3.png" onerror="this.src='https://raw.githubusercontent.com/availodigitalservices-eng/Availo/main/image_3.png'" alt="AVAILO Robot">
+        <div class="supervisor-stage" id="supStage" onclick="speakGentSupervisor('నమస్కారం సర్! నేను మీ ఆర్డర్ సూపర్‌వైజర్‌ని. మీ ఆర్డర్ చెప్పండి, నోట్ చేసుకుంటాను.')">
+            <img class="supervisor-robot" src="image_3.png" onerror="this.src='https://raw.githubusercontent.com/availodigitalservices-eng/Availo/main/image_3.png'" alt="AVAILO Android Supervisor">
         </div>
 
-        <!-- Supervisor Dialog Bubble -->
         <div class="supervisor-bubble">
             <span class="sup-badge">SUPERVISOR</span>
-            <span class="sup-voice-text" id="supervisorText">ఆర్డర్ చెప్పండి సర్, రాసుకుంటున్నాను ✍️</span>
+            <span class="sup-voice-text" id="supervisorText">ఆర్డర్ చెప్పండి సర్, నోట్ చేసుకుంటున్నాను ✍️</span>
         </div>
     </div>
 
-    <!-- 2. Menu Items -->
-    <div class="content-wrap">
+    <!-- 2. Dynamic Main Container (Menu & Live Status) -->
+    <div class="content-wrap" id="mainContainer">
         <div class="menu-header">
             <span>SELECT DISHES</span>
             <small style="color: #94a3b8; font-size: 11px;">TAP + TO ADD TO PAD</small>
@@ -379,7 +416,7 @@
             </div>
         </div>
 
-        <!-- 3. LIVE ORDER PAD (సూపర్‌వైజర్ రాసుకునే లైవ్ బుక్) -->
+        <!-- 3. LIVE ORDER PAD -->
         <div class="order-book-container">
             <div class="book-top-clip"></div>
             <div class="book-header">
@@ -398,8 +435,8 @@
         </div>
     </div>
 
-    <!-- 4. Fixed Bottom Action Bar -->
-    <div class="bottom-bar">
+    <!-- 4. Bottom Action Bar -->
+    <div class="bottom-bar" id="bottomNavBar">
         <button class="btn-speak" onclick="listenToVoiceOrder()">
             <span>🎤</span> ఆర్డర్ చెప్పండి
         </button>
@@ -424,41 +461,73 @@
             waterBottle: { name: "మినరల్ వాటర్", price: 25, count: 0 }
         };
 
-        // వాయిస్ ఫంక్షన్
-        function triggerSupervisorVoice(text) {
+        // గంభీరమైన జెంట్ వాయిస్ + రోబోట్ యానిమేషన్
+        function speakGentSupervisor(text, isTakingOrder = false) {
             document.getElementById('supervisorText').innerText = text;
+            
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utter = new SpeechSynthesisUtterance(text);
+                
+                const voices = window.speechSynthesis.getVoices();
+                const maleVoice = voices.find(v => (v.lang.includes('te') || v.lang.includes('en-IN')) && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('ravi') || v.name.toLowerCase().includes('pradeep')));
+                
+                if (maleVoice) {
+                    utter.voice = maleVoice;
+                }
+
+                utter.pitch = 0.78; 
+                utter.rate = 0.94;
                 utter.lang = 'te-IN';
-                utter.rate = 0.95;
+
+                const stage = document.getElementById('supStage');
+                if (isTakingOrder) {
+                    stage.classList.add('taking-order');
+                } else {
+                    stage.classList.add('speaking');
+                }
+
+                utter.onend = () => {
+                    stage.classList.remove('speaking');
+                    stage.classList.remove('taking-order');
+                };
+                utter.onerror = () => {
+                    stage.classList.remove('speaking');
+                    stage.classList.remove('taking-order');
+                };
+
                 window.speechSynthesis.speak(utter);
             }
         }
 
-        // ఐటమ్ సెలెక్ట్ చేసినప్పుడు బుక్ లో రాయడం & "నెక్స్ట్ ఆర్డర్ సర్?" అనడం
+        // స్క్రీన్ ఓపెన్ అవ్వగానే ఆటో-వెల్‌కమ్
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                speakGentSupervisor(`నమస్కారం సర్! ${hotelName} కు స్వాగతం. మీ ఆర్డర్ చెప్పండి, నేను నోట్ చేసుకుంటాను.`);
+            }, 800);
+        });
+
+        // ఐటమ్ సెలెక్షన్ & సూపర్‌వైజర్ రెస్పాన్స్
         function modifyItem(key, delta) {
             if (menuData[key]) {
-                const prevCount = menuData[key].count;
                 menuData[key].count = Math.max(0, menuData[key].count + delta);
                 document.getElementById(`qty_${key}`).innerText = menuData[key].count;
                 
                 renderOrderPad();
 
-                // కస్టమర్ కొత్తగా ఒక ఐటమ్ యాడ్ చేసినప్పుడు సూపర్‌వైజర్ రెస్పాన్స్
                 if (delta > 0) {
                     const prompts = [
-                        `నోట్ చేసుకున్నాను సర్.. నెక్స్ట్ ఆర్డర్ సర్?`,
-                        `${menuData[key].name} రాశాను సర్.. నెక్స్ట్ ఇంకా ఏమైనా కావాలా?`,
-                        `సరే సర్, నెక్స్ట్ ఆర్డర్ చెప్పండి..`
+                        `సరే సర్, ${menuData[key].name} నోట్ చేసుకున్నాను. నెక్స్ట్ ఆర్డర్ సర్?`,
+                        `${menuData[key].name} రాశాను సర్.. నెక్స్ట్ ఇంకా ఏం కావాలి సర్?`,
+                        `రైట్ సర్, నెక్స్ట్ ఆర్డర్ చెప్పండి..`
                     ];
                     const randomVoice = prompts[Math.floor(Math.random() * prompts.length)];
-                    triggerSupervisorVoice(randomVoice);
+                    speakGentSupervisor(randomVoice, true);
                 }
             }
         }
 
-        // లైవ్ బుక్ (Pad) అప్‌డేట్ చేయడం
+        // ప్యాడ్ మీద రాయడం
         function renderOrderPad() {
             const padContainer = document.getElementById('orderPadLines');
             let linesHtml = "";
@@ -493,7 +562,7 @@
         function listenToVoiceOrder() {
             const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) {
-                alert("వాయిస్ కోసం Chrome బ్రౌజర్ వాడండి.");
+                alert("వాయిస్ రికగ్నిషన్ కోసం Chrome వాడండి.");
                 return;
             }
             const rec = new SpeechRec();
@@ -503,15 +572,15 @@
             };
             rec.onresult = (e) => {
                 const spokenText = e.results[0][0].transcript;
-                document.getElementById('supervisorText').innerText = `రాసుకున్నాను సర్: "${spokenText}"`;
+                speakGentSupervisor(`రాసుకున్నాను సర్: ${spokenText}`, true);
                 
-                const msg = `*AVAILO SMART DINE - SUPERVISOR NOTE*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*కస్టమర్ వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0Aకిచెన్ తక్షణ తయారీ కోసం పంపబడింది.`;
+                const msg = `*AVAILO SMART DINE - LIVE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*కస్టమర్ వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0A_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఈ చాట్ లోనే కస్టమర్ కి ఆర్డర్ రెడీ అని రిప్లై ఇవ్వండి)_`;
                 window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
             };
             rec.start();
         }
 
-        // వాట్సాప్‌కు KOT పంపడం
+        // వాట్సాప్‌కు ఆర్డర్ పంపడం + కస్టమర్ స్క్రీన్‌పై లైవ్ స్టేటస్ చూపించడం
         function sendOrderWhatsApp() {
             let orderLines = [];
             let grandTotal = 0;
@@ -525,14 +594,56 @@
             }
 
             if (orderLines.length === 0) {
-                triggerSupervisorVoice("దయచేసి కనీసం ఒక ఐటమ్ అయినా చెప్పండి సర్, బుక్ లో రాసుకుంటాను.");
+                speakGentSupervisor("ఒక్క ఐటమ్ అయినా చెప్పండి సర్, స్లిప్ లో రాసుకుంటాను.");
                 return;
             }
 
             const itemsStr = orderLines.join('%0A');
-            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*సూపర్‌వైజర్:* AVAILO Assistant%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
+            // కస్టమర్ నంబర్ నుంచే కిచెన్ వాట్సాప్ కు వెళ్లే ఫార్మాట్
+            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${new Date().toLocaleTimeString()}%0A-----------------------------%0A🔔 *కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక తిరిగి ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
 
-            window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+            // 1. కస్టమర్ స్క్రీన్‌పై లైవ్ కిచెన్ ట్రాకర్ చూపించడం
+            displayOrderPreparingScreen(grandTotal);
+
+            // 2. వాట్సాప్ ఓపెన్ చేయడం (కస్టమర్ మొబైల్ నుంచే కిచెన్ నంబర్ కి డైరెక్ట్ ఆర్డర్)
+            setTimeout(() => {
+                window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+            }, 1200);
+        }
+
+        // ఆర్డర్ వెళ్లిన వెంటనే కస్టమర్ స్క్రీన్ మారే లాజిక్
+        function displayOrderPreparingScreen(billAmount) {
+            const container = document.getElementById('mainContainer');
+            container.innerHTML = `
+                <div class="tracker-card">
+                    <div style="font-size: 38px; margin-bottom: 8px;">👨‍🍳🔥</div>
+                    <h3 style="color: var(--brand-cyan); font-family: 'Rajdhani', sans-serif; font-size: 21px; margin-bottom: 6px;">
+                        ఆర్డర్ కిచెన్‌కు చేరింది!
+                    </h3>
+                    <p style="color: #ffffff; font-size: 14px; font-family: 'Ramabhadra', sans-serif; line-height: 1.5; margin-bottom: 12px;">
+                        సర్, మీ ఆర్డర్ చెఫ్ తయారుచేస్తున్నారు. పది నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వచ్చేస్తుంది!
+                    </p>
+                    
+                    <div style="background: rgba(32, 221, 224, 0.1); border: 1.5px dashed var(--brand-cyan); border-radius: 10px; padding: 12px; margin: 12px 0;">
+                        <div style="color: var(--brand-gold); font-size: 13px; font-family: 'Rajdhani', sans-serif; font-weight: 800;">STATUS: PREPARING IN KITCHEN ⏳</div>
+                        <div style="color: #fff; font-size: 15px; font-weight: 700; margin-top: 4px;">మొత్తం బిల్లు: ₹${billAmount}</div>
+                    </div>
+
+                    <p style="color: #94a3b8; font-size: 12px;">
+                        ఆర్డర్ రెడీ అవ్వగానే కిచెన్ నుండి మీ వాట్సాప్‌కు మెసేజ్ వస్తుంది 📲
+                    </p>
+                </div>
+            `;
+
+            // కింద బటన్ల బార్ ను రిఫ్రెష్ ఆర్డర్ మోడ్ కి మార్చడం
+            document.getElementById('bottomNavBar').innerHTML = `
+                <button onclick="location.reload()" style="width: 100%; background: var(--brand-cyan); color: #071426; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Rajdhani', sans-serif;">
+                    🔄 ఇంకేమైనా ఆర్డర్ చేయాలా? (NEW ORDER)
+                </button>
+            `;
+
+            // జెంట్ వాయిస్‌తో కన్ఫర్మేషన్ ధన్యవాదాలు
+            speakGentSupervisor("థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు చేరింది. పది నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వచ్చేస్తుంది సర్!");
         }
     </script>
 </body>
