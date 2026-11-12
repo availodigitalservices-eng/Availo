@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVAILO SMART DINE - VOICE & LIVE TRACKER</title>
+    <title>AVAILO SMART DINE - LIVE CONCIERGE & TRACKER</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -26,18 +26,26 @@
             background-color: var(--brand-navy);
             color: var(--text-light);
             font-family: 'Inter', sans-serif;
-            padding-bottom: 110px;
+            padding-bottom: 115px;
         }
 
-        /* 1. TOP STAGE: FUTURISTIC AI VOICE HUB */
+        /* 1. TOP STAGE: AI VOICE CONCIERGE HUB */
         .stage-box {
-            background: radial-gradient(circle at 50% 25%, #0e2f57 0%, var(--brand-navy) 85%);
+            background: radial-gradient(circle at 50% 20%, #0e2f57 0%, var(--brand-navy) 85%);
             border-bottom: 1.5px solid rgba(32, 221, 224, 0.3);
-            padding: 20px 14px 18px;
+            padding: 18px 14px 16px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        .top-meta-bar {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 460px;
+            margin-bottom: 12px;
         }
 
         .venue-pill {
@@ -46,16 +54,27 @@
             color: var(--brand-gold);
             font-size: 11px;
             font-weight: 700;
-            padding: 4px 14px;
+            padding: 4px 12px;
             border-radius: 16px;
-            margin-bottom: 14px;
             font-family: 'Rajdhani', sans-serif;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
         }
 
+        .live-clock-pill {
+            background: rgba(32, 221, 224, 0.12);
+            border: 1px solid rgba(32, 221, 224, 0.4);
+            color: var(--brand-cyan);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        /* Futuristic Voice Wave Core */
         .ai-voice-hub {
-            width: 110px;
-            height: 110px;
+            width: 96px;
+            height: 96px;
             border-radius: 50%;
             background: rgba(32, 221, 224, 0.08);
             border: 2px solid var(--brand-cyan);
@@ -65,19 +84,18 @@
             gap: 5px;
             cursor: pointer;
             box-shadow: 0 0 25px rgba(32, 221, 224, 0.25), inset 0 0 15px rgba(32, 221, 224, 0.2);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             position: relative;
-            transition: all 0.3s ease;
         }
 
         .ai-voice-hub::after {
             content: '';
             position: absolute;
-            width: 126px;
-            height: 126px;
+            width: 112px;
+            height: 112px;
             border-radius: 50%;
-            border: 1px dashed rgba(32, 221, 224, 0.4);
-            animation: spinRing 12s linear infinite;
+            border: 1px dashed rgba(32, 221, 224, 0.45);
+            animation: spinRing 10s linear infinite;
         }
 
         @keyframes spinRing {
@@ -85,38 +103,40 @@
         }
 
         .wave-bar {
-            width: 5px;
-            height: 18px;
+            width: 4.5px;
+            height: 16px;
             background: var(--brand-cyan);
             border-radius: 4px;
             transition: height 0.2s ease;
         }
 
         .stage-box.speaking .wave-bar {
-            animation: soundWave 0.4s infinite ease-in-out alternate;
+            animation: soundWave 0.35s infinite ease-in-out alternate;
         }
 
         .stage-box.speaking .wave-bar:nth-child(1) { animation-delay: 0.0s; }
-        .stage-box.speaking .wave-bar:nth-child(2) { animation-delay: 0.15s; }
-        .stage-box.speaking .wave-bar:nth-child(3) { animation-delay: 0.3s; }
-        .stage-box.speaking .wave-bar:nth-child(4) { animation-delay: 0.1s; }
-        .stage-box.speaking .wave-bar:nth-child(5) { animation-delay: 0.25s; }
+        .stage-box.speaking .wave-bar:nth-child(2) { animation-delay: 0.12s; }
+        .stage-box.speaking .wave-bar:nth-child(3) { animation-delay: 0.24s; }
+        .stage-box.speaking .wave-bar:nth-child(4) { animation-delay: 0.08s; }
+        .stage-box.speaking .wave-bar:nth-child(5) { animation-delay: 0.2s; }
 
         @keyframes soundWave {
-            0% { height: 14px; background: var(--brand-cyan); }
-            100% { height: 48px; background: var(--brand-gold); }
+            0% { height: 12px; background: var(--brand-cyan); }
+            100% { height: 44px; background: var(--brand-gold); }
         }
 
+        /* Dialog Bubble */
         .supervisor-bubble {
             background: rgba(7, 20, 38, 0.95);
             border: 1.5px solid var(--brand-cyan);
             border-radius: 16px;
-            padding: 10px 16px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             gap: 10px;
             box-shadow: 0 4px 15px rgba(32, 221, 224, 0.2);
-            max-width: 92%;
+            width: 100%;
+            max-width: 460px;
         }
 
         .sup-badge {
@@ -138,7 +158,7 @@
             text-align: left;
         }
 
-        /* 2. MENU ITEMS */
+        /* 2. MENU & CHEF NOTES */
         .content-wrap {
             padding: 14px;
             max-width: 480px;
@@ -150,10 +170,9 @@
             font-size: 16px;
             color: var(--brand-gold);
             font-weight: 800;
-            margin: 8px 0 10px;
+            margin: 6px 0 10px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
         }
 
         .items-list {
@@ -167,3 +186,680 @@
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 12px;
             padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dish-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .dish-desc {
+            font-size: 11.5px;
+            color: #94a3b8;
+        }
+
+        .dish-cost {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--brand-cyan);
+            margin-top: 3px;
+            display: inline-block;
+        }
+
+        .qty-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1.5px solid var(--brand-cyan);
+            background: rgba(32, 221, 224, 0.1);
+            color: var(--brand-cyan);
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-val {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* Chef Note Input */
+        .chef-note-box {
+            margin-top: 14px;
+        }
+
+        .chef-input {
+            width: 100%;
+            background: rgba(13, 34, 63, 0.8);
+            border: 1px solid rgba(32, 221, 224, 0.35);
+            border-radius: 10px;
+            padding: 11px 14px;
+            color: #fff;
+            font-size: 13px;
+            font-family: 'Ramabhadra', sans-serif;
+            outline: none;
+        }
+
+        .chef-input::placeholder {
+            color: #64748b;
+        }
+
+        /* 3. ORDER PAD SLIP (KOT) */
+        .order-book-container {
+            margin-top: 18px;
+            background: #fffdf5;
+            border-radius: 8px;
+            padding: 16px 14px;
+            color: #1e293b;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            border-left: 6px solid #854d0e;
+            position: relative;
+        }
+
+        .book-top-clip {
+            position: absolute;
+            top: -9px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 10px;
+            background: #475569;
+            border-radius: 4px;
+        }
+
+        .book-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .writing-lines {
+            min-height: 70px;
+            font-family: 'Caveat', cursive;
+            font-size: 19px;
+            color: #0f172a;
+            line-height: 1.6;
+        }
+
+        .writing-line-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dotted #cbd5e1;
+            padding: 2px 0;
+        }
+
+        .empty-hint {
+            color: #94a3b8;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            text-align: center;
+            padding: 20px 0;
+            font-style: italic;
+        }
+
+        /* 4. LIVE ORDER TRACKER & TIMER DISPLAY */
+        .tracker-card {
+            background: #0d223f;
+            border: 2px solid var(--brand-cyan);
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            margin-top: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .timer-box {
+            background: rgba(7, 20, 38, 0.95);
+            border: 1.5px solid var(--brand-gold);
+            border-radius: 12px;
+            padding: 14px;
+            margin: 14px 0;
+        }
+
+        .timer-digits {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--brand-cyan);
+            letter-spacing: 2px;
+            line-height: 1.1;
+        }
+
+        /* Progress Bar */
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: #1e293b;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 12px 0 6px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 35%;
+            background: linear-gradient(90deg, var(--brand-cyan), var(--accent-green));
+            border-radius: 6px;
+            transition: width 1s ease;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            text-align: left;
+            margin: 14px 0;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #64748b;
+            font-family: 'Ramabhadra', sans-serif;
+        }
+
+        .step-item.active {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .step-dot {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #334155;
+            border: 2px solid #475569;
+            flex-shrink: 0;
+        }
+
+        .step-item.active .step-dot {
+            background: var(--accent-green);
+            border-color: #86efac;
+            box-shadow: 0 0 10px var(--accent-green);
+        }
+
+        /* Quick Table Service Buttons */
+        .quick-service-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .srv-btn {
+            background: rgba(32, 221, 224, 0.1);
+            border: 1px solid var(--brand-cyan);
+            color: var(--brand-cyan);
+            padding: 10px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Ramabhadra', sans-serif;
+        }
+
+        /* 5. BOTTOM BAR */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #050e1a;
+            border-top: 1.5px solid rgba(32, 221, 224, 0.25);
+            padding: 10px 14px;
+            display: flex;
+            gap: 10px;
+            z-index: 999;
+        }
+
+        .btn-speak {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid var(--brand-cyan);
+            color: var(--brand-cyan);
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-family: 'Ramabhadra', sans-serif;
+        }
+
+        .btn-order {
+            flex: 1.3;
+            background: var(--accent-green);
+            border: none;
+            color: #ffffff;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. AI Voice Concierge Stage -->
+    <div id="voiceStage" class="stage-box">
+        <div class="top-meta-bar">
+            <div class="venue-pill" id="badgeText">AMARAVATI GRAND · TABLE 01</div>
+            <div class="live-clock-pill" id="liveClock">--:--</div>
+        </div>
+        
+        <div class="ai-voice-hub" onclick="speakGentVoice('నమస్కారం సర్! నేను అవైలో స్మార్ట్ కన్సీర్జ్. మీ ఆర్డర్ చెప్పండి, కిచెన్‌కు పంపిస్తాను.')">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+        </div>
+
+        <div class="supervisor-bubble">
+            <span class="sup-badge">AVAILO AI</span>
+            <span class="sup-voice-text" id="supervisorText">స్వాగతం సర్! మీ ఆర్డర్ సెలెక్ట్ చేయండి ✍️</span>
+        </div>
+    </div>
+
+    <!-- 2. Dynamic Main Container -->
+    <div class="content-wrap" id="mainContainer">
+        <div class="menu-header">
+            <span>SELECT DISHES</span>
+            <small style="color: #94a3b8; font-size: 11px;">TAP + TO ADD</small>
+        </div>
+
+        <div class="items-list">
+            <div class="dish-row">
+                <div>
+                    <div class="dish-title">స్పెషల్ వెజ్ బిర్యానీ</div>
+                    <div class="dish-desc">మిర్చి కా సాలన్ & రైతా</div>
+                    <span class="dish-cost">₹220</span>
+                </div>
+                <div class="qty-box">
+                    <button class="qty-btn" onclick="modifyItem('vegBiryani', -1)">-</button>
+                    <span class="qty-val" id="qty_vegBiryani">0</span>
+                    <button class="qty-btn" onclick="modifyItem('vegBiryani', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="dish-row">
+                <div>
+                    <div class="dish-title">పన్నీర్ బట్టర్ మసాలా</div>
+                    <div class="dish-desc">జీడిపప్పు రిచ్ గ్రేవీ</div>
+                    <span class="dish-cost">₹180</span>
+                </div>
+                <div class="qty-box">
+                    <button class="qty-btn" onclick="modifyItem('paneerButter', -1)">-</button>
+                    <span class="qty-val" id="qty_paneerButter">0</span>
+                    <button class="qty-btn" onclick="modifyItem('paneerButter', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="dish-row">
+                <div>
+                    <div class="dish-title">బట్టర్ నాన్ (2 Pcs)</div>
+                    <div class="dish-desc">తాజా రోటీ బ్రెడ్</div>
+                    <span class="dish-cost">₹60</span>
+                </div>
+                <div class="qty-box">
+                    <button class="qty-btn" onclick="modifyItem('butterNaan', -1)">-</button>
+                    <span class="qty-val" id="qty_butterNaan">0</span>
+                    <button class="qty-btn" onclick="modifyItem('butterNaan', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="dish-row">
+                <div>
+                    <div class="dish-title">మినరల్ వాటర్ (1L)</div>
+                    <div class="dish-desc">కూల్డ్ వాటర్ బాటిల్</div>
+                    <span class="dish-cost">₹25</span>
+                </div>
+                <div class="qty-box">
+                    <button class="qty-btn" onclick="modifyItem('waterBottle', -1)">-</button>
+                    <span class="qty-val" id="qty_waterBottle">0</span>
+                    <button class="qty-btn" onclick="modifyItem('waterBottle', 1)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chef Special Instruction -->
+        <div class="chef-note-box">
+            <input type="text" id="chefNoteInput" class="chef-input" placeholder="✍️ చెఫ్‌కు ప్రత్యేక సూచన (ఉదా: కారం తక్కువ, వేడిగా పంపండి)...">
+        </div>
+
+        <!-- 3. LIVE ORDER PAD -->
+        <div class="order-book-container">
+            <div class="book-top-clip"></div>
+            <div class="book-header">
+                <span>📝 LIVE ORDER SLIP (KOT)</span>
+                <span id="bookTableLabel">TABLE 01</span>
+            </div>
+            
+            <div class="writing-lines" id="orderPadLines">
+                <div class="empty-hint">పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️</div>
+            </div>
+
+            <div style="border-top: 1.5px dashed #94a3b8; padding-top: 8px; margin-top: 8px; display: flex; justify-content: space-between; font-weight: 800; font-family: 'Rajdhani', sans-serif;">
+                <span>ESTIMATED BILL:</span>
+                <span id="padTotalAmount" style="color: #16a34a; font-size: 16px;">₹0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Bottom Action Bar -->
+    <div class="bottom-bar" id="bottomNavBar">
+        <button class="btn-speak" onclick="listenToVoiceOrder()">
+            <span>🎤</span> ఆర్డర్ చెప్పండి
+        </button>
+        <button class="btn-order" onclick="sendOrderWhatsApp()">
+            <span>🛒</span> ఆర్డర్ పంపండి (<span id="cartCount">0</span>)
+        </button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const hotelName = params.get('hotel') || "అమరావతి గ్రాండ్";
+        const tableNumber = params.get('table') || "Table 01";
+        const targetWhatsApp = params.get('desk') || "919966157369";
+
+        document.getElementById('badgeText').innerText = `${hotelName.toUpperCase()} · ${tableNumber.toUpperCase()}`;
+        document.getElementById('bookTableLabel').innerText = `${tableNumber.toUpperCase()}`;
+
+        // Live Clock Update
+        function updateLiveClock() {
+            const now = new Date();
+            document.getElementById('liveClock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+        setInterval(updateLiveClock, 1000);
+        updateLiveClock();
+
+        const menuData = {
+            vegBiryani: { name: "స్పెషల్ వెజ్ బిర్యానీ", price: 220, count: 0 },
+            paneerButter: { name: "పన్నీర్ బట్టర్ మసాలా", price: 180, count: 0 },
+            butterNaan: { name: "బట్టర్ నాన్", price: 60, count: 0 },
+            waterBottle: { name: "మినరల్ వాటర్", price: 25, count: 0 }
+        };
+
+        // Time-based Greeting Generator
+        function getTimeGreeting() {
+            const hr = new Date().getHours();
+            if (hr < 12) return "శుభోదయం సర్!";
+            if (hr < 17) return "శుభ మధ్యాహ్నం సర్!";
+            return "శుభ సాయంత్రం సర్!";
+        }
+
+        // Gent Voice Engine
+        function speakGentVoice(text) {
+            document.getElementById('supervisorText').innerText = text;
+            
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(text);
+                
+                const voices = window.speechSynthesis.getVoices();
+                const maleVoice = voices.find(v => (v.lang.includes('te') || v.lang.includes('en-IN')) && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('ravi') || v.name.toLowerCase().includes('pradeep')));
+                
+                if (maleVoice) {
+                    utter.voice = maleVoice;
+                }
+
+                utter.pitch = 0.76; 
+                utter.rate = 0.94;
+                utter.lang = 'te-IN';
+
+                const stage = document.getElementById('voiceStage');
+                stage.classList.add('speaking');
+
+                utter.onend = () => stage.classList.remove('speaking');
+                utter.onerror = () => stage.classList.remove('speaking');
+
+                window.speechSynthesis.speak(utter);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const greet = getTimeGreeting();
+                speakGentVoice(`${greet} ${hotelName} కు స్వాగతం. మీరు ${tableNumber} లో ఉన్నారు. మీ ఆర్డర్ చెప్పండి సర్.`);
+            }, 600);
+        });
+
+        function modifyItem(key, delta) {
+            if (menuData[key]) {
+                menuData[key].count = Math.max(0, menuData[key].count + delta);
+                document.getElementById(`qty_${key}`).innerText = menuData[key].count;
+                
+                renderOrderPad();
+
+                if (delta > 0) {
+                    const prompts = [
+                        `సరే సర్, ${menuData[key].name} నోట్ చేసుకున్నాను. ఇంకా ఏం కావాలి సర్?`,
+                        `${menuData[key].name} యాడ్ చేశాను సర్.. నెక్స్ట్ ఆర్డర్ చెప్పండి.`,
+                        `రైట్ సర్, రాసుకున్నాను..`
+                    ];
+                    const randomVoice = prompts[Math.floor(Math.random() * prompts.length)];
+                    speakGentVoice(randomVoice);
+                }
+            }
+        }
+
+        function renderOrderPad() {
+            const padContainer = document.getElementById('orderPadLines');
+            let linesHtml = "";
+            let total = 0;
+            let totalCount = 0;
+
+            for (let k in menuData) {
+                if (menuData[k].count > 0) {
+                    const itemTotal = menuData[k].count * menuData[k].price;
+                    total += itemTotal;
+                    totalCount += menuData[k].count;
+                    linesHtml += `
+                        <div class="writing-line-item">
+                            <span>✍️ ${menuData[k].name} x ${menuData[k].count}</span>
+                            <span>₹${itemTotal}</span>
+                        </div>
+                    `;
+                }
+            }
+
+            if (linesHtml === "") {
+                padContainer.innerHTML = `<div class="empty-hint">పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️</div>`;
+            } else {
+                padContainer.innerHTML = linesHtml;
+            }
+
+            document.getElementById('padTotalAmount').innerText = `₹${total}`;
+            document.getElementById('cartCount').innerText = totalCount;
+        }
+
+        function listenToVoiceOrder() {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRec) {
+                alert("వాయిస్ రికగ్నిషన్ కోసం Chrome వాడండి.");
+                return;
+            }
+            const rec = new SpeechRec();
+            rec.lang = 'te-IN';
+            rec.onstart = () => {
+                document.getElementById('supervisorText').innerText = "🔴 వింటున్నాను సర్, మీ ఆర్డర్ చెప్పండి...";
+            };
+            rec.onresult = (e) => {
+                const spokenText = e.results[0][0].transcript;
+                speakGentVoice(`రాసుకున్నాను సర్: ${spokenText}`);
+                
+                const msg = `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0A_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు రిప్లై ఇవ్వండి)_`;
+                displayLiveTrackerScreen("Voice Order", 15);
+                setTimeout(() => {
+                    window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+                }, 1200);
+            };
+            rec.start();
+        }
+
+        function sendOrderWhatsApp() {
+            let orderLines = [];
+            let grandTotal = 0;
+
+            for (let k in menuData) {
+                if (menuData[k].count > 0) {
+                    const cost = menuData[k].count * menuData[k].price;
+                    orderLines.push(`• ${menuData[k].name} x ${menuData[k].count} = ₹${cost}`);
+                    grandTotal += cost;
+                }
+            }
+
+            if (orderLines.length === 0) {
+                speakGentVoice("ఒక్క ఐటమ్ అయినా సెలెక్ట్ చేయండి సర్, ఆర్డర్ పంపిస్తాను.");
+                return;
+            }
+
+            const chefNote = document.getElementById('chefNoteInput').value.trim();
+            const noteStr = chefNote ? `%0A*చెఫ్ సూచన:* ${chefNote}` : "";
+
+            const itemsStr = orderLines.join('%0A');
+            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${new Date().toLocaleTimeString()}%0A-----------------------------%0A🔔 *కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
+
+            displayLiveTrackerScreen(`₹${grandTotal}`, 15);
+
+            setTimeout(() => {
+                window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+            }, 1400);
+        }
+
+        // Quick Table Service Call
+        function requestTableService(serviceType) {
+            speakGentVoice(`${serviceType} కోసం రిక్వెస్ట్ పంపుతున్నాను సర్.`);
+            const msg = `*AVAILO TABLE SERVICE ALERT*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*అవసరం:* ${serviceType}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
+            window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+        }
+
+        // Live Timer & Progress Tracker Display
+        function displayLiveTrackerScreen(billInfo, minutes) {
+            const container = document.getElementById('mainContainer');
+            container.innerHTML = `
+                <div class="tracker-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 12px; color: var(--brand-gold); font-family: 'Rajdhani', sans-serif; font-weight: 800;">LIVE ORDER TRACKER</span>
+                        <span style="font-size: 12px; color: var(--brand-cyan); font-family: 'Rajdhani', sans-serif; font-weight: 800;" id="progressPercent">35% COMPLETED</span>
+                    </div>
+                    
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressBarFill"></div>
+                    </div>
+
+                    <div class="timer-box">
+                        <div style="font-size: 11px; color: #94a3b8; margin-bottom: 2px;">అంచనా సమయం (ESTIMATED DELIVERY)</div>
+                        <div class="timer-digits" id="liveTimer">${minutes}:00</div>
+                        <div style="font-size: 12.5px; color: var(--accent-green); font-weight: 700; margin-top: 4px;">మొత్తం బిల్లు: ${billInfo}</div>
+                    </div>
+
+                    <div class="progress-steps">
+                        <div class="step-item active" id="step1">
+                            <div class="step-dot"></div>
+                            <span>1. ఆర్డర్ కిచెన్‌కు చేరింది (Order Received)</span>
+                        </div>
+                        <div class="step-item active" id="step2">
+                            <div class="step-dot"></div>
+                            <span>2. చెఫ్ తయారు చేస్తున్నారు (Preparing Food...)</span>
+                        </div>
+                        <div class="step-item" id="step3">
+                            <div class="step-dot"></div>
+                            <span>3. టేబుల్ వద్దకు వస్తోంది (Ready to Serve)</span>
+                        </div>
+                    </div>
+
+                    <div class="quick-service-grid">
+                        <button class="srv-btn" onclick="requestTableService('మంచినీళ్లు కావాలి (Water)')">💧 మంచినీళ్లు కావాలి</button>
+                        <button class="srv-btn" onclick="requestTableService('బిల్లు పంపండి (Request Bill)')">🧾 బిల్లు పంపండి</button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('bottomNavBar').innerHTML = `
+                <button onclick="location.reload()" style="width: 100%; background: var(--brand-cyan); color: #071426; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Rajdhani', sans-serif;">
+                    🔄 మళ్ళీ ఆర్డర్ చేయండి (ADD MORE ITEMS)
+                </button>
+            `;
+
+            speakGentVoice(`థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. స్క్రీన్ మీద టైం చెక్ చేసుకోవచ్చు సర్.`);
+            startCountdown(minutes * 60);
+        }
+
+        function startCountdown(durationInSeconds) {
+            const totalDuration = durationInSeconds;
+            let timer = durationInSeconds;
+            const display = document.getElementById('liveTimer');
+            const barFill = document.getElementById('progressBarFill');
+            const percentText = document.getElementById('progressPercent');
+            
+            const interval = setInterval(() => {
+                if (!display) {
+                    clearInterval(interval);
+                    return;
+                }
+                let mins = Math.floor(timer / 60);
+                let secs = timer % 60;
+                mins = mins < 10 ? "0" + mins : mins;
+                secs = secs < 10 ? "0" + secs : secs;
+                
+                display.textContent = mins + ":" + secs;
+
+                // Dynamic Progress Bar Percentage
+                const elapsed = totalDuration - timer;
+                const pct = Math.min(100, Math.max(35, Math.round((elapsed / totalDuration) * 100)));
+                if (barFill) barFill.style.width = pct + "%";
+                if (percentText) percentText.textContent = pct + "% COMPLETED";
+
+                if (timer <= 120) {
+                    const step3 = document.getElementById('step3');
+                    if (step3) step3.classList.add('active');
+                }
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    display.textContent = "READY!";
+                    if (percentText) percentText.textContent = "100% READY TO SERVE";
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
