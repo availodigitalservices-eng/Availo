@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVAILO SMART DINE - LIVE CONCIERGE & TRACKER</title>
+    <title>AVAILO SMART DINE - NEXT-GEN TABLE CONCIERGE</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,6 +13,8 @@
             --card-bg: #0d223f;
             --text-light: #f8fafc;
             --accent-green: #16a34a;
+            --veg-green: #22c55e;
+            --nonveg-red: #ef4444;
         }
 
         * {
@@ -29,11 +31,11 @@
             padding-bottom: 115px;
         }
 
-        /* 1. TOP STAGE: AI VOICE CONCIERGE HUB */
+        /* 1. TOP STAGE: AI VOICE CONCIERGE */
         .stage-box {
             background: radial-gradient(circle at 50% 20%, #0e2f57 0%, var(--brand-navy) 85%);
             border-bottom: 1.5px solid rgba(32, 221, 224, 0.3);
-            padding: 18px 14px 16px;
+            padding: 16px 14px 14px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -45,7 +47,7 @@
             justify-content: space-between;
             width: 100%;
             max-width: 460px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .venue-pill {
@@ -73,26 +75,26 @@
 
         /* Futuristic Voice Wave Core */
         .ai-voice-hub {
-            width: 96px;
-            height: 96px;
+            width: 82px;
+            height: 82px;
             border-radius: 50%;
             background: rgba(32, 221, 224, 0.08);
             border: 2px solid var(--brand-cyan);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             cursor: pointer;
-            box-shadow: 0 0 25px rgba(32, 221, 224, 0.25), inset 0 0 15px rgba(32, 221, 224, 0.2);
-            margin-bottom: 12px;
+            box-shadow: 0 0 22px rgba(32, 221, 224, 0.25), inset 0 0 12px rgba(32, 221, 224, 0.2);
+            margin-bottom: 10px;
             position: relative;
         }
 
         .ai-voice-hub::after {
             content: '';
             position: absolute;
-            width: 112px;
-            height: 112px;
+            width: 96px;
+            height: 96px;
             border-radius: 50%;
             border: 1px dashed rgba(32, 221, 224, 0.45);
             animation: spinRing 10s linear infinite;
@@ -103,8 +105,8 @@
         }
 
         .wave-bar {
-            width: 4.5px;
-            height: 16px;
+            width: 4px;
+            height: 14px;
             background: var(--brand-cyan);
             border-radius: 4px;
             transition: height 0.2s ease;
@@ -121,19 +123,18 @@
         .stage-box.speaking .wave-bar:nth-child(5) { animation-delay: 0.2s; }
 
         @keyframes soundWave {
-            0% { height: 12px; background: var(--brand-cyan); }
-            100% { height: 44px; background: var(--brand-gold); }
+            0% { height: 10px; background: var(--brand-cyan); }
+            100% { height: 38px; background: var(--brand-gold); }
         }
 
-        /* Dialog Bubble */
         .supervisor-bubble {
             background: rgba(7, 20, 38, 0.95);
             border: 1.5px solid var(--brand-cyan);
-            border-radius: 16px;
-            padding: 10px 14px;
+            border-radius: 14px;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
             box-shadow: 0 4px 15px rgba(32, 221, 224, 0.2);
             width: 100%;
             max-width: 460px;
@@ -142,9 +143,9 @@
         .sup-badge {
             background: var(--brand-cyan);
             color: #071426;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 800;
-            padding: 3px 7px;
+            padding: 3px 6px;
             border-radius: 4px;
             letter-spacing: 0.5px;
             white-space: nowrap;
@@ -152,29 +153,104 @@
 
         .sup-voice-text {
             font-family: 'Ramabhadra', sans-serif;
-            font-size: 13.5px;
+            font-size: 13px;
             color: #fff;
-            line-height: 1.35;
+            line-height: 1.3;
             text-align: left;
         }
 
-        /* 2. MENU & CHEF NOTES */
+        /* 2. CATEGORIES & SUB-CATEGORIES BAR */
         .content-wrap {
-            padding: 14px;
+            padding: 12px 14px;
             max-width: 480px;
             margin: 0 auto;
         }
 
-        .menu-header {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 16px;
-            color: var(--brand-gold);
-            font-weight: 800;
-            margin: 6px 0 10px;
+        .filter-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
+        .cat-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            scrollbar-width: none;
+        }
+
+        .cat-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-chip {
+            background: var(--card-bg);
+            border: 1px solid rgba(32, 221, 224, 0.3);
+            color: #cbd5e1;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 700;
+            white-space: nowrap;
+            cursor: pointer;
+            font-family: 'Ramabhadra', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .cat-chip.active {
+            background: var(--brand-cyan);
+            color: #071426;
+            border-color: var(--brand-cyan);
+            box-shadow: 0 0 12px rgba(32, 221, 224, 0.4);
+        }
+
+        /* Sub-category / Diet Filter Pills */
+        .sub-filter-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .diet-pill {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.04);
+            color: #94a3b8;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .diet-pill.active {
+            border-color: var(--brand-gold);
+            color: var(--brand-gold);
+            background: rgba(221, 182, 93, 0.12);
+        }
+
+        .dot-veg {
+            width: 8px;
+            height: 8px;
+            background: var(--veg-green);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot-nonveg {
+            width: 8px;
+            height: 8px;
+            background: var(--nonveg-red);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Menu Item Cards */
         .items-list {
             display: flex;
             flex-direction: column;
@@ -189,6 +265,24 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .dish-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 3px;
+        }
+
+        .sub-tag {
+            font-size: 9.5px;
+            background: rgba(255,255,255,0.08);
+            color: #94a3b8;
+            padding: 1px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
         }
 
         .dish-title {
@@ -250,18 +344,14 @@
             background: rgba(13, 34, 63, 0.8);
             border: 1px solid rgba(32, 221, 224, 0.35);
             border-radius: 10px;
-            padding: 11px 14px;
+            padding: 10px 14px;
             color: #fff;
             font-size: 13px;
             font-family: 'Ramabhadra', sans-serif;
             outline: none;
         }
 
-        .chef-input::placeholder {
-            color: #64748b;
-        }
-
-        /* 3. ORDER PAD SLIP (KOT) */
+        /* 3. ORDER PAD SLIP + UNIQUE SPLIT BILL CALCULATOR */
         .order-book-container {
             margin-top: 18px;
             background: #fffdf5;
@@ -297,7 +387,7 @@
         }
 
         .writing-lines {
-            min-height: 70px;
+            min-height: 65px;
             font-family: 'Caveat', cursive;
             font-size: 19px;
             color: #0f172a;
@@ -316,11 +406,44 @@
             font-family: 'Inter', sans-serif;
             font-size: 12px;
             text-align: center;
-            padding: 20px 0;
+            padding: 18px 0;
             font-style: italic;
         }
 
-        /* 4. LIVE ORDER TRACKER & TIMER DISPLAY */
+        /* Unique Split Bill Bar */
+        .split-bill-box {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed #cbd5e1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #475569;
+        }
+
+        .split-btns {
+            display: flex;
+            gap: 4px;
+        }
+
+        .split-btn {
+            background: #e2e8f0;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 7px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #0f172a;
+        }
+
+        .split-btn.active {
+            background: #0f172a;
+            color: #fff;
+        }
+
+        /* 4. LIVE TRACKER & REFILLS */
         .tracker-card {
             background: #0d223f;
             border: 2px solid var(--brand-cyan);
@@ -348,7 +471,6 @@
             line-height: 1.1;
         }
 
-        /* Progress Bar */
         .progress-track {
             width: 100%;
             height: 8px;
@@ -366,7 +488,6 @@
             transition: width 1s ease;
         }
 
-        /* Progress Steps */
         .progress-steps {
             display: flex;
             flex-direction: column;
@@ -407,7 +528,6 @@
             box-shadow: 0 0 10px var(--accent-green);
         }
 
-        /* Quick Table Refills & Service Buttons */
         .refill-section-title {
             font-family: 'Rajdhani', sans-serif;
             font-size: 13px;
@@ -434,11 +554,6 @@
             font-weight: 600;
             cursor: pointer;
             font-family: 'Ramabhadra', sans-serif;
-            transition: background 0.2s;
-        }
-
-        .srv-btn:active {
-            background: rgba(32, 221, 224, 0.3);
         }
 
         .srv-btn.bill-btn {
@@ -504,7 +619,7 @@
             <div class="live-clock-pill" id="liveClock">--:--</div>
         </div>
         
-        <div class="ai-voice-hub" onclick="speakGentVoice('నమస్కారం సర్! నేను అవైలో స్మార్ట్ కన్సీర్జ్. మీ ఆర్డర్ చెప్పండి, కిచెన్‌కు పంపిస్తాను.')">
+        <div class="ai-voice-hub" onclick="speakGentVoice('నమస్కారం సర్! నేను అవైలో స్మార్ట్ కన్సీర్జ్. కింద ఉన్న కేటగిరీల నుండి మీకు నచ్చిన వంటకాలు ఎంచుకోండి.')">
             <div class="wave-bar"></div>
             <div class="wave-bar"></div>
             <div class="wave-bar"></div>
@@ -514,77 +629,38 @@
 
         <div class="supervisor-bubble">
             <span class="sup-badge">AVAILO AI</span>
-            <span class="sup-voice-text" id="supervisorText">స్వాగతం సర్! మీ ఆర్డర్ సెలెక్ట్ చేయండి ✍️</span>
+            <span class="sup-voice-text" id="supervisorText">స్వాగతం సర్! కేటగిరీ ఎంచుకుని ఆర్డర్ చేయండి ✍️</span>
         </div>
     </div>
 
     <!-- 2. Dynamic Main Container -->
     <div class="content-wrap" id="mainContainer">
-        <div class="menu-header">
-            <span>SELECT DISHES</span>
-            <small style="color: #94a3b8; font-size: 11px;">TAP + TO ADD</small>
+        
+        <!-- Main Categories -->
+        <div class="cat-scroll" id="categoryTabs">
+            <button class="cat-chip active" onclick="selectCategory('ALL', this)">🍽️ అన్నీ (All)</button>
+            <button class="cat-chip" onclick="selectCategory('STARTERS', this)">🍢 స్టార్టర్స్</button>
+            <button class="cat-chip" onclick="selectCategory('BIRYANIS', this)">🍲 బిర్యానీలు</button>
+            <button class="cat-chip" onclick="selectCategory('CURRIES_ROTIS', this)">🍛 కర్రీస్ & రోటీ</button>
+            <button class="cat-chip" onclick="selectCategory('DRINKS', this)">🥤 డ్రింక్స్</button>
         </div>
 
-        <div class="items-list">
-            <div class="dish-row">
-                <div>
-                    <div class="dish-title">స్పెషల్ వెజ్ బిర్యానీ</div>
-                    <div class="dish-desc">మిర్చి కా సాలన్ & రైతా</div>
-                    <span class="dish-cost">₹220</span>
-                </div>
-                <div class="qty-box">
-                    <button class="qty-btn" onclick="modifyItem('vegBiryani', -1)">-</button>
-                    <span class="qty-val" id="qty_vegBiryani">0</span>
-                    <button class="qty-btn" onclick="modifyItem('vegBiryani', 1)">+</button>
-                </div>
-            </div>
-
-            <div class="dish-row">
-                <div>
-                    <div class="dish-title">పన్నీర్ బట్టర్ మసాలా</div>
-                    <div class="dish-desc">జీడిపప్పు రిచ్ గ్రేవీ</div>
-                    <span class="dish-cost">₹180</span>
-                </div>
-                <div class="qty-box">
-                    <button class="qty-btn" onclick="modifyItem('paneerButter', -1)">-</button>
-                    <span class="qty-val" id="qty_paneerButter">0</span>
-                    <button class="qty-btn" onclick="modifyItem('paneerButter', 1)">+</button>
-                </div>
-            </div>
-
-            <div class="dish-row">
-                <div>
-                    <div class="dish-title">బట్టర్ నాన్ (2 Pcs)</div>
-                    <div class="dish-desc">తాజా రోటీ బ్రెడ్</div>
-                    <span class="dish-cost">₹60</span>
-                </div>
-                <div class="qty-box">
-                    <button class="qty-btn" onclick="modifyItem('butterNaan', -1)">-</button>
-                    <span class="qty-val" id="qty_butterNaan">0</span>
-                    <button class="qty-btn" onclick="modifyItem('butterNaan', 1)">+</button>
-                </div>
-            </div>
-
-            <div class="dish-row">
-                <div>
-                    <div class="dish-title">మినరల్ వాటర్ (1L)</div>
-                    <div class="dish-desc">కూల్డ్ వాటర్ బాటిల్</div>
-                    <span class="dish-cost">₹25</span>
-                </div>
-                <div class="qty-box">
-                    <button class="qty-btn" onclick="modifyItem('waterBottle', -1)">-</button>
-                    <span class="qty-val" id="qty_waterBottle">0</span>
-                    <button class="qty-btn" onclick="modifyItem('waterBottle', 1)">+</button>
-                </div>
-            </div>
+        <!-- Sub-Categories (Diet Type Filter) -->
+        <div class="sub-filter-bar">
+            <button class="diet-pill active" id="diet_ALL" onclick="selectDiet('ALL')">అన్నీ</button>
+            <button class="diet-pill" id="diet_VEG" onclick="selectDiet('VEG')"><span class="dot-veg"></span> Pure Veg</button>
+            <button class="diet-pill" id="diet_NONVEG" onclick="selectDiet('NONVEG')"><span class="dot-nonveg"></span> Non-Veg</button>
         </div>
+
+        <!-- Dynamic Menu Items Container -->
+        <div class="items-list" id="menuItemsContainer"></div>
 
         <!-- Chef Special Instruction -->
         <div class="chef-note-box">
             <input type="text" id="chefNoteInput" class="chef-input" placeholder="✍️ చెఫ్‌కు ప్రత్యేక సూచన (ఉదా: కారం తక్కువ, వేడిగా పంపండి)...">
         </div>
 
-        <!-- 3. LIVE ORDER PAD -->
+        <!-- 3. LIVE ORDER PAD + SPLIT BILL CALCULATOR -->
         <div class="order-book-container">
             <div class="book-top-clip"></div>
             <div class="book-header">
@@ -597,8 +673,19 @@
             </div>
 
             <div style="border-top: 1.5px dashed #94a3b8; padding-top: 8px; margin-top: 8px; display: flex; justify-content: space-between; font-weight: 800; font-family: 'Rajdhani', sans-serif;">
-                <span>ESTIMATED BILL:</span>
-                <span id="padTotalAmount" style="color: #16a34a; font-size: 16px;">₹0</span>
+                <span>TOTAL BILL:</span>
+                <span id="padTotalAmount" style="color: #16a34a; font-size: 17px;">₹0</span>
+            </div>
+
+            <!-- Unique Split Bill Feature -->
+            <div class="split-bill-box">
+                <span>👥 స్ప్లిట్ బిల్ (తలసరి): <strong id="splitAmountDisplay" style="color:#0f172a;">₹0</strong></span>
+                <div class="split-btns">
+                    <button class="split-btn active" onclick="setSplitCount(1, this)">1</button>
+                    <button class="split-btn" onclick="setSplitCount(2, this)">2</button>
+                    <button class="split-btn" onclick="setSplitCount(3, this)">3</button>
+                    <button class="split-btn" onclick="setSplitCount(4, this)">4</button>
+                </div>
             </div>
         </div>
     </div>
@@ -622,7 +709,7 @@
         document.getElementById('badgeText').innerText = `${hotelName.toUpperCase()} · ${tableNumber.toUpperCase()}`;
         document.getElementById('bookTableLabel').innerText = `${tableNumber.toUpperCase()}`;
 
-        // Live Clock Update
+        // Live Clock
         function updateLiveClock() {
             const now = new Date();
             document.getElementById('liveClock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
@@ -630,12 +717,74 @@
         setInterval(updateLiveClock, 1000);
         updateLiveClock();
 
-        const menuData = {
-            vegBiryani: { name: "స్పెషల్ వెజ్ బిర్యానీ", price: 220, count: 0 },
-            paneerButter: { name: "పన్నీర్ బట్టర్ మసాలా", price: 180, count: 0 },
-            butterNaan: { name: "బట్టర్ నాన్", price: 60, count: 0 },
-            waterBottle: { name: "మినరల్ వాటర్", price: 25, count: 0 }
-        };
+        // 🌟 EASY TO EDIT RESTAURANT MENU (Categories & Sub-categories)
+        const HOTEL_MENU = [
+            // STARTERS
+            { id: 'paneerTikka', cat: 'STARTERS', sub: 'Tandoori Starter', diet: 'VEG', name: 'పన్నీర్ టిక్కా (6 Pcs)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', price: 190, count: 0 },
+            { id: 'crispyCorn', cat: 'STARTERS', sub: 'Crispy Snack', diet: 'VEG', name: 'క్రిస్పీ చిల్లీ కార్న్', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', price: 150, count: 0 },
+            { id: 'chicken65', cat: 'STARTERS', sub: 'Andhra Special', diet: 'NONVEG', name: 'చికెన్ 65 (Boneless)', desc: 'కరివేపాకు మసాలా ఫ్రై', price: 220, count: 0 },
+            
+            // BIRYANIS
+            { id: 'vegDumBiryani', cat: 'BIRYANIS', sub: 'Hyderabadi Dum', diet: 'VEG', name: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', desc: 'మిర్చి కా సాలన్ & రైతా', price: 220, count: 0 },
+            { id: 'kajuBiryani', cat: 'BIRYANIS', sub: 'Chef Special', diet: 'VEG', name: 'జీడిపప్పు (Kaju) బిర్యానీ', desc: 'నెయ్యిలో వేయించిన జీడిపప్పుతో', price: 260, count: 0 },
+            { id: 'chickenDumBiryani', cat: 'BIRYANIS', sub: 'Signature Dish', diet: 'NONVEG', name: 'చికెన్ దమ్ బిర్యానీ', desc: 'అసలైన దమ్ మసాలా రుచి', price: 280, count: 0 },
+
+            // CURRIES & ROTIS
+            { id: 'paneerButter', cat: 'CURRIES_ROTIS', sub: 'Rich Gravy', diet: 'VEG', name: 'పన్నీర్ బట్టర్ మసాలా', desc: 'క్రీమీ టొమాటో & జీడిపప్పు గ్రేవీ', price: 180, count: 0 },
+            { id: 'butterNaan', cat: 'CURRIES_ROTIS', sub: 'Tandoor Bread', diet: 'VEG', name: 'బట్టర్ నాన్ (2 Pcs)', desc: 'వేడి వేడి తందూరీ నాన్', price: 60, count: 0 },
+
+            // DRINKS
+            { id: 'sweetLassi', cat: 'DRINKS', sub: 'Coolers', diet: 'VEG', name: 'స్పెషల్ స్వీట్ లస్సీ', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', price: 70, count: 0 },
+            { id: 'waterBottle', cat: 'DRINKS', sub: 'Beverages', diet: 'VEG', name: 'మినరల్ వాటర్ (1L)', desc: 'కూల్డ్ వాటర్ బాటిల్', price: 25, count: 0 }
+        ];
+
+        let currentCategory = 'ALL';
+        let currentDiet = 'ALL';
+        let splitCount = 1;
+        let currentGrandTotal = 0;
+
+        // Render Menu based on Category & Sub-category
+        function renderMenu() {
+            const listEl = document.getElementById('menuItemsContainer');
+            const filtered = HOTEL_MENU.filter(item => {
+                const matchCat = (currentCategory === 'ALL' || item.cat === currentCategory);
+                const matchDiet = (currentDiet === 'ALL' || item.diet === currentDiet);
+                return matchCat && matchDiet;
+            });
+
+            listEl.innerHTML = filtered.map(item => `
+                <div class="dish-row">
+                    <div>
+                        <div class="dish-badge-row">
+                            <span class="${item.diet === 'VEG' ? 'dot-veg' : 'dot-nonveg'}"></span>
+                            <span class="sub-tag">${item.sub}</span>
+                        </div>
+                        <div class="dish-title">${item.name}</div>
+                        <div class="dish-desc">${item.desc}</div>
+                        <span class="dish-cost">₹${item.price}</span>
+                    </div>
+                    <div class="qty-box">
+                        <button class="qty-btn" onclick="modifyItem('${item.id}', -1)">-</button>
+                        <span class="qty-val">${item.count}</span>
+                        <button class="qty-btn" onclick="modifyItem('${item.id}', 1)">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectCategory(cat, btnEl) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+            btnEl.classList.add('active');
+            renderMenu();
+        }
+
+        function selectDiet(diet) {
+            currentDiet = diet;
+            document.querySelectorAll('.diet-pill').forEach(p => p.classList.remove('active'));
+            document.getElementById(`diet_${diet}`).classList.add('active');
+            renderMenu();
+        }
 
         function getTimeGreeting() {
             const hr = new Date().getHours();
@@ -654,9 +803,7 @@
                 const voices = window.speechSynthesis.getVoices();
                 const maleVoice = voices.find(v => (v.lang.includes('te') || v.lang.includes('en-IN')) && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('ravi') || v.name.toLowerCase().includes('pradeep')));
                 
-                if (maleVoice) {
-                    utter.voice = maleVoice;
-                }
+                if (maleVoice) utter.voice = maleVoice;
 
                 utter.pitch = 0.76; 
                 utter.rate = 0.94;
@@ -673,29 +820,41 @@
         }
 
         window.addEventListener('load', () => {
+            renderMenu();
             setTimeout(() => {
                 const greet = getTimeGreeting();
-                speakGentVoice(`${greet} ${hotelName} కు స్వాగతం. మీరు ${tableNumber} లో ఉన్నారు. మీ ఆర్డర్ చెప్పండి సర్.`);
+                speakGentVoice(`${greet} ${hotelName} కు హృదయపూర్వక స్వాగతం. మీరు ${tableNumber} లో ఉన్నారు. మెనూ నుండి మీకు నచ్చినవి ఎంచుకోండి సర్.`);
             }, 600);
         });
 
-        function modifyItem(key, delta) {
-            if (menuData[key]) {
-                menuData[key].count = Math.max(0, menuData[key].count + delta);
-                document.getElementById(`qty_${key}`).innerText = menuData[key].count;
-                
+        function modifyItem(id, delta) {
+            const item = HOTEL_MENU.find(i => i.id === id);
+            if (item) {
+                item.count = Math.max(0, item.count + delta);
+                renderMenu();
                 renderOrderPad();
 
                 if (delta > 0) {
                     const prompts = [
-                        `సరే సర్, ${menuData[key].name} నోట్ చేసుకున్నాను. ఇంకా ఏం కావాలి సర్?`,
-                        `${menuData[key].name} యాడ్ చేశాను సర్.. నెక్స్ట్ ఆర్డర్ చెప్పండి.`,
+                        `సరే సర్, ${item.name} నోట్ చేసుకున్నాను. నెక్స్ట్ ఏం కావాలి సర్?`,
+                        `${item.name} యాడ్ చేశాను సర్.. ఇంకేమైనా కావాలా?`,
                         `రైట్ సర్, రాసుకున్నాను..`
                     ];
-                    const randomVoice = prompts[Math.floor(Math.random() * prompts.length)];
-                    speakGentVoice(randomVoice);
+                    speakGentVoice(prompts[Math.floor(Math.random() * prompts.length)]);
                 }
             }
+        }
+
+        function setSplitCount(num, btnEl) {
+            splitCount = num;
+            document.querySelectorAll('.split-btn').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+            updateSplitDisplay();
+        }
+
+        function updateSplitDisplay() {
+            const perHead = splitCount > 0 ? Math.ceil(currentGrandTotal / splitCount) : currentGrandTotal;
+            document.getElementById('splitAmountDisplay').innerText = `₹${perHead}`;
         }
 
         function renderOrderPad() {
@@ -704,19 +863,21 @@
             let total = 0;
             let totalCount = 0;
 
-            for (let k in menuData) {
-                if (menuData[k].count > 0) {
-                    const itemTotal = menuData[k].count * menuData[k].price;
+            HOTEL_MENU.forEach(item => {
+                if (item.count > 0) {
+                    const itemTotal = item.count * item.price;
                     total += itemTotal;
-                    totalCount += menuData[k].count;
+                    totalCount += item.count;
                     linesHtml += `
                         <div class="writing-line-item">
-                            <span>✍️ ${menuData[k].name} x ${menuData[k].count}</span>
+                            <span>✍️ ${item.name} x ${item.count}</span>
                             <span>₹${itemTotal}</span>
                         </div>
                     `;
                 }
-            }
+            });
+
+            currentGrandTotal = total;
 
             if (linesHtml === "") {
                 padContainer.innerHTML = `<div class="empty-hint">పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️</div>`;
@@ -726,6 +887,7 @@
 
             document.getElementById('padTotalAmount').innerText = `₹${total}`;
             document.getElementById('cartCount').innerText = totalCount;
+            updateSplitDisplay();
         }
 
         function listenToVoiceOrder() {
@@ -756,13 +918,13 @@
             let orderLines = [];
             let grandTotal = 0;
 
-            for (let k in menuData) {
-                if (menuData[k].count > 0) {
-                    const cost = menuData[k].count * menuData[k].price;
-                    orderLines.push(`• ${menuData[k].name} x ${menuData[k].count} = ₹${cost}`);
+            HOTEL_MENU.forEach(item => {
+                if (item.count > 0) {
+                    const cost = item.count * item.price;
+                    orderLines.push(`• ${item.name} x ${item.count} = ₹${cost}`);
                     grandTotal += cost;
                 }
-            }
+            });
 
             if (orderLines.length === 0) {
                 speakGentVoice("ఒక్క ఐటమ్ అయినా సెలెక్ట్ చేయండి సర్, ఆర్డర్ పంపిస్తాను.");
@@ -782,7 +944,6 @@
             }, 1400);
         }
 
-        // Quick Refill & Service Request Function
         function requestTableService(itemLabel, voiceReply) {
             speakGentVoice(voiceReply);
             const msg = `*AVAILO TABLE REFILL / SERVICE*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*కావలసినవి:* ${itemLabel}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
@@ -791,7 +952,6 @@
             }, 900);
         }
 
-        // Live Timer, Progress & Quick Refills Display
         function displayLiveTrackerScreen(billInfo, minutes) {
             const container = document.getElementById('mainContainer');
             container.innerHTML = `
@@ -826,12 +986,13 @@
                         </div>
                     </div>
 
-                    <!-- One-Tap Extra Refills (Onions, Lemon, Curd, Water, Bill) -->
                     <div class="refill-section-title">⚡ తక్షణ అవసరాలు / రీఫిల్స్ (ONE-TAP REFILLS):</div>
                     <div class="quick-service-grid">
                         <button class="srv-btn" onclick="requestTableService('ఉల్లిపాయలు & నిమ్మకాయ (Onions & Lemon)', 'ఉల్లిపాయలు, నిమ్మకాయ పంపించమని కిచెన్‌కు చెప్తున్నాను సర్.')">🧅 ఉల్లిపాయ & నిమ్మకాయ</button>
                         <button class="srv-btn" onclick="requestTableService('పెరుగు / రైతా (Extra Curd / Raita)', 'ఎక్స్‌ట్రా పెరుగు పంపించమని చెప్తున్నాను సర్.')">🥣 పెరుగు / రైతా</button>
                         <button class="srv-btn" onclick="requestTableService('మంచినీళ్లు (Drinking Water)', 'మంచినీళ్లు పంపిస్తున్నాము సర్.')">💧 మంచినీళ్లు (Water)</button>
+                        <button class="srv-btn" onclick="requestTableService('టిష్యూ పేపర్స్ / సాల్ట్ (Tissues & Salt)', 'టిష్యూ పేపర్స్ పంపిస్తున్నాము సర్.')">🧻 టిష్యూ పేపర్స్</button>
+                        <button class="srv-btn" onclick="requestTableService('AC కూలింగ్ అడ్జస్ట్ చేయండి (Adjust AC)', 'AC టెంపరేచర్ అడ్జస్ట్ చేయమని స్టాఫ్‌కు చెప్తున్నాను సర్.')">❄️ AC అడ్జస్ట్ చేయండి</button>
                         <button class="srv-btn bill-btn" onclick="requestTableService('బిల్లు పంపండి (Request Final Bill)', 'మీ టేబుల్ బిల్లు సిద్ధం చేయమని కౌంటర్‌కు చెప్తున్నాను సర్.')">🧾 బిల్లు పంపండి</button>
                     </div>
                 </div>
@@ -843,7 +1004,7 @@
                 </button>
             `;
 
-            speakGentVoice(`థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. మధ్యలో ఉల్లిపాయలు, నిమ్మకాయ, పెరుగు ఏం కావాలన్నా కింద బటన్ నొక్కండి సర్.`);
+            speakGentVoice(`థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. మధ్యలో ఉల్లిపాయలు, నిమ్మకాయ, పెరుగు లేదా AC అడ్జస్ట్‌మెంట్ కోసం కింద బటన్లు వాడుకోండి సర్.`);
             startCountdown(minutes * 60);
         }
 
