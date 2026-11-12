@@ -1,1 +1,681 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AVAILO AI HUMAN WAITER - SMART DINE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-navy: #071426;
+            --brand-cyan: #20DDE0;
+            --brand-gold: #DDB65D;
+            --card-bg: #0d223f;
+            --text-light: #f8fafc;
+            --accent-green: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--brand-navy);
+            color: var(--text-light);
+            font-family: 'Inter', 'Ramabhadra', 'Noto Sans Devanagari', sans-serif;
+            padding-bottom: 110px;
+        }
+
+        /* 1. HUMAN HOST VIDEO STAGE */
+        .host-stage {
+            position: relative;
+            background: radial-gradient(circle at 50% 20%, #103766 0%, var(--brand-navy) 90%);
+            border-bottom: 1.5px solid rgba(32, 221, 224, 0.35);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .top-header {
+            width: 100%;
+            max-width: 460px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .table-badge {
+            background: rgba(221, 182, 93, 0.15);
+            border: 1px solid var(--brand-gold);
+            color: var(--brand-gold);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.8px;
+        }
+
+        /* Language Switcher Pills */
+        .lang-bar {
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(32, 221, 224, 0.3);
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 9px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            background: var(--brand-cyan);
+            color: #071426;
+            border-color: var(--brand-cyan);
+        }
+
+        /* Video / Avatar Frame */
+        .avatar-frame {
+            width: 150px;
+            height: 190px;
+            border-radius: 22px;
+            border: 2px solid var(--brand-cyan);
+            overflow: hidden;
+            position: relative;
+            background: #0a1d36;
+            box-shadow: 0 8px 25px rgba(32, 221, 224, 0.25);
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .avatar-frame.speaking {
+            box-shadow: 0 0 28px rgba(32, 221, 224, 0.65);
+            border-color: var(--brand-gold);
+        }
+
+        .host-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Fallback Visual if host.mp4 is not uploaded yet */
+        .fallback-host {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(160deg, #0d2b52 0%, #071426 100%);
+            padding: 10px;
+        }
+
+        .live-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(7, 20, 38, 0.8);
+            color: #22c55e;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 8px;
+            border: 1px solid #22c55e;
+        }
+
+        /* Speech Subtitle Bubble */
+        .speech-box {
+            background: rgba(7, 20, 38, 0.92);
+            border: 1px solid rgba(32, 221, 224, 0.45);
+            border-radius: 14px;
+            padding: 9px 14px;
+            width: 100%;
+            max-width: 460px;
+            font-size: 13.5px;
+            line-height: 1.4;
+            color: #ffffff;
+        }
+
+        /* 2. MENU SECTION */
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 14px;
+        }
+
+        .section-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--brand-gold);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-name {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .item-sub {
+            font-size: 11.5px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .item-price {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--brand-cyan);
+            margin-top: 4px;
+            display: inline-block;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .q-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1.5px solid var(--brand-cyan);
+            background: rgba(32, 221, 224, 0.1);
+            color: var(--brand-cyan);
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .q-num {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* 3. ORDER CONFIRMATION MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 9, 18, 0.88);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .modal-card {
+            background: #0d223f;
+            border: 2px solid var(--brand-cyan);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            padding: 18px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-head {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--brand-gold);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .summary-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 14px;
+            font-size: 13.5px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 11px;
+            border-radius: 8px;
+            border: 1px solid #64748b;
+            background: transparent;
+            color: #cbd5e1;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-confirm-wa {
+            flex: 1.5;
+            padding: 11px;
+            border-radius: 8px;
+            border: none;
+            background: var(--accent-green);
+            color: #fff;
+            font-weight: 800;
+            font-size: 13.5px;
+            cursor: pointer;
+        }
+
+        /* 4. BOTTOM ACTION BAR */
+        .bottom-dock {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #050e1a;
+            border-top: 1.5px solid rgba(32, 221, 224, 0.25);
+            padding: 10px 14px;
+            display: flex;
+            gap: 10px;
+            z-index: 999;
+        }
+
+        .btn-mic {
+            flex: 1;
+            background: rgba(32, 221, 224, 0.12);
+            border: 1.5px solid var(--brand-cyan);
+            color: var(--brand-cyan);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-review {
+            flex: 1.3;
+            background: var(--accent-green);
+            border: none;
+            color: #ffffff;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. AI HUMAN HOST STAGE -->
+    <div class="host-stage">
+        <div class="top-header">
+            <div class="table-badge" id="tableBadge">AVAILO DINE · TABLE 01</div>
+            <div class="lang-bar">
+                <button class="lang-btn active" onclick="setLanguage('te', this)">తెలుగు</button>
+                <button class="lang-btn" onclick="setLanguage('en', this)">English</button>
+                <button class="lang-btn" onclick="setLanguage('hi', this)">हिन्दी</button>
+            </div>
+        </div>
+
+        <div class="avatar-frame" id="avatarFrame" onclick="replayWelcome()">
+            <span class="live-dot">● AI HOST</span>
+            <video id="hostVideo" class="host-video" src="host.mp4" autoplay loop muted playsinline onerror="showFallbackHost()"></video>
+            <div id="fallbackHost" class="fallback-host" style="display:none;">
+                <div style="font-size: 46px; margin-bottom: 6px;">👩‍💼</div>
+                <div style="font-size: 11px; color: var(--brand-cyan); font-weight: 800;">AVAILO HOST</div>
+                <div style="font-size: 10px; color: #94a3b8; margin-top: 2px;">Tap to hear voice</div>
+            </div>
+        </div>
+
+        <div class="speech-box" id="hostSubtitle">
+            "నమస్కారం! AVAILO Dine కి స్వాగతం. నేను మీ వర్చువల్ వేటర్‌ని. మీకు ఏం కావాలో చెప్పండి లేదా కింద ఎంచుకోండి."
+        </div>
+    </div>
+
+    <!-- 2. SMART MENU -->
+    <div class="container">
+        <div class="section-title">
+            <span id="menuHeading">MENU · SELECT ITEMS</span>
+            <span id="totalPreview" style="color: var(--brand-cyan);">₹0</span>
+        </div>
+
+        <div class="menu-grid" id="menuContainer"></div>
+    </div>
+
+    <!-- 3. ORDER CONFIRMATION MODAL -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-card">
+            <div class="modal-head">
+                <span id="modalTitle">ఆర్డర్ కన్ఫర్మేషన్</span>
+                <span id="modalTable">TABLE 01</span>
+            </div>
+            <div class="summary-list" id="modalItemsList"></div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px; display: flex; justify-content: space-between; font-weight: 800; font-size: 16px; color: var(--brand-cyan);">
+                <span id="modalTotalLabel">మొత్తం బిల్లు:</span>
+                <span id="modalGrandTotal">₹0</span>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" id="btnEdit" onclick="closeModal()">మార్చాలి</button>
+                <button class="btn-confirm-wa" id="btnSendWa" onclick="dispatchToWhatsApp()">✅ కన్ఫర్మ్ & పంపండి</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. BOTTOM ACTION DOCK -->
+    <div class="bottom-dock">
+        <button class="btn-mic" id="micBtn" onclick="startVoiceOrder()">
+            <span>🎤</span> <span id="micLabel">మాట్లాడి ఆర్డర్ చేయండి</span>
+        </button>
+        <button class="btn-review" onclick="openConfirmModal()">
+            <span>🛒</span> <span id="cartLabel">ఆర్డర్ చూడండి</span> (<span id="cartCount">0</span>)
+        </button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const hotelName = params.get('hotel') || "AVAILO DINE";
+        const tableNo = params.get('table') || "Table 01";
+        const kitchenWa = params.get('desk') || "919966157369";
+
+        document.getElementById('tableBadge').innerText = `${hotelName.toUpperCase()} · ${tableNo.toUpperCase()}`;
+        document.getElementById('modalTable').innerText = tableNo.toUpperCase();
+
+        let currentLang = 'te';
+
+        const UI_TEXT = {
+            te: {
+                welcome: `నమస్కారం! ${hotelName} కి స్వాగతం. నేను మీ వర్చువల్ వేటర్‌ని. మీకు ఏం కావాలో చెప్పండి లేదా కింద ఎంచుకోండి.`,
+                micBtn: "మాట్లాడి ఆర్డర్ చేయండి",
+                cartBtn: "ఆర్డర్ చూడండి",
+                listening: "🔴 వింటున్నాను... ఉదాహరణకు 'ఒక మసాలా దోశ, రెండు కాఫీలు' అని చెప్పండి...",
+                emptyCart: "దయచేసి కనీసం ఒక ఐటమ్ ఎంచుకోండి.",
+                modalTitle: "ఆర్డర్ నిర్ధారణ (Confirm)",
+                totalLbl: "మొత్తం బిల్లు:",
+                editBtn: "మార్చాలి",
+                sendBtn: "✅ కన్ఫర్మ్ & పంపండి",
+                addedVoice: (name) => `${name} కార్ట్‌లో చేర్చాను. ఇంకా ఏం కావాలి?`
+            },
+            en: {
+                welcome: `Welcome to ${hotelName}! I am your AVAILO virtual waiter. How may I help you today?`,
+                micBtn: "Voice Order",
+                cartBtn: "Review Order",
+                listening: "🔴 Listening... Say something like 'One Masala Dosa and two Coffees'...",
+                emptyCart: "Please select at least one item first.",
+                modalTitle: "Order Confirmation",
+                totalLbl: "Total Amount:",
+                editBtn: "Edit",
+                sendBtn: "✅ Confirm & Send",
+                addedVoice: (name) => `Added ${name} to your order. Anything else?`
+            },
+            hi: {
+                welcome: `नमस्ते! ${hotelName} में आपका स्वागत है। मैं आपका वर्चुअल वेटर हूँ। मैं आपकी क्या मदद कर सकता हूँ?`,
+                micBtn: "बोलकर ऑर्डर करें",
+                cartBtn: "ऑर्डर देखें",
+                listening: "🔴 सुन रहा हूँ... जैसे 'एक मसाला डोसा और दो कॉफ़ी' बोलें...",
+                emptyCart: "कृपया पहले कम से कम एक आइटम चुनें।",
+                modalTitle: "ऑर्डर कन्फर्मेशन",
+                totalLbl: "कुल बिल:",
+                editBtn: "बदलें",
+                sendBtn: "✅ कन्फर्म करें",
+                addedVoice: (name) => `${name} जोड़ दिया गया है। और क्या चाहिए?`
+            }
+        };
+
+        // Multi-language Menu Items with Voice Keywords
+        const MENU_ITEMS = [
+            {
+                id: 'dosa',
+                price: 80,
+                count: 0,
+                names: { te: 'మసాలా దోశ', en: 'Masala Dosa', hi: 'मसाला डोसा' },
+                desc: { te: 'చట్నీ & సాంబార్‌తో', en: 'Crispy dosa with chutney & sambar', hi: 'चटनी और सांभर के साथ' },
+                keywords: ['దోశ', 'దోస', 'dosa', 'masala dosa', 'डोसा']
+            },
+            {
+                id: 'idli',
+                price: 50,
+                count: 0,
+                names: { te: 'ఇడ్లీ (3 Pcs)', en: 'Steamed Idli (3 Pcs)', hi: 'इडली (3 पीस)' },
+                desc: { te: 'వేడి నెయ్యి & కారప్పొడితో', en: 'Soft idlis with ghee & podi', hi: 'घी और चटनी के साथ' },
+                keywords: ['ఇడ్లీ', 'ఇడ్లి', 'idli', 'idly', 'इडली']
+            },
+            {
+                id: 'biryani',
+                price: 220,
+                count: 0,
+                names: { te: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', en: 'Special Veg Dum Biryani', hi: 'स्पेशल वेज दम बिरयानी' },
+                desc: { te: 'రైతా & మిర్చి కా సాలన్', en: 'Aromatic basmati rice with raita', hi: 'रायता और ग्रेवी के साथ' },
+                keywords: ['బిర్యానీ', 'బిర్యాని', 'biryani', 'बिरयानी']
+            },
+            {
+                id: 'coffee',
+                price: 40,
+                count: 0,
+                names: { te: 'ఫిల్టర్ కాఫీ', en: 'Filter Coffee', hi: 'फ़िल्टर कॉफ़ी' },
+                desc: { te: 'సంప్రదాయ సౌత్ ఇండియన్ కాఫీ', en: 'Authentic South Indian filter coffee', hi: 'साउथ इंडियन फ़िल्टर कॉफ़ी' },
+                keywords: ['కాఫీ', 'కాఫి', 'coffee', 'कॉफ़ी', 'कॉफी']
+            }
+        ];
+
+        function showFallbackHost() {
+            document.getElementById('hostVideo').style.display = 'none';
+            document.getElementById('fallbackHost').style.display = 'flex';
+        }
+
+        function renderMenu() {
+            const container = document.getElementById('menuContainer');
+            container.innerHTML = MENU_ITEMS.map(item => `
+                <div class="menu-card">
+                    <div>
+                        <div class="item-name">${item.names[currentLang]}</div>
+                        <div class="item-sub">${item.desc[currentLang]}</div>
+                        <span class="item-price">₹${item.price}</span>
+                    </div>
+                    <div class="qty-controls">
+                        <button class="q-btn" onclick="updateQty('${item.id}', -1)">-</button>
+                        <span class="q-num">${item.count}</span>
+                        <button class="q-btn" onclick="updateQty('${item.id}', 1)">+</button>
+                    </div>
+                </div>
+            `).join('');
+            updateTotals();
+        }
+
+        function setLanguage(lang, btn) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.getElementById('micLabel').innerText = UI_TEXT[lang].micBtn;
+            document.getElementById('cartLabel').innerText = UI_TEXT[lang].cartBtn;
+            document.getElementById('modalTitle').innerText = UI_TEXT[lang].modalTitle;
+            document.getElementById('modalTotalLabel').innerText = UI_TEXT[lang].totalLbl;
+            document.getElementById('btnEdit').innerText = UI_TEXT[lang].editBtn;
+            document.getElementById('btnSendWa').innerText = UI_TEXT[lang].sendBtn;
+
+            renderMenu();
+            speakHost(UI_TEXT[lang].welcome);
+        }
+
+        function speakHost(text) {
+            document.getElementById('hostSubtitle').innerText = `"${text}"`;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(text);
+                const langMap = { te: 'te-IN', en: 'en-IN', hi: 'hi-IN' };
+                utter.lang = langMap[currentLang];
+                utter.rate = 0.96;
+                utter.pitch = 1.05;
+
+                const frame = document.getElementById('avatarFrame');
+                frame.classList.add('speaking');
+                utter.onend = () => frame.classList.remove('speaking');
+                utter.onerror = () => frame.classList.remove('speaking');
+
+                window.speechSynthesis.speak(utter);
+            }
+        }
+
+        function replayWelcome() {
+            speakHost(UI_TEXT[currentLang].welcome);
+        }
+
+        function updateQty(id, delta) {
+            const item = MENU_ITEMS.find(i => i.id === id);
+            if (!item) return;
+            item.count = Math.max(0, item.count + delta);
+            renderMenu();
+            if (delta > 0) {
+                speakHost(UI_TEXT[currentLang].addedVoice(item.names[currentLang]));
+            }
+        }
+
+        function updateTotals() {
+            let totalQty = 0;
+            let totalCost = 0;
+            MENU_ITEMS.forEach(i => {
+                totalQty += i.count;
+                totalCost += i.count * i.price;
+            });
+            document.getElementById('cartCount').innerText = totalQty;
+            document.getElementById('totalPreview').innerText = `₹${totalCost}`;
+        }
+
+        // Smart Local Browser Voice Recognition (Zero Server Cost)
+        function startVoiceOrder() {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRec) {
+                alert("Voice order works best in Google Chrome. You can also tap + to order!");
+                return;
+            }
+            const rec = new SpeechRec();
+            const langMap = { te: 'te-IN', en: 'en-IN', hi: 'hi-IN' };
+            rec.lang = langMap[currentLang];
+
+            rec.onstart = () => {
+                document.getElementById('hostSubtitle').innerText = UI_TEXT[currentLang].listening;
+            };
+
+            rec.onresult = (event) => {
+                const transcript = event.results[0][0].transcript.toLowerCase();
+                let matchedAny = false;
+
+                // Detect numbers (1, 2, 3) in spoken text
+                let qty = 1;
+                if (transcript.includes('two') || transcript.includes('రెండు') || transcript.includes('दो') || transcript.includes('2')) qty = 2;
+                if (transcript.includes('three') || transcript.includes('మూడు') || transcript.includes('तीन') || transcript.includes('3')) qty = 3;
+
+                MENU_ITEMS.forEach(item => {
+                    if (item.keywords.some(kw => transcript.includes(kw))) {
+                        item.count += qty;
+                        matchedAny = true;
+                    }
+                });
+
+                renderMenu();
+                if (matchedAny) {
+                    speakHost(`"${transcript}" — కార్ట్‌లో యాడ్ చేశాను! ఆర్డర్ కన్ఫర్మ్ చేయడానికి కింద బటన్ నొక్కండి.`);
+                } else {
+                    speakHost(`మీరు "${transcript}" అన్నారు. కింద మెనూలో + నొక్కి కూడా ఎంచుకోవచ్చు.`);
+                }
+            };
+
+            rec.start();
+        }
+
+        function openConfirmModal() {
+            const selected = MENU_ITEMS.filter(i => i.count > 0);
+            if (selected.length === 0) {
+                speakHost(UI_TEXT[currentLang].emptyCart);
+                return;
+            }
+
+            let grandTotal = 0;
+            document.getElementById('modalItemsList').innerHTML = selected.map(item => {
+                const sub = item.count * item.price;
+                grandTotal += sub;
+                return `<div class="summary-row"><span>${item.names[currentLang]} × ${item.count}</span><span>₹${sub}</span></div>`;
+            }).join('');
+
+            document.getElementById('modalGrandTotal').innerText = `₹${grandTotal}`;
+            document.getElementById('confirmModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        function dispatchToWhatsApp() {
+            const selected = MENU_ITEMS.filter(i => i.count > 0);
+            let grandTotal = 0;
+            const lines = selected.map(item => {
+                const sub = item.count * item.price;
+                grandTotal += sub;
+                return `• ${item.names.en} (${item.names.te}) x ${item.count} = ₹${sub}`;
+            }).join('%0A');
+
+            const msg = `*AVAILO AI HUMAN WAITER - ORDER*%0A-------------------------%0A*Restaurant:* ${hotelName}%0A*Table:* ${tableNo}%0A*Language:* ${currentLang.toUpperCase()}%0A-------------------------%0A${lines}%0A-------------------------%0A*Total Bill:* ₹${grandTotal}%0A*Time:* ${new Date().toLocaleTimeString()}`;
+
+            closeModal();
+            speakHost("ధన్యవాదాలు! మీ ఆర్డర్ కిచెన్‌కు పంపబడుతోంది.");
+            setTimeout(() => {
+                window.location.href = `https://wa.me/${kitchenWa}?text=${msg}`;
+            }, 900);
+        }
+
+        window.addEventListener('load', () => {
+            renderMenu();
+        });
+    </script>
+</body>
+</html>
 
