@@ -325,7 +325,7 @@
             background: #0d223f;
             border: 2px solid var(--brand-cyan);
             border-radius: 16px;
-            padding: 20px 16px;
+            padding: 18px 14px;
             text-align: center;
             margin-top: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -335,13 +335,13 @@
             background: rgba(7, 20, 38, 0.95);
             border: 1.5px solid var(--brand-gold);
             border-radius: 12px;
-            padding: 14px;
-            margin: 14px 0;
+            padding: 12px;
+            margin: 12px 0;
         }
 
         .timer-digits {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 42px;
+            font-size: 40px;
             font-weight: 800;
             color: var(--brand-cyan);
             letter-spacing: 2px;
@@ -355,7 +355,7 @@
             background: #1e293b;
             border-radius: 6px;
             overflow: hidden;
-            margin: 12px 0 6px;
+            margin: 10px 0 6px;
         }
 
         .progress-fill {
@@ -370,10 +370,10 @@
         .progress-steps {
             display: flex;
             flex-direction: column;
-            gap: 11px;
+            gap: 10px;
             text-align: left;
-            margin: 14px 0;
-            padding: 12px;
+            margin: 12px 0;
+            padding: 10px 12px;
             background: rgba(255,255,255,0.03);
             border-radius: 10px;
         }
@@ -382,7 +382,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 13px;
+            font-size: 12.5px;
             color: #64748b;
             font-family: 'Ramabhadra', sans-serif;
         }
@@ -393,8 +393,8 @@
         }
 
         .step-dot {
-            width: 13px;
-            height: 13px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: #334155;
             border: 2px solid #475569;
@@ -407,24 +407,44 @@
             box-shadow: 0 0 10px var(--accent-green);
         }
 
-        /* Quick Table Service Buttons */
+        /* Quick Table Refills & Service Buttons */
+        .refill-section-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            color: var(--brand-gold);
+            font-weight: 800;
+            text-align: left;
+            margin: 14px 0 8px;
+            letter-spacing: 0.5px;
+        }
+
         .quick-service-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
-            margin-top: 14px;
         }
 
         .srv-btn {
             background: rgba(32, 221, 224, 0.1);
             border: 1px solid var(--brand-cyan);
-            color: var(--brand-cyan);
+            color: #ffffff;
             padding: 10px 8px;
             border-radius: 8px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             font-family: 'Ramabhadra', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .srv-btn:active {
+            background: rgba(32, 221, 224, 0.3);
+        }
+
+        .srv-btn.bill-btn {
+            border-color: var(--brand-gold);
+            color: var(--brand-gold);
+            background: rgba(221, 182, 93, 0.1);
         }
 
         /* 5. BOTTOM BAR */
@@ -617,7 +637,6 @@
             waterBottle: { name: "మినరల్ వాటర్", price: 25, count: 0 }
         };
 
-        // Time-based Greeting Generator
         function getTimeGreeting() {
             const hr = new Date().getHours();
             if (hr < 12) return "శుభోదయం సర్!";
@@ -625,7 +644,6 @@
             return "శుభ సాయంత్రం సర్!";
         }
 
-        // Gent Voice Engine
         function speakGentVoice(text) {
             document.getElementById('supervisorText').innerText = text;
             
@@ -764,14 +782,16 @@
             }, 1400);
         }
 
-        // Quick Table Service Call
-        function requestTableService(serviceType) {
-            speakGentVoice(`${serviceType} కోసం రిక్వెస్ట్ పంపుతున్నాను సర్.`);
-            const msg = `*AVAILO TABLE SERVICE ALERT*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*అవసరం:* ${serviceType}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
-            window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+        // Quick Refill & Service Request Function
+        function requestTableService(itemLabel, voiceReply) {
+            speakGentVoice(voiceReply);
+            const msg = `*AVAILO TABLE REFILL / SERVICE*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*కావలసినవి:* ${itemLabel}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
+            setTimeout(() => {
+                window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+            }, 900);
         }
 
-        // Live Timer & Progress Tracker Display
+        // Live Timer, Progress & Quick Refills Display
         function displayLiveTrackerScreen(billInfo, minutes) {
             const container = document.getElementById('mainContainer');
             container.innerHTML = `
@@ -806,20 +826,24 @@
                         </div>
                     </div>
 
+                    <!-- One-Tap Extra Refills (Onions, Lemon, Curd, Water, Bill) -->
+                    <div class="refill-section-title">⚡ తక్షణ అవసరాలు / రీఫిల్స్ (ONE-TAP REFILLS):</div>
                     <div class="quick-service-grid">
-                        <button class="srv-btn" onclick="requestTableService('మంచినీళ్లు కావాలి (Water)')">💧 మంచినీళ్లు కావాలి</button>
-                        <button class="srv-btn" onclick="requestTableService('బిల్లు పంపండి (Request Bill)')">🧾 బిల్లు పంపండి</button>
+                        <button class="srv-btn" onclick="requestTableService('ఉల్లిపాయలు & నిమ్మకాయ (Onions & Lemon)', 'ఉల్లిపాయలు, నిమ్మకాయ పంపించమని కిచెన్‌కు చెప్తున్నాను సర్.')">🧅 ఉల్లిపాయ & నిమ్మకాయ</button>
+                        <button class="srv-btn" onclick="requestTableService('పెరుగు / రైతా (Extra Curd / Raita)', 'ఎక్స్‌ట్రా పెరుగు పంపించమని చెప్తున్నాను సర్.')">🥣 పెరుగు / రైతా</button>
+                        <button class="srv-btn" onclick="requestTableService('మంచినీళ్లు (Drinking Water)', 'మంచినీళ్లు పంపిస్తున్నాము సర్.')">💧 మంచినీళ్లు (Water)</button>
+                        <button class="srv-btn bill-btn" onclick="requestTableService('బిల్లు పంపండి (Request Final Bill)', 'మీ టేబుల్ బిల్లు సిద్ధం చేయమని కౌంటర్‌కు చెప్తున్నాను సర్.')">🧾 బిల్లు పంపండి</button>
                     </div>
                 </div>
             `;
 
             document.getElementById('bottomNavBar').innerHTML = `
                 <button onclick="location.reload()" style="width: 100%; background: var(--brand-cyan); color: #071426; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Rajdhani', sans-serif;">
-                    🔄 మళ్ళీ ఆర్డర్ చేయండి (ADD MORE ITEMS)
+                    🔄 ఇంకా ఏమైనా ఫుడ్ ఆర్డర్ చేయండి (ADD MORE FOOD)
                 </button>
             `;
 
-            speakGentVoice(`థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. స్క్రీన్ మీద టైం చెక్ చేసుకోవచ్చు సర్.`);
+            speakGentVoice(`థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. మధ్యలో ఉల్లిపాయలు, నిమ్మకాయ, పెరుగు ఏం కావాలన్నా కింద బటన్ నొక్కండి సర్.`);
             startCountdown(minutes * 60);
         }
 
@@ -842,7 +866,6 @@
                 
                 display.textContent = mins + ":" + secs;
 
-                // Dynamic Progress Bar Percentage
                 const elapsed = totalDuration - timer;
                 const pct = Math.min(100, Math.max(35, Math.round((elapsed / totalDuration) * 100)));
                 if (barFill) barFill.style.width = pct + "%";
