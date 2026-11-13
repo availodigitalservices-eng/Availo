@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVAILO AI WAITER</title>
+    <title>AVAILO AI HUMAN WAITER</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -124,106 +124,72 @@
             justify-content: center;
         }
 
-        /* 2. PREMIUM AI VOICE ORB STAGE (NO CARTOON) */
-        .host-stage {
+        /* 2. REAL HUMAN HOST VIDEO STAGE */
+        .human-stage {
             width: 100%;
-            background: linear-gradient(165deg, #0e2c54 0%, #071426 100%);
-            border: 1.5px solid rgba(32, 221, 224, 0.5);
+            background: #08182e;
+            border: 2px solid var(--cyan);
             border-radius: 20px;
-            padding: 18px 14px 14px;
+            overflow: hidden;
             margin-bottom: 14px;
-            box-shadow: 0 10px 30px rgba(32, 221, 224, 0.18);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            box-shadow: 0 10px 30px rgba(32, 221, 224, 0.25);
+            position: relative;
             cursor: pointer;
         }
 
-        .voice-orb-wrap {
+        .video-wrapper {
+            width: 100%;
+            height: 260px;
             position: relative;
-            width: 96px;
-            height: 96px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
+            background: #0b1f3a;
+            overflow: hidden;
         }
 
-        .orb-ring {
-            position: absolute;
+        .human-video {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            border: 2px solid var(--cyan);
-            opacity: 0.45;
-            transition: all 0.3s ease;
+            object-fit: cover;
+            object-position: center 20%;
+            display: block;
+            transition: transform 0.4s ease;
         }
 
-        .orb-core {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #20DDE0, #0284c7, #0f172a);
-            box-shadow: 0 0 24px rgba(32, 221, 224, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
+        .human-stage.speaking .human-video {
+            transform: scale(1.03);
         }
 
-        .eq-bar {
-            width: 4px;
-            height: 14px;
-            background: #ffffff;
-            border-radius: 4px;
-            transition: height 0.15s ease;
-        }
-
-        /* Speaking Animation */
-        .host-stage.speaking .orb-ring {
-            animation: rippleRing 1.2s infinite ease-out;
-            border-color: var(--gold);
-        }
-
-        .host-stage.speaking .orb-core {
-            box-shadow: 0 0 35px rgba(32, 221, 224, 0.9);
-        }
-
-        .host-stage.speaking .eq-bar:nth-child(1) { animation: eqWave 0.4s infinite alternate; }
-        .host-stage.speaking .eq-bar:nth-child(2) { animation: eqWave 0.25s infinite alternate 0.1s; }
-        .host-stage.speaking .eq-bar:nth-child(3) { animation: eqWave 0.35s infinite alternate 0.2s; }
-        .host-stage.speaking .eq-bar:nth-child(4) { animation: eqWave 0.28s infinite alternate 0.05s; }
-        .host-stage.speaking .eq-bar:nth-child(5) { animation: eqWave 0.42s infinite alternate 0.15s; }
-
-        @keyframes rippleRing {
-            0% { transform: scale(0.95); opacity: 0.85; }
-            100% { transform: scale(1.38); opacity: 0; }
-        }
-
-        @keyframes eqWave {
-            0% { height: 10px; }
-            100% { height: 34px; }
-        }
-
-        .tap-hint {
+        .live-speak-pill {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(7, 20, 38, 0.85);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
             font-family: 'Rajdhani', sans-serif;
             font-size: 11px;
-            font-weight: 700;
-            color: var(--gold);
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .human-stage.speaking .live-speak-pill {
+            background: var(--cyan);
+            color: #071426;
+        }
+
+        .caption-overlay {
+            background: linear-gradient(180deg, rgba(7, 20, 38, 0.92) 0%, #071426 100%);
+            padding: 12px 14px;
+            border-top: 1px solid rgba(32, 221, 224, 0.3);
         }
 
         .speech-caption {
-            background: rgba(7, 20, 38, 0.92);
-            border: 1px solid rgba(32, 221, 224, 0.35);
-            border-radius: 12px;
-            padding: 10px 12px;
             font-size: 13.5px;
             color: #ffffff;
             line-height: 1.5;
-            width: 100%;
         }
 
         /* 3. LANGUAGE SELECTOR */
@@ -422,32 +388,32 @@
         <div class="brand-header">
             <div class="brand-title-wrap">
                 <div class="brand-name">AVAILO</div>
-                <div class="brand-sub">AI VOICE WAITER</div>
+                <div class="brand-sub">AI HUMAN WAITER</div>
             </div>
             <div class="header-right">
                 <div class="online-badge">
-                    <span class="pulse-dot"></span> LIVE VOICE
+                    <span class="pulse-dot"></span> LIVE HOST
                 </div>
                 <button class="api-cfg-btn" onclick="configureSarvamKey()" title="Sarvam API Key">⚙️</button>
             </div>
         </div>
 
-        <!-- 2. Clean AI Voice Visualizer Stage -->
-        <div class="host-stage" id="hostStage" onclick="speakWelcome()">
-            <div class="voice-orb-wrap">
-                <div class="orb-ring"></div>
-                <div class="orb-core">
-                    <span class="eq-bar"></span>
-                    <span class="eq-bar"></span>
-                    <span class="eq-bar"></span>
-                    <span class="eq-bar"></span>
-                    <span class="eq-bar"></span>
+        <!-- 2. Real Human Host Video Stage -->
+        <div class="human-stage" id="hostStage" onclick="speakWelcome()">
+            <div class="video-wrapper">
+                <!-- Real Human Hospitality Host Video -->
+                <video id="humanVideo" class="human-video" loop muted playsinline autoplay
+                    poster="https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=800">
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-talking-on-a-video-call-42874-large.mp4" type="video/mp4">
+                </video>
+                <div class="live-speak-pill" id="hostStatusPill">
+                    <span>🔊</span> <span id="tapHintText">మాట్లాడటానికి ట్యాప్ చేయండి</span>
                 </div>
             </div>
-            <div class="tap-hint" id="tapHintText">● వినడానికి ఇక్కడ ట్యాప్ చేయండి</div>
-
-            <div class="speech-caption" id="hostCaption">
-                "నమస్కారం! AVAILO Dine కి స్వాగతం. నన్ను ట్యాప్ చేసి మాట్లాడండి లేదా కింద మెనూ ఎంచుకోండి."
+            <div class="caption-overlay">
+                <div class="speech-caption" id="hostCaption">
+                    "నమస్కారం! AVAILO Dine కి స్వాగతం. నన్ను ట్యాప్ చేసి మాట్లాడండి లేదా కింద మెనూ ఎంచుకోండి."
+                </div>
             </div>
         </div>
 
@@ -506,7 +472,6 @@
             }
         }
 
-        // URL నుండి కేవలం స్వచ్ఛమైన నంబర్ మాత్రమే తీసుకునేలా శానిటైజ్ చేశాము
         const urlParams = new URLSearchParams(window.location.search);
         const rawTable = urlParams.get('table') || "01";
         const cleanDigits = rawTable.replace(/[^0-9]/g, '');
@@ -525,7 +490,8 @@
                 code: "te-IN",
                 speaker: "anushka",
                 hotel: hotelParam || "అమరావతి గ్రాండ్",
-                tapHint: "● వాయిస్ వినడానికి ఇక్కడ ట్యాప్ చేయండి",
+                tapHint: "మాట్లాడటానికి ట్యాప్ చేయండి",
+                speakingHint: "మాట్లాడుతున్నారు...",
                 welcome: `నమస్కారం! ${hotelParam || "అమరావతి గ్రాండ్"} కి స్వాగతం. మీరు టేబుల్ నంబర్ ${tableParam} లో ఉన్నారు. మీకు ఏం కావాలో చెప్పండి లేదా కింద మెనూలో ఎంచుకోండి.`,
                 menuLbl: "మెనూ ఎంచుకోండి (TOUCH MENU)",
                 micBtn: "మాట్లాడి ఆర్డర్ చేయండి",
@@ -538,7 +504,8 @@
                 code: "en-IN",
                 speaker: "anushka",
                 hotel: hotelParam || "Amaravati Grand",
-                tapHint: "● TAP HERE TO HEAR AI VOICE",
+                tapHint: "TAP TO TALK",
+                speakingHint: "SPEAKING...",
                 welcome: `Welcome to ${hotelParam || "Amaravati Grand"}! You are at Table ${tableParam}. Tell me what you would like to order or select from the menu below.`,
                 menuLbl: "SELECT DISHES (TOUCH MENU)",
                 micBtn: "Voice Order",
@@ -551,7 +518,8 @@
                 code: "hi-IN",
                 speaker: "anushka",
                 hotel: hotelParam || "अमरावती ग्रैंड",
-                tapHint: "● आवाज़ सुनने के लिए यहाँ टैप करें",
+                tapHint: "बात करने के लिए टैप करें",
+                speakingHint: "बोल रहे हैं...",
                 welcome: `नमस्ते! ${hotelParam || "अमरावती ग्रैंड"} में आपका स्वागत है। आप टेबल नंबर ${tableParam} पर हैं। कृपया अपना ऑर्डर बोलें या नीचे मेनू से चुनें।`,
                 menuLbl: "मेनू चुनें (TOUCH MENU)",
                 micBtn: "बोलकर ऑर्डर करें",
@@ -569,9 +537,22 @@
             { id: 'coffee', price: 40, count: 0, names: { te: 'ఫిల్టర్ కాఫీ', en: 'Filter Coffee', hi: 'फ़िल्टर कॉफ़ी' }, desc: { te: 'సంప్రదాయ సౌత్ ఇండియన్ కాఫీ', en: 'Traditional South Indian', hi: 'साउथ इंडियन फ़िल्टर कॉफ़ी' }, keys: ['కాఫీ', 'coffee', 'कॉफ़ी'] }
         ];
 
+        function setSpeakingState(isSpeaking) {
+            const stage = document.getElementById('hostStage');
+            const vid = document.getElementById('humanVideo');
+            const hint = document.getElementById('tapHintText');
+            if (isSpeaking) {
+                stage.classList.add('speaking');
+                hint.innerText = LANG_CONFIG[currentLang].speakingHint;
+                vid.play().catch(() => {});
+            } else {
+                stage.classList.remove('speaking');
+                hint.innerText = LANG_CONFIG[currentLang].tapHint;
+            }
+        }
+
         async function speakWithSarvam(text) {
             document.getElementById('hostCaption').innerText = `"${text}"`;
-            const stage = document.getElementById('hostStage');
 
             if (currentAudio) {
                 currentAudio.pause();
@@ -585,7 +566,7 @@
             }
 
             try {
-                stage.classList.add('speaking');
+                setSpeakingState(true);
                 const response = await fetch("https://api.sarvam.ai/text-to-speech", {
                     method: "POST",
                     headers: {
@@ -607,15 +588,15 @@
                 if (data && data.audios && data.audios[0]) {
                     const audioSrc = "data:audio/wav;base64," + data.audios[0];
                     currentAudio = new Audio(audioSrc);
-                    currentAudio.onended = () => stage.classList.remove('speaking');
-                    currentAudio.onerror = () => stage.classList.remove('speaking');
+                    currentAudio.onended = () => setSpeakingState(false);
+                    currentAudio.onerror = () => setSpeakingState(false);
                     await currentAudio.play();
                 } else {
-                    stage.classList.remove('speaking');
+                    setSpeakingState(false);
                     fallbackBrowserSpeak(text);
                 }
             } catch (err) {
-                stage.classList.remove('speaking');
+                setSpeakingState(false);
                 fallbackBrowserSpeak(text);
             }
         }
@@ -625,10 +606,9 @@
                 window.speechSynthesis.cancel();
                 const utter = new SpeechSynthesisUtterance(text);
                 utter.lang = LANG_CONFIG[currentLang].code;
-                const stage = document.getElementById('hostStage');
-                stage.classList.add('speaking');
-                utter.onend = () => stage.classList.remove('speaking');
-                utter.onerror = () => stage.classList.remove('speaking');
+                setSpeakingState(true);
+                utter.onend = () => setSpeakingState(false);
+                utter.onerror = () => setSpeakingState(false);
                 window.speechSynthesis.speak(utter);
             }
         }
@@ -742,7 +722,7 @@
                 return `• ${i.names.en} (${i.names.te}) x ${i.count} = ₹${cost}`;
             }).join('%0A');
 
-            const msg = `*AVAILO AI VOICE WAITER - ORDER*%0A-----------------------------%0A*Restaurant:* ${LANG_CONFIG.en.hotel}%0A*Table No:* ${tableParam}%0A*Language:* ${currentLang.toUpperCase()}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*Total Bill:* ₹${total}%0A*Time:* ${new Date().toLocaleTimeString()}`;
+            const msg = `*AVAILO AI HUMAN WAITER - ORDER*%0A-----------------------------%0A*Restaurant:* ${LANG_CONFIG.en.hotel}%0A*Table No:* ${tableParam}%0A*Language:* ${currentLang.toUpperCase()}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*Total Bill:* ₹${total}%0A*Time:* ${new Date().toLocaleTimeString()}`;
 
             speakWithSarvam("ధన్యవాదాలు! మీ ఆర్డర్ కిచెన్‌కు పంపిస్తున్నాను.");
             setTimeout(() => {
