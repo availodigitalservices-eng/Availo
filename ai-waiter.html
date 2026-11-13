@@ -29,7 +29,7 @@
             color: var(--text-main);
             font-family: 'Inter', 'Ramabhadra', 'Noto Sans Devanagari', sans-serif;
             min-height: 100vh;
-            padding: 16px 14px 110px;
+            padding: 16px 14px 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -106,28 +106,17 @@
             50% { opacity: 0.3; }
         }
 
-        /* 2. AI LIVE HOST NOTICE CARD */
-        .ai-live-banner {
+        /* 2. DEDICATED LIVE D-ID AVATAR STAGE */
+        #did-avatar-stage {
             width: 100%;
-            background: linear-gradient(135deg, rgba(32, 221, 224, 0.15), rgba(13, 34, 63, 0.95));
-            border: 1.5px solid var(--cyan);
-            border-radius: 16px;
-            padding: 14px;
+            height: 360px;
+            background: #0a1b33;
+            border: 2px solid var(--cyan);
+            border-radius: 18px;
+            overflow: hidden;
             margin-bottom: 14px;
-            box-shadow: 0 8px 24px rgba(32, 221, 224, 0.2);
-        }
-
-        .greeting-title {
-            font-size: 19px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-
-        .greeting-desc {
-            font-size: 13px;
-            color: #cbd5e1;
-            line-height: 1.45;
+            box-shadow: 0 10px 30px rgba(32, 221, 224, 0.25);
+            position: relative;
         }
 
         /* 3. LANGUAGE SELECTOR */
@@ -253,7 +242,6 @@
             text-align: center;
         }
 
-        /* 5. FOOTER */
         .footer-bar {
             margin-top: 20px;
             font-family: 'Rajdhani', sans-serif;
@@ -267,7 +255,7 @@
             color: var(--gold);
         }
 
-        /* 6. BOTTOM ACTION BAR */
+        /* BOTTOM ACTION BAR */
         .bottom-dock {
             position: fixed;
             bottom: 0;
@@ -278,7 +266,7 @@
             padding: 10px 14px;
             display: flex;
             justify-content: center;
-            z-index: 900;
+            z-index: 500;
         }
 
         .btn-send-order {
@@ -314,13 +302,8 @@
             </div>
         </div>
 
-        <!-- 2. Greeting Banner -->
-        <div class="ai-live-banner">
-            <h1 class="greeting-title" id="greetTitle">నమస్కారం! 👋</h1>
-            <p class="greeting-desc" id="greetDesc">
-                స్క్రీన్‌పై ఉన్న మన AVAILO AI వెయిటర్‌తో నేరుగా మాట్లాడి ఆర్డర్ చేయండి లేదా కింద మెనూలో ఎంచుకోండి.
-            </p>
-        </div>
+        <!-- 2. D-ID LIVE AI HUMAN WAITER CONTAINER -->
+        <div id="did-avatar-stage"></div>
 
         <!-- 3. Language Selection -->
         <div class="lang-section">
@@ -334,7 +317,7 @@
 
         <!-- 4. Touch Menu Section -->
         <div class="menu-header">
-            <span id="menuLabel">QUICK TOUCH MENU</span>
+            <span id="menuLabel">మెనూ ఎంచుకోండి (TOUCH MENU)</span>
             <span id="totalCostBadge" style="color: var(--cyan);">₹0</span>
         </div>
 
@@ -365,22 +348,16 @@
 
         const CONTENT = {
             te: {
-                title: "నమస్కారం! 👋",
-                desc: "స్క్రీన్‌పై ఉన్న మన AVAILO AI వెయిటర్‌తో నేరుగా మాట్లాడి ఆర్డర్ చేయండి లేదా కింద మెనూలో ఎంచుకోండి.",
                 menuLbl: "మెనూ ఎంచుకోండి (TOUCH MENU)",
                 orderBtn: "కిచెన్‌కు ఆర్డర్ పంపండి",
                 emptyWarn: "దయచేసి ముందుగా మెనూలో కనీసం ఒక ఐటమ్ ఎంచుకోండి సర్!"
             },
             en: {
-                title: "Welcome! 👋",
-                desc: "Talk directly to our AVAILO AI Human Waiter on screen or select dishes from the quick menu below.",
                 menuLbl: "SELECT DISHES (TOUCH MENU)",
                 orderBtn: "Send Order to Kitchen",
                 emptyWarn: "Please select at least one item from the menu first!"
             },
             hi: {
-                title: "नमस्ते! 👋",
-                desc: "स्क्रीन पर हमारे AVAILO AI वेटर से सीधे बात करके ऑर्डर करें या नीचे मेनू से चुनें।",
                 menuLbl: "मेनू चुनें (TOUCH MENU)",
                 orderBtn: "किचन को ऑर्डर भेजें",
                 emptyWarn: "कृपया पहले मेनू से कम से कम एक आइटम चुनें!"
@@ -418,8 +395,6 @@
             document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
 
-            document.getElementById('greetTitle').innerText = CONTENT[lang].title;
-            document.getElementById('greetDesc').innerText = CONTENT[lang].desc;
             document.getElementById('menuLabel').innerText = CONTENT[lang].menuLbl;
             document.getElementById('orderBtnText').innerText = CONTENT[lang].orderBtn;
             renderMenu();
@@ -464,20 +439,16 @@
         window.addEventListener('load', renderMenu);
     </script>
 
-    <!-- D-ID LIVE AI HUMAN WAITER AGENT -->
+    <!-- D-ID LIVE AI HUMAN WAITER EMBEDDED DIRECTLY IN STAGE -->
     <script type="module"
           src="https://agent.d-id.com/v2/index.js"
-          data-mode="fabio"
+          data-mode="full"
           data-client-key="ck_xwdCGTUQ-bUIfTJpXcQ8Z"
           data-agent-id="v2_agt_ExEqstSu"
           data-name="did-agent"
           data-monitor="true"
-          data-light-mode="false"
-          data-orientation="horizontal"
-          data-position="right"
-          data-open-mode="expanded">
+          data-target-id="did-avatar-stage">
     </script>
 
 </body>
 </html>
-
