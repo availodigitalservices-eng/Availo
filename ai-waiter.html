@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVAILO AI WAITER - SARVAM TELUGU VOICE</title>
+    <title>AVAILO AI WAITER</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -61,7 +61,7 @@
 
         .brand-name {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 20px;
+            font-size: 21px;
             font-weight: 800;
             color: var(--cyan);
             letter-spacing: 1.5px;
@@ -124,73 +124,105 @@
             justify-content: center;
         }
 
-        /* 2. LIP-SYNC ANIMATED HUMAN HOST AVATAR */
+        /* 2. PREMIUM AI VOICE ORB STAGE (NO CARTOON) */
         .host-stage {
             width: 100%;
             background: linear-gradient(165deg, #0e2c54 0%, #071426 100%);
-            border: 2px solid var(--cyan);
+            border: 1.5px solid rgba(32, 221, 224, 0.5);
             border-radius: 20px;
-            padding: 16px 14px;
+            padding: 18px 14px 14px;
             margin-bottom: 14px;
-            box-shadow: 0 10px 30px rgba(32, 221, 224, 0.22);
+            box-shadow: 0 10px 30px rgba(32, 221, 224, 0.18);
             display: flex;
             flex-direction: column;
             align-items: center;
             cursor: pointer;
         }
 
-        .avatar-circle {
-            width: 132px;
-            height: 132px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 50% 30%, #1d4ed8, #0f172a);
-            border: 2.5px solid var(--gold);
+        .voice-orb-wrap {
+            position: relative;
+            width: 96px;
+            height: 96px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 12px;
-            position: relative;
-            box-shadow: 0 0 22px rgba(221, 182, 93, 0.3);
         }
 
-        .host-stage.speaking .avatar-circle {
-            border-color: var(--cyan);
-            box-shadow: 0 0 30px rgba(32, 221, 224, 0.7);
+        .orb-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--cyan);
+            opacity: 0.45;
+            transition: all 0.3s ease;
         }
 
-        /* Eye Blink & Lip Sync Animations */
-        .eye-lid {
-            animation: eyeBlink 4.2s infinite;
-            transform-origin: center;
+        .orb-core {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #20DDE0, #0284c7, #0f172a);
+            box-shadow: 0 0 24px rgba(32, 221, 224, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
         }
 
-        @keyframes eyeBlink {
-            0%, 94%, 100% { transform: scaleY(1); }
-            97% { transform: scaleY(0.1); }
+        .eq-bar {
+            width: 4px;
+            height: 14px;
+            background: #ffffff;
+            border-radius: 4px;
+            transition: height 0.15s ease;
         }
 
-        .host-mouth {
-            transition: transform 0.1s ease;
-            transform-origin: 100px 134px;
+        /* Speaking Animation */
+        .host-stage.speaking .orb-ring {
+            animation: rippleRing 1.2s infinite ease-out;
+            border-color: var(--gold);
         }
 
-        .host-stage.speaking .host-mouth {
-            animation: lipSyncMove 0.22s infinite alternate ease-in-out;
+        .host-stage.speaking .orb-core {
+            box-shadow: 0 0 35px rgba(32, 221, 224, 0.9);
         }
 
-        @keyframes lipSyncMove {
-            0% { transform: scaleY(0.4) scaleX(0.95); }
-            100% { transform: scaleY(1.35) scaleX(1.05); }
+        .host-stage.speaking .eq-bar:nth-child(1) { animation: eqWave 0.4s infinite alternate; }
+        .host-stage.speaking .eq-bar:nth-child(2) { animation: eqWave 0.25s infinite alternate 0.1s; }
+        .host-stage.speaking .eq-bar:nth-child(3) { animation: eqWave 0.35s infinite alternate 0.2s; }
+        .host-stage.speaking .eq-bar:nth-child(4) { animation: eqWave 0.28s infinite alternate 0.05s; }
+        .host-stage.speaking .eq-bar:nth-child(5) { animation: eqWave 0.42s infinite alternate 0.15s; }
+
+        @keyframes rippleRing {
+            0% { transform: scale(0.95); opacity: 0.85; }
+            100% { transform: scale(1.38); opacity: 0; }
+        }
+
+        @keyframes eqWave {
+            0% { height: 10px; }
+            100% { height: 34px; }
+        }
+
+        .tap-hint {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
 
         .speech-caption {
             background: rgba(7, 20, 38, 0.92);
-            border: 1px solid rgba(32, 221, 224, 0.4);
+            border: 1px solid rgba(32, 221, 224, 0.35);
             border-radius: 12px;
-            padding: 9px 12px;
+            padding: 10px 12px;
             font-size: 13.5px;
             color: #ffffff;
-            line-height: 1.45;
+            line-height: 1.5;
             width: 100%;
         }
 
@@ -390,54 +422,29 @@
         <div class="brand-header">
             <div class="brand-title-wrap">
                 <div class="brand-name">AVAILO</div>
-                <div class="brand-sub">SARVAM AI VOICE WAITER</div>
+                <div class="brand-sub">AI VOICE WAITER</div>
             </div>
             <div class="header-right">
                 <div class="online-badge">
-                    <span class="pulse-dot"></span> SARVAM AI
+                    <span class="pulse-dot"></span> LIVE VOICE
                 </div>
-                <button class="api-cfg-btn" onclick="configureSarvamKey()" title="Set Sarvam API Key">⚙️</button>
+                <button class="api-cfg-btn" onclick="configureSarvamKey()" title="Sarvam API Key">⚙️</button>
             </div>
         </div>
 
-        <!-- 2. Lip-Sync Animated Host Stage -->
+        <!-- 2. Clean AI Voice Visualizer Stage -->
         <div class="host-stage" id="hostStage" onclick="speakWelcome()">
-            <div class="avatar-circle">
-                <!-- Custom SVG Indian Hospitality Host with Lip-Sync -->
-                <svg viewBox="0 0 200 200" width="118" height="118">
-                    <!-- Hair Back -->
-                    <path d="M45 95 C40 40, 160 40, 155 95 L162 165 L38 165 Z" fill="#1e1b4b"/>
-                    <!-- Shoulders & Uniform -->
-                    <path d="M35 195 C40 155, 160 155, 165 195 Z" fill="#0f172a" stroke="#20DDE0" stroke-width="2"/>
-                    <path d="M85 158 L100 185 L115 158 Z" fill="#DDB65D"/>
-                    <!-- Neck -->
-                    <rect x="88" y="135" width="24" height="26" rx="8" fill="#f1c29b"/>
-                    <!-- Face -->
-                    <path d="M62 85 C62 48, 138 48, 138 85 C138 125, 118 146, 100 146 C82 146, 62 125, 62 85 Z" fill="#fbd3b0"/>
-                    <!-- Hair Front Bangs -->
-                    <path d="M60 85 C62 45, 138 45, 140 85 C128 62, 95 60, 60 85 Z" fill="#1e1b4b"/>
-                    <!-- Bindi -->
-                    <circle cx="100" cy="79" r="2.8" fill="#dc2626"/>
-                    <!-- Eyebrows -->
-                    <path d="M74 84 Q83 80 91 84" stroke="#1e1b4b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                    <path d="M109 84 Q117 80 126 84" stroke="#1e1b4b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                    <!-- Eyes -->
-                    <g class="eye-lid">
-                        <ellipse cx="83" cy="94" rx="5.5" ry="4" fill="#1e1b4b"/>
-                        <circle cx="84.5" cy="92.5" r="1.5" fill="#ffffff"/>
-                        <ellipse cx="117" cy="94" rx="5.5" ry="4" fill="#1e1b4b"/>
-                        <circle cx="118.5" cy="92.5" r="1.5" fill="#ffffff"/>
-                    </g>
-                    <!-- Nose -->
-                    <path d="M100 96 L97 111 L103 111" stroke="#d99b6c" stroke-width="2" fill="none" stroke-linecap="round"/>
-                    <!-- Animated Lip-Sync Mouth -->
-                    <ellipse class="host-mouth" cx="100" cy="126" rx="11" ry="5.5" fill="#be123c"/>
-                    <!-- Headset Mic -->
-                    <path d="M58 95 C52 95, 52 115, 60 115" stroke="#20DDE0" stroke-width="3" fill="none"/>
-                    <path d="M58 115 Q75 128 86 127" stroke="#20DDE0" stroke-width="2" fill="none"/>
-                    <circle cx="87" cy="127" r="3" fill="#20DDE0"/>
-                </svg>
+            <div class="voice-orb-wrap">
+                <div class="orb-ring"></div>
+                <div class="orb-core">
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                </div>
             </div>
+            <div class="tap-hint" id="tapHintText">● వినడానికి ఇక్కడ ట్యాప్ చేయండి</div>
 
             <div class="speech-caption" id="hostCaption">
                 "నమస్కారం! AVAILO Dine కి స్వాగతం. నన్ను ట్యాప్ చేసి మాట్లాడండి లేదా కింద మెనూ ఎంచుకోండి."
@@ -446,7 +453,7 @@
 
         <!-- 3. Language Selector -->
         <div class="lang-section">
-            <span class="section-label">Choose Your Language (Sarvam AI Voice)</span>
+            <span class="section-label">Choose Your Language</span>
             <div class="lang-grid">
                 <button class="lang-pill active" onclick="switchLang('te', this)">తెలుగు</button>
                 <button class="lang-pill" onclick="switchLang('en', this)">English</button>
@@ -464,7 +471,7 @@
 
         <!-- 5. Footer -->
         <div class="footer-bar">
-            Table No: <span id="tableNumber">01</span> · Powered by <span>AVAILO & SARVAM AI</span>
+            Table No: <span id="tableNumber">01</span> · Powered by <span>AVAILO</span>
         </div>
     </div>
 
@@ -481,7 +488,6 @@
     </div>
 
     <script>
-        // 🔑 ఇక్కడ నీ Sarvam AI API Key పెట్టు (లేదా పేజీ పైన ⚙️ నొక్కి సేవ్ చేసుకో)
         const DEFAULT_SARVAM_KEY = "YOUR_SARVAM_API_KEY_HERE";
 
         function getSarvamKey() {
@@ -492,18 +498,22 @@
 
         function configureSarvamKey() {
             const current = localStorage.getItem('availo_sarvam_key') || "";
-            const userKey = prompt("మీ Sarvam AI API Subscription Key ఇక్కడ పేస్ట్ చేయండి:", current);
+            const userKey = prompt("మీ Sarvam AI API Key ఇక్కడ పేస్ట్ చేయండి:", current);
             if (userKey !== null) {
                 localStorage.setItem('availo_sarvam_key', userKey.trim());
-                alert("Sarvam AI Key సేవ్ అయింది! ఇప్పుడు అవతార్ మీద ట్యాప్ చేసి తెలుగు వాయిస్ వినండి.");
+                alert("Sarvam AI Key సేవ్ అయింది!");
                 speakWelcome();
             }
         }
 
+        // URL నుండి కేవలం స్వచ్ఛమైన నంబర్ మాత్రమే తీసుకునేలా శానిటైజ్ చేశాము
         const urlParams = new URLSearchParams(window.location.search);
-        const hotelName = urlParams.get('hotel') || "అమరావతి గ్రాండ్";
-        const tableParam = urlParams.get('table') || "01";
-        const kitchenWa = urlParams.get('desk') || "919966157369";
+        const rawTable = urlParams.get('table') || "01";
+        const cleanDigits = rawTable.replace(/[^0-9]/g, '');
+        const tableParam = cleanDigits ? cleanDigits.slice(0, 3) : "01";
+
+        const hotelParam = urlParams.get('hotel');
+        const kitchenWa = (urlParams.get('desk') || "919966157369").replace(/[^0-9]/g, '');
 
         document.getElementById('tableNumber').innerText = tableParam;
 
@@ -514,7 +524,9 @@
             te: {
                 code: "te-IN",
                 speaker: "anushka",
-                welcome: `నమస్కారం! ${hotelName} కి స్వాగతం. మీరు టేబుల్ ${tableParam} లో ఉన్నారు. మీకు ఏం కావాలో చెప్పండి లేదా కింద మెనూలో ఎంచుకోండి.`,
+                hotel: hotelParam || "అమరావతి గ్రాండ్",
+                tapHint: "● వాయిస్ వినడానికి ఇక్కడ ట్యాప్ చేయండి",
+                welcome: `నమస్కారం! ${hotelParam || "అమరావతి గ్రాండ్"} కి స్వాగతం. మీరు టేబుల్ నంబర్ ${tableParam} లో ఉన్నారు. మీకు ఏం కావాలో చెప్పండి లేదా కింద మెనూలో ఎంచుకోండి.`,
                 menuLbl: "మెనూ ఎంచుకోండి (TOUCH MENU)",
                 micBtn: "మాట్లాడి ఆర్డర్ చేయండి",
                 orderBtn: "ఆర్డర్ పంపండి",
@@ -525,7 +537,9 @@
             en: {
                 code: "en-IN",
                 speaker: "anushka",
-                welcome: `Welcome to ${hotelName}! You are at Table ${tableParam}. Tell me what you would like to order or select from the menu below.`,
+                hotel: hotelParam || "Amaravati Grand",
+                tapHint: "● TAP HERE TO HEAR AI VOICE",
+                welcome: `Welcome to ${hotelParam || "Amaravati Grand"}! You are at Table ${tableParam}. Tell me what you would like to order or select from the menu below.`,
                 menuLbl: "SELECT DISHES (TOUCH MENU)",
                 micBtn: "Voice Order",
                 orderBtn: "Send Order",
@@ -536,7 +550,9 @@
             hi: {
                 code: "hi-IN",
                 speaker: "anushka",
-                welcome: `नमस्ते! ${hotelName} में आपका स्वागत है। आप टेबल नंबर ${tableParam} पर हैं। कृपया अपना ऑर्डर बोलें या नीचे मेनू से चुनें।`,
+                hotel: hotelParam || "अमरावती ग्रैंड",
+                tapHint: "● आवाज़ सुनने के लिए यहाँ टैप करें",
+                welcome: `नमस्ते! ${hotelParam || "अमरावती ग्रैंड"} में आपका स्वागत है। आप टेबल नंबर ${tableParam} पर हैं। कृपया अपना ऑर्डर बोलें या नीचे मेनू से चुनें।`,
                 menuLbl: "मेनू चुनें (TOUCH MENU)",
                 micBtn: "बोलकर ऑर्डर करें",
                 orderBtn: "ऑर्डर भेजें",
@@ -553,7 +569,6 @@
             { id: 'coffee', price: 40, count: 0, names: { te: 'ఫిల్టర్ కాఫీ', en: 'Filter Coffee', hi: 'फ़िल्टर कॉफ़ी' }, desc: { te: 'సంప్రదాయ సౌత్ ఇండియన్ కాఫీ', en: 'Traditional South Indian', hi: 'साउथ इंडियन फ़िल्टर कॉफ़ी' }, keys: ['కాఫీ', 'coffee', 'कॉफ़ी'] }
         ];
 
-        // 🎙️ SARVAM AI TEXT-TO-SPEECH FUNCTION
         async function speakWithSarvam(text) {
             document.getElementById('hostCaption').innerText = `"${text}"`;
             const stage = document.getElementById('hostStage');
@@ -565,7 +580,6 @@
 
             const apiKey = getSarvamKey();
             if (!apiKey || apiKey === "YOUR_SARVAM_API_KEY_HERE") {
-                // కీ ఇంకా ఇవ్వకపోతే బ్రౌజర్ వాయిస్‌తో ఆగకుండా ప్లే చేస్తుంది
                 fallbackBrowserSpeak(text);
                 return;
             }
@@ -601,7 +615,6 @@
                     fallbackBrowserSpeak(text);
                 }
             } catch (err) {
-                console.error("Sarvam TTS error:", err);
                 stage.classList.remove('speaking');
                 fallbackBrowserSpeak(text);
             }
@@ -648,6 +661,7 @@
             document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
 
+            document.getElementById('tapHintText').innerText = LANG_CONFIG[lang].tapHint;
             document.getElementById('menuLabel').innerText = LANG_CONFIG[lang].menuLbl;
             document.getElementById('micBtnText').innerText = LANG_CONFIG[lang].micBtn;
             document.getElementById('orderBtnText').innerText = LANG_CONFIG[lang].orderBtn;
@@ -728,7 +742,7 @@
                 return `• ${i.names.en} (${i.names.te}) x ${i.count} = ₹${cost}`;
             }).join('%0A');
 
-            const msg = `*AVAILO SARVAM AI WAITER - ORDER*%0A-----------------------------%0A*Restaurant:* ${hotelName}%0A*Table No:* ${tableParam}%0A*Language:* ${currentLang.toUpperCase()}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*Total Bill:* ₹${total}%0A*Time:* ${new Date().toLocaleTimeString()}`;
+            const msg = `*AVAILO AI VOICE WAITER - ORDER*%0A-----------------------------%0A*Restaurant:* ${LANG_CONFIG.en.hotel}%0A*Table No:* ${tableParam}%0A*Language:* ${currentLang.toUpperCase()}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*Total Bill:* ₹${total}%0A*Time:* ${new Date().toLocaleTimeString()}`;
 
             speakWithSarvam("ధన్యవాదాలు! మీ ఆర్డర్ కిచెన్‌కు పంపిస్తున్నాను.");
             setTimeout(() => {
