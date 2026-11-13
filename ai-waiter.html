@@ -1,1 +1,483 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AVAILO AI HUMAN WAITER - LIVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #071426;
+            --card-bg: #0d223f;
+            --cyan: #20DDE0;
+            --gold: #DDB65D;
+            --green: #22c55e;
+            --accent-green: #16a34a;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(circle at 50% 0%, #103563 0%, var(--bg-dark) 85%);
+            color: var(--text-main);
+            font-family: 'Inter', 'Ramabhadra', 'Noto Sans Devanagari', sans-serif;
+            min-height: 100vh;
+            padding: 16px 14px 110px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .app-shell {
+            width: 100%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* 1. TOP BRAND & ONLINE STATUS */
+        .brand-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(32, 221, 224, 0.25);
+            margin-bottom: 14px;
+        }
+
+        .brand-title-wrap {
+            text-align: left;
+        }
+
+        .brand-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--cyan);
+            letter-spacing: 1.5px;
+            line-height: 1;
+        }
+
+        .brand-sub {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .online-badge {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid var(--green);
+            color: var(--green);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            letter-spacing: 0.8px;
+        }
+
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--green);
+            animation: blinkDot 1.4s infinite;
+        }
+
+        @keyframes blinkDot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* 2. AI LIVE HOST NOTICE CARD */
+        .ai-live-banner {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(32, 221, 224, 0.15), rgba(13, 34, 63, 0.95));
+            border: 1.5px solid var(--cyan);
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 24px rgba(32, 221, 224, 0.2);
+        }
+
+        .greeting-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .greeting-desc {
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 1.45;
+        }
+
+        /* 3. LANGUAGE SELECTOR */
+        .lang-section {
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 12px;
+            margin-bottom: 14px;
+        }
+
+        .section-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .lang-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .lang-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(32, 221, 224, 0.25);
+            color: #e2e8f0;
+            padding: 8px 6px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-pill.active {
+            background: var(--cyan);
+            color: #071426;
+            border-color: var(--cyan);
+            box-shadow: 0 0 12px rgba(32, 221, 224, 0.4);
+        }
+
+        /* 4. TOUCH MENU LIST */
+        .menu-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .menu-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            text-align: left;
+        }
+
+        .dish-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 11px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dish-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .dish-desc {
+            font-size: 11.5px;
+            color: var(--text-muted);
+        }
+
+        .dish-price {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15.5px;
+            font-weight: 800;
+            color: var(--cyan);
+            margin-top: 2px;
+            display: inline-block;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .q-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1.5px solid var(--cyan);
+            background: rgba(32, 221, 224, 0.1);
+            color: var(--cyan);
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .q-num {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        /* 5. FOOTER */
+        .footer-bar {
+            margin-top: 20px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.6px;
+        }
+
+        .footer-bar span {
+            color: var(--gold);
+        }
+
+        /* 6. BOTTOM ACTION BAR */
+        .bottom-dock {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #050e1a;
+            border-top: 1.5px solid rgba(32, 221, 224, 0.25);
+            padding: 10px 14px;
+            display: flex;
+            justify-content: center;
+            z-index: 900;
+        }
+
+        .btn-send-order {
+            width: 100%;
+            max-width: 440px;
+            background: var(--accent-green);
+            border: none;
+            color: #ffffff;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(22, 163, 74, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-shell">
+        <!-- 1. Header -->
+        <div class="brand-header">
+            <div class="brand-title-wrap">
+                <div class="brand-name">AVAILO</div>
+                <div class="brand-sub">AI HUMAN WAITER</div>
+            </div>
+            <div class="online-badge">
+                <span class="pulse-dot"></span> LIVE AI HOST
+            </div>
+        </div>
+
+        <!-- 2. Greeting Banner -->
+        <div class="ai-live-banner">
+            <h1 class="greeting-title" id="greetTitle">నమస్కారం! 👋</h1>
+            <p class="greeting-desc" id="greetDesc">
+                స్క్రీన్‌పై ఉన్న మన AVAILO AI వెయిటర్‌తో నేరుగా మాట్లాడి ఆర్డర్ చేయండి లేదా కింద మెనూలో ఎంచుకోండి.
+            </p>
+        </div>
+
+        <!-- 3. Language Selection -->
+        <div class="lang-section">
+            <span class="section-label">Choose Your Language</span>
+            <div class="lang-grid">
+                <button class="lang-pill active" onclick="switchLang('te', this)">తెలుగు</button>
+                <button class="lang-pill" onclick="switchLang('en', this)">English</button>
+                <button class="lang-pill" onclick="switchLang('hi', this)">हिन्दी</button>
+            </div>
+        </div>
+
+        <!-- 4. Touch Menu Section -->
+        <div class="menu-header">
+            <span id="menuLabel">QUICK TOUCH MENU</span>
+            <span id="totalCostBadge" style="color: var(--cyan);">₹0</span>
+        </div>
+
+        <div class="menu-list" id="menuContainer"></div>
+
+        <!-- 5. Table Footer -->
+        <div class="footer-bar">
+            Table No: <span id="tableNumber">01</span> · Powered by <span>AVAILO</span>
+        </div>
+    </div>
+
+    <!-- 6. Bottom WhatsApp Order Bar -->
+    <div class="bottom-dock">
+        <button class="btn-send-order" onclick="sendWhatsAppOrder()">
+            <span>🛒</span> <span id="orderBtnText">కిచెన్‌కు ఆర్డర్ పంపండి</span> (<span id="cartCount">0</span>)
+        </button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const hotelName = urlParams.get('hotel') || "Amaravati Grand";
+        const tableParam = urlParams.get('table') || "01";
+        const kitchenWa = urlParams.get('desk') || "919966157369";
+
+        document.getElementById('tableNumber').innerText = tableParam;
+
+        let currentLang = 'te';
+
+        const CONTENT = {
+            te: {
+                title: "నమస్కారం! 👋",
+                desc: "స్క్రీన్‌పై ఉన్న మన AVAILO AI వెయిటర్‌తో నేరుగా మాట్లాడి ఆర్డర్ చేయండి లేదా కింద మెనూలో ఎంచుకోండి.",
+                menuLbl: "మెనూ ఎంచుకోండి (TOUCH MENU)",
+                orderBtn: "కిచెన్‌కు ఆర్డర్ పంపండి",
+                emptyWarn: "దయచేసి ముందుగా మెనూలో కనీసం ఒక ఐటమ్ ఎంచుకోండి సర్!"
+            },
+            en: {
+                title: "Welcome! 👋",
+                desc: "Talk directly to our AVAILO AI Human Waiter on screen or select dishes from the quick menu below.",
+                menuLbl: "SELECT DISHES (TOUCH MENU)",
+                orderBtn: "Send Order to Kitchen",
+                emptyWarn: "Please select at least one item from the menu first!"
+            },
+            hi: {
+                title: "नमस्ते! 👋",
+                desc: "स्क्रीन पर हमारे AVAILO AI वेटर से सीधे बात करके ऑर्डर करें या नीचे मेनू से चुनें।",
+                menuLbl: "मेनू चुनें (TOUCH MENU)",
+                orderBtn: "किचन को ऑर्डर भेजें",
+                emptyWarn: "कृपया पहले मेनू से कम से कम एक आइटम चुनें!"
+            }
+        };
+
+        const MENU = [
+            { id: 'biryani', price: 220, count: 0, names: { te: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', en: 'Special Veg Dum Biryani', hi: 'स्पेशल वेज दम बिरयानी' }, desc: { te: 'రైతా & మిర్చి కా సాలన్', en: 'With Raita & Salan', hi: 'रायता और सालन के साथ' } },
+            { id: 'chickenBiryani', price: 280, count: 0, names: { te: 'చికెన్ దమ్ బిర్యానీ', en: 'Chicken Dum Biryani', hi: 'चिकन दम बिरयानी' }, desc: { te: 'అసలైన హైదరాబాదీ రుచి', en: 'Authentic Hyderabadi Dum', hi: 'असली दम मसाला स्वाद' } },
+            { id: 'dosa', price: 80, count: 0, names: { te: 'మసాలా దోశ', en: 'Masala Dosa', hi: 'मसाला डोसा' }, desc: { te: 'చట్నీ & సాంబార్‌తో', en: 'Crispy dosa with chutney', hi: 'चटनी और सांभर के साथ' } },
+            { id: 'coffee', price: 40, count: 0, names: { te: 'ఫిల్టర్ కాఫీ', en: 'Filter Coffee', hi: 'फ़िल्टर कॉफ़ी' }, desc: { te: 'సంప్రదాయ సౌత్ ఇండియన్ కాఫీ', en: 'Traditional South Indian', hi: 'साउथ इंडियन फ़िल्टर कॉफ़ी' } }
+        ];
+
+        function renderMenu() {
+            const container = document.getElementById('menuContainer');
+            container.innerHTML = MENU.map(item => `
+                <div class="dish-card">
+                    <div>
+                        <div class="dish-name">${item.names[currentLang]}</div>
+                        <div class="dish-desc">${item.desc[currentLang]}</div>
+                        <span class="dish-price">₹${item.price}</span>
+                    </div>
+                    <div class="qty-controls">
+                        <button class="q-btn" onclick="changeQty('${item.id}', -1)">-</button>
+                        <span class="q-num">${item.count}</span>
+                        <button class="q-btn" onclick="changeQty('${item.id}', 1)">+</button>
+                    </div>
+                </div>
+            `).join('');
+            updateCart();
+        }
+
+        function switchLang(lang, el) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+
+            document.getElementById('greetTitle').innerText = CONTENT[lang].title;
+            document.getElementById('greetDesc').innerText = CONTENT[lang].desc;
+            document.getElementById('menuLabel').innerText = CONTENT[lang].menuLbl;
+            document.getElementById('orderBtnText').innerText = CONTENT[lang].orderBtn;
+            renderMenu();
+        }
+
+        function changeQty(id, delta) {
+            const item = MENU.find(i => i.id === id);
+            if (!item) return;
+            item.count = Math.max(0, item.count + delta);
+            renderMenu();
+        }
+
+        function updateCart() {
+            let qty = 0;
+            let total = 0;
+            MENU.forEach(i => {
+                qty += i.count;
+                total += i.count * i.price;
+            });
+            document.getElementById('cartCount').innerText = qty;
+            document.getElementById('totalCostBadge').innerText = `₹${total}`;
+        }
+
+        function sendWhatsAppOrder() {
+            const selected = MENU.filter(i => i.count > 0);
+            if (selected.length === 0) {
+                alert(CONTENT[currentLang].emptyWarn);
+                return;
+            }
+            let total = 0;
+            const itemsStr = selected.map(i => {
+                const cost = i.count * i.price;
+                total += cost;
+                return `• ${i.names.en} (${i.names.te}) x ${i.count} = ₹${cost}`;
+            }).join('%0A');
+
+            const msg = `*AVAILO AI HUMAN WAITER - LIVE ORDER*%0A-----------------------------%0A*Restaurant:* ${hotelName}%0A*Table No:* ${tableParam}%0A*Language:* ${currentLang.toUpperCase()}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*Total Bill:* ₹${total}%0A*Time:* ${new Date().toLocaleTimeString()}`;
+
+            window.location.href = `https://wa.me/${kitchenWa}?text=${msg}`;
+        }
+
+        window.addEventListener('load', renderMenu);
+    </script>
+
+    <!-- D-ID LIVE AI HUMAN WAITER AGENT -->
+    <script type="module"
+          src="https://agent.d-id.com/v2/index.js"
+          data-mode="fabio"
+          data-client-key="ck_xwdCGTUQ-bUIfTJpXcQ8Z"
+          data-agent-id="v2_agt_ExEqstSu"
+          data-name="did-agent"
+          data-monitor="true"
+          data-light-mode="false"
+          data-orientation="horizontal"
+          data-position="right"
+          data-open-mode="expanded">
+    </script>
+
+</body>
+</html>
 
