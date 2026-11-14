@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVAILO AI HUMAN WAITER</title>
+    <title>AVAILO AI VOICE CONCIERGE</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #071426;
-            --card-bg: #0d223f;
+            --bg-dark: #040b16;
+            --card-bg: rgba(13, 34, 63, 0.72);
             --cyan: #20DDE0;
             --gold: #DDB65D;
+            --purple: #8b5cf6;
             --green: #22c55e;
             --accent-green: #16a34a;
             --text-main: #ffffff;
@@ -25,7 +26,7 @@
         }
 
         body {
-            background: radial-gradient(circle at 50% 0%, #103563 0%, var(--bg-dark) 85%);
+            background: radial-gradient(circle at 50% 15%, #0c274d 0%, var(--bg-dark) 80%);
             color: var(--text-main);
             font-family: 'Inter', 'Ramabhadra', 'Noto Sans Devanagari', sans-serif;
             min-height: 100vh;
@@ -51,7 +52,7 @@
             justify-content: space-between;
             align-items: center;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(32, 221, 224, 0.25);
+            border-bottom: 1px solid rgba(32, 221, 224, 0.2);
             margin-bottom: 14px;
         }
 
@@ -61,20 +62,20 @@
 
         .brand-name {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 21px;
+            font-size: 22px;
             font-weight: 800;
             color: var(--cyan);
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             line-height: 1;
         }
 
         .brand-sub {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 700;
             color: var(--gold);
-            letter-spacing: 1px;
-            margin-top: 2px;
+            letter-spacing: 1.2px;
+            margin-top: 3px;
         }
 
         .header-right {
@@ -83,31 +84,16 @@
             gap: 8px;
         }
 
-        .online-badge {
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid var(--green);
-            color: var(--green);
+        .mode-badge {
+            background: rgba(32, 221, 224, 0.12);
+            border: 1px solid rgba(32, 221, 224, 0.4);
+            color: var(--cyan);
             font-family: 'Rajdhani', sans-serif;
             font-size: 10.5px;
             font-weight: 800;
-            padding: 4px 9px;
+            padding: 4px 10px;
             border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .pulse-dot {
-            width: 7px;
-            height: 7px;
-            background: var(--green);
-            border-radius: 50%;
-            animation: blinkDot 1.4s infinite;
-        }
-
-        @keyframes blinkDot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            letter-spacing: 0.8px;
         }
 
         .api-cfg-btn {
@@ -124,116 +110,159 @@
             justify-content: center;
         }
 
-        /* 2. FOREIGN HOST REAL-TIME LIP-SYNC STAGE */
-        .human-stage {
+        /* 2. PURE VOICE AI NEBULA & WAVE STAGE */
+        .voice-stage {
             width: 100%;
-            background: linear-gradient(170deg, #0e2c54 0%, #071426 100%);
-            border: 2px solid var(--cyan);
-            border-radius: 20px;
-            overflow: hidden;
+            background: linear-gradient(175deg, rgba(16, 44, 84, 0.65) 0%, rgba(4, 11, 22, 0.95) 100%);
+            border: 1.5px solid rgba(32, 221, 224, 0.4);
+            border-radius: 22px;
+            padding: 18px 14px 14px;
             margin-bottom: 14px;
-            box-shadow: 0 10px 30px rgba(32, 221, 224, 0.25);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(32, 221, 224, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
-            cursor: pointer;
         }
 
-        .host-canvas-wrap {
-            width: 100%;
-            height: 250px;
+        .voice-stage.listening {
+            border-color: #ef4444;
+            box-shadow: 0 0 28px rgba(239, 68, 68, 0.35);
+        }
+
+        .voice-stage.speaking {
+            border-color: var(--cyan);
+            box-shadow: 0 0 32px rgba(32, 221, 224, 0.4);
+        }
+
+        .status-chip {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            padding: 4px 12px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--gold);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .voice-stage.listening .status-chip {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .voice-stage.speaking .status-chip {
+            background: rgba(32, 221, 224, 0.2);
+            color: var(--cyan);
+        }
+
+        /* Interactive Core Button */
+        .ai-core-btn {
+            width: 116px;
+            height: 116px;
+            border-radius: 50%;
+            border: none;
+            background: radial-gradient(circle at 35% 35%, #20DDE0, #0369a1 65%, #071426 100%);
+            box-shadow: 0 0 30px rgba(32, 221, 224, 0.45);
+            cursor: pointer;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle at 50% 40%, #173f73 0%, #071426 85%);
+            margin: 6px 0 12px;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
         }
 
-        /* Eye Blinking & Natural Head Sway */
-        .host-head-group {
-            animation: subtleBreathe 4s ease-in-out infinite;
-            transform-origin: 150px 180px;
+        .ai-core-btn:active {
+            transform: scale(0.95);
         }
 
-        @keyframes subtleBreathe {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-2.5px) rotate(0.6deg); }
+        .voice-stage.listening .ai-core-btn {
+            background: radial-gradient(circle at 35% 35%, #f87171, #dc2626 65%, #450a0a 100%);
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.7);
+            animation: pulseListen 1.2s infinite ease-in-out;
         }
 
-        .foreign-eyelid {
-            animation: naturalBlink 4.5s infinite;
-            transform-origin: center;
+        @keyframes pulseListen {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.07); }
         }
 
-        @keyframes naturalBlink {
-            0%, 93%, 100% { transform: scaleY(0); }
-            96% { transform: scaleY(1); }
+        #waveCanvas {
+            width: 100%;
+            height: 44px;
+            margin-bottom: 10px;
         }
 
-        .live-speak-pill {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: rgba(7, 20, 38, 0.88);
-            border: 1px solid var(--cyan);
-            color: var(--cyan);
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .transcript-box {
+            width: 100%;
+            background: rgba(4, 11, 22, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 10px 12px;
+            text-align: left;
         }
 
-        .human-stage.speaking .live-speak-pill {
-            background: var(--cyan);
-            color: #071426;
+        .user-said {
+            font-size: 12px;
+            color: var(--gold);
+            margin-bottom: 4px;
+            min-height: 16px;
         }
 
-        .caption-overlay {
-            background: rgba(5, 14, 26, 0.95);
-            padding: 12px 14px;
-            border-top: 1px solid rgba(32, 221, 224, 0.3);
-        }
-
-        .speech-caption {
+        .ai-reply {
             font-size: 13.5px;
             color: #ffffff;
             line-height: 1.5;
         }
 
-        /* 3. LANGUAGE SELECTOR */
-        .lang-section {
+        /* Quick Voice Command Chips */
+        .quick-prompts {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            width: 100%;
+            padding-top: 10px;
+            scrollbar-width: none;
+        }
+
+        .quick-prompts::-webkit-scrollbar { display: none; }
+
+        .q-chip {
+            background: rgba(32, 221, 224, 0.1);
+            border: 1px solid rgba(32, 221, 224, 0.3);
+            color: #e2e8f0;
+            font-size: 11.5px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        /* 3. LANGUAGE & AUTO-LOOP CONTROLS */
+        .control-strip {
             width: 100%;
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 14px;
-            padding: 11px;
+            padding: 10px 12px;
             margin-bottom: 14px;
-        }
-
-        .section-label {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--gold);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            display: block;
         }
 
         .lang-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
+            margin-bottom: 10px;
         }
 
         .lang-pill {
             background: rgba(255, 255, 255, 0.05);
             border: 1.5px solid rgba(32, 221, 224, 0.25);
             color: #e2e8f0;
-            padding: 8px 6px;
+            padding: 7px 6px;
             border-radius: 10px;
             font-size: 13px;
             font-weight: 700;
@@ -242,12 +271,21 @@
 
         .lang-pill.active {
             background: var(--cyan);
-            color: #071426;
+            color: #040b16;
             border-color: var(--cyan);
-            box-shadow: 0 0 12px rgba(32, 221, 224, 0.4);
         }
 
-        /* 4. MENU LIST */
+        .auto-loop-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #cbd5e1;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* 4. COMPACT LIVE CART / MENU */
         .menu-header {
             width: 100%;
             display: flex;
@@ -264,7 +302,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 9px;
+            gap: 8px;
             text-align: left;
         }
 
@@ -272,7 +310,7 @@
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            padding: 11px 14px;
+            padding: 10px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -284,18 +322,11 @@
             color: #fff;
         }
 
-        .dish-desc {
-            font-size: 11.5px;
-            color: var(--text-muted);
-        }
-
         .dish-price {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 15.5px;
+            font-size: 15px;
             font-weight: 800;
             color: var(--cyan);
-            margin-top: 2px;
-            display: inline-block;
         }
 
         .qty-controls {
@@ -305,13 +336,13 @@
         }
 
         .q-btn {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: 8px;
             border: 1.5px solid var(--cyan);
             background: rgba(32, 221, 224, 0.1);
             color: var(--cyan);
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 800;
             cursor: pointer;
         }
@@ -330,11 +361,10 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #050e1a;
+            background: #030811;
             border-top: 1.5px solid rgba(32, 221, 224, 0.25);
             padding: 10px 14px;
             display: flex;
-            gap: 10px;
             justify-content: center;
             z-index: 900;
         }
@@ -346,24 +376,20 @@
             gap: 10px;
         }
 
-        .btn-voice {
+        .btn-talk {
             flex: 1;
-            background: rgba(32, 221, 224, 0.12);
+            background: rgba(32, 221, 224, 0.14);
             border: 1.5px solid var(--cyan);
             color: var(--cyan);
             padding: 12px 8px;
             border-radius: 12px;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
         }
 
         .btn-send-order {
-            flex: 1.3;
+            flex: 1.2;
             background: var(--accent-green);
             border: none;
             color: #ffffff;
@@ -372,150 +398,80 @@
             font-size: 13.5px;
             font-weight: 800;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
         }
 
         .footer-bar {
-            margin-top: 20px;
+            margin-top: 18px;
             font-family: 'Rajdhani', sans-serif;
             font-size: 12px;
             font-weight: 700;
             color: var(--text-muted);
         }
 
-        .footer-bar span {
-            color: var(--gold);
-        }
+        .footer-bar span { color: var(--gold); }
     </style>
 </head>
 <body>
 
     <div class="app-shell">
-        <!-- 1. Top Header -->
+        <!-- 1. Header -->
         <div class="brand-header">
             <div class="brand-title-wrap">
                 <div class="brand-name">AVAILO</div>
-                <div class="brand-sub">AI HUMAN WAITER</div>
+                <div class="brand-sub">NEXT-GEN VOICE AI ASSISTANT</div>
             </div>
             <div class="header-right">
-                <div class="online-badge">
-                    <span class="pulse-dot"></span> LIVE HOST
-                </div>
+                <span class="mode-badge">HANDS-FREE AI</span>
                 <button class="api-cfg-btn" onclick="configureSarvamKey()" title="Sarvam API Key">⚙️</button>
             </div>
         </div>
 
-        <!-- 2. Foreign Host Real-Time Audio Lip-Sync Stage -->
-        <div class="human-stage" id="hostStage" onclick="speakWelcome()">
-            <div class="host-canvas-wrap">
-                <div class="live-speak-pill" id="hostStatusPill">
-                    <span>🔊</span> <span id="tapHintText">మాట్లాడటానికి ట్యాప్ చేయండి</span>
-                </div>
+        <!-- 2. Pure Voice AI Stage -->
+        <div class="voice-stage" id="voiceStage">
+            <div class="status-chip" id="statusChip">● TAP CORE TO START CONVERSATION</div>
 
-                <!-- Foreign Female Hospitality Host with Audio-Driven Lip-Sync -->
-                <svg viewBox="0 0 300 260" width="270" height="240">
-                    <defs>
-                        <linearGradient id="blondeHair" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#f3d08a"/>
-                            <stop offset="50%" stop-color="#d4a359"/>
-                            <stop offset="100%" stop-color="#9e6b2b"/>
-                        </linearGradient>
-                        <linearGradient id="fairSkin" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stop-color="#ffe7d6"/>
-                            <stop offset="100%" stop-color="#f5c6a8"/>
-                        </linearGradient>
-                        <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#1e293b"/>
-                            <stop offset="100%" stop-color="#0f172a"/>
-                        </linearGradient>
-                    </defs>
-
-                    <!-- Back Blonde Hair -->
-                    <path d="M88 105 C78 35, 222 35, 212 105 L224 225 L76 225 Z" fill="url(#blondeHair)"/>
-
-                    <!-- Hospitality Blazer & Gold Scarf -->
-                    <path d="M55 260 C65 198, 235 198, 245 260 Z" fill="url(#suitGrad)" stroke="#20DDE0" stroke-width="1.5"/>
-                    <path d="M126 196 L150 232 L174 196 Z" fill="#ffffff"/>
-                    <path d="M138 202 L150 225 L162 202 Z" fill="#DDB65D"/>
-
-                    <!-- Neck -->
-                    <rect x="135" y="165" width="30" height="36" rx="10" fill="#ecc0a3"/>
-
-                    <g class="host-head-group">
-                        <!-- Face Contour -->
-                        <path d="M104 102 C104 52, 196 52, 196 102 C196 148, 174 176, 150 176 C126 176, 104 148, 104 102 Z" fill="url(#fairSkin)"/>
-
-                        <!-- Cheek Blush -->
-                        <ellipse cx="122" cy="128" rx="11" ry="6" fill="#f43f5e" opacity="0.18"/>
-                        <ellipse cx="178" cy="128" rx="11" ry="6" fill="#f43f5e" opacity="0.18"/>
-
-                        <!-- Front Swept Blonde Hair -->
-                        <path d="M102 104 C104 46, 196 46, 198 104 C184 68, 145 64, 102 104 Z" fill="url(#blondeHair)"/>
-                        <path d="M168 62 C188 72, 198 92, 202 128 C192 108, 182 85, 168 62 Z" fill="#e5be75"/>
-
-                        <!-- Eyebrows -->
-                        <path d="M118 98 Q130 92 140 97" stroke="#855826" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-                        <path d="M160 97 Q170 92 182 98" stroke="#855826" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-
-                        <!-- Blue/Hazel Eyes -->
-                        <ellipse cx="130" cy="110" rx="8" ry="5.5" fill="#ffffff"/>
-                        <circle cx="130" cy="110" r="4.2" fill="#2563eb"/>
-                        <circle cx="130" cy="110" r="2" fill="#0f172a"/>
-                        <circle cx="131.5" cy="108.5" r="1.2" fill="#ffffff"/>
-
-                        <ellipse cx="170" cy="110" rx="8" ry="5.5" fill="#ffffff"/>
-                        <circle cx="170" cy="110" r="4.2" fill="#2563eb"/>
-                        <circle cx="170" cy="110" r="2" fill="#0f172a"/>
-                        <circle cx="171.5" cy="108.5" r="1.2" fill="#ffffff"/>
-
-                        <!-- Eyelids for Natural Blink -->
-                        <ellipse class="foreign-eyelid" cx="130" cy="110" rx="8.5" ry="6" fill="#f5c6a8"/>
-                        <ellipse class="foreign-eyelid" cx="170" cy="110" rx="8.5" ry="6" fill="#f5c6a8"/>
-
-                        <!-- Nose -->
-                        <path d="M150 112 L147 131 L153 131" stroke="#d8a282" stroke-width="2" fill="none" stroke-linecap="round"/>
-
-                        <!-- DYNAMIC REAL-TIME LIP-SYNC MOUTH -->
-                        <!-- Outer Upper & Lower Lips -->
-                        <path id="upperLip" d="M136 148 Q144 143 150 145 Q156 143 164 148 Q150 149 136 148 Z" fill="#d9536f"/>
-                        <!-- Mouth Cavity (Opens dynamically with audio volume) -->
-                        <ellipse id="mouthCavity" cx="150" cy="149" rx="11" ry="0.8" fill="#581122"/>
-                        <!-- Teeth hint when open -->
-                        <rect id="teethBar" x="142" y="147.5" width="16" height="0" rx="1" fill="#ffffff"/>
-                        <!-- Lower Lip -->
-                        <path id="lowerLip" d="M137 148 Q150 155 163 148 Q150 151 137 148 Z" fill="#e1657f"/>
-
-                        <!-- Sleek Wireless Concierge Headset -->
-                        <path d="M98 112 C90 112, 90 138, 100 138" stroke="#20DDE0" stroke-width="3" fill="none"/>
-                        <path d="M98 138 Q120 152 132 150" stroke="#20DDE0" stroke-width="2" fill="none"/>
-                        <circle cx="133" cy="150" r="3" fill="#20DDE0"/>
-                    </g>
+            <button class="ai-core-btn" id="aiCoreBtn" onclick="toggleConversation()" aria-label="Talk to AVAILO AI">
+                <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="22"/>
                 </svg>
+            </button>
+
+            <canvas id="waveCanvas" width="380" height="44"></canvas>
+
+            <div class="transcript-box">
+                <div class="user-said" id="userTranscript"></div>
+                <div class="ai-reply" id="aiReplyText">
+                    "నమస్కారం! మధ్యలో ఉన్న బటన్ నొక్కి మాట్లాడండి — నేను మీ ఆర్డర్ తీసుకుంటాను."
+                </div>
             </div>
 
-            <div class="caption-overlay">
-                <div class="speech-caption" id="hostCaption">
-                    "నమస్కారం! AVAILO Dine కి స్వాగతం. నన్ను ట్యాప్ చేసి మాట్లాడండి లేదా కింద మెనూ ఎంచుకోండి."
-                </div>
+            <!-- Tap-to-Speak Sample Voice Intents -->
+            <div class="quick-prompts">
+                <button class="q-chip" onclick="processVoiceCommand('ఈరోజు స్పెషల్స్ ఏంటి?')">"స్పెషల్స్ ఏంటి?"</button>
+                <button class="q-chip" onclick="processVoiceCommand('ఒక వెజ్ బిర్యానీ యాడ్ చెయ్')">"వెజ్ బిర్యానీ యాడ్ చెయ్"</button>
+                <button class="q-chip" onclick="processVoiceCommand('బిల్ ఎంత అయింది?')">"బిల్ ఎంత?"</button>
+                <button class="q-chip" onclick="processVoiceCommand('ఆర్డర్ కన్ఫర్మ్ చెయ్')">"ఆర్డర్ కన్ఫర్మ్ చెయ్"</button>
             </div>
         </div>
 
-        <!-- 3. Language Selector -->
-        <div class="lang-section">
-            <span class="section-label">Choose Your Language</span>
+        <!-- 3. Language & Hands-Free Loop Control -->
+        <div class="control-strip">
             <div class="lang-grid">
                 <button class="lang-pill active" onclick="switchLang('te', this)">తెలుగు</button>
                 <button class="lang-pill" onclick="switchLang('en', this)">English</button>
                 <button class="lang-pill" onclick="switchLang('hi', this)">हिन्दी</button>
             </div>
+            <div class="auto-loop-row">
+                <span>🔄 ఆటో-కంటిన్యూయస్ సంభాషణ (Auto-Listen)</span>
+                <input type="checkbox" id="autoLoopToggle" checked style="width:18px; height:18px; accent-color:#20DDE0;">
+            </div>
         </div>
 
-        <!-- 4. Menu List -->
+        <!-- 4. Live Order & Menu -->
         <div class="menu-header">
-            <span id="menuLabel">మెనూ ఎంచుకోండి</span>
+            <span id="menuLabel">మెనూ & లైవ్ బిల్</span>
             <span id="totalCostBadge" style="color: var(--cyan);">₹0</span>
         </div>
 
@@ -523,19 +479,15 @@
 
         <!-- 5. Footer -->
         <div class="footer-bar">
-            Table No: <span id="tableNumber">01</span> · Powered by <span>AVAILO</span>
+            Table No: <span id="tableNumber">01</span> · Powered by <span>AVAILO VOICE ENGINE</span>
         </div>
     </div>
 
-    <!-- 6. Bottom Bar -->
+    <!-- 6. Bottom Dock -->
     <div class="bottom-dock">
         <div class="dock-inner">
-            <button class="btn-voice" onclick="startVoiceRecognition()">
-                <span>🎤</span> <span id="micBtnText">మాట్లాడి ఆర్డర్ చేయండి</span>
-            </button>
-            <button class="btn-send-order" onclick="sendWhatsAppOrder()">
-                <span>🛒</span> <span id="orderBtnText">ఆర్డర్ పంపండి</span> (<span id="cartCount">0</span>)
-            </button>
+            <button class="btn-talk" onclick="startListening()">🎤 మాట్లాడండి</button>
+            <button class="btn-send-order" onclick="sendWhatsAppOrder()">🛒 ఆర్డర్ పంపండి (<span id="cartCount">0</span>)</button>
         </div>
     </div>
 
@@ -544,8 +496,7 @@
 
         function getSarvamKey() {
             const saved = localStorage.getItem('availo_sarvam_key');
-            if (saved && saved.trim() !== "") return saved.trim();
-            return DEFAULT_SARVAM_KEY;
+            return (saved && saved.trim() !== "") ? saved.trim() : DEFAULT_SARVAM_KEY;
         }
 
         function configureSarvamKey() {
@@ -554,15 +505,12 @@
             if (userKey !== null) {
                 localStorage.setItem('availo_sarvam_key', userKey.trim());
                 alert("Sarvam AI Key సేవ్ అయింది!");
-                speakWelcome();
             }
         }
 
         const urlParams = new URLSearchParams(window.location.search);
-        const rawTable = urlParams.get('table') || "01";
-        const cleanDigits = rawTable.replace(/[^0-9]/g, '');
+        const cleanDigits = (urlParams.get('table') || "01").replace(/[^0-9]/g, '');
         const tableParam = cleanDigits ? cleanDigits.slice(0, 3) : "01";
-
         const hotelParam = urlParams.get('hotel');
         const kitchenWa = (urlParams.get('desk') || "919966157369").replace(/[^0-9]/g, '');
 
@@ -570,157 +518,172 @@
 
         let currentLang = 'te';
         let currentAudio = null;
-        let audioCtx = null;
-        let lipAnimId = null;
+        let recognition = null;
+        let isListening = false;
+        let waveState = 'idle'; // idle | listening | speaking
 
-        const LANG_CONFIG = {
+        const LANG_DATA = {
             te: {
                 code: "te-IN",
                 speaker: "anushka",
                 hotel: hotelParam || "అమరావతి గ్రాండ్",
-                tapHint: "మాట్లాడటానికి ట్యాప్ చేయండి",
-                speakingHint: "మాట్లాడుతున్నారు...",
-                welcome: `నమస్కారం! ${hotelParam || "అమరావతి గ్రాండ్"} కి స్వాగతం. మీరు టేబుల్ నంబర్ ${tableParam} లో ఉన్నారు. మీకు ఏం కావాలో చెప్పండి లేదా కింద మెనూలో ఎంచుకోండి.`,
-                menuLbl: "మెనూ ఎంచుకోండి (TOUCH MENU)",
-                micBtn: "మాట్లాడి ఆర్డర్ చేయండి",
-                orderBtn: "ఆర్డర్ పంపండి",
-                listening: "🔴 వింటున్నాను... మీకు ఏం కావాలో చెప్పండి...",
-                addedMsg: (name) => `${name} ఆర్డర్‌లో చేర్చాను. ఇంకా ఏం కావాలి?`,
-                emptyWarn: "దయచేసి ముందుగా కనీసం ఒక ఐటమ్ ఎంచుకోండి సర్."
+                welcome: `నమస్కారం! ${hotelParam || "అమరావతి గ్రాండ్"} కి స్వాగతం. మీరు టేబుల్ ${tableParam} లో ఉన్నారు. మీకు ఏం కావాలో చెప్పండి?`,
+                specials: "ఈరోజు మా స్పెషల్ వెజ్ దమ్ బిర్యానీ 220 రూపాయలు, చికెన్ దమ్ బిర్యానీ 280 రూపాయలు, మరియు వేడివేడి మసాలా దోశ 80 రూపాయలు. ఏది యాడ్ చేయమంటారు?",
+                emptyWarn: "మీ కార్ట్‌లో ఇంకా ఏ ఐటమ్స్ లేవు. ముందుగా ఏదైనా ఐటమ్ చెప్పండి.",
+                confirming: (total) => `మీ మొత్తం బిల్ ${total} రూపాయలు అయింది. ఆర్డర్ ఇప్పుడే కిచెన్‌కు పంపిస్తున్నాను!`
             },
             en: {
                 code: "en-IN",
                 speaker: "anushka",
                 hotel: hotelParam || "Amaravati Grand",
-                tapHint: "TAP TO TALK",
-                speakingHint: "SPEAKING...",
-                welcome: `Welcome to ${hotelParam || "Amaravati Grand"}! You are at Table ${tableParam}. Tell me what you would like to order or select from the menu below.`,
-                menuLbl: "SELECT DISHES (TOUCH MENU)",
-                micBtn: "Voice Order",
-                orderBtn: "Send Order",
-                listening: "🔴 Listening... Please say your order...",
-                addedMsg: (name) => `Added ${name} to your order. Anything else?`,
-                emptyWarn: "Please select at least one item from the menu first."
+                welcome: `Welcome to ${hotelParam || "Amaravati Grand"}! You are at Table ${tableParam}. What would you like to order today?`,
+                specials: "Today's specials are Special Veg Dum Biryani at 220 rupees, Chicken Dum Biryani at 280 rupees, and Masala Dosa at 80 rupees. Which one should I add?",
+                emptyWarn: "Your order list is empty. Please tell me what you would like to have.",
+                confirming: (total) => `Your total bill is ${total} rupees. Sending your order to the kitchen now!`
             },
             hi: {
                 code: "hi-IN",
                 speaker: "anushka",
                 hotel: hotelParam || "अमरावती ग्रैंड",
-                tapHint: "बात करने के लिए टैप करें",
-                speakingHint: "बोल रहे हैं...",
-                welcome: `नमस्ते! ${hotelParam || "अमरावती ग्रैंड"} में आपका स्वागत है। आप टेबल नंबर ${tableParam} पर हैं। कृपया अपना ऑर्डर बोलें या नीचे मेनू से चुनें।`,
-                menuLbl: "मेनू चुनें (TOUCH MENU)",
-                micBtn: "बोलकर ऑर्डर करें",
-                orderBtn: "ऑर्डर भेजें",
-                listening: "🔴 सुन रहा हूँ... कृपया अपना ऑर्डर बोलें...",
-                addedMsg: (name) => `${name} ऑर्डर में जोड़ दिया गया है। और क्या चाहिए?`,
-                emptyWarn: "कृपया पहले मेनू से कम से कम एक आइटम चुनें।"
+                welcome: `नमस्ते! ${hotelParam || "अमरावती ग्रैंड"} में आपका स्वागत है। आप टेबल नंबर ${tableParam} पर हैं। आज आप क्या ऑर्डर करना चाहेंगे?`,
+                specials: "आज के स्पेशल में वेज दम बिरयानी 220 रुपये, चिकन दम बिरयानी 280 रुपये और मसाला डोसा 80 रुपये है। क्या जोड़ूं?",
+                emptyWarn: "आपकी ऑर्डर लिस्ट खाली है। कृपया पहले कोई आइटम बोलें।",
+                confirming: (total) => `आपका कुल बिल ${total} रुपये है। आपका ऑर्डर अभी किचन में भेज रहा हूँ!`
             }
         };
 
         const MENU = [
-            { id: 'biryani', price: 220, count: 0, names: { te: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', en: 'Special Veg Dum Biryani', hi: 'स्पेशल वेज दम बिरयानी' }, desc: { te: 'రైతా & మిర్చి కా సాలన్', en: 'With Raita & Salan', hi: 'रायता और सालन के साथ' }, keys: ['బిర్యానీ', 'వెజ్ బిర్యానీ', 'biryani', 'बिरयानी'] },
-            { id: 'chickenBiryani', price: 280, count: 0, names: { te: 'చికెన్ దమ్ బిర్యానీ', en: 'Chicken Dum Biryani', hi: 'चिकन दम बिरयानी' }, desc: { te: 'అసలైన హైదరాబాదీ రుచి', en: 'Authentic Hyderabadi Dum', hi: 'असली दम मसाला स्वाद' }, keys: ['చికెన్', 'chicken', 'चिकन'] },
-            { id: 'dosa', price: 80, count: 0, names: { te: 'మసాలా దోశ', en: 'Masala Dosa', hi: 'मसाला डोसा' }, desc: { te: 'చట్నీ & సాంబార్‌తో', en: 'Crispy dosa with chutney', hi: 'चटनी और सांभर के साथ' }, keys: ['దోశ', 'దోస', 'dosa', 'डोसा'] },
-            { id: 'coffee', price: 40, count: 0, names: { te: 'ఫిల్టర్ కాఫీ', en: 'Filter Coffee', hi: 'फ़िल्टर कॉफ़ी' }, desc: { te: 'సంప్రదాయ సౌత్ ఇండియన్ కాఫీ', en: 'Traditional South Indian', hi: 'साउथ इंडियन फ़िल्टर कॉफ़ी' }, keys: ['కాఫీ', 'coffee', 'कॉफ़ी'] }
+            { id: 'biryani', price: 220, count: 0, names: { te: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', en: 'Special Veg Dum Biryani', hi: 'स्पेशल वेज दम बिरयानी' }, keys: ['వెజ్ బిర్యానీ', 'బిర్యానీ', 'biryani', 'बिरयानी'] },
+            { id: 'chickenBiryani', price: 280, count: 0, names: { te: 'చికెన్ దమ్ బిర్యానీ', en: 'Chicken Dum Biryani', hi: 'चिकन दम बिरयानी' }, keys: ['చికెన్', 'chicken', 'चिकन'] },
+            { id: 'dosa', price: 80, count: 0, names: { te: 'మసాలా దోశ', en: 'Masala Dosa', hi: 'मसाला डोसा' }, keys: ['దోశ', 'దోస', 'dosa', 'डोसा'] },
+            { id: 'coffee', price: 40, count: 0, names: { te: 'ఫిల్టర్ కాఫీ', en: 'Filter Coffee', hi: 'फ़िल्टर कॉफ़ी' }, keys: ['కాఫీ', 'coffee', 'कॉफ़ी'] }
         ];
 
-        // 👄 REAL-TIME LIP MOVEMENT CONTROLLER
-        function setMouthOpenness(amount) {
-            // amount is between 0 (closed) and 1 (wide open)
-            const cavity = document.getElementById('mouthCavity');
-            const lowerLip = document.getElementById('lowerLip');
-            const teeth = document.getElementById('teethBar');
+        // 🌊 SMOOTH AUDIO WAVE VISUALIZER
+        const canvas = document.getElementById('waveCanvas');
+        const ctx = canvas.getContext('2d');
+        let phase = 0;
 
-            const ry = 0.8 + (amount * 7.5);
-            const drop = amount * 6.5;
+        function animateWave() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const midY = canvas.height / 2;
+            const amp = waveState === 'speaking' ? 16 : (waveState === 'listening' ? 12 : 3);
+            const color = waveState === 'listening' ? '#ef4444' : '#20DDE0';
 
-            cavity.setAttribute('ry', ry.toFixed(1));
-            lowerLip.setAttribute('d', `M137 148 Q150 ${(155 + drop).toFixed(1)} 163 148 Q150 ${(151 + drop * 0.7).toFixed(1)} 137 148 Z`);
-            teeth.setAttribute('height', amount > 0.25 ? (amount * 2.5).toFixed(1) : '0');
-        }
+            for (let layer = 0; layer < 2; layer++) {
+                ctx.beginPath();
+                ctx.lineWidth = layer === 0 ? 2.5 : 1.2;
+                ctx.strokeStyle = layer === 0 ? color : '#DDB65D';
 
-        function stopLipSync() {
-            if (lipAnimId) {
-                cancelAnimationFrame(lipAnimId);
-                lipAnimId = null;
+                for (let x = 0; x < canvas.width; x++) {
+                    const env = Math.sin((x / canvas.width) * Math.PI);
+                    const y = midY + Math.sin(x * 0.04 + phase + layer) * amp * env;
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
             }
-            setMouthOpenness(0);
-            document.getElementById('hostStage').classList.remove('speaking');
-            document.getElementById('tapHintText').innerText = LANG_CONFIG[currentLang].tapHint;
+            phase += waveState === 'idle' ? 0.04 : 0.18;
+            requestAnimationFrame(animateWave);
+        }
+        animateWave();
+
+        function setStageUI(state, chipText) {
+            waveState = state;
+            const stage = document.getElementById('voiceStage');
+            stage.classList.remove('listening', 'speaking');
+            if (state === 'listening') stage.classList.add('listening');
+            if (state === 'speaking') stage.classList.add('speaking');
+            document.getElementById('statusChip').innerText = chipText;
         }
 
-        function startAudioLipSync(audioElement) {
-            document.getElementById('hostStage').classList.add('speaking');
-            document.getElementById('tapHintText').innerText = LANG_CONFIG[currentLang].speakingHint;
+        // 🧠 CONVERSATIONAL AI ENGINE
+        function processVoiceCommand(rawText) {
+            const text = rawText.toLowerCase().trim();
+            document.getElementById('userTranscript').innerText = `మీరు: "${rawText}"`;
 
-            try {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
+            // 1. Check Specials / Menu Query
+            if (text.includes('స్పెషల్') || text.includes('మెనూ') || text.includes('ఏమున్నాయి') || text.includes('special') || text.includes('menu') || text.includes('मेनू')) {
+                speakResponse(LANG_DATA[currentLang].specials, true);
+                return;
+            }
 
-                const src = audioCtx.createMediaElementSource(audioElement);
-                const analyser = audioCtx.createAnalyser();
-                analyser.fftSize = 256;
-                src.connect(analyser);
-                analyser.connect(audioCtx.destination);
+            // 2. Check Bill Query
+            if (text.includes('బిల్') || text.includes('ఎంత') || text.includes('bill') || text.includes('total') || text.includes('बिल')) {
+                const { qty, total } = getCartTotals();
+                const msg = currentLang === 'te'
+                    ? (qty === 0 ? "మీరు ఇంకా ఏమీ ఆర్డర్ చేయలేదు. ఏం యాడ్ చేయమంటారు?" : `మీ ఆర్డర్‌లో ${qty} ఐటమ్స్ ఉన్నాయి, మొత్తం బిల్ ${total} రూపాయలు. ఆర్డర్ పంపమంటారా?`)
+                    : `You have ${qty} items totaling ${total} rupees. Should I send the order?`;
+                speakResponse(msg, true);
+                return;
+            }
 
-                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            // 3. Check Order Confirmation / Send
+            if (text.includes('కన్ఫర్మ్') || text.includes('పంపించు') || text.includes('పంపు') || text.includes('confirm') || text.includes('send') || text.includes('भेज')) {
+                sendWhatsAppOrder();
+                return;
+            }
 
-                function renderLipFrame() {
-                    if (audioElement.paused || audioElement.ended) {
-                        stopLipSync();
-                        return;
+            // 4. Check Remove / Cancel Item
+            const isRemove = text.includes('తీసేయ్') || text.includes('వద్దు') || text.includes('remove') || text.includes('cancel') || text.includes('हटा');
+
+            let qty = 1;
+            if (text.includes('రెండు') || text.includes('two') || text.includes('दो') || text.includes('2')) qty = 2;
+            if (text.includes('మూడు') || text.includes('three') || text.includes('तीन') || text.includes('3')) qty = 3;
+
+            let matchedItem = null;
+            MENU.forEach(item => {
+                if (item.keys.some(k => text.includes(k))) {
+                    if (isRemove) {
+                        item.count = Math.max(0, item.count - qty);
+                    } else {
+                        item.count += qty;
                     }
-                    analyser.getByteFrequencyData(dataArray);
-                    // వాయిస్ ఫ్రీక్వెన్సీల సగటు తీసుకొని పెదాలను కదిలించడం
-                    let sum = 0;
-                    for (let i = 2; i < 32; i++) {
-                        sum += dataArray[i];
-                    }
-                    const avg = sum / 30;
-                    const openness = Math.min(1, Math.max(0, (avg - 15) / 85));
-                    setMouthOpenness(openness);
+                    matchedItem = item;
+                }
+            });
 
-                    lipAnimId = requestAnimationFrame(renderLipFrame);
+            renderMenu();
+
+            if (matchedItem) {
+                const { total } = getCartTotals();
+                if (isRemove) {
+                    speakResponse(`${matchedItem.names[currentLang]} తొలగించాను. ఇంకా ఏమైనా మార్చాలా?`, true);
+                } else {
+                    const upsell = matchedItem.id.includes('biryani')
+                        ? "దీనికి తోడుగా చల్లని ఫిల్టర్ కాఫీ లేదా మసాలా దోశ యాడ్ చేయమంటారా? లేదంటే 'ఆర్డర్ కన్ఫర్మ్' అని చెప్పండి."
+                        : "ఇంకా ఏమైనా కావాలా? లేదంటే 'ఆర్డర్ పంపించు' అని చెప్పండి.";
+                    speakResponse(`${qty} ${matchedItem.names[currentLang]} యాడ్ చేశాను. మొత్తం బిల్ ${total} రూపాయలు. ${upsell}`, true);
                 }
-                renderLipFrame();
-            } catch (e) {
-                // Fallback syllable lip sync if WebAudio is restricted
-                let t = 0;
-                function fallbackLip() {
-                    if (audioElement.paused || audioElement.ended) {
-                        stopLipSync();
-                        return;
-                    }
-                    t += 0.28;
-                    const open = Math.abs(Math.sin(t)) * 0.85;
-                    setMouthOpenness(open);
-                    lipAnimId = requestAnimationFrame(fallbackLip);
-                }
-                fallbackLip();
+            } else {
+                speakResponse(`మీరు "${rawText}" అన్నారు. దయచేసి బిర్యానీ, దోశ లేదా కాఫీ అని చెప్పండి — లేదా 'స్పెషల్స్ ఏంటి' అని అడగండి.`, true);
             }
         }
 
-        async function speakWithSarvam(text) {
-            document.getElementById('hostCaption').innerText = `"${text}"`;
+        // 🎙️ SARVAM AI TTS + AUTO-LISTEN CHAIN
+        async function speakResponse(text, autoListenAfter = false) {
+            document.getElementById('aiReplyText').innerText = `"${text}"`;
 
             if (currentAudio) {
                 currentAudio.pause();
                 currentAudio = null;
             }
-            stopLipSync();
+
+            const onSpeechFinish = () => {
+                setStageUI('idle', '● READY TO LISTEN');
+                if (autoListenAfter && document.getElementById('autoLoopToggle').checked) {
+                    setTimeout(() => startListening(), 400);
+                }
+            };
 
             const apiKey = getSarvamKey();
             if (!apiKey || apiKey === "YOUR_SARVAM_API_KEY_HERE") {
-                fallbackBrowserSpeak(text);
+                fallbackSpeak(text, onSpeechFinish);
                 return;
             }
 
             try {
+                setStageUI('speaking', '🔊 AI SPEAKING...');
                 const response = await fetch("https://api.sarvam.ai/text-to-speech", {
                     method: "POST",
                     headers: {
@@ -729,9 +692,9 @@
                     },
                     body: JSON.stringify({
                         inputs: [text],
-                        target_language_code: LANG_CONFIG[currentLang].code,
-                        speaker: LANG_CONFIG[currentLang].speaker,
-                        pace: 1.0,
+                        target_language_code: LANG_DATA[currentLang].code,
+                        speaker: LANG_DATA[currentLang].speaker,
+                        pace: 1.02,
                         speech_sample_rate: 16000,
                         enable_preprocessing: true,
                         model: "bulbul:v2"
@@ -740,42 +703,101 @@
 
                 const data = await response.json();
                 if (data && data.audios && data.audios[0]) {
-                    const audioSrc = "data:audio/wav;base64," + data.audios[0];
-                    currentAudio = new Audio(audioSrc);
-                    currentAudio.onplay = () => startAudioLipSync(currentAudio);
-                    currentAudio.onended = () => stopLipSync();
-                    currentAudio.onerror = () => stopLipSync();
+                    currentAudio = new Audio("data:audio/wav;base64," + data.audios[0]);
+                    currentAudio.onended = onSpeechFinish;
+                    currentAudio.onerror = onSpeechFinish;
                     await currentAudio.play();
                 } else {
-                    fallbackBrowserSpeak(text);
+                    fallbackSpeak(text, onSpeechFinish);
                 }
-            } catch (err) {
-                fallbackBrowserSpeak(text);
+            } catch (e) {
+                fallbackSpeak(text, onSpeechFinish);
             }
         }
 
-        function fallbackBrowserSpeak(text) {
+        function fallbackSpeak(text, doneCb) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utter = new SpeechSynthesisUtterance(text);
-                utter.lang = LANG_CONFIG[currentLang].code;
-                document.getElementById('hostStage').classList.add('speaking');
-                document.getElementById('tapHintText').innerText = LANG_CONFIG[currentLang].speakingHint;
-
-                let phase = 0;
-                const interval = setInterval(() => {
-                    phase += 0.45;
-                    setMouthOpenness(Math.abs(Math.sin(phase)) * 0.85);
-                }, 60);
-
-                utter.onend = () => { clearInterval(interval); stopLipSync(); };
-                utter.onerror = () => { clearInterval(interval); stopLipSync(); };
+                utter.lang = LANG_DATA[currentLang].code;
+                setStageUI('speaking', '🔊 AI SPEAKING...');
+                utter.onend = doneCb;
+                utter.onerror = doneCb;
                 window.speechSynthesis.speak(utter);
+            } else {
+                doneCb();
             }
         }
 
-        function speakWelcome() {
-            speakWithSarvam(LANG_CONFIG[currentLang].welcome);
+        function startListening() {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRec) {
+                alert("Voice recognition works best in Chrome.");
+                return;
+            }
+            if (currentAudio) {
+                currentAudio.pause();
+            }
+            window.speechSynthesis.cancel();
+
+            recognition = new SpeechRec();
+            recognition.lang = LANG_DATA[currentLang].code;
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                isListening = true;
+                setStageUI('listening', '🔴 LISTENING... SPEAK NOW');
+            };
+
+            recognition.onresult = (event) => {
+                isListening = false;
+                const spoken = event.results[0][0].transcript;
+                processVoiceCommand(spoken);
+            };
+
+            recognition.onerror = () => {
+                isListening = false;
+                setStageUI('idle', '● TAP MIC TO SPEAK');
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                if (waveState === 'listening') {
+                    setStageUI('idle', '● TAP MIC TO SPEAK');
+                }
+            };
+
+            recognition.start();
+        }
+
+        function toggleConversation() {
+            if (isListening && recognition) {
+                recognition.stop();
+                setStageUI('idle', '● PAUSED');
+            } else {
+                speakResponse(LANG_DATA[currentLang].welcome, true);
+            }
+        }
+
+        function switchLang(lang, el) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            renderMenu();
+            speakResponse(LANG_DATA[lang].welcome, true);
+        }
+
+        function changeQty(id, delta) {
+            const item = MENU.find(i => i.id === id);
+            if (!item) return;
+            item.count = Math.max(0, item.count + delta);
+            renderMenu();
+        }
+
+        function getCartTotals() {
+            let qty = 0, total = 0;
+            MENU.forEach(i => { qty += i.count; total += i.count * i.price; });
+            return { qty, total };
         }
 
         function renderMenu() {
@@ -784,7 +806,6 @@
                 <div class="dish-card">
                     <div>
                         <div class="dish-name">${item.names[currentLang]}</div>
-                        <div class="dish-desc">${item.desc[currentLang]}</div>
                         <span class="dish-price">₹${item.price}</span>
                     </div>
                     <div class="qty-controls">
@@ -794,101 +815,26 @@
                     </div>
                 </div>
             `).join('');
-            updateCart();
-        }
 
-        function switchLang(lang, el) {
-            currentLang = lang;
-            document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-
-            document.getElementById('tapHintText').innerText = LANG_CONFIG[lang].tapHint;
-            document.getElementById('menuLabel').innerText = LANG_CONFIG[lang].menuLbl;
-            document.getElementById('micBtnText').innerText = LANG_CONFIG[lang].micBtn;
-            document.getElementById('orderBtnText').innerText = LANG_CONFIG[lang].orderBtn;
-
-            renderMenu();
-            speakWelcome();
-        }
-
-        function changeQty(id, delta) {
-            const item = MENU.find(i => i.id === id);
-            if (!item) return;
-            item.count = Math.max(0, item.count + delta);
-            renderMenu();
-            if (delta > 0) {
-                speakWithSarvam(LANG_CONFIG[currentLang].addedMsg(item.names[currentLang]));
-            }
-        }
-
-        function updateCart() {
-            let qty = 0;
-            let total = 0;
-            MENU.forEach(i => {
-                qty += i.count;
-                total += i.count * i.price;
-            });
+            const { qty, total } = getCartTotals();
             document.getElementById('cartCount').innerText = qty;
             document.getElementById('totalCostBadge').innerText = `₹${total}`;
-        }
-
-        function startVoiceRecognition() {
-            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRec) {
-                alert("Voice recognition works best in Chrome.");
-                return;
-            }
-            const rec = new SpeechRec();
-            rec.lang = LANG_CONFIG[currentLang].code;
-
-            rec.onstart = () => {
-                document.getElementById('hostCaption').innerText = LANG_CONFIG[currentLang].listening;
-            };
-
-            rec.onresult = (e) => {
-                const text = e.results[0][0].transcript.toLowerCase();
-                let qty = 1;
-                if (text.includes('రెండు') || text.includes('two') || text.includes('दो') || text.includes('2')) qty = 2;
-                if (text.includes('మూడు') || text.includes('three') || text.includes('तीन') || text.includes('3')) qty = 3;
-
-                let matched = false;
-                MENU.forEach(item => {
-                    if (item.keys.some(k => text.includes(k))) {
-                        item.count += qty;
-                        matched = true;
-                    }
-                });
-
-                renderMenu();
-                if (matched) {
-                    speakWithSarvam(`"${text}" — మీ ఆర్డర్‌లో యాడ్ చేశాను. ఇంకా ఏం కావాలి?`);
-                } else {
-                    speakWithSarvam(`మీరు "${text}" అన్నారు. కింద మెనూలో కూడా ఎంచుకోవచ్చు.`);
-                }
-            };
-
-            rec.start();
         }
 
         function sendWhatsAppOrder() {
             const selected = MENU.filter(i => i.count > 0);
             if (selected.length === 0) {
-                speakWithSarvam(LANG_CONFIG[currentLang].emptyWarn);
+                speakResponse(LANG_DATA[currentLang].emptyWarn, true);
                 return;
             }
-            let total = 0;
-            const itemsStr = selected.map(i => {
-                const cost = i.count * i.price;
-                total += cost;
-                return `• ${i.names.en} (${i.names.te}) x ${i.count} = ₹${cost}`;
-            }).join('%0A');
+            const { total } = getCartTotals();
+            const itemsStr = selected.map(i => `• ${i.names.en} (${i.names.te}) x ${i.count} = ₹${i.count * i.price}`).join('%0A');
+            const msg = `*AVAILO VOICE AI - KITCHEN ORDER*%0A-----------------------------%0A*Restaurant:* ${LANG_DATA.en.hotel}%0A*Table No:* ${tableParam}%0A*Language:* ${currentLang.toUpperCase()}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*Total Bill:* ₹${total}%0A*Time:* ${new Date().toLocaleTimeString()}`;
 
-            const msg = `*AVAILO AI HUMAN WAITER - ORDER*%0A-----------------------------%0A*Restaurant:* ${LANG_CONFIG.en.hotel}%0A*Table No:* ${tableParam}%0A*Language:* ${currentLang.toUpperCase()}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*Total Bill:* ₹${total}%0A*Time:* ${new Date().toLocaleTimeString()}`;
-
-            speakWithSarvam("ధన్యవాదాలు! మీ ఆర్డర్ కిచెన్‌కు పంపిస్తున్నాను.");
+            speakResponse(LANG_DATA[currentLang].confirming(total), false);
             setTimeout(() => {
                 window.location.href = `https://wa.me/${kitchenWa}?text=${msg}`;
-            }, 1200);
+            }, 2200);
         }
 
         window.addEventListener('load', renderMenu);
