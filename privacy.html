@@ -8,7 +8,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@600;700&family=Ramabhadra&family=Suranna&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@600;700&family=Ramabhadra&family=Suranna&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #030b1e;
@@ -22,7 +22,7 @@
         body {
             background-color: var(--bg-dark);
             color: #ffffff;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', 'Ramabhadra', 'Noto Sans Devanagari', sans-serif;
             line-height: 1.6;
             padding-bottom: 40px;
         }
@@ -43,6 +43,17 @@
             color: var(--cyan-glow);
             text-decoration: none;
             font-size: 14px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 16px;
+            cursor: pointer;
         }
 
         .container {
@@ -97,42 +108,65 @@
 <body>
 
     <header>
-        <div class="te-heading" style="color: #fff; font-size: 16px;">AVAILO LEGAL</div>
-        <a href="index.html" class="back-link te-heading">‹ హోమ్‌కి వెళ్లండి</a>
+        <div class="te-heading" style="color: #fff; font-size: 16px;" data-te="AVAILO లీగల్" data-en="AVAILO LEGAL" data-hi="AVAILO लीगल">AVAILO లీగల్</div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+            <a href="index.html" class="back-link te-heading" data-te="‹ హోమ్‌కి వెళ్లండి" data-en="‹ Go to Home" data-hi="‹ होम पर जाएं">‹ హోమ్‌కి వెళ్లండి</a>
+        </div>
     </header>
 
     <div class="container">
-        <h1 class="te-heading">Privacy Policy</h1>
-        <div class="sub-meta">చివరిగా అప్‌డేట్ చేయబడింది: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)</div>
+        <h1 class="te-heading" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</h1>
+        <div class="sub-meta" data-te="చివరిగా అప్‌డేట్ చేయబడింది: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)" data-en="Last updated: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)" data-hi="अंतिम अपडेट: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)">చివరిగా అప్‌డేట్ చేయబడింది: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)</div>
 
         <div class="block-card">
-            <h3 class="te-heading">మేము ఏమి సేకరిస్తాము</h3>
-            <p class="te-body">సర్వీస్ నిర్వహణ కోసం కింది సమాచారాన్ని మాత్రమే సేకరిస్తాము:</p>
+            <h3 class="te-heading" data-te="మేము ఏమి సేకరిస్తాము" data-en="What We Collect" data-hi="हम क्या जानकारी लेते हैं">మేము ఏమి సేకరిస్తాము</h3>
+            <p class="te-body" data-te="సర్వీస్ నిర్వహణ కోసం కింది సమాచారాన్ని మాత్రమే సేకరిస్తాము:" data-en="We collect only the following information to run the service:" data-hi="सेवा चलाने के लिए हम केवल नीचे दी गई जानकारी लेते हैं:">సర్వీస్ నిర్వహణ కోసం కింది సమాచారాన్ని మాత్రమే సేకరిస్తాము:</p>
             <ul class="te-body">
-                <li>పేరు మరియు WhatsApp మొబైల్ నంబర్</li>
-                <li>అపార్ట్‌మెంట్ / ఇంటి చిరునామా (డెలివరీ ప్రయోజనాలకు మాత్రమే)</li>
-                <li>మీరు కోరిన గ్రోసరీ మరియు హోమ్ రిపేర్ రిక్వెస్ట్ వివరాలు</li>
+                <li data-te="పేరు మరియు WhatsApp మొబైల్ నంబర్" data-en="Name and WhatsApp mobile number" data-hi="नाम और WhatsApp मोबाइल नंबर">పేరు మరియు WhatsApp మొబైల్ నంబర్</li>
+                <li data-te="అపార్ట్‌మెంట్ / ఇంటి చిరునామా (డెలివరీ ప్రయోజనాలకు మాత్రమే)" data-en="Apartment / home address (for delivery purposes only)" data-hi="अपार्टमेंट / घर का पता (केवल डिलीवरी के लिए)">అపార్ట్‌మెంట్ / ఇంటి చిరునామా (డెలివరీ ప్రయోజనాలకు మాత్రమే)</li>
+                <li data-te="మీరు కోరిన గ్రోసరీ మరియు హోమ్ రిపేర్ రిక్వెస్ట్ వివరాలు" data-en="Details of the grocery and home repair requests you ask for" data-hi="आपके द्वारा मांगी गई किराना और होम रिपेयर रिक्वेस्ट का विवरण">మీరు కోరిన గ్రోసరీ మరియు హోమ్ రిపేర్ రిక్వెస్ట్ వివరాలు</li>
             </ul>
         </div>
 
         <div class="block-card">
-            <h3 class="te-heading">మహిళల ప్రైవసీ రక్షణ</h3>
-            <div class="shield-highlight te-body">
+            <h3 class="te-heading" data-te="మహిళల ప్రైవసీ రక్షణ" data-en="Women's Privacy Protection" data-hi="महिलाओं की गोपनीयता की सुरक्षा">మహిళల ప్రైవసీ రక్షణ</h3>
+            <div class="shield-highlight te-body" data-te="గేట్ పాస్ మరియు డెలివరీ సర్వీసుల్లో మహిళా రెసిడెంట్ల ఫోన్ నంబర్లు డెలివరీ సిబ్బందికి ఎప్పుడూ కనిపించవు. పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది." data-en="In gate pass and delivery services, women residents' phone numbers are never shown to delivery staff. Full masking protection applies." data-hi="गेट पास और डिलीवरी सेवाओं में महिला निवासियों के फ़ोन नंबर डिलीवरी स्टाफ़ को कभी नहीं दिखाए जाते। पूरी मास्किंग सुरक्षा रहती है।">
                 గేట్ పాస్ మరియు డెలివరీ సర్వీసుల్లో మహిళా రెసిడెంట్ల ఫోన్ నంబర్లు డెలివరీ సిబ్బందికి ఎప్పుడూ కనిపించవు. పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది.
             </div>
         </div>
 
         <div class="block-card">
-            <h3 class="te-heading">డేటా భద్రత & వాగ్దానం</h3>
-            <p class="te-body">మేము మీ వ్యక్తిగత సమాచారాన్ని మార్కెటింగ్ లేదా ప్రచారాల కోసం ఎలాంటి మూడో పార్టీలకు అమ్మము.</p>
+            <h3 class="te-heading" data-te="డేటా భద్రత &amp; వాగ్దానం" data-en="Data Safety &amp; Promise" data-hi="डेटा सुरक्षा और वादा">డేటా భద్రత & వాగ్దానం</h3>
+            <p class="te-body" data-te="మేము మీ వ్యక్తిగత సమాచారాన్ని మార్కెటింగ్ లేదా ప్రచారాల కోసం ఎలాంటి మూడో పార్టీలకు అమ్మము." data-en="We never sell your personal information to any third party for marketing or promotions." data-hi="हम आपकी निजी जानकारी मार्केटिंग या प्रचार के लिए किसी तीसरे पक्ष को कभी नहीं बेचते।">మేము మీ వ్యక్తిగత సమాచారాన్ని మార్కెటింగ్ లేదా ప్రచారాల కోసం ఎలాంటి మూడో పార్టీలకు అమ్మము.</p>
         </div>
 
         <div class="block-card">
-            <h3 class="te-heading">మమ్మల్ని సంప్రదించండి</h3>
-            <p class="te-body">ఫోన్: <strong>9966157369</strong></p>
-            <p class="te-body">ప్రాంతం: కానూరు, విజయవాడ & గుంటూరు రీజియన్</p>
+            <h3 class="te-heading" data-te="మమ్మల్ని సంప్రదించండి" data-en="Contact Us" data-hi="हमसे संपर्क करें">మమ్మల్ని సంప్రదించండి</h3>
+            <p class="te-body" data-te="ఫోన్: <strong>9966157369</strong>" data-en="Phone: <strong>9966157369</strong>" data-hi="फ़ोन: <strong>9966157369</strong>">ఫోన్: <strong>9966157369</strong></p>
+            <p class="te-body" data-te="ప్రాంతం: కానూరు, విజయవాడ &amp; గుంటూరు రీజియన్" data-en="Area: Kaanuru, Vijayawada &amp; Guntur region" data-hi="क्षेत्र: कानूरु, विजयवाड़ा और गुंटूर क्षेत्र">ప్రాంతం: కానూరు, విజయవాడ & గుంటూరు రీజియన్</p>
         </div>
     </div>
+
+    <script>
+        // 3-language toggle (mirrors index.html toggleLanguage, extended te -> en -> hi -> te).
+        // Button label always shows the NEXT language.
+        let currentLang = 'te';
+        const LANG_ORDER = ['te', 'en', 'hi'];
+        const LANG_BTN_LABEL = { te: 'English', en: 'हिन्दी', hi: 'తెలుగు' };
+
+        function toggleLanguage() {
+            const next = LANG_ORDER[(LANG_ORDER.indexOf(currentLang) + 1) % LANG_ORDER.length];
+            currentLang = next;
+            document.documentElement.lang = currentLang;
+            document.getElementById('langBtn').innerText = LANG_BTN_LABEL[currentLang];
+
+            document.querySelectorAll('[data-te]').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang);
+                if (text) el.innerHTML = text;
+            });
+        }
+    </script>
 
 </body>
 </html>

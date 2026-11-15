@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVAILO SMART DINE - NEXT-GEN TABLE CONCIERGE</title>
+    <title>AVAILO స్మార్ట్ డైన్ — టేబుల్ కన్సియర్జ్</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -45,6 +45,8 @@
         .top-meta-bar {
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
             width: 100%;
             max-width: 460px;
             margin-bottom: 10px;
@@ -71,6 +73,19 @@
             padding: 4px 10px;
             border-radius: 16px;
             font-family: 'Rajdhani', sans-serif;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1.5px solid var(--brand-cyan);
+            color: var(--brand-cyan);
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.5px;
         }
 
         /* Futuristic Voice Wave Core */
@@ -615,11 +630,12 @@
     <!-- 1. AI Voice Concierge Stage -->
     <div id="voiceStage" class="stage-box">
         <div class="top-meta-bar">
-            <div class="venue-pill" id="badgeText">AMARAVATI GRAND · TABLE 01</div>
+            <div class="venue-pill" id="badgeText">అమరావతి గ్రాండ్ · టేబుల్ 01</div>
             <div class="live-clock-pill" id="liveClock">--:--</div>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
         </div>
         
-        <div class="ai-voice-hub" onclick="speakGentVoice('నమస్కారం సర్! నేను అవైలో స్మార్ట్ కన్సీర్జ్. కింద ఉన్న కేటగిరీల నుండి మీకు నచ్చిన వంటకాలు ఎంచుకోండి.')">
+        <div class="ai-voice-hub" onclick="speakHubGreeting()">
             <div class="wave-bar"></div>
             <div class="wave-bar"></div>
             <div class="wave-bar"></div>
@@ -629,7 +645,7 @@
 
         <div class="supervisor-bubble">
             <span class="sup-badge">AVAILO AI</span>
-            <span class="sup-voice-text" id="supervisorText">స్వాగతం సర్! కేటగిరీ ఎంచుకుని ఆర్డర్ చేయండి ✍️</span>
+            <span class="sup-voice-text" id="supervisorText" data-te="స్వాగతం సర్! కేటగిరీ ఎంచుకుని ఆర్డర్ చేయండి ✍️" data-en="Welcome, sir! Pick a category and place your order ✍️" data-hi="स्वागत है सर! कैटेगरी चुनकर ऑर्डर कीजिए ✍️">స్వాగతం సర్! కేటగిరీ ఎంచుకుని ఆర్డర్ చేయండి ✍️</span>
         </div>
     </div>
 
@@ -638,18 +654,18 @@
         
         <!-- Main Categories -->
         <div class="cat-scroll" id="categoryTabs">
-            <button class="cat-chip active" onclick="selectCategory('ALL', this)">🍽️ అన్నీ (All)</button>
-            <button class="cat-chip" onclick="selectCategory('STARTERS', this)">🍢 స్టార్టర్స్</button>
-            <button class="cat-chip" onclick="selectCategory('BIRYANIS', this)">🍲 బిర్యానీలు</button>
-            <button class="cat-chip" onclick="selectCategory('CURRIES_ROTIS', this)">🍛 కర్రీస్ & రోటీ</button>
-            <button class="cat-chip" onclick="selectCategory('DRINKS', this)">🥤 డ్రింక్స్</button>
+            <button class="cat-chip active" onclick="selectCategory('ALL', this)" data-te="🍽️ అన్నీ" data-en="🍽️ All" data-hi="🍽️ सभी">🍽️ అన్నీ</button>
+            <button class="cat-chip" onclick="selectCategory('STARTERS', this)" data-te="🍢 స్టార్టర్స్" data-en="🍢 Starters" data-hi="🍢 स्टार्टर्स">🍢 స్టార్టర్స్</button>
+            <button class="cat-chip" onclick="selectCategory('BIRYANIS', this)" data-te="🍲 బిర్యానీలు" data-en="🍲 Biryanis" data-hi="🍲 बिरयानी">🍲 బిర్యానీలు</button>
+            <button class="cat-chip" onclick="selectCategory('CURRIES_ROTIS', this)" data-te="🍛 కర్రీస్ &amp; రోటీ" data-en="🍛 Curries &amp; Rotis" data-hi="🍛 करी और रोटी">🍛 కర్రీస్ & రోటీ</button>
+            <button class="cat-chip" onclick="selectCategory('DRINKS', this)" data-te="🥤 డ్రింక్స్" data-en="🥤 Drinks" data-hi="🥤 ड्रिंक्स">🥤 డ్రింక్స్</button>
         </div>
 
         <!-- Sub-Categories (Diet Type Filter) -->
         <div class="sub-filter-bar">
-            <button class="diet-pill active" id="diet_ALL" onclick="selectDiet('ALL')">అన్నీ</button>
-            <button class="diet-pill" id="diet_VEG" onclick="selectDiet('VEG')"><span class="dot-veg"></span> Pure Veg</button>
-            <button class="diet-pill" id="diet_NONVEG" onclick="selectDiet('NONVEG')"><span class="dot-nonveg"></span> Non-Veg</button>
+            <button class="diet-pill active" id="diet_ALL" onclick="selectDiet('ALL')" data-te="అన్నీ" data-en="All" data-hi="सभी">అన్నీ</button>
+            <button class="diet-pill" id="diet_VEG" onclick="selectDiet('VEG')"><span class="dot-veg"></span> <span data-te="ప్యూర్ వెజ్" data-en="Pure Veg" data-hi="शुद्ध शाकाहारी">ప్యూర్ వెజ్</span></button>
+            <button class="diet-pill" id="diet_NONVEG" onclick="selectDiet('NONVEG')"><span class="dot-nonveg"></span> <span data-te="నాన్-వెజ్" data-en="Non-Veg" data-hi="मांसाहारी">నాన్-వెజ్</span></button>
         </div>
 
         <!-- Dynamic Menu Items Container -->
@@ -657,29 +673,29 @@
 
         <!-- Chef Special Instruction -->
         <div class="chef-note-box">
-            <input type="text" id="chefNoteInput" class="chef-input" placeholder="✍️ చెఫ్‌కు ప్రత్యేక సూచన (ఉదా: కారం తక్కువ, వేడిగా పంపండి)...">
+            <input type="text" id="chefNoteInput" class="chef-input" placeholder="✍️ చెఫ్‌కు ప్రత్యేక సూచన (ఉదా: కారం తక్కువ, వేడిగా పంపండి)..." data-te-ph="✍️ చెఫ్‌కు ప్రత్యేక సూచన (ఉదా: కారం తక్కువ, వేడిగా పంపండి)..." data-en-ph="✍️ Special note for the chef (e.g.: less spicy, serve hot)..." data-hi-ph="✍️ शेफ़ के लिए खास नोट (जैसे: कम तीखा, गरम परोसें)...">
         </div>
 
         <!-- 3. LIVE ORDER PAD + SPLIT BILL CALCULATOR -->
         <div class="order-book-container">
             <div class="book-top-clip"></div>
             <div class="book-header">
-                <span>📝 LIVE ORDER SLIP (KOT)</span>
-                <span id="bookTableLabel">TABLE 01</span>
+                <span data-te="📝 లైవ్ ఆర్డర్ స్లిప్" data-en="📝 LIVE ORDER SLIP (KOT)" data-hi="📝 लाइव ऑर्डर स्लिप">📝 లైవ్ ఆర్డర్ స్లిప్</span>
+                <span id="bookTableLabel">టేబుల్ 01</span>
             </div>
             
             <div class="writing-lines" id="orderPadLines">
-                <div class="empty-hint">పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️</div>
+                <div class="empty-hint" data-te="పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️" data-en="Select items above — they will be noted here ✍️" data-hi="ऊपर से आइटम चुनिए, यहाँ नोट हो जाएँगे ✍️">పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️</div>
             </div>
 
             <div style="border-top: 1.5px dashed #94a3b8; padding-top: 8px; margin-top: 8px; display: flex; justify-content: space-between; font-weight: 800; font-family: 'Rajdhani', sans-serif;">
-                <span>TOTAL BILL:</span>
+                <span data-te="మొత్తం బిల్లు:" data-en="TOTAL BILL:" data-hi="कुल बिल:">మొత్తం బిల్లు:</span>
                 <span id="padTotalAmount" style="color: #16a34a; font-size: 17px;">₹0</span>
             </div>
 
             <!-- Unique Split Bill Feature -->
             <div class="split-bill-box">
-                <span>👥 స్ప్లిట్ బిల్ (తలసరి): <strong id="splitAmountDisplay" style="color:#0f172a;">₹0</strong></span>
+                <span><span data-te="👥 స్ప్లిట్ బిల్ (తలసరి):" data-en="👥 Split bill (per person):" data-hi="👥 बिल बाँटें (प्रति व्यक्ति):">👥 స్ప్లిట్ బిల్ (తలసరి):</span> <strong id="splitAmountDisplay" style="color:#0f172a;">₹0</strong></span>
                 <div class="split-btns">
                     <button class="split-btn active" onclick="setSplitCount(1, this)">1</button>
                     <button class="split-btn" onclick="setSplitCount(2, this)">2</button>
@@ -693,41 +709,57 @@
     <!-- 4. Bottom Action Bar -->
     <div class="bottom-bar" id="bottomNavBar">
         <button class="btn-speak" onclick="listenToVoiceOrder()">
-            <span>🎤</span> ఆర్డర్ చెప్పండి
+            <span>🎤</span> <span data-te="ఆర్డర్ చెప్పండి" data-en="Say Your Order" data-hi="ऑर्डर बोलिए">ఆర్డర్ చెప్పండి</span>
         </button>
         <button class="btn-order" onclick="sendOrderWhatsApp()">
-            <span>🛒</span> ఆర్డర్ పంపండి (<span id="cartCount">0</span>)
+            <span>🛒</span> <span data-te="ఆర్డర్ పంపండి" data-en="Send Order" data-hi="ऑर्डर भेजिए">ఆర్డర్ పంపండి</span> (<span id="cartCount">0</span>)
         </button>
     </div>
 
     <!-- Footer: back to homepage + contact -->
     <footer style="text-align: center; padding: 18px 16px 26px; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); color: #94a3b8; font-size: 12.5px; line-height: 1.9;">
-        <a href="https://availoservices.in/" style="color: var(--brand-gold); font-weight: 800; text-decoration: none;">← హోమ్‌పేజీకి వెళ్ళండి</a>
+        <a href="https://availoservices.in/" style="color: var(--brand-gold); font-weight: 800; text-decoration: none;" data-te="← హోమ్‌పేజీకి వెళ్ళండి" data-en="← Go to Homepage" data-hi="← होमपेज पर जाइए">← హోమ్‌పేజీకి వెళ్ళండి</a>
         <div style="margin-top: 8px;">
-            హెల్ప్‌లైన్: <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
+            <span data-te="హెల్ప్‌లైన్:" data-en="Helpline:" data-hi="हेल्पलाइन:">హెల్ప్‌లైన్:</span> <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
             &nbsp;·&nbsp;
             <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
         </div>
-        <div>AVAILO Digital Services · విజయవాడ &amp; గుంటూరు</div>
+        <div data-te="AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు" data-en="AVAILO Digital Services · Vijayawada &amp; Guntur" data-hi="AVAILO डिजिटल सर्विसेज़ · विजयवाड़ा और गुंटूर">AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు</div>
     </footer>
 
     <!-- Order confirmation overlay -->
     <div id="orderConfirmOverlay" style="display: none; position: fixed; inset: 0; background: rgba(3,11,30,0.88); z-index: 999; align-items: center; justify-content: center; padding: 16px;">
         <div style="background: #0d284e; border: 1.5px solid var(--brand-gold); border-radius: 14px; padding: 18px 16px; max-width: 420px; width: 100%; color: #fff;">
-            <h3 style="font-family: 'Rajdhani', sans-serif; color: var(--brand-gold); font-size: 18px; font-weight: 800; margin-bottom: 10px;">ఆర్డర్ నిర్ధారణ</h3>
+            <h3 style="font-family: 'Rajdhani', sans-serif; color: var(--brand-gold); font-size: 18px; font-weight: 800; margin-bottom: 10px;" data-te="ఆర్డర్ నిర్ధారణ" data-en="Confirm Order" data-hi="ऑर्डर कन्फ़र्म कीजिए">ఆర్డర్ నిర్ధారణ</h3>
             <div id="orderConfirmBody" style="font-size: 13.5px; line-height: 1.9; margin-bottom: 14px; color: #e2e8f0;"></div>
             <div style="display: flex; gap: 10px;">
-                <button onclick="confirmOrderSend()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;">✅ నిర్ధారించి పంపండి</button>
-                <button onclick="closeOrderConfirm()" style="flex: 1; background: #334155; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer;">వెనక్కి</button>
+                <button onclick="confirmOrderSend()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;" data-te="✅ నిర్ధారించి పంపండి" data-en="✅ Confirm &amp; Send" data-hi="✅ कन्फ़र्म करके भेजिए">✅ నిర్ధారించి పంపండి</button>
+                <button onclick="closeOrderConfirm()" style="flex: 1; background: #334155; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="వెనక్కి" data-en="Back" data-hi="वापस">వెనక్కి</button>
             </div>
         </div>
     </div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
-        const hotelName = params.get('hotel') || "అమరావతి గ్రాండ్";
-        const tableNumber = params.get('table') || "Table 01";
+        const hotelParam = params.get('hotel');
+        const tableParam = params.get('table');
+        // Kitchen-facing (WhatsApp) names stay Telugu by design; these two are
+        // only for the on-screen text below.
+        const hotelName = hotelParam || "అమరావతి గ్రాండ్";
+        const tableNumber = tableParam || "Table 01";
         const targetWhatsApp = params.get('desk') || "919966157369";
+
+        // On-screen venue names follow the selected language (defaults only;
+        // a ?hotel= / ?table= value passed in is a proper noun and is kept as-is).
+        const HOTEL_DISPLAY = { te: "అమరావతి గ్రాండ్", en: "Amaravati Grand", hi: "अमरावती ग्रैंड" };
+        const TABLE_DISPLAY = { te: "టేబుల్ 01", en: "Table 01", hi: "टेबल 01" };
+        function hotelDisplay() { return hotelParam || HOTEL_DISPLAY[currentLang]; }
+        function tableDisplay() { return tableParam ? tableParam.toUpperCase() : TABLE_DISPLAY[currentLang]; }
+        function renderVenueLabels() {
+            document.getElementById('badgeText').innerText = `${hotelDisplay().toUpperCase()} · ${tableDisplay().toUpperCase()}`;
+            const bookLabel = document.getElementById('bookTableLabel');
+            if (bookLabel) bookLabel.innerText = tableDisplay().toUpperCase();
+        }
 
         document.getElementById('badgeText').innerText = `${hotelName.toUpperCase()} · ${tableNumber.toUpperCase()}`;
         document.getElementById('bookTableLabel').innerText = `${tableNumber.toUpperCase()}`;
@@ -735,7 +767,7 @@
         // Live Clock
         function updateLiveClock() {
             const now = new Date();
-            document.getElementById('liveClock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('liveClock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
         }
         setInterval(updateLiveClock, 1000);
         updateLiveClock();
@@ -743,22 +775,22 @@
         // 🌟 EASY TO EDIT RESTAURANT MENU (Categories & Sub-categories)
         const HOTEL_MENU = [
             // STARTERS
-            { id: 'paneerTikka', cat: 'STARTERS', sub: 'Tandoori Starter', diet: 'VEG', name: 'పన్నీర్ టిక్కా (6 Pcs)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', price: 190, count: 0 },
-            { id: 'crispyCorn', cat: 'STARTERS', sub: 'Crispy Snack', diet: 'VEG', name: 'క్రిస్పీ చిల్లీ కార్న్', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', price: 150, count: 0 },
-            { id: 'chicken65', cat: 'STARTERS', sub: 'Andhra Special', diet: 'NONVEG', name: 'చికెన్ 65 (Boneless)', desc: 'కరివేపాకు మసాలా ఫ్రై', price: 220, count: 0 },
-            
+            { id: 'paneerTikka', cat: 'STARTERS', sub: { te: 'తందూరీ స్టార్టర్', en: 'Tandoori Starter', hi: 'तंदूरी स्टार्टर' }, diet: 'VEG', name: 'పన్నీర్ టిక్కా (6 ముక్కలు)', nameEn: 'Paneer Tikka (6 Pcs)', nameHi: 'पनीर टिक्का (6 पीस)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', descEn: 'Charcoal-grilled paneer', descHi: 'कोयले पर सेंका हुआ पनीर', price: 190, count: 0 },
+            { id: 'crispyCorn', cat: 'STARTERS', sub: { te: 'క్రిస్పీ స్నాక్', en: 'Crispy Snack', hi: 'क्रिस्पी स्नैक' }, diet: 'VEG', name: 'క్రిస్పీ చిల్లీ కార్న్', nameEn: 'Crispy Chilli Corn', nameHi: 'क्रिस्पी चिल्ली कॉर्न', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', descEn: 'Spicy sweet corn fry', descHi: 'मसालेदार स्वीट कॉर्न फ्राई', price: 150, count: 0 },
+            { id: 'chicken65', cat: 'STARTERS', sub: { te: 'ఆంధ్రా స్పెషల్', en: 'Andhra Special', hi: 'आंध्र स्पेशल' }, diet: 'NONVEG', name: 'చికెన్ 65 (బోన్‌లెస్)', nameEn: 'Chicken 65 (Boneless)', nameHi: 'चिकन 65 (बोनलेस)', desc: 'కరివేపాకు మసాలా ఫ్రై', descEn: 'Curry-leaf masala fry', descHi: 'करी पत्ता मसाला फ्राई', price: 220, count: 0 },
+
             // BIRYANIS
-            { id: 'vegDumBiryani', cat: 'BIRYANIS', sub: 'Hyderabadi Dum', diet: 'VEG', name: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', desc: 'మిర్చి కా సాలన్ & రైతా', price: 220, count: 0 },
-            { id: 'kajuBiryani', cat: 'BIRYANIS', sub: 'Chef Special', diet: 'VEG', name: 'జీడిపప్పు (Kaju) బిర్యానీ', desc: 'నెయ్యిలో వేయించిన జీడిపప్పుతో', price: 260, count: 0 },
-            { id: 'chickenDumBiryani', cat: 'BIRYANIS', sub: 'Signature Dish', diet: 'NONVEG', name: 'చికెన్ దమ్ బిర్యానీ', desc: 'అసలైన దమ్ మసాలా రుచి', price: 280, count: 0 },
+            { id: 'vegDumBiryani', cat: 'BIRYANIS', sub: { te: 'హైదరాబాదీ దమ్', en: 'Hyderabadi Dum', hi: 'हैदराबादी दम' }, diet: 'VEG', name: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', nameEn: 'Special Veg Dum Biryani', nameHi: 'स्पेशल वेज दम बिरयानी', desc: 'మిర్చి కా సాలన్ & రైతా', descEn: 'Mirchi ka salan & raita', descHi: 'मिर्ची का सालन और रायता', price: 220, count: 0 },
+            { id: 'kajuBiryani', cat: 'BIRYANIS', sub: { te: 'చెఫ్ స్పెషల్', en: 'Chef Special', hi: 'शेफ स्पेशल' }, diet: 'VEG', name: 'జీడిపప్పు బిర్యానీ', nameEn: 'Cashew (Kaju) Biryani', nameHi: 'काजू बिरयानी', desc: 'నెయ్యిలో వేయించిన జీడిపప్పుతో', descEn: 'With cashews roasted in ghee', descHi: 'घी में भुने हुए काजू के साथ', price: 260, count: 0 },
+            { id: 'chickenDumBiryani', cat: 'BIRYANIS', sub: { te: 'సిగ్నేచర్ డిష్', en: 'Signature Dish', hi: 'सिग्नेचर डिश' }, diet: 'NONVEG', name: 'చికెన్ దమ్ బిర్యానీ', nameEn: 'Chicken Dum Biryani', nameHi: 'चिकन दम बिरयानी', desc: 'అసలైన దమ్ మసాలా రుచి', descEn: 'Authentic dum masala flavour', descHi: 'असली दम मसाले का स्वाद', price: 280, count: 0 },
 
             // CURRIES & ROTIS
-            { id: 'paneerButter', cat: 'CURRIES_ROTIS', sub: 'Rich Gravy', diet: 'VEG', name: 'పన్నీర్ బట్టర్ మసాలా', desc: 'క్రీమీ టొమాటో & జీడిపప్పు గ్రేవీ', price: 180, count: 0 },
-            { id: 'butterNaan', cat: 'CURRIES_ROTIS', sub: 'Tandoor Bread', diet: 'VEG', name: 'బట్టర్ నాన్ (2 Pcs)', desc: 'వేడి వేడి తందూరీ నాన్', price: 60, count: 0 },
+            { id: 'paneerButter', cat: 'CURRIES_ROTIS', sub: { te: 'రిచ్ గ్రేవీ', en: 'Rich Gravy', hi: 'रिच ग्रेवी' }, diet: 'VEG', name: 'పన్నీర్ బట్టర్ మసాలా', nameEn: 'Paneer Butter Masala', nameHi: 'पनीर बटर मसाला', desc: 'క్రీమీ టొమాటో & జీడిపప్పు గ్రేవీ', descEn: 'Creamy tomato & cashew gravy', descHi: 'क्रीमी टमाटर और काजू की ग्रेवी', price: 180, count: 0 },
+            { id: 'butterNaan', cat: 'CURRIES_ROTIS', sub: { te: 'తందూరీ బ్రెడ్', en: 'Tandoor Bread', hi: 'तंदूर ब्रेड' }, diet: 'VEG', name: 'బట్టర్ నాన్ (2 ముక్కలు)', nameEn: 'Butter Naan (2 Pcs)', nameHi: 'बटर नान (2 पीस)', desc: 'వేడి వేడి తందూరీ నాన్', descEn: 'Hot tandoori naan', descHi: 'गरमागरम तंदूरी नान', price: 60, count: 0 },
 
             // DRINKS
-            { id: 'sweetLassi', cat: 'DRINKS', sub: 'Coolers', diet: 'VEG', name: 'స్పెషల్ స్వీట్ లస్సీ', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', price: 70, count: 0 },
-            { id: 'waterBottle', cat: 'DRINKS', sub: 'Beverages', diet: 'VEG', name: 'మినరల్ వాటర్ (1L)', desc: 'కూల్డ్ వాటర్ బాటిల్', price: 25, count: 0 }
+            { id: 'sweetLassi', cat: 'DRINKS', sub: { te: 'కూలర్స్', en: 'Coolers', hi: 'कूलर्स' }, diet: 'VEG', name: 'స్పెషల్ స్వీట్ లస్సీ', nameEn: 'Special Sweet Lassi', nameHi: 'स्पेशल स्वीट लस्सी', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', descEn: 'Thick curd with almond flakes', descHi: 'गाढ़ा दही और बादाम के टुकड़े', price: 70, count: 0 },
+            { id: 'waterBottle', cat: 'DRINKS', sub: { te: 'బెవరేజెస్', en: 'Beverages', hi: 'पेय पदार्थ' }, diet: 'VEG', name: 'మినరల్ వాటర్ (1 లీటర్)', nameEn: 'Mineral Water (1L)', nameHi: 'मिनरल वॉटर (1 लीटर)', desc: 'కూల్డ్ వాటర్ బాటిల్', descEn: 'Chilled water bottle', descHi: 'ठंडी पानी की बोतल', price: 25, count: 0 }
         ];
 
         let currentCategory = 'ALL';
@@ -766,9 +798,94 @@
         let splitCount = 1;
         let currentGrandTotal = 0;
 
+        // 🌐 LANGUAGE: Telugu (default) / English / Hindi — button shows NEXT language
+        let currentLang = 'te';
+        const LANG_CODE = { te: 'te-IN', en: 'en-IN', hi: 'hi-IN' };
+        const LANG_NEXT_LABEL = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
+
+        const STR = {
+            pageTitle: { te: "AVAILO స్మార్ట్ డైన్ — టేబుల్ కన్సియర్జ్", en: "AVAILO SMART DINE - NEXT-GEN TABLE CONCIERGE", hi: "AVAILO स्मार्ट डाइन — टेबल कंसीयर्ज" },
+            greetMorning: { te: "శుభోదయం సర్!", en: "Good morning, sir!", hi: "शुभ प्रभात सर!" },
+            greetAfternoon: { te: "శుభ మధ్యాహ్నం సర్!", en: "Good afternoon, sir!", hi: "शुभ दोपहर सर!" },
+            greetEvening: { te: "శుభ సాయంత్రం సర్!", en: "Good evening, sir!", hi: "शुभ संध्या सर!" },
+            welcomeSpeech: { te: "{greet} {hotel} కు హృదయపూర్వక స్వాగతం. మీరు {table} లో ఉన్నారు. మెనూ నుండి మీకు నచ్చినవి ఎంచుకోండి సర్.", en: "{greet} Welcome to {hotel}. You are at {table}. Please pick your favourites from the menu, sir.", hi: "{greet} {hotel} में आपका हार्दिक स्वागत है। आप {table} पर हैं। कृपया मेनू से अपनी पसंद की चीज़ें चुनिए।" },
+            hubGreeting: { te: "నమస్కారం సర్! నేను అవైలో స్మార్ట్ కన్సీర్జ్. కింద ఉన్న కేటగిరీల నుండి మీకు నచ్చిన వంటకాలు ఎంచుకోండి.", en: "Hello sir! I am the Availo Smart Concierge. Please pick your favourite dishes from the categories below.", hi: "नमस्ते सर! मैं अवेलो स्मार्ट कंसीयर्ज हूँ। नीचे दी गई कैटेगरी से अपनी पसंद के व्यंजन चुनिए।" },
+            addedPrompt1: { te: "సరే సర్, {name} నోట్ చేసుకున్నాను. నెక్స్ట్ ఏం కావాలి సర్?", en: "Okay sir, noted {name}. What would you like next?", hi: "ठीक है सर, {name} नोट कर लिया। और क्या चाहिए सर?" },
+            addedPrompt2: { te: "{name} యాడ్ చేశాను సర్.. ఇంకేమైనా కావాలా?", en: "Added {name}, sir. Would you like anything else?", hi: "{name} जोड़ दिया सर। और कुछ चाहिए?" },
+            addedPrompt3: { te: "రైట్ సర్, రాసుకున్నాను..", en: "Right sir, noted down.", hi: "ठीक है सर, लिख लिया।" },
+            emptyCartSpeak: { te: "ఒక్క ఐటమ్ అయినా సెలెక్ట్ చేయండి సర్, ఆర్డర్ పంపిస్తాను.", en: "Please select at least one item, sir, and I will send the order.", hi: "कृपया कम से कम एक आइटम चुनिए सर, फिर ऑर्डर भेज दूँगा।" },
+            orderReadySpeak: { te: "మీ ఆర్డర్ సిద్ధంగా ఉంది సర్. నిర్ధారించి పంపండి.", en: "Your order is ready, sir. Please confirm and send it.", hi: "आपका ऑर्डर तैयार है सर। कृपया कन्फ़र्म करके भेजिए।" },
+            emptyHint: { te: "పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️", en: "Select items above — they will be noted here ✍️", hi: "ऊपर से आइटम चुनिए, यहाँ नोट हो जाएँगे ✍️" },
+            voiceChromeAlert: { te: "వాయిస్ రికగ్నిషన్ కోసం Chrome వాడండి.", en: "Please use Chrome for voice recognition.", hi: "वॉयस पहचान के लिए कृपया Chrome इस्तेमाल कीजिए।" },
+            listening: { te: "🔴 వింటున్నాను సర్, మీ ఆర్డర్ చెప్పండి...", en: "🔴 Listening, sir — please tell me your order...", hi: "🔴 सुन रहा हूँ सर, अपना ऑर्डर बताइए..." },
+            voiceNoted: { te: "రాసుకున్నాను సర్: {text}", en: "Noted down, sir: {text}", hi: "लिख लिया सर: {text}" },
+            voiceOrderLabel: { te: "మీ వాయిస్ ఆర్డర్:", en: "Your voice order:", hi: "आपका वॉयस ऑर्डर:" },
+            voiceOrderBill: { te: "వాయిస్ ఆర్డర్", en: "Voice Order", hi: "वॉयस ऑर्डर" },
+            sendToKitchenQ: { te: "ఈ ఆర్డర్‌ను WhatsApp ద్వారా కిచెన్‌కు పంపాలా?", en: "Send this order to the kitchen on WhatsApp?", hi: "क्या यह ऑर्डर WhatsApp से किचन को भेजें?" },
+            tableLabel: { te: "టేబుల్", en: "Table", hi: "टेबल" },
+            chefNoteLabel: { te: "చెఫ్ సూచన:", en: "Chef's note:", hi: "शेफ़ के लिए नोट:" },
+            totalBillLabel: { te: "మొత్తం బిల్లు:", en: "Total bill:", hi: "कुल बिल:" },
+            estTime: { te: "అంచనా సమయం", en: "Estimated delivery time", hi: "अनुमानित समय" },
+            step1: { te: "1. ఆర్డర్ కిచెన్‌కు చేరింది", en: "1. Order reached the kitchen", hi: "1. ऑर्डर किचन पहुँच गया" },
+            step2: { te: "2. చెఫ్ తయారు చేస్తున్నారు", en: "2. The chef is preparing your food", hi: "2. शेफ़ खाना तैयार कर रहे हैं" },
+            step3: { te: "3. టేబుల్ వద్దకు వస్తోంది", en: "3. On its way to your table", hi: "3. आपकी टेबल पर आ रहा है" },
+            refillTitle: { te: "⚡ తక్షణ అవసరాలు / రీఫిల్స్:", en: "⚡ Instant needs / refills:", hi: "⚡ तुरंत ज़रूरतें / रीफ़िल:" },
+            addMoreFood: { te: "🔄 ఇంకా ఏమైనా ఫుడ్ ఆర్డర్ చేయండి", en: "🔄 Order more food", hi: "🔄 और खाना ऑर्डर कीजिए" },
+            thankYouSpeak: { te: "థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. మధ్యలో ఉల్లిపాయలు, నిమ్మకాయ, పెరుగు లేదా ఏసీ అడ్జస్ట్‌మెంట్ కోసం కింద బటన్లు వాడుకోండి సర్.", en: "Thank you, sir! Your order has gone to the kitchen. It will reach your table hot in fifteen minutes. Meanwhile, use the buttons below for onions, lemon, curd or AC adjustment, sir.", hi: "धन्यवाद सर! आपका ऑर्डर किचन चला गया है। पंद्रह मिनट में गरमागरम आपकी टेबल पर आ जाएगा। बीच में प्याज़, नींबू, दही या एसी के लिए नीचे दिए गए बटन इस्तेमाल कीजिए सर।" },
+            trackerTitle: { te: "లైవ్ ఆర్డర్ ట్రాకర్", en: "LIVE ORDER TRACKER", hi: "लाइव ऑर्डर ट्रैकर" },
+            progressSuffix: { te: "పూర్తయింది", en: "COMPLETED", hi: "पूरा हुआ" },
+            readyText: { te: "సిద్ధం!", en: "READY!", hi: "तैयार!" },
+            readyServe: { te: "100% సర్వ్ చేయడానికి సిద్ధం", en: "100% READY TO SERVE", hi: "100% परोसने के लिए तैयार" }
+        };
+
+        // One-tap refill buttons: on-screen label + spoken reply follow the selected
+        // language; wa (WhatsApp message to the kitchen) stays Telugu for kitchen staff.
+        const REFILLS = [
+            { label: { te: "🧅 ఉల్లిపాయ & నిమ్మకాయ", en: "🧅 Onion & Lemon", hi: "🧅 प्याज़ और नींबू" }, wa: "ఉల్లిపాయలు & నిమ్మకాయ (Onions & Lemon)", reply: { te: "ఉల్లిపాయలు, నిమ్మకాయ పంపించమని కిచెన్‌కు చెప్తున్నాను సర్.", en: "I am asking the kitchen to send onions and lemon, sir.", hi: "मैं किचन से प्याज़ और नींबू भिजवाने के लिए कह रहा हूँ सर।" }, bill: false },
+            { label: { te: "🥣 పెరుగు / రైతా", en: "🥣 Curd / Raita", hi: "🥣 दही / रायता" }, wa: "పెరుగు / రైతా (Extra Curd / Raita)", reply: { te: "ఎక్స్‌ట్రా పెరుగు పంపించమని చెప్తున్నాను సర్.", en: "I am asking them to send extra curd, sir.", hi: "मैं एक्स्ट्रा दही भिजवाने के लिए कह रहा हूँ सर।" }, bill: false },
+            { label: { te: "💧 మంచినీళ్లు", en: "💧 Drinking Water", hi: "💧 पीने का पानी" }, wa: "మంచినీళ్లు (Drinking Water)", reply: { te: "మంచినీళ్లు పంపిస్తున్నాము సర్.", en: "We are sending drinking water, sir.", hi: "पीने का पानी भिजवा रहे हैं सर।" }, bill: false },
+            { label: { te: "🧻 టిష్యూ పేపర్స్", en: "🧻 Tissue Papers", hi: "🧻 टिशू पेपर" }, wa: "టిష్యూ పేపర్స్ / సాల్ట్ (Tissues & Salt)", reply: { te: "టిష్యూ పేపర్స్ పంపిస్తున్నాము సర్.", en: "We are sending tissue papers, sir.", hi: "टिशू पेपर भिजवा रहे हैं सर।" }, bill: false },
+            { label: { te: "❄️ ఏసీ అడ్జస్ట్ చేయండి", en: "❄️ Adjust AC", hi: "❄️ एसी ठीक कीजिए" }, wa: "AC కూలింగ్ అడ్జస్ట్ చేయండి (Adjust AC)", reply: { te: "ఏసీ టెంపరేచర్ అడ్జస్ట్ చేయమని స్టాఫ్‌కు చెప్తున్నాను సర్.", en: "I am asking the staff to adjust the AC temperature, sir.", hi: "मैं स्टाफ़ से एसी का तापमान ठीक करने के लिए कह रहा हूँ सर।" }, bill: false },
+            { label: { te: "🧾 బిల్లు పంపండి", en: "🧾 Send the Bill", hi: "🧾 बिल भेजिए" }, wa: "బిల్లు పంపండి (Request Final Bill)", reply: { te: "మీ టేబుల్ బిల్లు సిద్ధం చేయమని కౌంటర్‌కు చెప్తున్నాను సర్.", en: "I am asking the counter to prepare your table's bill, sir.", hi: "मैं काउंटर से आपकी टेबल का बिल तैयार करने के लिए कह रहा हूँ सर।" }, bill: true }
+        ];
+
+        function t(key) { const v = STR[key]; return v ? (v[currentLang] || v.te) : ''; }
+        function tf(key, vars) {
+            let str = t(key);
+            if (vars) Object.keys(vars).forEach(k => { str = str.split('{' + k + '}').join(vars[k]); });
+            return str;
+        }
+        function itemName(item) { return currentLang === 'en' ? item.nameEn : currentLang === 'hi' ? item.nameHi : item.name; }
+        function itemDesc(item) { return currentLang === 'en' ? item.descEn : currentLang === 'hi' ? item.descHi : item.desc; }
+        function itemSub(item) { return item.sub[currentLang] || item.sub.te; }
+
+        // Same pattern as index.html toggleLanguage(), extended to 3 languages.
+        function toggleLanguage() {
+            currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+            document.documentElement.lang = currentLang;
+            document.getElementById('langBtn').innerText = LANG_NEXT_LABEL[currentLang];
+            document.title = t('pageTitle');
+            renderVenueLabels();
+
+            document.querySelectorAll('[data-te]').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang);
+                if (text) el.innerHTML = text;
+            });
+            document.querySelectorAll('[data-te-ph]').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang + '-ph');
+                if (text) el.placeholder = text;
+            });
+            renderMenu();
+            renderOrderPad();
+            applyTrackerLang();
+        }
+
+        function speakHubGreeting() { speakGentVoice(t('hubGreeting')); }
+
         // Render Menu based on Category & Sub-category
         function renderMenu() {
             const listEl = document.getElementById('menuItemsContainer');
+            if (!listEl) return;
             const filtered = HOTEL_MENU.filter(item => {
                 const matchCat = (currentCategory === 'ALL' || item.cat === currentCategory);
                 const matchDiet = (currentDiet === 'ALL' || item.diet === currentDiet);
@@ -780,10 +897,10 @@
                     <div>
                         <div class="dish-badge-row">
                             <span class="${item.diet === 'VEG' ? 'dot-veg' : 'dot-nonveg'}"></span>
-                            <span class="sub-tag">${item.sub}</span>
+                            <span class="sub-tag">${itemSub(item)}</span>
                         </div>
-                        <div class="dish-title">${item.name}</div>
-                        <div class="dish-desc">${item.desc}</div>
+                        <div class="dish-title">${itemName(item)}</div>
+                        <div class="dish-desc">${itemDesc(item)}</div>
                         <span class="dish-cost">₹${item.price}</span>
                     </div>
                     <div class="qty-box">
@@ -811,9 +928,9 @@
 
         function getTimeGreeting() {
             const hr = new Date().getHours();
-            if (hr < 12) return "శుభోదయం సర్!";
-            if (hr < 17) return "శుభ మధ్యాహ్నం సర్!";
-            return "శుభ సాయంత్రం సర్!";
+            if (hr < 12) return t('greetMorning');
+            if (hr < 17) return t('greetAfternoon');
+            return t('greetEvening');
         }
 
         function speakGentVoice(text) {
@@ -824,13 +941,15 @@
                 const utter = new SpeechSynthesisUtterance(text);
                 
                 const voices = window.speechSynthesis.getVoices();
-                const maleVoice = voices.find(v => (v.lang.includes('te') || v.lang.includes('en-IN')) && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('ravi') || v.name.toLowerCase().includes('pradeep')));
-                
+                const langPrefix = LANG_CODE[currentLang].slice(0, 2);
+                const maleVoice = voices.find(v => v.lang.toLowerCase().startsWith(langPrefix) && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('ravi') || v.name.toLowerCase().includes('pradeep')))
+                    || voices.find(v => v.lang.toLowerCase().startsWith(langPrefix));
+
                 if (maleVoice) utter.voice = maleVoice;
 
-                utter.pitch = 0.76; 
+                utter.pitch = 0.76;
                 utter.rate = 0.94;
-                utter.lang = 'te-IN';
+                utter.lang = LANG_CODE[currentLang];
 
                 const stage = document.getElementById('voiceStage');
                 stage.classList.add('speaking');
@@ -842,11 +961,14 @@
             }
         }
 
+        renderVenueLabels();
+        document.title = t('pageTitle');
+
         window.addEventListener('load', () => {
             renderMenu();
             setTimeout(() => {
                 const greet = getTimeGreeting();
-                speakGentVoice(`${greet} ${hotelName} కు హృదయపూర్వక స్వాగతం. మీరు ${tableNumber} లో ఉన్నారు. మెనూ నుండి మీకు నచ్చినవి ఎంచుకోండి సర్.`);
+                speakGentVoice(tf('welcomeSpeech', { greet: greet, hotel: hotelDisplay(), table: tableDisplay() }));
             }, 600);
         });
 
@@ -859,9 +981,9 @@
 
                 if (delta > 0) {
                     const prompts = [
-                        `సరే సర్, ${item.name} నోట్ చేసుకున్నాను. నెక్స్ట్ ఏం కావాలి సర్?`,
-                        `${item.name} యాడ్ చేశాను సర్.. ఇంకేమైనా కావాలా?`,
-                        `రైట్ సర్, రాసుకున్నాను..`
+                        tf('addedPrompt1', { name: itemName(item) }),
+                        tf('addedPrompt2', { name: itemName(item) }),
+                        t('addedPrompt3')
                     ];
                     speakGentVoice(prompts[Math.floor(Math.random() * prompts.length)]);
                 }
@@ -877,11 +999,13 @@
 
         function updateSplitDisplay() {
             const perHead = splitCount > 0 ? Math.ceil(currentGrandTotal / splitCount) : currentGrandTotal;
-            document.getElementById('splitAmountDisplay').innerText = `₹${perHead}`;
+            const splitEl = document.getElementById('splitAmountDisplay');
+            if (splitEl) splitEl.innerText = `₹${perHead}`;
         }
 
         function renderOrderPad() {
             const padContainer = document.getElementById('orderPadLines');
+            if (!padContainer) return;
             let linesHtml = "";
             let total = 0;
             let totalCount = 0;
@@ -893,7 +1017,7 @@
                     totalCount += item.count;
                     linesHtml += `
                         <div class="writing-line-item">
-                            <span>✍️ ${item.name} x ${item.count}</span>
+                            <span>✍️ ${itemName(item)} × ${item.count}</span>
                             <span>₹${itemTotal}</span>
                         </div>
                     `;
@@ -903,34 +1027,36 @@
             currentGrandTotal = total;
 
             if (linesHtml === "") {
-                padContainer.innerHTML = `<div class="empty-hint">పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️</div>`;
+                padContainer.innerHTML = `<div class="empty-hint">${t('emptyHint')}</div>`;
             } else {
                 padContainer.innerHTML = linesHtml;
             }
 
-            document.getElementById('padTotalAmount').innerText = `₹${total}`;
-            document.getElementById('cartCount').innerText = totalCount;
+            const padTotalEl = document.getElementById('padTotalAmount');
+            if (padTotalEl) padTotalEl.innerText = `₹${total}`;
+            const cartEl = document.getElementById('cartCount');
+            if (cartEl) cartEl.innerText = totalCount;
             updateSplitDisplay();
         }
 
         function listenToVoiceOrder() {
             const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) {
-                alert("వాయిస్ రికగ్నిషన్ కోసం Chrome వాడండి.");
+                alert(t('voiceChromeAlert'));
                 return;
             }
             const rec = new SpeechRec();
-            rec.lang = 'te-IN';
+            rec.lang = LANG_CODE[currentLang];
             rec.onstart = () => {
-                document.getElementById('supervisorText').innerText = "🔴 వింటున్నాను సర్, మీ ఆర్డర్ చెప్పండి...";
+                document.getElementById('supervisorText').innerText = t('listening');
             };
             rec.onresult = (e) => {
                 const spokenText = e.results[0][0].transcript;
-                speakGentVoice(`రాసుకున్నాను సర్: ${spokenText}`);
+                speakGentVoice(tf('voiceNoted', { text: spokenText }));
                 
                 const msg = `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0A_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు రిప్లై ఇవ్వండి)_`;
-                const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelName)} · టేబుల్ ${escHtml(tableNumber)}</div><div style="margin-top: 6px;">మీ వాయిస్ ఆర్డర్:</div><div style="font-weight: 700; color: #fff;">"${escHtml(spokenText)}"</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">ఈ ఆర్డర్‌ను WhatsApp ద్వారా కిచెన్‌కు పంపాలా?</div>`;
-                showOrderConfirm(summaryHtml, msg, "Voice Order");
+                const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${t('tableLabel')} ${escHtml(tableDisplay())}</div><div style="margin-top: 6px;">${t('voiceOrderLabel')}</div><div style="font-weight: 700; color: #fff;">"${escHtml(spokenText)}"</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
+                showOrderConfirm(summaryHtml, msg, t('voiceOrderBill'));
             };
             rec.start();
         }
@@ -977,7 +1103,7 @@
             });
 
             if (orderLines.length === 0) {
-                speakGentVoice("ఒక్క ఐటమ్ అయినా సెలెక్ట్ చేయండి సర్, ఆర్డర్ పంపిస్తాను.");
+                speakGentVoice(t('emptyCartSpeak'));
                 return;
             }
 
@@ -987,28 +1113,41 @@
             const itemsStr = orderLines.join('%0A');
             const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${new Date().toLocaleTimeString()}%0A-----------------------------%0A🔔 *కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
 
-            const summaryLines = orderLines.map(l => `<div>${escHtml(l)}</div>`).join('');
-            const noteLine = chefNote ? `<div style="margin-top: 6px;">చెఫ్ సూచన: ${escHtml(chefNote)}</div>` : '';
-            const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelName)} · టేబుల్ ${escHtml(tableNumber)}</div>${summaryLines}${noteLine}<div style="border-top: 1px dashed #94a3b8; margin-top: 8px; padding-top: 8px; font-weight: 800; color: #fff;">మొత్తం బిల్లు: ₹${grandTotal}</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">ఈ ఆర్డర్‌ను WhatsApp ద్వారా కిచెన్‌కు పంపాలా?</div>`;
-            speakGentVoice("మీ ఆర్డర్ సిద్ధంగా ఉంది సర్. నిర్ధారించి పంపండి.");
+            const displayLines = [];
+            HOTEL_MENU.forEach(item => {
+                if (item.count > 0) displayLines.push(`• ${itemName(item)} × ${item.count} = ₹${item.count * item.price}`);
+            });
+            const summaryLines = displayLines.map(l => `<div>${escHtml(l)}</div>`).join('');
+            const noteLine = chefNote ? `<div style="margin-top: 6px;">${t('chefNoteLabel')} ${escHtml(chefNote)}</div>` : '';
+            const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${t('tableLabel')} ${escHtml(tableDisplay())}</div>${summaryLines}${noteLine}<div style="border-top: 1px dashed #94a3b8; margin-top: 8px; padding-top: 8px; font-weight: 800; color: #fff;">${t('totalBillLabel')} ₹${grandTotal}</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
+            speakGentVoice(t('orderReadySpeak'));
             showOrderConfirm(summaryHtml, msg, `₹${grandTotal}`);
         }
 
-        function requestTableService(itemLabel, voiceReply) {
-            speakGentVoice(voiceReply);
-            const msg = `*AVAILO TABLE REFILL / SERVICE*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*కావలసినవి:* ${itemLabel}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
+        function requestTableService(idx) {
+            const r = REFILLS[idx];
+            if (!r) return;
+            speakGentVoice(r.reply[currentLang]);
+            const msg = `*AVAILO TABLE REFILL / SERVICE*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*కావలసినవి:* ${r.wa}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
             setTimeout(() => {
                 window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
             }, 900);
         }
 
+        let trackerState = null;
+        let lastPct = 35;
+        let trackerReady = false;
+
         function displayLiveTrackerScreen(billInfo, minutes) {
+            trackerState = { billInfo: billInfo };
+            trackerReady = false;
+            lastPct = 35;
             const container = document.getElementById('mainContainer');
             container.innerHTML = `
                 <div class="tracker-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                        <span style="font-size: 12px; color: var(--brand-gold); font-family: 'Rajdhani', sans-serif; font-weight: 800;">LIVE ORDER TRACKER</span>
-                        <span style="font-size: 12px; color: var(--brand-cyan); font-family: 'Rajdhani', sans-serif; font-weight: 800;" id="progressPercent">35% COMPLETED</span>
+                        <span id="trackerTitle" style="font-size: 12px; color: var(--brand-gold); font-family: 'Rajdhani', sans-serif; font-weight: 800;">${t('trackerTitle')}</span>
+                        <span style="font-size: 12px; color: var(--brand-cyan); font-family: 'Rajdhani', sans-serif; font-weight: 800;" id="progressPercent">${'35% ' + t('progressSuffix')}</span>
                     </div>
                     
                     <div class="progress-track">
@@ -1016,46 +1155,59 @@
                     </div>
 
                     <div class="timer-box">
-                        <div style="font-size: 11px; color: #94a3b8; margin-bottom: 2px;">అంచనా సమయం (ESTIMATED DELIVERY)</div>
+                        <div id="estTimeLabel" style="font-size: 11px; color: #94a3b8; margin-bottom: 2px;">${t('estTime')}</div>
                         <div class="timer-digits" id="liveTimer">${minutes}:00</div>
-                        <div style="font-size: 12.5px; color: var(--accent-green); font-weight: 700; margin-top: 4px;">మొత్తం బిల్లు: ${billInfo}</div>
+                        <div id="trackerBillLine" style="font-size: 12.5px; color: var(--accent-green); font-weight: 700; margin-top: 4px;">${t('totalBillLabel')} ${billInfo}</div>
                     </div>
 
                     <div class="progress-steps">
                         <div class="step-item active" id="step1">
                             <div class="step-dot"></div>
-                            <span>1. ఆర్డర్ కిచెన్‌కు చేరింది (Order Received)</span>
+                            <span>${t('step1')}</span>
                         </div>
                         <div class="step-item active" id="step2">
                             <div class="step-dot"></div>
-                            <span>2. చెఫ్ తయారు చేస్తున్నారు (Preparing Food...)</span>
+                            <span>${t('step2')}</span>
                         </div>
                         <div class="step-item" id="step3">
                             <div class="step-dot"></div>
-                            <span>3. టేబుల్ వద్దకు వస్తోంది (Ready to Serve)</span>
+                            <span>${t('step3')}</span>
                         </div>
                     </div>
 
-                    <div class="refill-section-title">⚡ తక్షణ అవసరాలు / రీఫిల్స్ (ONE-TAP REFILLS):</div>
-                    <div class="quick-service-grid">
-                        <button class="srv-btn" onclick="requestTableService('ఉల్లిపాయలు & నిమ్మకాయ (Onions & Lemon)', 'ఉల్లిపాయలు, నిమ్మకాయ పంపించమని కిచెన్‌కు చెప్తున్నాను సర్.')">🧅 ఉల్లిపాయ & నిమ్మకాయ</button>
-                        <button class="srv-btn" onclick="requestTableService('పెరుగు / రైతా (Extra Curd / Raita)', 'ఎక్స్‌ట్రా పెరుగు పంపించమని చెప్తున్నాను సర్.')">🥣 పెరుగు / రైతా</button>
-                        <button class="srv-btn" onclick="requestTableService('మంచినీళ్లు (Drinking Water)', 'మంచినీళ్లు పంపిస్తున్నాము సర్.')">💧 మంచినీళ్లు (Water)</button>
-                        <button class="srv-btn" onclick="requestTableService('టిష్యూ పేపర్స్ / సాల్ట్ (Tissues & Salt)', 'టిష్యూ పేపర్స్ పంపిస్తున్నాము సర్.')">🧻 టిష్యూ పేపర్స్</button>
-                        <button class="srv-btn" onclick="requestTableService('AC కూలింగ్ అడ్జస్ట్ చేయండి (Adjust AC)', 'AC టెంపరేచర్ అడ్జస్ట్ చేయమని స్టాఫ్‌కు చెప్తున్నాను సర్.')">❄️ AC అడ్జస్ట్ చేయండి</button>
-                        <button class="srv-btn bill-btn" onclick="requestTableService('బిల్లు పంపండి (Request Final Bill)', 'మీ టేబుల్ బిల్లు సిద్ధం చేయమని కౌంటర్‌కు చెప్తున్నాను సర్.')">🧾 బిల్లు పంపండి</button>
+                    <div class="refill-section-title" id="refillTitleEl">${t('refillTitle')}</div>
+                    <div class="quick-service-grid" id="refillGrid">
+                        ${REFILLS.map((r, i) => `<button class="srv-btn${r.bill ? ' bill-btn' : ''}" onclick="requestTableService(${i})">${r.label[currentLang]}</button>`).join('')}
                     </div>
                 </div>
             `;
 
             document.getElementById('bottomNavBar').innerHTML = `
-                <button onclick="location.reload()" style="width: 100%; background: var(--brand-cyan); color: #071426; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Rajdhani', sans-serif;">
-                    🔄 ఇంకా ఏమైనా ఫుడ్ ఆర్డర్ చేయండి (ADD MORE FOOD)
+                <button id="addMoreBtn" onclick="location.reload()" style="width: 100%; background: var(--brand-cyan); color: #071426; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Rajdhani', sans-serif;">
+                    ${t('addMoreFood')}
                 </button>
             `;
 
-            speakGentVoice(`థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. మధ్యలో ఉల్లిపాయలు, నిమ్మకాయ, పెరుగు లేదా AC అడ్జస్ట్‌మెంట్ కోసం కింద బటన్లు వాడుకోండి సర్.`);
+            speakGentVoice(t('thankYouSpeak'));
             startCountdown(minutes * 60);
+        }
+
+        // Re-apply the selected language to the live-tracker screen (built by JS,
+        // so the data-* sweep cannot reach it). Timer digits keep counting.
+        function applyTrackerLang() {
+            if (!trackerState) return;
+            const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
+            setText('trackerTitle', t('trackerTitle'));
+            setText('estTimeLabel', t('estTime'));
+            setText('trackerBillLine', `${t('totalBillLabel')} ${trackerState.billInfo}`);
+            const s1 = document.querySelector('#step1 span'); if (s1) s1.innerText = t('step1');
+            const s2 = document.querySelector('#step2 span'); if (s2) s2.innerText = t('step2');
+            const s3 = document.querySelector('#step3 span'); if (s3) s3.innerText = t('step3');
+            setText('refillTitleEl', t('refillTitle'));
+            const grid = document.getElementById('refillGrid');
+            if (grid) grid.innerHTML = REFILLS.map((r, i) => `<button class="srv-btn${r.bill ? ' bill-btn' : ''}" onclick="requestTableService(${i})">${r.label[currentLang]}</button>`).join('');
+            setText('progressPercent', trackerReady ? t('readyServe') : `${lastPct}% ${t('progressSuffix')}`);
+            setText('addMoreBtn', t('addMoreFood'));
         }
 
         function startCountdown(durationInSeconds) {
@@ -1079,8 +1231,9 @@
 
                 const elapsed = totalDuration - timer;
                 const pct = Math.min(100, Math.max(35, Math.round((elapsed / totalDuration) * 100)));
+                lastPct = pct;
                 if (barFill) barFill.style.width = pct + "%";
-                if (percentText) percentText.textContent = pct + "% COMPLETED";
+                if (percentText) percentText.textContent = pct + "% " + t('progressSuffix');
 
                 if (timer <= 120) {
                     const step3 = document.getElementById('step3');
@@ -1089,8 +1242,8 @@
 
                 if (--timer < 0) {
                     clearInterval(interval);
-                    display.textContent = "READY!";
-                    if (percentText) percentText.textContent = "100% READY TO SERVE";
+                    display.textContent = t('readyText'); trackerReady = true;
+                    if (percentText) percentText.textContent = t('readyServe');
                 }
             }, 1000);
         }

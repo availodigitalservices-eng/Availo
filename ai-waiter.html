@@ -507,15 +507,15 @@
 <body>
 
     <div class="app-shell">
-        <a class="back-link" href="https://availoservices.in/">← అవైలో హోమ్</a>
+        <a class="back-link" id="backLink" href="https://availoservices.in/">← అవైలో హోమ్</a>
         <!-- 1. Header -->
         <div class="brand-header">
             <div class="brand-title-wrap">
                 <div class="brand-name">AVAILO</div>
-                <div class="brand-sub">NEXT-GEN VOICE AI ASSISTANT</div>
+                <div class="brand-sub" id="brandSub">నెక్స్ట్-జెన్ వాయిస్ AI అసిస్టెంట్</div>
             </div>
             <div class="header-right">
-                <span class="mode-badge">HANDS-FREE AI</span>
+                <span class="mode-badge" id="modeBadge">హ్యాండ్స్-ఫ్రీ AI</span>
                 <button class="api-cfg-btn" onclick="configureSarvamKey()" title="Sarvam API Key">⚙️</button>
             </div>
         </div>
@@ -542,12 +542,7 @@
             </div>
 
             <!-- Tap-to-Speak Sample Voice Intents -->
-            <div class="quick-prompts">
-                <button class="q-chip" onclick="processVoiceCommand('ఈరోజు స్పెషల్స్ ఏంటి?')">"స్పెషల్స్ ఏంటి?"</button>
-                <button class="q-chip" onclick="processVoiceCommand('ఒక వెజ్ బిర్యానీ యాడ్ చెయ్')">"వెజ్ బిర్యానీ యాడ్ చెయ్"</button>
-                <button class="q-chip" onclick="processVoiceCommand('బిల్ ఎంత అయింది?')">"బిల్ ఎంత?"</button>
-                <button class="q-chip" onclick="processVoiceCommand('ఆర్డర్ కన్ఫర్మ్ చెయ్')">"ఆర్డర్ కన్ఫర్మ్ చెయ్"</button>
-            </div>
+            <div class="quick-prompts" id="quickPrompts"></div>
         </div>
 
         <!-- 3. Language & Hands-Free Loop Control -->
@@ -558,7 +553,7 @@
                 <button class="lang-pill" onclick="switchLang('hi', this)">हिन्दी</button>
             </div>
             <div class="auto-loop-row">
-                <span id="autoLoopLabel">🔄 ఆటో-కంటిన్యూయస్ సంభాషణ (Auto-Listen)</span>
+                <span id="autoLoopLabel">🔄 ఆటో-కంటిన్యూయస్ సంభాషణ</span>
                 <input type="checkbox" id="autoLoopToggle" checked style="width:18px; height:18px; accent-color:#20DDE0;">
             </div>
         </div>
@@ -573,8 +568,8 @@
 
         <!-- 5. Footer -->
         <div class="footer-bar">
-            Table No: <span id="tableNumber">01</span> · Powered by <span>AVAILO VOICE ENGINE</span><br>
-            Helpline: <a href="tel:9966157369">9966157369</a> · <a href="https://wa.me/919966157369">WhatsApp</a> · <a href="https://availoservices.in/">availoservices.in</a>
+            <span id="tableNoLbl">టేబుల్ నం:</span> <span id="tableNumber">01</span> · <span id="poweredByLbl">AVAILO VOICE ENGINE ద్వారా</span><br>
+            <span id="helplineLbl">హెల్ప్‌లైన్:</span> <a href="tel:9966157369">9966157369</a> · <a href="https://wa.me/919966157369">WhatsApp</a> · <a href="https://availoservices.in/">availoservices.in</a>
         </div>
     </div>
 
@@ -609,10 +604,10 @@
 
         function configureSarvamKey() {
             const current = localStorage.getItem('availo_sarvam_key') || "";
-            const userKey = prompt("మీ Sarvam AI API Key ఇక్కడ పేస్ట్ చేయండి:", current);
+            const userKey = prompt(LANG_DATA[currentLang].sarvamPrompt, current);
             if (userKey !== null) {
                 localStorage.setItem('availo_sarvam_key', userKey.trim());
-                alert("Sarvam AI Key సేవ్ అయింది!");
+                alert(LANG_DATA[currentLang].sarvamSaved);
             }
         }
 
@@ -640,7 +635,12 @@
                 emptyWarn: "మీ కార్ట్‌లో ఇంకా ఏ ఐటమ్స్ లేవు. ముందుగా ఏదైనా ఐటమ్ చెప్పండి.",
                 confirming: (total) => `మీ మొత్తం బిల్ ${total} రూపాయలు అయింది. ఆర్డర్ ఇప్పుడే కిచెన్‌కు పంపిస్తున్నాను!`,
                 menuLabel: "మెనూ & లైవ్ బిల్",
-                autoLoop: "🔄 ఆటో-కంటిన్యూయస్ సంభాషణ (Auto-Listen)",
+                autoLoop: "🔄 ఆటో-కంటిన్యూయస్ సంభాషణ",
+                brandSub: "నెక్స్ట్-జెన్ వాయిస్ AI అసిస్టెంట్",
+                modeBadge: "హ్యాండ్స్-ఫ్రీ AI",
+                tableNoLabel: "టేబుల్ నం:",
+                poweredBy: "AVAILO VOICE ENGINE ద్వారా",
+                helplineLabel: "హెల్ప్‌లైన్:",
                 talkBtn: "🎤 మాట్లాడండి",
                 sendBtn: "ఆర్డర్ పంపండి",
                 chip: { tap: "● మాట్లాడటానికి మధ్య బటన్ నొక్కండి", ready: "● వినడానికి సిద్ధం", listening: "🔴 వింటున్నాను... మాట్లాడండి", speaking: "🔊 AI మాట్లాడుతోంది...", paused: "● ఆగిపోయింది" },
@@ -655,7 +655,12 @@
                 confirmTitle: "మీ ఆర్డర్ నిర్ధారించండి",
                 confirmTotalLabel: "మొత్తం బిల్",
                 confirmBtn: "✅ కన్ఫర్మ్ చేసి పంపండి",
-                cancelBtn: "❌ రద్దు చేయండి"
+                cancelBtn: "❌ రద్దు చేయండి",
+                backLink: "← అవైలో హోమ్",
+                youSaid: (raw) => `మీరు: "${raw}"`,
+                sarvamPrompt: "మీ Sarvam AI API Key ఇక్కడ పేస్ట్ చేయండి:",
+                sarvamSaved: "Sarvam AI Key సేవ్ అయింది!",
+                chips: [{ label: "స్పెషల్స్ ఏంటి?", cmd: "ఈరోజు స్పెషల్స్ ఏంటి?" }, { label: "వెజ్ బిర్యానీ యాడ్ చెయ్", cmd: "ఒక వెజ్ బిర్యానీ యాడ్ చెయ్" }, { label: "బిల్ ఎంత?", cmd: "బిల్ ఎంత అయింది?" }, { label: "ఆర్డర్ కన్ఫర్మ్ చెయ్", cmd: "ఆర్డర్ కన్ఫర్మ్ చెయ్" }]
             },
             en: {
                 code: "en-IN",
@@ -667,6 +672,11 @@
                 confirming: (total) => `Your total bill is ${total} rupees. Sending your order to the kitchen now!`,
                 menuLabel: "Menu & Live Bill",
                 autoLoop: "🔄 Auto-Continuous Conversation (Auto-Listen)",
+                brandSub: "NEXT-GEN VOICE AI ASSISTANT",
+                modeBadge: "HANDS-FREE AI",
+                tableNoLabel: "Table No:",
+                poweredBy: "Powered by AVAILO VOICE ENGINE",
+                helplineLabel: "Helpline:",
                 talkBtn: "🎤 Talk",
                 sendBtn: "Send Order",
                 chip: { tap: "● TAP CORE TO START CONVERSATION", ready: "● READY TO LISTEN", listening: "🔴 LISTENING... SPEAK NOW", speaking: "🔊 AI SPEAKING...", paused: "● PAUSED" },
@@ -681,7 +691,12 @@
                 confirmTitle: "Confirm Your Order",
                 confirmTotalLabel: "Total Bill",
                 confirmBtn: "✅ Confirm & Send",
-                cancelBtn: "❌ Cancel"
+                cancelBtn: "❌ Cancel",
+                backLink: "← AVAILO Home",
+                youSaid: (raw) => `You: "${raw}"`,
+                sarvamPrompt: "Paste your Sarvam AI API Key here:",
+                sarvamSaved: "Sarvam AI Key saved!",
+                chips: [{ label: "What are the specials?", cmd: "What are today's specials?" }, { label: "Add veg biryani", cmd: "Add one veg biryani" }, { label: "What's the bill?", cmd: "What is the bill?" }, { label: "Confirm order", cmd: "Confirm order" }]
             },
             hi: {
                 code: "hi-IN",
@@ -692,7 +707,12 @@
                 emptyWarn: "आपकी ऑर्डर लिस्ट खाली है। कृपया पहले कोई आइटम बोलें।",
                 confirming: (total) => `आपका कुल बिल ${total} रुपये है। आपका ऑर्डर अभी किचन में भेज रहा हूँ!`,
                 menuLabel: "मेनू और लाइव बिल",
-                autoLoop: "🔄 ऑटो-लगातार बातचीत (Auto-Listen)",
+                autoLoop: "🔄 ऑटो-लगातार बातचीत",
+                brandSub: "नेक्स्ट-जेन वॉइस AI असिस्टेंट",
+                modeBadge: "हैंड्स-फ़्री AI",
+                tableNoLabel: "टेबल नं:",
+                poweredBy: "AVAILO VOICE ENGINE द्वारा",
+                helplineLabel: "हेल्पलाइन:",
                 talkBtn: "🎤 बोलिए",
                 sendBtn: "ऑर्डर भेजें",
                 chip: { tap: "● बातचीत शुरू करने के लिए बीच का बटन दबाएं", ready: "● सुनने के लिए तैयार", listening: "🔴 सुन रहा हूँ... बोलिए", speaking: "🔊 AI बोल रहा है...", paused: "● रुका हुआ" },
@@ -707,7 +727,12 @@
                 confirmTitle: "अपना ऑर्डर कन्फर्म करें",
                 confirmTotalLabel: "कुल बिल",
                 confirmBtn: "✅ कन्फर्म करें और भेजें",
-                cancelBtn: "❌ रद्द करें"
+                cancelBtn: "❌ रद्द करें",
+                backLink: "← अवैलो होम",
+                youSaid: (raw) => `आप: "${raw}"`,
+                sarvamPrompt: "अपनी Sarvam AI API Key यहाँ पेस्ट करें:",
+                sarvamSaved: "Sarvam AI Key सेव हो गई!",
+                chips: [{ label: "स्पेशल क्या है?", cmd: "आज के स्पेशल क्या हैं?" }, { label: "वेज बिरयानी जोड़ो", cmd: "एक वेज बिरयानी जोड़ो" }, { label: "बिल कितना है?", cmd: "बिल कितना हुआ?" }, { label: "ऑर्डर कन्फर्म करो", cmd: "ऑर्डर कन्फर्म करो" }]
             }
         };
 
@@ -759,10 +784,10 @@
         // 🧠 CONVERSATIONAL AI ENGINE
         function processVoiceCommand(rawText) {
             const text = rawText.toLowerCase().trim();
-            document.getElementById('userTranscript').innerText = `మీరు: "${rawText}"`;
+            document.getElementById('userTranscript').innerText = LANG_DATA[currentLang].youSaid(rawText);
 
             // 1. Check Specials / Menu Query
-            if (text.includes('స్పెషల్') || text.includes('మెనూ') || text.includes('ఏమున్నాయి') || text.includes('special') || text.includes('menu') || text.includes('मेनू')) {
+            if (text.includes('స్పెషల్') || text.includes('మెనూ') || text.includes('ఏమున్నాయి') || text.includes('special') || text.includes('menu') || text.includes('मेनू') || text.includes('स्पेशल')) {
                 speakResponse(LANG_DATA[currentLang].specials, true);
                 return;
             }
@@ -776,7 +801,7 @@
             }
 
             // 3. Check Order Confirmation / Send
-            if (text.includes('కన్ఫర్మ్') || text.includes('పంపించు') || text.includes('పంపు') || text.includes('confirm') || text.includes('send') || text.includes('भेज')) {
+            if (text.includes('కన్ఫర్మ్') || text.includes('పంపించు') || text.includes('పంపు') || text.includes('confirm') || text.includes('send') || text.includes('भेज') || text.includes('कन्फर्म')) {
                 sendWhatsAppOrder();
                 return;
             }
@@ -942,12 +967,31 @@
             el.classList.add('active');
             document.getElementById('menuLabel').innerText = LANG_DATA[lang].menuLabel;
             document.getElementById('autoLoopLabel').innerText = LANG_DATA[lang].autoLoop;
+            document.getElementById('brandSub').innerText = LANG_DATA[lang].brandSub;
+            document.getElementById('modeBadge').innerText = LANG_DATA[lang].modeBadge;
+            document.getElementById('tableNoLbl').innerText = LANG_DATA[lang].tableNoLabel;
+            document.getElementById('poweredByLbl').innerText = LANG_DATA[lang].poweredBy;
+            document.getElementById('helplineLbl').innerText = LANG_DATA[lang].helplineLabel;
             document.getElementById('talkBtn').innerText = LANG_DATA[lang].talkBtn;
             document.getElementById('sendOrderLabel').innerText = LANG_DATA[lang].sendBtn;
+            document.getElementById('backLink').innerText = LANG_DATA[lang].backLink;
+            renderChips();
             setStageUI('idle', LANG_DATA[lang].chip.tap);
             renderMenu();
             if (document.getElementById('confirmModal').classList.contains('show')) buildConfirmSummary();
             speakResponse(LANG_DATA[lang].welcome, true);
+        }
+
+        function renderChips() {
+            const wrap = document.getElementById('quickPrompts');
+            wrap.innerHTML = '';
+            LANG_DATA[currentLang].chips.forEach(c => {
+                const b = document.createElement('button');
+                b.className = 'q-chip';
+                b.textContent = '"' + c.label + '"';
+                b.addEventListener('click', () => processVoiceCommand(c.cmd));
+                wrap.appendChild(b);
+            });
         }
 
         function changeQty(id, delta) {
@@ -1028,7 +1072,7 @@
             }, 2200);
         }
 
-        window.addEventListener('load', renderMenu);
+        window.addEventListener('load', () => { renderChips(); renderMenu(); });
     </script>
 </body>
 </html>

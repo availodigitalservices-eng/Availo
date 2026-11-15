@@ -87,6 +87,17 @@
             border-radius: 20px;
         }
 
+        .lang-btn {
+            background: #ffffff;
+            border: 1.5px solid #008069;
+            color: #008069;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
         /* App Body Content */
         .app-content {
             flex: 1;
@@ -261,11 +272,14 @@
             <div class="user-profile">
                 <div class="avatar">A</div>
                 <div class="user-text">
-                    <h4>Availo Resident Desk</h4>
-                    <p>Vijayawada / Guntur</p>
+                    <h4 data-te="అవైలో రెసిడెంట్ డెస్క్" data-en="Availo Resident Desk" data-hi="अवैलो रेज़िडेंट डेस्क">అవైలో రెసిడెంట్ డెస్క్</h4>
+                    <p data-te="విజయవాడ / గుంటూరు" data-en="Vijayawada / Guntur" data-hi="विजयवाड़ा / गुंटूर">విజయవాడ / గుంటూరు</p>
                 </div>
             </div>
-            <span class="status-badge">● Active Protection</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="status-badge" data-te="● యాక్టివ్ ప్రొటెక్షన్" data-en="● Active Protection" data-hi="● सक्रिय सुरक्षा">● యాక్టివ్ ప్రొటెక్షన్</span>
+                <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+            </div>
         </div>
 
         <!-- Scrollable Screen Content -->
@@ -273,56 +287,56 @@
             
             <!-- Shield Status Card -->
             <div class="shield-banner">
-                <span class="shield-tag">🛡️ Society Care Active</span>
-                <h3 style="margin-top: 8px;">Apartment & Asset Shield</h3>
-                <p>లిఫ్ట్, మోటార్లు & కామన్ ఏరియా పూర్తి ఇన్సూరెన్స్ రక్షణలో ఉన్నాయి.</p>
-                <div style="font-size: 11px; color: #cbd5e1;">పాలసీ ఐడీ: <strong>AV-2026-AP01</strong></div>
+                <span class="shield-tag" data-te="🛡️ సొసైటీ కేర్ యాక్టివ్" data-en="🛡️ Society Care Active" data-hi="🛡️ सोसाइटी केयर सक्रिय">🛡️ సొసైటీ కేర్ యాక్టివ్</span>
+                <h3 style="margin-top: 8px;" data-te="అపార్ట్‌మెంట్ &amp; ఆస్తి రక్షణ" data-en="Apartment &amp; Asset Shield" data-hi="अपार्टमेंट और संपत्ति सुरक्षा">అపార్ట్‌మెంట్ &amp; ఆస్తి రక్షణ</h3>
+                <p data-te="లిఫ్ట్, మోటార్లు &amp; కామన్ ఏరియా పూర్తి ఇన్సూరెన్స్ రక్షణలో ఉన్నాయి." data-en="Lifts, motors &amp; common areas are fully covered under insurance." data-hi="लिफ्ट, मोटर और कॉमन एरिया पूरी तरह बीमा सुरक्षा में हैं।">లిఫ్ట్, మోటార్లు &amp; కామన్ ఏరియా పూర్తి ఇన్సూరెన్స్ రక్షణలో ఉన్నాయి.</p>
+                <div style="font-size: 11px; color: #cbd5e1;"><span data-te="పాలసీ ఐడీ:" data-en="Policy ID:" data-hi="पॉलिसी आईडी:">పాలసీ ఐడీ:</span> <strong>AV-2026-AP01</strong></div>
             </div>
 
             <!-- Instant WhatsApp Voice/Chat Action -->
             <div class="wa-instant-card">
                 <div>
-                    <h4>వన్-క్లిక్ వాట్సాప్ కేర్</h4>
-                    <p>ఏ సర్వీస్ కావాలన్నా వాయిస్ నోట్ ఇవ్వండి</p>
+                    <h4 data-te="వన్-క్లిక్ వాట్సాప్ కేర్" data-en="One-Click WhatsApp Care" data-hi="वन-क्लिक WhatsApp केयर">వన్-క్లిక్ వాట్సాప్ కేర్</h4>
+                    <p data-te="ఏ సర్వీస్ కావాలన్నా వాయిస్ నోట్ ఇవ్వండి" data-en="Send a voice note for any service you need" data-hi="कोई भी सेवा चाहिए तो वॉइस नोट भेजें">ఏ సర్వీస్ కావాలన్నా వాయిస్ నోట్ ఇవ్వండి</p>
                 </div>
-                <a href="https://wa.me/919966157369?text=హలో%20Availo,%20నాకు%20సర్వీస్%20కావాలి" class="wa-btn">చాట్ చేయండి</a>
+                <a href="https://wa.me/919966157369?text=హలో%20Availo,%20నాకు%20సర్వీస్%20కావాలి" class="wa-btn" data-te="చాట్ చేయండి" data-en="Chat Now" data-hi="चैट करें">చాట్ చేయండి</a>
             </div>
 
             <!-- Core Operations Grid -->
             <div class="section-title">
-                <span>ముఖ్యమైన సేవలు</span>
+                <span data-te="ముఖ్యమైన సేవలు" data-en="Important Services" data-hi="मुख्य सेवाएँ">ముఖ్యమైన సేవలు</span>
             </div>
 
             <div class="grid-2">
                 <a href="https://wa.me/919966157369?text=ఆదివారం%20స్క్రాప్%20పికప్%20కావాలి" class="action-card">
                     <div class="action-icon" style="background: #fef3c7; color: #d97706;">♻️</div>
-                    <h5>సండే స్క్రాప్</h5>
-                    <span>డోర్‌స్టెప్ తూకం & క్యాష్</span>
+                    <h5 data-te="సండే స్క్రాప్" data-en="Sunday Scrap" data-hi="रविवार स्क्रैप">సండే స్క్రాప్</h5>
+                    <span data-te="డోర్‌స్టెప్ తూకం &amp; క్యాష్" data-en="Doorstep weighing &amp; cash" data-hi="दरवाज़े पर तौल और नकद">డోర్‌స్టెప్ తూకం &amp; క్యాష్</span>
                 </a>
 
                 <a href="https://wa.me/919966157369?text=రిపేర్స్%20కావాలి" class="action-card">
                     <div class="action-icon" style="background: #eff6ff; color: #0044bb;">🔧</div>
-                    <h5>రిపేర్స్ & AMC</h5>
-                    <span>ప్లంబర్, ఎలక్ట్రీషియన్, ఏసీ</span>
+                    <h5 data-te="రిపేర్స్ &amp; AMC" data-en="Repairs &amp; AMC" data-hi="मरम्मत और AMC">రిపేర్స్ &amp; AMC</h5>
+                    <span data-te="ప్లంబర్, ఎలక్ట్రీషియన్, ఏసీ" data-en="Plumber, Electrician, AC" data-hi="प्लंबर, इलेक्ट्रीशियन, AC">ప్లంబర్, ఎలక్ట్రీషియన్, ఏసీ</span>
                 </a>
 
                 <a href="gate.html" class="action-card">
                     <div class="action-icon" style="background: #f3e8ff; color: #7c3aed;">🚪</div>
-                    <h5>స్మార్ట్ గేట్</h5>
-                    <span>ప్రైవసీ విజిటర్ లాగ్</span>
+                    <h5 data-te="స్మార్ట్ గేట్" data-en="Smart Gate" data-hi="स्मार्ट गेट">స్మార్ట్ గేట్</h5>
+                    <span data-te="ప్రైవసీ విజిటర్ లాగ్" data-en="Private visitor log" data-hi="प्राइवेट विज़िटर लॉग">ప్రైవసీ విజిటర్ లాగ్</span>
                 </a>
 
                 <a href="https://wa.me/919966157369?text=క్లెయిమ్స్%20సపోర్ట్%20కావాలి" class="action-card">
                     <div class="action-icon" style="background: #e0f2fe; color: #0284c7;">📑</div>
-                    <h5>క్లెయిమ్స్ సపోర్ట్</h5>
-                    <span>24/7 ప్రాపర్టీ షీల్డ్ హెల్ప్</span>
+                    <h5 data-te="క్లెయిమ్స్ సపోర్ట్" data-en="Claims Support" data-hi="क्लेम सपोर्ट">క్లెయిమ్స్ సపోర్ట్</h5>
+                    <span data-te="24/7 ప్రాపర్టీ షీల్డ్ హెల్ప్" data-en="24/7 Property Shield help" data-hi="24/7 प्रॉपर्टी शील्ड मदद">24/7 ప్రాపర్టీ షీల్డ్ హెల్ప్</span>
                 </a>
             </div>
 
             <!-- Helpline & Home Footer -->
             <div style="text-align: center; font-size: 11px; color: #64748b; line-height: 1.9;">
-                హెల్ప్‌లైన్: <a href="tel:9966157369" style="color: #008069; font-weight: 700; text-decoration: none;">9966157369</a><br>
-                <a href="index.html" style="color: #0044bb; font-weight: 700; text-decoration: none;">‹ హోమ్‌కి వెళ్ళండి</a>
+                <span data-te="హెల్ప్‌లైన్:" data-en="Helpline:" data-hi="हेल्पलाइन:">హెల్ప్‌లైన్:</span> <a href="tel:9966157369" style="color: #008069; font-weight: 700; text-decoration: none;">9966157369</a><br>
+                <a href="index.html" style="color: #0044bb; font-weight: 700; text-decoration: none;" data-te="‹ హోమ్‌కి వెళ్ళండి" data-en="‹ Go to Home" data-hi="‹ होम पर जाएँ">‹ హోమ్‌కి వెళ్ళండి</a>
             </div>
 
         </div>
@@ -331,19 +345,36 @@
         <div class="bottom-nav">
             <a href="index.html" class="nav-item active">
                 <span class="nav-icon">🏠</span>
-                <span>హోమ్</span>
+                <span data-te="హోమ్" data-en="Home" data-hi="होम">హోమ్</span>
             </a>
             <a href="https://wa.me/919966157369?text=ఆదివారం%20స్క్రాప్%20పికప్%20కావాలి" class="nav-item">
                 <span class="nav-icon">♻️</span>
-                <span>స్క్రాప్</span>
+                <span data-te="స్క్రాప్" data-en="Scrap" data-hi="स्क्रैप">స్క్రాప్</span>
             </a>
             <div class="nav-item" onclick="window.location.href='https://wa.me/919966157369'">
                 <span class="nav-icon">💬</span>
-                <span>సపోర్ట్</span>
+                <span data-te="సపోర్ట్" data-en="Support" data-hi="सपोर्ट">సపోర్ట్</span>
             </div>
         </div>
     </div>
 
+    <script>
+        let currentLang = 'te';
+        const LANG_NEXT = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+            document.documentElement.lang = currentLang;
+            document.body.classList.toggle('lang-en', currentLang === 'en');
+            document.body.classList.toggle('lang-hi', currentLang === 'hi');
+            const btn = document.getElementById('langBtn');
+            if (btn) btn.innerText = LANG_NEXT[currentLang];
+            document.querySelectorAll('[data-te]').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang);
+                if (text) el.innerHTML = text;
+            });
+        }
+    </script>
 </body>
 </html>
 

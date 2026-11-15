@@ -31,6 +31,20 @@
         .te-heading { font-family: 'Ramabhadra', sans-serif; }
         .te-body { font-family: 'Suranna', serif; }
 
+        body.lang-en .te-heading, body.lang-en .te-body,
+        body.lang-hi .te-heading, body.lang-hi .te-body { font-family: 'Inter', sans-serif; }
+
+        .lang-btn {
+            background: rgba(0, 229, 255, 0.08);
+            border: 1.5px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
         header {
             background: var(--panel-bg);
             padding: 12px 16px;
@@ -148,52 +162,86 @@
 <body>
 
     <header>
-        <a href="index.html" class="back-btn te-heading">‹ హోమ్</a>
-        <div style="font-size: 12px; color: var(--cyan-glow);">● ఆన్‌లైన్ (AI Mayura)</div>
+        <a href="index.html" class="back-btn te-heading" data-te="‹ హోమ్" data-en="‹ Home" data-hi="‹ होम">‹ హోమ్</a>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="font-size: 12px; color: var(--cyan-glow);" data-te="● ఆన్‌లైన్ (AI Mayura)" data-en="● Online (AI Mayura)" data-hi="● ऑनलाइन (AI Mayura)">● ఆన్‌లైన్ (AI Mayura)</div>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+        </div>
     </header>
 
     <div class="chat-header-profile">
         <div class="mayura-circle-chat">🦚</div>
         <h3 class="te-heading" style="font-size: 16px;">AVAILO OneChat</h3>
-        <p class="te-body" style="font-size: 12px; color: var(--text-sub);">నమస్కారం! నేను మీ అవైలో మయూరను.</p>
+        <p class="te-body" style="font-size: 12px; color: var(--text-sub);" data-te="నమస్కారం! నేను మీ అవైలో మయూరను." data-en="Hello! I am your Availo Mayura." data-hi="नमस्ते! मैं आपकी Availo मयूरा हूँ।">నమస్కారం! నేను మీ అవైలో మయూరను.</p>
     </div>
 
     <div class="chat-body">
         <div class="bot-msg-card">
-            <p class="te-heading" style="font-size: 13.5px; color: var(--cyan-glow);">ఈ రోజు మీకు ఏ సహాయం కావాలి?</p>
-            <p class="te-body" style="font-size: 12.5px; color: var(--text-sub); margin-top: 4px;">క్రింద ఉన్న సర్వీస్‌ను ఎంచుకోండి:</p>
+            <p class="te-heading" style="font-size: 13.5px; color: var(--cyan-glow);" data-te="ఈ రోజు మీకు ఏ సహాయం కావాలి?" data-en="How can I help you today?" data-hi="आज आपको किस मदद की ज़रूरत है?">ఈ రోజు మీకు ఏ సహాయం కావాలి?</p>
+            <p class="te-body" style="font-size: 12.5px; color: var(--text-sub); margin-top: 4px;" data-te="క్రింద ఉన్న సర్వీస్‌ను ఎంచుకోండి:" data-en="Choose a service below:" data-hi="नीचे दी गई सेवा चुनें:">క్రింద ఉన్న సర్వీస్‌ను ఎంచుకోండి:</p>
 
             <div class="quick-links">
                 <a href="https://wa.me/919966157369?text=హోమ్%20రిపేర్స్%20(ఎలక్ట్రికల్/ప్లంబింగ్)%20కావాలి" class="quick-btn">
-                    <span>🛠️</span> <span class="te-heading">హోమ్ రిపేర్స్ (ఎలక్ట్రికల్ / ప్లంబర్)</span>
+                    <span>🛠️</span> <span class="te-heading" data-te="హోమ్ రిపేర్స్ (ఎలక్ట్రికల్ / ప్లంబర్)" data-en="Home Repairs (Electrical / Plumber)" data-hi="होम रिपेयर (इलेक्ट्रिकल / प्लंबर)">హోమ్ రిపేర్స్ (ఎలక్ట్రికల్ / ప్లంబర్)</span>
                 </a>
                 <a href="https://wa.me/919966157369?text=డైలీ%20కిరాణా%20ఆర్డర్" class="quick-btn">
-                    <span>🛒</span> <span class="te-heading">డైలీ కిరాణా & తాజా సరుకులు</span>
+                    <span>🛒</span> <span class="te-heading" data-te="డైలీ కిరాణా &amp; తాజా సరుకులు" data-en="Daily Grocery &amp; Fresh Items" data-hi="रोज़ाना किराना और ताज़ा सामान">డైలీ కిరాణా & తాజా సరుకులు</span>
                 </a>
                 <a href="https://wa.me/919966157369?text=NRI%20పేరెంట్స్%20కేర్%20సపోర్ట్" class="quick-btn">
-                    <span>👴</span> <span class="te-heading">NRI పేరెంట్స్ కేర్ సపోర్ట్</span>
+                    <span>👴</span> <span class="te-heading" data-te="NRI పేరెంట్స్ కేర్ సపోర్ట్" data-en="NRI Parents Care Support" data-hi="NRI पेरेंट्स केयर सपोर्ट">NRI పేరెంట్స్ కేర్ సపోర్ట్</span>
                 </a>
                 <a href="https://wa.me/919966157369?text=ఈ-వేస్ట్%20మరియు%20స్క్రాప్%20పికప్" class="quick-btn">
-                    <span>♻️</span> <span class="te-heading">ఈ-వేస్ట్ & స్క్రాప్ పికప్</span>
+                    <span>♻️</span> <span class="te-heading" data-te="ఈ-వేస్ట్ &amp; స్క్రాప్ పికప్" data-en="E-Waste &amp; Scrap Pickup" data-hi="ई-वेस्ट और स्क्रैप पिकअप">ఈ-వేస్ట్ & స్క్రాప్ పికప్</span>
                 </a>
             </div>
         </div>
     </div>
 
     <div style="text-align: center; padding: 8px 16px; font-size: 11px; color: var(--text-sub); background: var(--panel-bg); border-top: var(--border-glow);">
-        హెల్ప్‌లైన్: <a href="tel:9966157369" style="color: var(--cyan-glow); text-decoration: none; font-weight: 600;">9966157369</a>
+        <span data-te="హెల్ప్‌లైన్:" data-en="Helpline:" data-hi="हेल्पलाइन:">హెల్ప్‌లైన్:</span> <a href="tel:9966157369" style="color: var(--cyan-glow); text-decoration: none; font-weight: 600;">9966157369</a>
     </div>
 
     <div class="input-bar">
-        <input type="text" id="chatInput" class="input-field te-body" placeholder="టైప్ చేయండి లేదా మైక్ నొక్కండి..." onkeydown="if(event.key==='Enter')submitToWhatsApp()">
+        <input type="text" id="chatInput" class="input-field te-body" placeholder="టైప్ చేయండి లేదా మైక్ నొక్కండి..." data-ph-te="టైప్ చేయండి లేదా మైక్ నొక్కండి..." data-ph-en="Type or tap the mic..." data-ph-hi="टाइप करें या माइक दबाएँ..." onkeydown="if(event.key==='Enter')submitToWhatsApp()">
         <button class="btn-circle btn-mic" onclick="startVoiceInput()">🎤</button>
         <button class="btn-circle btn-send" onclick="submitToWhatsApp()">➤</button>
     </div>
 
     <script>
+        let currentLang = 'te';
+        const LANG_NEXT = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
+        const VOICE_LANG = { te: 'te-IN', en: 'en-IN', hi: 'hi-IN' };
+        const DEFAULT_GREETING = {
+            te: 'నమస్తే అవైలో, నాకు సర్వీస్ కావాలి',
+            en: 'Hello Availo, I need a service',
+            hi: 'नमस्ते Availo, मुझे सर्विस चाहिए'
+        };
+        const VOICE_ALERT = {
+            te: 'వాయిస్ టైపింగ్ సదుపాయం కోసం WhatsApp ఉపయోగించండి.',
+            en: 'Please use WhatsApp for voice typing.',
+            hi: 'वॉइस टाइपिंग के लिए WhatsApp इस्तेमाल करें।'
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+            document.documentElement.lang = currentLang;
+            document.body.classList.toggle('lang-en', currentLang === 'en');
+            document.body.classList.toggle('lang-hi', currentLang === 'hi');
+            const btn = document.getElementById('langBtn');
+            if (btn) btn.innerText = LANG_NEXT[currentLang];
+            document.querySelectorAll('[data-te]').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang);
+                if (text) el.innerHTML = text;
+            });
+            document.querySelectorAll('[data-ph-te]').forEach(el => {
+                const text = el.getAttribute('data-ph-' + currentLang);
+                if (text) el.placeholder = text;
+            });
+        }
+
         function submitToWhatsApp() {
             const input = document.getElementById('chatInput').value.trim();
-            const text = input ? encodeURIComponent(input) : "నమస్తే%20అవైలో,%20నాకు%20సర్వీస్%20కావాలి";
+            const text = input ? encodeURIComponent(input) : encodeURIComponent(DEFAULT_GREETING[currentLang]);
             window.location.href = `https://wa.me/919966157369?text=${text}`;
         }
 
@@ -201,14 +249,14 @@
             if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 const rec = new SpeechRecognition();
-                rec.lang = 'te-IN';
+                rec.lang = VOICE_LANG[currentLang];
                 rec.start();
                 rec.onresult = function(e) {
                     document.getElementById('chatInput').value = e.results[0][0].transcript;
                     submitToWhatsApp();
                 };
             } else {
-                alert("వాయిస్ టైపింగ్ సదుపాయం కోసం WhatsApp ఉపయోగించండి.");
+                alert(VOICE_ALERT[currentLang]);
             }
         }
     </script>

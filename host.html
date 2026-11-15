@@ -358,7 +358,7 @@
     <!-- 1. AI HUMAN HOST STAGE -->
     <div class="host-stage">
         <div class="top-header">
-            <div class="table-badge" id="tableBadge">AVAILO DINE · TABLE 01</div>
+            <div class="table-badge" id="tableBadge">AVAILO DINE · టేబుల్ 01</div>
             <div class="lang-bar">
                 <button class="lang-btn active" onclick="setLanguage('te', this)">తెలుగు</button>
                 <button class="lang-btn" onclick="setLanguage('en', this)">English</button>
@@ -367,12 +367,12 @@
         </div>
 
         <div class="avatar-frame" id="avatarFrame" onclick="replayWelcome()">
-            <span class="live-dot">● AI HOST</span>
+            <span class="live-dot" id="liveDot">● AI హోస్ట్</span>
             <video id="hostVideo" class="host-video" src="host.mp4" autoplay loop muted playsinline onerror="showFallbackHost()"></video>
             <div id="fallbackHost" class="fallback-host" style="display:none;">
                 <div style="font-size: 46px; margin-bottom: 6px;">👩‍💼</div>
-                <div style="font-size: 11px; color: var(--brand-cyan); font-weight: 800;">AVAILO HOST</div>
-                <div style="font-size: 10px; color: #94a3b8; margin-top: 2px;">వాయిస్ వినడానికి నొక్కండి</div>
+                <div id="fallbackHostLabel" style="font-size: 11px; color: var(--brand-cyan); font-weight: 800;">AVAILO హోస్ట్</div>
+                <div id="fallbackHint" style="font-size: 10px; color: #94a3b8; margin-top: 2px;">వాయిస్ వినడానికి నొక్కండి</div>
             </div>
         </div>
 
@@ -396,7 +396,7 @@
         <div class="modal-card">
             <div class="modal-head">
                 <span id="modalTitle">ఆర్డర్ కన్ఫర్మేషన్</span>
-                <span id="modalTable">TABLE 01</span>
+                <span id="modalTable">టేబుల్ 01</span>
             </div>
             <div class="summary-list" id="modalItemsList"></div>
             <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px; display: flex; justify-content: space-between; font-weight: 800; font-size: 16px; color: var(--brand-cyan);">
@@ -422,13 +422,13 @@
 
     <!-- Footer: back to homepage + contact -->
     <footer style="text-align: center; padding: 18px 16px 26px; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); color: #94a3b8; font-size: 12.5px; line-height: 1.9;">
-        <a href="https://availoservices.in/" style="color: var(--brand-gold); font-weight: 800; text-decoration: none;">← హోమ్‌పేజీకి వెళ్ళండి</a>
+        <a id="homeLink" href="https://availoservices.in/" style="color: var(--brand-gold); font-weight: 800; text-decoration: none;">← హోమ్‌పేజీకి వెళ్ళండి</a>
         <div style="margin-top: 8px;">
-            హెల్ప్‌లైన్: <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
+            <span id="helplineLbl">హెల్ప్‌లైన్:</span> <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
             &nbsp;·&nbsp;
             <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
         </div>
-        <div>AVAILO Digital Services · విజయవాడ &amp; గుంటూరు</div>
+        <div id="regionLbl">AVAILO Digital Services · విజయవాడ &amp; గుంటూరు</div>
     </footer>
 
     <script>
@@ -437,8 +437,14 @@
         const tableNo = params.get('table') || "Table 01";
         const kitchenWa = params.get('desk') || "919966157369";
 
-        document.getElementById('tableBadge').innerText = `${hotelName.toUpperCase()} · ${tableNo.toUpperCase()}`;
-        document.getElementById('modalTable').innerText = tableNo.toUpperCase();
+        // Table number without the word "Table" so the label word itself can switch language.
+        const tableNum = tableNo.replace(/^\s*table\s*/i, '').trim() || tableNo;
+
+        function updateTableLabels() {
+            const w = UI_TEXT[currentLang].tableWord;
+            document.getElementById('tableBadge').innerText = `${hotelName.toUpperCase()} · ${w} ${tableNum}`;
+            document.getElementById('modalTable').innerText = `${w} ${tableNum}`;
+        }
 
         let currentLang = 'te';
 
@@ -450,11 +456,22 @@
                 cartBtn: "ఆర్డర్ చూడండి",
                 listening: "🔴 వింటున్నాను... ఉదాహరణకు 'ఒక మసాలా దోశ, రెండు కాఫీలు' అని చెప్పండి...",
                 emptyCart: "దయచేసి కనీసం ఒక ఐటమ్ ఎంచుకోండి.",
-                modalTitle: "ఆర్డర్ నిర్ధారణ (Confirm)",
+                modalTitle: "ఆర్డర్ నిర్ధారణ",
                 totalLbl: "మొత్తం బిల్లు:",
                 editBtn: "మార్చాలి",
                 sendBtn: "✅ కన్ఫర్మ్ & పంపండి",
-                addedVoice: (name) => `${name} కార్ట్‌లో చేర్చాను. ఇంకా ఏం కావాలి?`
+                tableWord: "టేబుల్",
+                liveDot: "● AI హోస్ట్",
+                fallbackHost: "AVAILO హోస్ట్",
+                voiceAlert: "వాయిస్ ఆర్డర్ Google Chrome లో బాగా పనిచేస్తుంది. + నొక్కి కూడా ఆర్డర్ చేయవచ్చు!",
+                addedVoice: (name) => `${name} కార్ట్‌లో చేర్చాను. ఇంకా ఏం కావాలి?`,
+                fallbackHint: "వాయిస్ వినడానికి నొక్కండి",
+                homeLink: "← హోమ్‌పేజీకి వెళ్ళండి",
+                helplineLbl: "హెల్ప్‌లైన్:",
+                regionLbl: "AVAILO Digital Services · విజయవాడ & గుంటూరు",
+                voiceAdded: (t) => `${t} — కార్ట్‌లో యాడ్ చేశాను! ఆర్డర్ కన్ఫర్మ్ చేయడానికి కింద బటన్ నొక్కండి.`,
+                voiceNotMatched: (t) => `మీరు ${t} అన్నారు. కింద మెనూలో + నొక్కి కూడా ఎంచుకోవచ్చు.`,
+                orderSent: "ధన్యవాదాలు! మీ ఆర్డర్ కిచెన్‌కు పంపబడుతోంది."
             },
             en: {
                 welcome: `Welcome to ${hotelName}! I am your AVAILO virtual waiter. How may I help you today?`,
@@ -467,7 +484,18 @@
                 totalLbl: "Total Amount:",
                 editBtn: "Edit",
                 sendBtn: "✅ Confirm & Send",
-                addedVoice: (name) => `Added ${name} to your order. Anything else?`
+                tableWord: "TABLE",
+                liveDot: "● AI HOST",
+                fallbackHost: "AVAILO HOST",
+                voiceAlert: "Voice order works best in Google Chrome. You can also tap + to order!",
+                addedVoice: (name) => `Added ${name} to your order. Anything else?`,
+                fallbackHint: "Tap to hear the voice",
+                homeLink: "← Go to Homepage",
+                helplineLbl: "Helpline:",
+                regionLbl: "AVAILO Digital Services · Vijayawada & Guntur",
+                voiceAdded: (t) => `${t} — added to your cart! Tap the button below to confirm your order.`,
+                voiceNotMatched: (t) => `You said ${t}. You can also tap + in the menu below to select.`,
+                orderSent: "Thank you! Your order is being sent to the kitchen."
             },
             hi: {
                 welcome: `नमस्ते! ${hotelName} में आपका स्वागत है। मैं आपका वर्चुअल वेटर हूँ। मैं आपकी क्या मदद कर सकता हूँ?`,
@@ -479,8 +507,19 @@
                 modalTitle: "ऑर्डर कन्फर्मेशन",
                 totalLbl: "कुल बिल:",
                 editBtn: "बदलें",
-                sendBtn: "✅ कन्फर्म करें",
-                addedVoice: (name) => `${name} जोड़ दिया गया है। और क्या चाहिए?`
+                sendBtn: "✅ कन्फर्म करें और भेजें",
+                tableWord: "टेबल",
+                liveDot: "● AI होस्ट",
+                fallbackHost: "AVAILO होस्ट",
+                voiceAlert: "वॉइस ऑर्डर Google Chrome में सबसे अच्छा काम करता है। आप + दबाकर भी ऑर्डर कर सकते हैं।",
+                addedVoice: (name) => `${name} जोड़ दिया गया है। और क्या चाहिए?`,
+                fallbackHint: "आवाज़ सुनने के लिए दबाएं",
+                homeLink: "← होमपेज पर जाएं",
+                helplineLbl: "हेल्पलाइन:",
+                regionLbl: "AVAILO Digital Services · विजयवाड़ा और गुंटूर",
+                voiceAdded: (t) => `${t} — कार्ट में जोड़ दिया! ऑर्डर कन्फर्म करने के लिए नीचे का बटन दबाएं।`,
+                voiceNotMatched: (t) => `आपने ${t} कहा। आप नीचे मेनू में + दबाकर भी चुन सकते हैं।`,
+                orderSent: "धन्यवाद! आपका ऑर्डर किचन में भेजा जा रहा है।"
             }
         };
 
@@ -498,7 +537,7 @@
                 id: 'idli',
                 price: 50,
                 count: 0,
-                names: { te: 'ఇడ్లీ (3 Pcs)', en: 'Steamed Idli (3 Pcs)', hi: 'इडली (3 पीस)' },
+                names: { te: 'ఇడ్లీ (3 ముక్కలు)', en: 'Steamed Idli (3 Pcs)', hi: 'इडली (3 पीस)' },
                 desc: { te: 'వేడి నెయ్యి & కారప్పొడితో', en: 'Soft idlis with ghee & podi', hi: 'घी और चटनी के साथ' },
                 keywords: ['ఇడ్లీ', 'ఇడ్లి', 'idli', 'idly', 'इडली']
             },
@@ -556,6 +595,13 @@
             document.getElementById('modalTotalLabel').innerText = UI_TEXT[lang].totalLbl;
             document.getElementById('btnEdit').innerText = UI_TEXT[lang].editBtn;
             document.getElementById('btnSendWa').innerText = UI_TEXT[lang].sendBtn;
+            document.getElementById('fallbackHint').innerText = UI_TEXT[lang].fallbackHint;
+            document.getElementById('liveDot').innerText = UI_TEXT[lang].liveDot;
+            document.getElementById('fallbackHostLabel').innerText = UI_TEXT[lang].fallbackHost;
+            updateTableLabels();
+            document.getElementById('homeLink').innerText = UI_TEXT[lang].homeLink;
+            document.getElementById('helplineLbl').innerText = UI_TEXT[lang].helplineLbl;
+            document.getElementById('regionLbl').innerText = UI_TEXT[lang].regionLbl;
 
             renderMenu();
             speakHost(UI_TEXT[lang].welcome);
@@ -609,7 +655,7 @@
         function startVoiceOrder() {
             const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) {
-                alert("Voice order works best in Google Chrome. You can also tap + to order!");
+                alert(UI_TEXT[currentLang].voiceAlert);
                 return;
             }
             const rec = new SpeechRec();
@@ -640,9 +686,9 @@
 
                 renderMenu();
                 if (matchedAny) {
-                    speakHost(`${transcript} — కార్ట్‌లో యాడ్ చేశాను! ఆర్డర్ కన్ఫర్మ్ చేయడానికి కింద బటన్ నొక్కండి.`);
+                    speakHost(UI_TEXT[currentLang].voiceAdded(transcript));
                 } else {
-                    speakHost(`మీరు ${transcript} అన్నారు. కింద మెనూలో + నొక్కి కూడా ఎంచుకోవచ్చు.`);
+                    speakHost(UI_TEXT[currentLang].voiceNotMatched(transcript));
                 }
             };
 
@@ -683,13 +729,14 @@
             const msg = `*AVAILO AI HUMAN WAITER - ORDER*\n-------------------------\n*Restaurant:* ${hotelName}\n*Table:* ${tableNo}\n*Language:* ${currentLang.toUpperCase()}\n-------------------------\n${lines}\n-------------------------\n*Total Bill:* ₹${grandTotal}\n*Time:* ${new Date().toLocaleTimeString()}`;
 
             closeModal();
-            speakHost("ధన్యవాదాలు! మీ ఆర్డర్ కిచెన్‌కు పంపబడుతోంది.");
+            speakHost(UI_TEXT[currentLang].orderSent);
             setTimeout(() => {
                 window.location.href = `https://wa.me/${kitchenWa}?text=${encodeURIComponent(msg)}`;
             }, 900);
         }
 
         window.addEventListener('load', () => {
+            updateTableLabels();
             renderMenu();
         });
     </script>

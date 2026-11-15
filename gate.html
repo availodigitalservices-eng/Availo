@@ -26,14 +26,15 @@
         <div>
           <div class="flex items-center gap-1.5">
             <h1 class="text-base font-extrabold tracking-wide uppercase">AVAILO GATE</h1>
-            <span class="bg-amber-400 text-slate-900 text-[9px] font-black px-1.5 py-0.5 rounded shadow">PILOT</span>
+            <span class="bg-amber-400 text-slate-900 text-[9px] font-black px-1.5 py-0.5 rounded shadow" data-te="పైలట్" data-en="PILOT" data-hi="पायलट">పైలట్</span>
           </div>
-          <p class="text-[11px] text-indigo-200">స్మార్ట్ గేట్ పాస్ & లోకల్ సొసైటీ డెస్క్</p>
+          <p class="text-[11px] text-indigo-200" data-te="స్మార్ట్ గేట్ పాస్ &amp; లోకల్ సొసైటీ డెస్క్" data-en="Smart Gate Pass &amp; Local Society Desk" data-hi="स्मार्ट गेट पास और लोकल सोसाइटी डेस्क">స్మార్ట్ గేట్ పాస్ &amp; లోకల్ సొసైటీ డెస్క్</p>
         </div>
       </div>
-      <div class="text-right">
+      <div class="text-right flex items-center gap-2">
+        <button id="langBtn" onclick="toggleLanguage()" class="text-[11px] font-extrabold px-2.5 py-1 rounded-lg border border-amber-400/70 text-amber-300 bg-white/10">English</button>
         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-          <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-400 animate-ping"></span> లైవ్ వెరిఫైడ్
+          <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-400 animate-ping"></span> <span data-te="లైవ్ వెరిఫైడ్" data-en="Live Verified" data-hi="लाइव वेरिफाइड">లైవ్ వెరిఫైడ్</span>
         </span>
       </div>
     </div>
@@ -46,11 +47,11 @@
       <div class="flex items-center space-x-2">
         <i class="fa-solid fa-building-user text-indigo-600 text-base"></i>
         <div>
-          <p class="font-bold text-slate-800">విజయవాడ రెసిడెన్సీ క్లస్టర్</p>
-          <p class="text-[10px] text-slate-500">24/7 డిజిటల్ గేట్ ఎంట్రీ సిస్టమ్</p>
+          <p class="font-bold text-slate-800" data-te="విజయవాడ రెసిడెన్సీ క్లస్టర్" data-en="Vijayawada Residency Cluster" data-hi="विजयवाड़ा रेज़िडेंसी क्लस्टर">విజయవాడ రెసిడెన్సీ క్లస్టర్</p>
+          <p class="text-[10px] text-slate-500" data-te="24/7 డిజిటల్ గేట్ ఎంట్రీ సిస్టమ్" data-en="24/7 Digital Gate Entry System" data-hi="24/7 डिजिटल गेट एंट्री सिस्टम">24/7 డిజిటల్ గేట్ ఎంట్రీ సిస్టమ్</p>
         </div>
       </div>
-      <div class="text-right text-[10px] font-medium text-slate-400" id="liveClock">
+      <div class="text-right text-[10px] font-medium text-slate-400" id="liveClock" data-te="IST సమయం..." data-en="IST time..." data-hi="IST समय...">
         IST సమయం...
       </div>
     </div>
@@ -60,45 +61,45 @@
       <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
         <div class="flex items-center space-x-2">
           <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">1</span>
-          <h2 class="text-sm font-bold text-slate-900">గేట్ విజిటర్ & డెలివరీ పాస్</h2>
+          <h2 class="text-sm font-bold text-slate-900" data-te="గేట్ విజిటర్ &amp; డెలివరీ పాస్" data-en="Gate Visitor &amp; Delivery Pass" data-hi="गेट विज़िटर और डिलीवरी पास">గేట్ విజిటర్ &amp; డెలివరీ పాస్</h2>
         </div>
-        <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-semibold">తక్షణ అలర్ట్</span>
+        <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-semibold" data-te="తక్షణ అలర్ట్" data-en="Instant Alert" data-hi="तुरंत अलर्ट">తక్షణ అలర్ట్</span>
       </div>
 
       <!-- Flat & Category Selection Grid -->
       <div class="grid grid-cols-2 gap-2.5">
         <div>
           <label class="block text-[11px] font-bold text-slate-700 mb-1">
-            <i class="fa-solid fa-house-chimney text-indigo-500 mr-1"></i> ఫ్లాట్ ఎంచుకోండి *
+            <i class="fa-solid fa-house-chimney text-indigo-500 mr-1"></i> <span data-te="ఫ్లాట్ ఎంచుకోండి *" data-en="Select Flat *" data-hi="फ्लैट चुनें *">ఫ్లాట్ ఎంచుకోండి *</span>
           </label>
           <select id="gateFlat" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
-            <option value="" selected>ఫ్లాట్ ఎంచుకోండి</option>
-            <option value="Flat 101">Flat 101</option>
-            <option value="Flat 102">Flat 102</option>
-            <option value="Flat 201">Flat 201</option>
-            <option value="Flat 202">Flat 202</option>
-            <option value="Flat 301">Flat 301</option>
-            <option value="Flat 302">Flat 302</option>
-            <option value="Flat 401">Flat 401</option>
-            <option value="Flat 402">Flat 402</option>
-            <option value="Flat 501">Flat 501</option>
-            <option value="Flat 502">Flat 502</option>
+            <option value="" selected data-te="ఫ్లాట్ ఎంచుకోండి" data-en="Select Flat" data-hi="फ्लैट चुनें">ఫ్లాట్ ఎంచుకోండి</option>
+            <option value="Flat 101" data-te="ఫ్లాట్ 101" data-en="Flat 101" data-hi="फ़्लैट 101">ఫ్లాట్ 101</option>
+            <option value="Flat 102" data-te="ఫ్లాట్ 102" data-en="Flat 102" data-hi="फ़्लैट 102">ఫ్లాట్ 102</option>
+            <option value="Flat 201" data-te="ఫ్లాట్ 201" data-en="Flat 201" data-hi="फ़्लैट 201">ఫ్లాట్ 201</option>
+            <option value="Flat 202" data-te="ఫ్లాట్ 202" data-en="Flat 202" data-hi="फ़्लैट 202">ఫ్లాట్ 202</option>
+            <option value="Flat 301" data-te="ఫ్లాట్ 301" data-en="Flat 301" data-hi="फ़्लैट 301">ఫ్లాట్ 301</option>
+            <option value="Flat 302" data-te="ఫ్లాట్ 302" data-en="Flat 302" data-hi="फ़्लैट 302">ఫ్లాట్ 302</option>
+            <option value="Flat 401" data-te="ఫ్లాట్ 401" data-en="Flat 401" data-hi="फ़्लैट 401">ఫ్లాట్ 401</option>
+            <option value="Flat 402" data-te="ఫ్లాట్ 402" data-en="Flat 402" data-hi="फ़्लैट 402">ఫ్లాట్ 402</option>
+            <option value="Flat 501" data-te="ఫ్లాట్ 501" data-en="Flat 501" data-hi="फ़्लैट 501">ఫ్లాట్ 501</option>
+            <option value="Flat 502" data-te="ఫ్లాట్ 502" data-en="Flat 502" data-hi="फ़्लैट 502">ఫ్లాట్ 502</option>
           </select>
         </div>
 
         <div>
           <label class="block text-[11px] font-bold text-slate-700 mb-1">
-            <i class="fa-solid fa-motorcycle text-indigo-500 mr-1"></i> విజిటర్ రకం *
+            <i class="fa-solid fa-motorcycle text-indigo-500 mr-1"></i> <span data-te="విజిటర్ రకం *" data-en="Visitor Type *" data-hi="विज़िटर का प्रकार *">విజిటర్ రకం *</span>
           </label>
           <select id="visitorType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
-            <option value="" selected>విజిటర్ రకం ఎంచుకోండి</option>
+            <option value="" selected data-te="విజిటర్ రకం ఎంచుకోండి" data-en="Select Visitor Type" data-hi="विज़िटर का प्रकार चुनें">విజిటర్ రకం ఎంచుకోండి</option>
             <option value="Swiggy / Zomato">Swiggy / Zomato</option>
             <option value="Amazon / Flipkart">Amazon / Flipkart</option>
             <option value="Blinkit / Zepto / Instamart">Blinkit / Zepto / Instamart</option>
-            <option value="Milk / Water / Newspaper">పాలు / వాటర్ క్యాన్</option>
-            <option value="Courier / SpeedPost">ఇతర కొరియర్</option>
-            <option value="Guest / Relatives">బంధువులు / అతిథి</option>
-            <option value="Cab / Auto (Uber/Ola)">క్యాబ్ / ఆటో పికప్</option>
+            <option value="Milk / Water / Newspaper" data-te="పాలు / వాటర్ క్యాన్" data-en="Milk / Water Can" data-hi="दूध / पानी का कैन">పాలు / వాటర్ క్యాన్</option>
+            <option value="Courier / SpeedPost" data-te="ఇతర కొరియర్" data-en="Other Courier" data-hi="अन्य कूरियर">ఇతర కొరియర్</option>
+            <option value="Guest / Relatives" data-te="బంధువులు / అతిథి" data-en="Relatives / Guest" data-hi="रिश्तेदार / मेहमान">బంధువులు / అతిథి</option>
+            <option value="Cab / Auto (Uber/Ola)" data-te="క్యాబ్ / ఆటో పికప్" data-en="Cab / Auto Pickup" data-hi="कैब / ऑटो पिकअप">క్యాబ్ / ఆటో పికప్</option>
           </select>
         </div>
       </div>
@@ -106,20 +107,20 @@
       <!-- Visitor Details / Vehicle Number -->
       <div>
         <label class="block text-[11px] font-bold text-slate-700 mb-1">
-          <i class="fa-solid fa-id-card text-indigo-500 mr-1"></i> డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:
+          <i class="fa-solid fa-id-card text-indigo-500 mr-1"></i> <span data-te="డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:" data-en="Delivery person name or vehicle number:" data-hi="डिलीवरी बॉय का नाम या गाड़ी नंबर:">డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:</span>
         </label>
-        <input type="text" id="visitorDetail" placeholder="ఉదా: రాము (AP 16 AB 1234)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
+        <input type="text" id="visitorDetail" placeholder="ఉదా: రాము (AP 16 AB 1234)" data-ph-te="ఉదా: రాము (AP 16 AB 1234)" data-ph-en="e.g.: Ramu (AP 16 AB 1234)" data-ph-hi="उदा.: रामू (AP 16 AB 1234)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
       </div>
 
       <!-- Primary Action: WhatsApp Camera Pass Generator -->
       <button onclick="triggerWhatsAppGateEntry()" class="pulse-btn w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold py-3.5 px-4 rounded-2xl text-xs shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2.5 transition">
         <i class="fa-solid fa-camera text-base"></i>
-        <span>వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి</span>
+        <span data-te="వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి" data-en="Take a selfie on WhatsApp &amp; send the pass" data-hi="WhatsApp पर सेल्फी लेकर पास भेजें">వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి</span>
       </button>
 
       <div class="bg-amber-50 rounded-xl p-2.5 border border-amber-200/70 text-[10px] text-amber-900 flex items-start gap-2">
         <i class="fa-solid fa-shield-cat text-amber-600 text-sm mt-0.5"></i>
-        <p><strong>సెక్యూరిటీ రూల్:</strong> బటన్ నొక్కగానే వాట్సాప్ తెరుచుకుంటుంది. వాట్సాప్ లోని కెమెరాతో సెల్ఫీ లేదా డెలివరీ బాక్స్ ఫోటో తీసి సెండ్ కొడితే గేట్ పాస్ వెరిఫై అవుతుంది.</p>
+        <p data-te="<strong>సెక్యూరిటీ రూల్:</strong> బటన్ నొక్కగానే వాట్సాప్ తెరుచుకుంటుంది. వాట్సాప్ లోని కెమెరాతో సెల్ఫీ లేదా డెలివరీ బాక్స్ ఫోటో తీసి సెండ్ కొడితే గేట్ పాస్ వెరిఫై అవుతుంది." data-en="<strong>Security Rule:</strong> Tapping the button opens WhatsApp. Take a selfie or a photo of the delivery box with the WhatsApp camera and send it to verify the gate pass." data-hi="<strong>सुरक्षा नियम:</strong> बटन दबाते ही WhatsApp खुल जाएगा। WhatsApp कैमरे से सेल्फी या डिलीवरी बॉक्स की फोटो लेकर भेजें, गेट पास वेरिफ़ाई हो जाएगा।"><strong>సెక్యూరిటీ రూల్:</strong> బటన్ నొక్కగానే వాట్సాప్ తెరుచుకుంటుంది. వాట్సాప్ లోని కెమెరాతో సెల్ఫీ లేదా డెలివరీ బాక్స్ ఫోటో తీసి సెండ్ కొడితే గేట్ పాస్ వెరిఫై అవుతుంది.</p>
       </div>
     </section>
 
@@ -130,11 +131,11 @@
           🍞
         </div>
         <div>
-          <p class="text-[11px] font-bold leading-tight">శ్రీ వెంకటేశ్వర బేకరీ & డైరీ</p>
-          <p class="text-[9px] text-amber-100">తాజా పాలు, బ్రెడ్ ప్రతిరోజూ ఉదయం 6:00కి ఫ్లాట్ డోర్ వద్దకు!</p>
+          <p class="text-[11px] font-bold leading-tight" data-te="శ్రీ వెంకటేశ్వర బేకరీ &amp; డైరీ" data-en="Sri Venkateswara Bakery &amp; Dairy" data-hi="श्री वेंकटेश्वर बेकरी और डेयरी">శ్రీ వెంకటేశ్వర బేకరీ &amp; డైరీ</p>
+          <p class="text-[9px] text-amber-100" data-te="తాజా పాలు, బ్రెడ్ ప్రతిరోజూ ఉదయం 6:00కి ఫ్లాట్ డోర్ వద్దకు!" data-en="Fresh milk and bread at your flat door every morning at 6:00!" data-hi="ताज़ा दूध और ब्रेड हर रोज़ सुबह 6:00 बजे आपके फ्लैट के दरवाज़े पर!">తాజా పాలు, బ్రెడ్ ప్రతిరోజూ ఉదయం 6:00కి ఫ్లాట్ డోర్ వద్దకు!</p>
         </div>
       </div>
-      <span class="text-[9px] font-black bg-white text-orange-600 px-2 py-1 rounded-full uppercase tracking-tighter">స్పాన్సర్డ్</span>
+      <span class="text-[9px] font-black bg-white text-orange-600 px-2 py-1 rounded-full uppercase tracking-tighter" data-te="స్పాన్సర్డ్" data-en="Sponsored" data-hi="प्रायोजित">స్పాన్సర్డ్</span>
     </div>
 
     <!-- 2. Society Micro-Services Pre-Booking Section -->
@@ -143,74 +144,74 @@
         <div class="flex items-center space-x-2">
           <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">2</span>
           <div>
-            <h2 class="text-sm font-bold text-slate-900">అపార్ట్‌మెంట్ సర్వీసెస్ డెస్క్</h2>
-            <p class="text-[10px] text-slate-500">ట్రయల్ ఫేజ్: సర్వీస్ ఎంచుకోండి (ఉచిత ఇన్‌స్పెక్షన్)</p>
+            <h2 class="text-sm font-bold text-slate-900" data-te="అపార్ట్‌మెంట్ సర్వీసెస్ డెస్క్" data-en="Apartment Services Desk" data-hi="अपार्टमेंट सर्विसेज़ डेस्क">అపార్ట్‌మెంట్ సర్వీసెస్ డెస్క్</h2>
+            <p class="text-[10px] text-slate-500" data-te="ట్రయల్ ఫేజ్: సర్వీస్ ఎంచుకోండి (ఉచిత ఇన్‌స్పెక్షన్)" data-en="Trial Phase: Select a service (Free Inspection)" data-hi="ट्रायल फेज़: सेवा चुनें (मुफ़्त निरीक्षण)">ట్రయల్ ఫేజ్: సర్వీస్ ఎంచుకోండి (ఉచిత ఇన్‌స్పెక్షన్)</p>
           </div>
         </div>
-        <span class="text-[10px] bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-md font-bold">క్లస్టర్ కేర్</span>
+        <span class="text-[10px] bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-md font-bold" data-te="క్లస్టర్ కేర్" data-en="Cluster Care" data-hi="क्लस्टर केयर">క్లస్టర్ కేర్</span>
       </div>
 
       <!-- Service Selection Cards Grid -->
       <div class="grid grid-cols-2 gap-2.5">
         
         <!-- Plumber -->
-        <div onclick="openServiceForm('🔧 ప్లంబర్ సర్వీస్', 'లీకేజీలు, ట్యాప్ రిపేర్, ఫ్లష్ ట్యాంక్ సరిచేయుట')" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40 hover:border-indigo-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
+        <div onclick="openServiceForm('plumber')" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40 hover:border-indigo-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
           <div class="w-10 h-10 rounded-full bg-blue-100/70 text-blue-600 flex items-center justify-center text-lg mb-1.5">
             <i class="fa-solid fa-wrench"></i>
           </div>
-          <p class="text-xs font-bold text-slate-800">ప్లంబర్</p>
-          <p class="text-[9px] text-slate-500 line-clamp-1 mt-0.5">ట్యాప్ & పైప్ రిపేర్</p>
-          <span class="text-[9px] text-indigo-600 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 mt-2 shadow-2xs">బుక్ చేయండి →</span>
+          <p class="text-xs font-bold text-slate-800" data-te="ప్లంబర్" data-en="Plumber" data-hi="प्लंबर">ప్లంబర్</p>
+          <p class="text-[9px] text-slate-500 line-clamp-1 mt-0.5" data-te="ట్యాప్ &amp; పైప్ రిపేర్" data-en="Tap &amp; pipe repair" data-hi="टैप और पाइप रिपेयर">ట్యాప్ &amp; పైప్ రిపేర్</p>
+          <span class="text-[9px] text-indigo-600 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 mt-2 shadow-2xs" data-te="బుక్ చేయండి →" data-en="Book Now →" data-hi="बुक करें →">బుక్ చేయండి →</span>
         </div>
 
         <!-- Electrician -->
-        <div onclick="openServiceForm('⚡ ఎలక్ట్రీషియన్ సర్వీస్', 'స్విచ్ బోర్డులు, ఫ్యాన్ ఫిట్టింగ్, MCB ట్రిప్పింగ్ చెకప్')" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40 hover:border-indigo-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
+        <div onclick="openServiceForm('electrician')" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40 hover:border-indigo-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
           <div class="w-10 h-10 rounded-full bg-amber-100/70 text-amber-600 flex items-center justify-center text-lg mb-1.5">
             <i class="fa-solid fa-bolt"></i>
           </div>
-          <p class="text-xs font-bold text-slate-800">ఎలక్ట్రీషియన్</p>
-          <p class="text-[9px] text-slate-500 line-clamp-1 mt-0.5">MCB, స్విచ్ & ఫ్యాన్</p>
-          <span class="text-[9px] text-indigo-600 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 mt-2 shadow-2xs">బుక్ చేయండి →</span>
+          <p class="text-xs font-bold text-slate-800" data-te="ఎలక్ట్రీషియన్" data-en="Electrician" data-hi="इलेक्ट्रीशियन">ఎలక్ట్రీషియన్</p>
+          <p class="text-[9px] text-slate-500 line-clamp-1 mt-0.5" data-te="MCB, స్విచ్ &amp; ఫ్యాన్" data-en="MCB, switch &amp; fan" data-hi="MCB, स्विच और पंखा">MCB, స్విచ్ &amp; ఫ్యాన్</p>
+          <span class="text-[9px] text-indigo-600 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 mt-2 shadow-2xs" data-te="బుక్ చేయండి →" data-en="Book Now →" data-hi="बुक करें →">బుక్ చేయండి →</span>
         </div>
 
         <!-- Scrap Pickup -->
-        <div onclick="openServiceForm('🗑️ ఆదివారం స్క్రాప్ క్యాష్ పికప్', 'పాత పేపర్లు, ప్లాస్టిక్ బాటిళ్లు, ఇనుము తూకం వేసి స్పాట్ క్యాష్')" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40 hover:border-indigo-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
+        <div onclick="openServiceForm('scrap')" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40 hover:border-indigo-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
           <div class="w-10 h-10 rounded-full bg-emerald-100/70 text-emerald-600 flex items-center justify-center text-lg mb-1.5">
             <i class="fa-solid fa-recycle"></i>
           </div>
-          <p class="text-xs font-bold text-slate-800">స్క్రాప్ పికప్</p>
-          <p class="text-[9px] text-slate-500 line-clamp-1 mt-0.5">ఆదివారం స్పాట్ క్యాష్</p>
-          <span class="text-[9px] text-emerald-600 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 mt-2 shadow-2xs">స్లాట్ బుక్ →</span>
+          <p class="text-xs font-bold text-slate-800" data-te="స్క్రాప్ పికప్" data-en="Scrap Pickup" data-hi="स्क्रैप पिकअप">స్క్రాప్ పికప్</p>
+          <p class="text-[9px] text-slate-500 line-clamp-1 mt-0.5" data-te="ఆదివారం స్పాట్ క్యాష్" data-en="Sunday spot cash" data-hi="रविवार तुरंत नकद">ఆదివారం స్పాట్ క్యాష్</p>
+          <span class="text-[9px] text-emerald-600 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 mt-2 shadow-2xs" data-te="స్లాట్ బుక్ →" data-en="Book Slot →" data-hi="स्लॉट बुक करें →">స్లాట్ బుక్ →</span>
         </div>
 
         <!-- Geyser Cleaning -->
-        <div onclick="openServiceForm('🚿 గీజర్ డీ-స్కేలింగ్', 'విజయవాడ ఉప్పునీటి సున్నం క్లీనింగ్ & కాయిల్ లైఫ్ పెంపు')" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40 hover:border-indigo-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
+        <div onclick="openServiceForm('geyser')" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40 hover:border-indigo-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
           <div class="w-10 h-10 rounded-full bg-cyan-100/70 text-cyan-600 flex items-center justify-center text-lg mb-1.5">
             <i class="fa-solid fa-shower"></i>
           </div>
-          <p class="text-xs font-bold text-slate-800">గీజర్ సర్వీస్</p>
-          <p class="text-[9px] text-slate-500 line-clamp-1 mt-0.5">ఉప్పునీటి డీ-స్కేలింగ్</p>
-          <span class="text-[9px] text-cyan-600 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 mt-2 shadow-2xs">బుక్ చేయండి →</span>
+          <p class="text-xs font-bold text-slate-800" data-te="గీజర్ సర్వీస్" data-en="Geyser Service" data-hi="गीज़र सर्विस">గీజర్ సర్వీస్</p>
+          <p class="text-[9px] text-slate-500 line-clamp-1 mt-0.5" data-te="ఉప్పునీటి డీ-స్కేలింగ్" data-en="Salty-water de-scaling" data-hi="खारे पानी की डी-स्केलिंग">ఉప్పునీటి డీ-స్కేలింగ్</p>
+          <span class="text-[9px] text-cyan-600 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 mt-2 shadow-2xs" data-te="బుక్ చేయండి →" data-en="Book Now →" data-hi="बुक करें →">బుక్ చేయండి →</span>
         </div>
 
         <!-- Plant Care -->
-        <div onclick="openServiceForm('🌿 లాక్ & లీవ్ ప్లాంట్ కేర్', 'మీరు ఊరెళ్లినప్పుడు బాల్కనీ మొక్కలకు క్రమం తప్పకుండా నీరు పోయుట')" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40 hover:border-indigo-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
+        <div onclick="openServiceForm('plant')" class="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-indigo-50/40 hover:border-indigo-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
           <div class="w-10 h-10 rounded-full bg-green-100/70 text-green-600 flex items-center justify-center text-lg mb-1.5">
             <i class="fa-solid fa-seedling"></i>
           </div>
-          <p class="text-xs font-bold text-slate-800">ప్లాంట్ కేర్</p>
-          <p class="text-[9px] text-slate-500 line-clamp-1 mt-0.5">లాక్ & లీవ్ మొక్కల సంరక్షణ</p>
-          <span class="text-[9px] text-green-600 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 mt-2 shadow-2xs">రిజిస్టర్ →</span>
+          <p class="text-xs font-bold text-slate-800" data-te="ప్లాంట్ కేర్" data-en="Plant Care" data-hi="प्लांट केयर">ప్లాంట్ కేర్</p>
+          <p class="text-[9px] text-slate-500 line-clamp-1 mt-0.5" data-te="లాక్ &amp; లీవ్ మొక్కల సంరక్షణ" data-en="Lock &amp; Leave plant care" data-hi="लॉक और लीव पौधों की देखभाल">లాక్ &amp; లీవ్ మొక్కల సంరక్షణ</p>
+          <span class="text-[9px] text-green-600 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 mt-2 shadow-2xs" data-te="రిజిస్టర్ →" data-en="Register →" data-hi="रजिस्टर करें →">రిజిస్టర్ →</span>
         </div>
 
         <!-- Emergency SOS Medicine Runner -->
-        <div onclick="openServiceForm('🆘 నైట్ ఎమర్జెన్సీ మెడిసిన్ రన్నర్', 'రాత్రి 10 నుండి ఉదయం 6 వరకు అత్యవసర మందుల మెడికల్ డెలివరీ సదుపాయం')" class="p-3 rounded-2xl border border-rose-200 bg-rose-50/40 hover:bg-rose-50 hover:border-rose-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
+        <div onclick="openServiceForm('medical')" class="p-3 rounded-2xl border border-rose-200 bg-rose-50/40 hover:bg-rose-50 hover:border-rose-400 cursor-pointer transition active:scale-95 text-center flex flex-col items-center justify-between">
           <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-lg mb-1.5">
             <i class="fa-solid fa-truck-medical"></i>
           </div>
-          <p class="text-xs font-bold text-rose-900">నైట్ మెడికల్ SOS</p>
-          <p class="text-[9px] text-rose-600 line-clamp-1 mt-0.5">రాత్రి వేళ మందులు</p>
-          <span class="text-[9px] text-rose-600 font-bold bg-white px-2 py-0.5 rounded-full border border-rose-200 mt-2 shadow-2xs">సహాయం పొందండి →</span>
+          <p class="text-xs font-bold text-rose-900" data-te="నైట్ మెడికల్ SOS" data-en="Night Medical SOS" data-hi="रात में मेडिकल SOS">నైట్ మెడికల్ SOS</p>
+          <p class="text-[9px] text-rose-600 line-clamp-1 mt-0.5" data-te="రాత్రి వేళ మందులు" data-en="Night-time medicines" data-hi="रात में दवाएँ">రాత్రి వేళ మందులు</p>
+          <span class="text-[9px] text-rose-600 font-bold bg-white px-2 py-0.5 rounded-full border border-rose-200 mt-2 shadow-2xs" data-te="సహాయం పొందండి →" data-en="Get Help →" data-hi="मदद पाएँ →">సహాయం పొందండి →</span>
         </div>
 
       </div>
@@ -218,9 +219,9 @@
 
     <!-- Interactive Bottom Support Card -->
     <div class="text-center py-2 space-y-1">
-      <p class="text-[11px] font-semibold text-slate-500">AVAILO Cluster Management Services, Vijayawada</p>
-      <p class="text-[9px] text-slate-400">అపార్ట్‌మెంట్ సెక్యూరిటీ & జీరో-బ్రోకరేజ్ లోకల్ నెట్‌వర్క్</p>
-      <p class="text-[11px] font-semibold"><a href="tel:9966157369" class="text-indigo-600">హెల్ప్‌లైన్: 9966157369</a> &nbsp;•&nbsp; <a href="index.html" class="text-indigo-600">‹ హోమ్‌కి వెళ్ళండి</a></p>
+      <p class="text-[11px] font-semibold text-slate-500" data-te="అవైలో క్లస్టర్ మేనేజ్‌మెంట్ సర్వీసెస్, విజయవాడ" data-en="AVAILO Cluster Management Services, Vijayawada" data-hi="अवैलो क्लस्टर मैनेजमेंट सर्विसेज़, विजयवाड़ा">అవైలో క్లస్టర్ మేనేజ్‌మెంట్ సర్వీసెస్, విజయవాడ</p>
+      <p class="text-[9px] text-slate-400" data-te="అపార్ట్‌మెంట్ సెక్యూరిటీ &amp; జీరో-బ్రోకరేజ్ లోకల్ నెట్‌వర్క్" data-en="Apartment security &amp; zero-brokerage local network" data-hi="अपार्टमेंट सुरक्षा और ज़ीरो-ब्रोकरेज लोकल नेटवर्क">అపార్ట్‌మెంట్ సెక్యూరిటీ &amp; జీరో-బ్రోకరేజ్ లోకల్ నెట్‌వర్క్</p>
+      <p class="text-[11px] font-semibold"><a href="tel:9966157369" class="text-indigo-600"><span data-te="హెల్ప్‌లైన్:" data-en="Helpline:" data-hi="हेल्पलाइन:">హెల్ప్‌లైన్:</span> 9966157369</a> &nbsp;•&nbsp; <a href="index.html" class="text-indigo-600" data-te="‹ హోమ్‌కి వెళ్ళండి" data-en="‹ Go to Home" data-hi="‹ होम पर जाएँ">‹ హోమ్‌కి వెళ్ళండి</a></p>
     </div>
 
   </main>
@@ -230,42 +231,42 @@
     <div class="bg-white rounded-t-3xl sm:rounded-3xl p-5 max-w-md w-full space-y-3.5 shadow-2xl border border-slate-100 transform transition-all">
       <div class="flex justify-between items-start border-b border-slate-100 pb-2.5">
         <div>
-          <h3 class="font-extrabold text-slate-900 text-base" id="modalServiceName">సర్వీస్ బుకింగ్</h3>
-          <p class="text-xs font-medium text-indigo-600 mt-0.5" id="modalServiceDesc">వివరాలు</p>
+          <h3 class="font-extrabold text-slate-900 text-base" id="modalServiceName" data-te="సర్వీస్ బుకింగ్" data-en="Service Booking" data-hi="सर्विस बुकिंग">సర్వీస్ బుకింగ్</h3>
+          <p class="text-xs font-medium text-indigo-600 mt-0.5" id="modalServiceDesc" data-te="వివరాలు" data-en="Details" data-hi="विवरण">వివరాలు</p>
         </div>
         <button onclick="closeServiceForm()" class="text-slate-400 hover:text-slate-600 text-2xl font-bold px-2 py-0.5">&times;</button>
       </div>
 
       <form onsubmit="submitServiceBooking(event)" class="space-y-3">
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">మీ ఫ్లాట్ నంబర్ *</label>
-          <input type="text" id="flatNo" required placeholder="ఉదా: Flat 302" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
+          <label class="block text-xs font-bold text-slate-700 mb-1" data-te="మీ ఫ్లాట్ నంబర్ *" data-en="Your Flat Number *" data-hi="आपका फ्लैट नंबर *">మీ ఫ్లాట్ నంబర్ *</label>
+          <input type="text" id="flatNo" required placeholder="ఉదా: ఫ్లాట్ 302" data-ph-te="ఉదా: ఫ్లాట్ 302" data-ph-en="e.g.: Flat 302" data-ph-hi="उदा.: फ़्लैट 302" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">మీ పేరు *</label>
-            <input type="text" id="custName" required placeholder="పేరు రాయండి" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
+            <label class="block text-xs font-bold text-slate-700 mb-1" data-te="మీ పేరు *" data-en="Your Name *" data-hi="आपका नाम *">మీ పేరు *</label>
+            <input type="text" id="custName" required placeholder="పేరు రాయండి" data-ph-te="పేరు రాయండి" data-ph-en="Enter your name" data-ph-hi="अपना नाम लिखें" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">మొబైల్ నంబర్ *</label>
-            <input type="tel" id="custPhone" required placeholder="10 అంకెల నంబర్" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
+            <label class="block text-xs font-bold text-slate-700 mb-1" data-te="మొబైల్ నంబర్ *" data-en="Mobile Number *" data-hi="मोबाइल नंबर *">మొబైల్ నంబర్ *</label>
+            <input type="tel" id="custPhone" required placeholder="10 అంకెల నంబర్" data-ph-te="10 అంకెల నంబర్" data-ph-en="10-digit number" data-ph-hi="10 अंकों का नंबर" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">సమస్య / ఎప్పుడు రావాలో వివరాలు:</label>
-          <textarea id="issueNotes" rows="2" placeholder="ఉదా: కిచెన్ సింక్ పైప్ లీకేజ్ అవుతోంది, సాయంత్రం 5 గంటలకు రండి" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+          <label class="block text-xs font-bold text-slate-700 mb-1" data-te="సమస్య / ఎప్పుడు రావాలో వివరాలు:" data-en="Problem / when to visit details:" data-hi="समस्या / कब आना है, विवरण:">సమస్య / ఎప్పుడు రావాలో వివరాలు:</label>
+          <textarea id="issueNotes" rows="2" placeholder="ఉదా: కిచెన్ సింక్ పైప్ లీకేజ్ అవుతోంది, సాయంత్రం 5 గంటలకు రండి" data-ph-te="ఉదా: కిచెన్ సింక్ పైప్ లీకేజ్ అవుతోంది, సాయంత్రం 5 గంటలకు రండి" data-ph-en="e.g.: Kitchen sink pipe is leaking, please come at 5 PM" data-ph-hi="उदा.: किचन सिंक का पाइप लीक हो रहा है, शाम 5 बजे आइए" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
         </div>
 
         <div class="bg-indigo-50/70 p-2.5 rounded-xl border border-indigo-100 text-[10px] text-indigo-900 flex items-start gap-2">
           <i class="fa-solid fa-clock-rotate-left text-indigo-600 text-xs mt-0.5"></i>
-          <span>ట్రయల్ బుకింగ్: ఈ వివరాలు మా డెస్క్‌కు చేరగానే సొసైటీ వెరిఫైడ్ టెక్నీషియన్ మీకు కాల్ చేసి సమయం నిర్ధారిస్తారు.</span>
+          <span data-te="ట్రయల్ బుకింగ్: ఈ వివరాలు మా డెస్క్‌కు చేరగానే సొసైటీ వెరిఫైడ్ టెక్నీషియన్ మీకు కాల్ చేసి సమయం నిర్ధారిస్తారు." data-en="Trial booking: Once these details reach our desk, a society-verified technician will call you and confirm the time." data-hi="ट्रायल बुकिंग: ये विवरण हमारे डेस्क तक पहुँचते ही सोसाइटी-वेरिफाइड टेक्नीशियन आपको कॉल करके समय पक्का करेंगे।">ట్రయల్ బుకింగ్: ఈ వివరాలు మా డెస్క్‌కు చేరగానే సొసైటీ వెరిఫైడ్ టెక్నీషియన్ మీకు కాల్ చేసి సమయం నిర్ధారిస్తారు.</span>
         </div>
 
         <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-extrabold py-3.5 rounded-2xl text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition">
           <i class="fa-brands fa-whatsapp text-sm"></i>
-          <span>వివరాలు కన్ఫర్మ్ చేసి వాట్సాప్ పంపండి</span>
+          <span data-te="వివరాలు కన్ఫర్మ్ చేసి వాట్సాప్ పంపండి" data-en="Confirm details &amp; send on WhatsApp" data-hi="विवरण कन्फर्म करके WhatsApp पर भेजें">వివరాలు కన్ఫర్మ్ చేసి వాట్సాప్ పంపండి</span>
         </button>
       </form>
     </div>
@@ -276,13 +277,85 @@
     // 1. AVAILO అధికారిక అడ్మిన్ వాట్సాప్ నంబర్
     const AVAILO_ADMIN_WHATSAPP = "919966157369";
 
+    let currentLang = 'te';
+    const LANG_NEXT = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
+
+    // Service names/descriptions in all three languages (modal title + desc)
+    const SERVICE_TEXTS = {
+      plumber: {
+        te: ['🔧 ప్లంబర్ సర్వీస్', 'లీకేజీలు, ట్యాప్ రిపేర్, ఫ్లష్ ట్యాంక్ సరిచేయుట'],
+        en: ['🔧 Plumber Service', 'Leaks, tap repair, flush tank fixing'],
+        hi: ['🔧 प्लंबर सर्विस', 'लीकेज, टैप रिपेयर, फ्लश टैंक ठीक करना']
+      },
+      electrician: {
+        te: ['⚡ ఎలక్ట్రీషియన్ సర్వీస్', 'స్విచ్ బోర్డులు, ఫ్యాన్ ఫిట్టింగ్, MCB ట్రిప్పింగ్ చెకప్'],
+        en: ['⚡ Electrician Service', 'Switch boards, fan fitting, MCB tripping checkup'],
+        hi: ['⚡ इलेक्ट्रीशियन सर्विस', 'स्विच बोर्ड, पंखा फिटिंग, MCB ट्रिपिंग चेकअप']
+      },
+      scrap: {
+        te: ['🗑️ ఆదివారం స్క్రాప్ క్యాష్ పికప్', 'పాత పేపర్లు, ప్లాస్టిక్ బాటిళ్లు, ఇనుము తూకం వేసి స్పాట్ క్యాష్'],
+        en: ['🗑️ Sunday Scrap Cash Pickup', 'Old papers, plastic bottles, iron weighed for spot cash'],
+        hi: ['🗑️ रविवार स्क्रैप कैश पिकअप', 'पुराने पेपर, प्लास्टिक बोतलें, लोहा तौलकर तुरंत नकद']
+      },
+      geyser: {
+        te: ['🚿 గీజర్ డీ-స్కేలింగ్', 'విజయవాడ ఉప్పునీటి సున్నం క్లీనింగ్ & కాయిల్ లైఫ్ పెంపు'],
+        en: ['🚿 Geyser De-scaling', 'Vijayawada salty-water scale cleaning & longer coil life'],
+        hi: ['🚿 गीज़र डी-स्केलिंग', 'विजयवाड़ा के खारे पानी की परत की सफाई और कॉइल की लंबी उम्र']
+      },
+      plant: {
+        te: ['🌿 లాక్ & లీవ్ ప్లాంట్ కేర్', 'మీరు ఊరెళ్లినప్పుడు బాల్కనీ మొక్కలకు క్రమం తప్పకుండా నీరు పోయుట'],
+        en: ['🌿 Lock & Leave Plant Care', 'Regular watering for your balcony plants while you are away'],
+        hi: ['🌿 लॉक और लीव प्लांट केयर', 'आपके बाहर रहने पर बालकनी के पौधों को नियमित पानी देना']
+      },
+      medical: {
+        te: ['🆘 నైట్ ఎమర్జెన్సీ మెడిసిన్ రన్నర్', 'రాత్రి 10 నుండి ఉదయం 6 వరకు అత్యవసర మందుల మెడికల్ డెలివరీ సదుపాయం'],
+        en: ['🆘 Night Emergency Medicine Runner', 'Emergency medicine delivery facility from 10 PM to 6 AM'],
+        hi: ['🆘 रात में इमरजेंसी मेडिसिन रनर', 'रात 10 बजे से सुबह 6 बजे तक ज़रूरी दवाओं की मेडिकल डिलीवरी सुविधा']
+      }
+    };
+
+    const GATE_ALERT = {
+      te: 'దయచేసి ఫ్లాట్ మరియు విజిటర్ రకం ఎంచుకోండి',
+      en: 'Please select the flat and visitor type',
+      hi: 'कृपया फ्लैट और विज़िटर का प्रकार चुनें'
+    };
+    const DEFAULT_DETAIL = { te: 'డెలివరీ ఎగ్జిక్యూటివ్', en: 'Delivery Executive', hi: 'डिलीवरी एग्ज़ीक्यूटिव' };
+    const DEFAULT_NOTES = { te: 'సాధారణ తనిఖీ', en: 'General check', hi: 'सामान्य जाँच' };
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+      document.documentElement.lang = currentLang;
+      document.body.classList.toggle('lang-en', currentLang === 'en');
+      document.body.classList.toggle('lang-hi', currentLang === 'hi');
+      const btn = document.getElementById('langBtn');
+      if (btn) btn.innerText = LANG_NEXT[currentLang];
+      document.querySelectorAll('[data-te]').forEach(el => {
+        const text = el.getAttribute('data-' + currentLang);
+        if (text) el.innerHTML = text;
+      });
+      document.querySelectorAll('[data-ph-te]').forEach(el => {
+        const text = el.getAttribute('data-ph-' + currentLang);
+        if (text) el.placeholder = text;
+      });
+      // If a service modal is open, re-apply its title/desc in the new language
+      if (activeServiceKey && SERVICE_TEXTS[activeServiceKey]) {
+        const t = SERVICE_TEXTS[activeServiceKey][currentLang];
+        document.getElementById('modalServiceName').innerText = t[0];
+        document.getElementById('modalServiceDesc').innerText = t[1];
+      }
+      updateClock();
+    }
+
     let activeServiceName = '';
+    let activeServiceKey = '';
 
     // లైవ్ సమయాన్ని అప్‌డేట్ చేసే చిన్న క్లాక్
     function updateClock() {
       const now = new Date();
-      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-      const dateStr = now.toLocaleDateString('te-IN', { day: 'numeric', month: 'short' });
+      // 24-hour time: te-IN/hi-IN 12-hour formatting still renders Latin AM/PM.
+      const dateLocale = currentLang === 'hi' ? 'hi-IN' : currentLang === 'en' ? 'en-IN' : 'te-IN';
+      const timeStr = now.toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit', hour12: false });
+      const dateStr = now.toLocaleDateString(dateLocale, { day: 'numeric', month: 'short' });
       document.getElementById('liveClock').innerText = `${dateStr}, ${timeStr}`;
     }
     setInterval(updateClock, 1000);
@@ -293,10 +366,10 @@
       const flat = document.getElementById('gateFlat').value;
       const visitor = document.getElementById('visitorType').value;
       if (!flat || !visitor) {
-        alert('దయచేసి ఫ్లాట్ మరియు విజిటర్ రకం ఎంచుకోండి');
+        alert(GATE_ALERT[currentLang]);
         return;
       }
-      const detail = document.getElementById('visitorDetail').value || 'డెలివరీ ఎగ్జిక్యూటివ్';
+      const detail = document.getElementById('visitorDetail').value || DEFAULT_DETAIL[currentLang];
       const now = new Date();
       const timeStr = now.toLocaleDateString('te-IN') + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 
@@ -313,10 +386,12 @@
     }
 
     // 2. సర్వీస్ మోడల్ ఓపెన్ & క్లోజ్ హ్యాండ్లర్లు
-    function openServiceForm(name, desc) {
-      activeServiceName = name;
-      document.getElementById('modalServiceName').innerText = name;
-      document.getElementById('modalServiceDesc').innerText = desc;
+    function openServiceForm(key) {
+      activeServiceKey = key;
+      const t = SERVICE_TEXTS[key] || SERVICE_TEXTS.plumber;
+      activeServiceName = t.te[0];
+      document.getElementById('modalServiceName').innerText = t[currentLang][0];
+      document.getElementById('modalServiceDesc').innerText = t[currentLang][1];
       const modal = document.getElementById('serviceModal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
@@ -334,7 +409,7 @@
       const flat = document.getElementById('flatNo').value;
       const name = document.getElementById('custName').value;
       const phone = document.getElementById('custPhone').value;
-      const notes = document.getElementById('issueNotes').value || 'సాధారణ తనిఖీ';
+      const notes = document.getElementById('issueNotes').value || DEFAULT_NOTES[currentLang];
       const now = new Date();
       const timeStr = now.toLocaleDateString('te-IN') + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 

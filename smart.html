@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVAILO SMART DINE - ANDROID SUPERVISOR</title>
+    <title>AVAILO స్మార్ట్ డైన్ — ఆండ్రాయిడ్ సూపర్‌వైజర్</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -30,6 +30,7 @@
         }
 
         .stage-box {
+            position: relative;
             background: radial-gradient(circle at 50% 20%, #0e2f57 0%, var(--brand-navy) 85%);
             border-bottom: 1.5px solid rgba(32, 221, 224, 0.3);
             padding: 16px 14px 14px;
@@ -38,6 +39,23 @@
             flex-direction: column;
             align-items: center;
         }
+
+        .lang-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255,255,255,0.08);
+            border: 1.5px solid var(--brand-cyan);
+            color: var(--brand-cyan);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        body.lang-en .sup-voice-text, body.lang-hi .sup-voice-text { font-family: 'Inter', sans-serif; }
 
         .venue-pill {
             background: rgba(221, 182, 93, 0.15);
@@ -336,9 +354,10 @@
 <body>
 
     <div id="robotStage" class="stage-box">
-        <div class="venue-pill" id="badgeText">AMARAVATI GRAND · TABLE 01</div>
+        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+        <div class="venue-pill" id="badgeText">అమరావతి గ్రాండ్ · టేబుల్ 01</div>
         
-        <div class="supervisor-stage" id="supStage" onclick="speakGentSupervisor('నమస్కారం సర్! నేను మీ ఆర్డర్ సూపర్‌వైజర్‌ని. మీ ఆర్డర్ చెప్పండి, నోట్ చేసుకుంటాను.')">
+        <div class="supervisor-stage" id="supStage" onclick="speakSupervisorGreeting()">
             <svg class="supervisor-art" viewBox="0 0 180 250" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -424,22 +443,22 @@
         </div>
 
         <div class="supervisor-bubble">
-            <span class="sup-badge">SUPERVISOR</span>
-            <span class="sup-voice-text" id="supervisorText">ఆర్డర్ చెప్పండి సర్, నోట్ చేసుకుంటున్నాను ✍️</span>
+            <span class="sup-badge" data-te="సూపర్‌వైజర్" data-en="SUPERVISOR" data-hi="सुपरवाइज़र">సూపర్‌వైజర్</span>
+            <span class="sup-voice-text" id="supervisorText" data-te="ఆర్డర్ చెప్పండి సర్, నోట్ చేసుకుంటున్నాను ✍️" data-en="Tell me your order, Sir — I'm noting it down ✍️" data-hi="अपना ऑर्डर बताइए सर, मैं नोट कर रहा हूँ ✍️">ఆర్డర్ చెప్పండి సర్, నోట్ చేసుకుంటున్నాను ✍️</span>
         </div>
     </div>
 
     <div class="content-wrap" id="mainContainer">
         <div class="menu-header">
-            <span>SELECT DISHES</span>
-            <small style="color: #94a3b8; font-size: 11px;">TAP + TO ADD TO PAD</small>
+            <span data-te="వంటకాలు ఎంచుకోండి" data-en="SELECT DISHES" data-hi="खाना चुनें">వంటకాలు ఎంచుకోండి</span>
+            <small style="color: #94a3b8; font-size: 11px;" data-te="జోడించడానికి + నొక్కండి" data-en="TAP + TO ADD TO PAD" data-hi="+ दबाकर पैड में जोड़ें">జోడించడానికి + నొక్కండి</small>
         </div>
 
         <div class="items-list">
             <div class="dish-row">
                 <div>
-                    <div class="dish-title">స్పెషల్ వెజ్ బిర్యానీ</div>
-                    <div class="dish-desc">మిర్చి కా సాలన్ & రైతా</div>
+                    <div class="dish-title" data-te="స్పెషల్ వెజ్ బిర్యానీ" data-en="Special Veg Biryani" data-hi="स्पेशल वेज बिरयानी">స్పెషల్ వెజ్ బిర్యానీ</div>
+                    <div class="dish-desc" data-te="మిర్చి కా సాలన్ &amp; రైతా" data-en="Mirchi ka salan &amp; raita" data-hi="मिर्ची का सालन और रायता">మిర్చి కా సాలన్ &amp; రైతా</div>
                     <span class="dish-cost">₹220</span>
                 </div>
                 <div class="qty-box">
@@ -451,8 +470,8 @@
 
             <div class="dish-row">
                 <div>
-                    <div class="dish-title">పన్నీర్ బట్టర్ మసాలా</div>
-                    <div class="dish-desc">జీడిపప్పు రిచ్ గ్రేవీ</div>
+                    <div class="dish-title" data-te="పన్నీర్ బట్టర్ మసాలా" data-en="Paneer Butter Masala" data-hi="पनीर बटर मसाला">పన్నీర్ బట్టర్ మసాలా</div>
+                    <div class="dish-desc" data-te="జీడిపప్పు రిచ్ గ్రేవీ" data-en="Rich cashew gravy" data-hi="काजू की रिच ग्रेवी">జీడిపప్పు రిచ్ గ్రేవీ</div>
                     <span class="dish-cost">₹180</span>
                 </div>
                 <div class="qty-box">
@@ -464,8 +483,8 @@
 
             <div class="dish-row">
                 <div>
-                    <div class="dish-title">బట్టర్ నాన్ (2 Pcs)</div>
-                    <div class="dish-desc">తాజా రోటీ బ్రెడ్</div>
+                    <div class="dish-title" data-te="బట్టర్ నాన్ (2 ముక్కలు)" data-en="Butter Naan (2 Pcs)" data-hi="बटर नान (2 पीस)">బట్టర్ నాన్ (2 ముక్కలు)</div>
+                    <div class="dish-desc" data-te="తాజా రోటీ బ్రెడ్" data-en="Fresh roti bread" data-hi="ताज़ा रोटी ब्रेड">తాజా రోటీ బ్రెడ్</div>
                     <span class="dish-cost">₹60</span>
                 </div>
                 <div class="qty-box">
@@ -477,8 +496,8 @@
 
             <div class="dish-row">
                 <div>
-                    <div class="dish-title">మినరల్ వాటర్ (1L)</div>
-                    <div class="dish-desc">కూల్డ్ వాటర్ బాటిల్</div>
+                    <div class="dish-title" data-te="మినరల్ వాటర్ (1 లీటర్)" data-en="Mineral Water (1L)" data-hi="मिनरल वॉटर (1 लीटर)">మినరల్ వాటర్ (1 లీటర్)</div>
+                    <div class="dish-desc" data-te="కూల్డ్ వాటర్ బాటిల్" data-en="Chilled water bottle" data-hi="ठंडी पानी की बोतल">కూల్డ్ వాటర్ బాటిల్</div>
                     <span class="dish-cost">₹25</span>
                 </div>
                 <div class="qty-box">
@@ -492,16 +511,16 @@
         <div class="order-book-container">
             <div class="book-top-clip"></div>
             <div class="book-header">
-                <span>📝 LIVE ORDER SLIP (KOT)</span>
-                <span id="bookTableLabel">TABLE 01</span>
+                <span data-te="📝 లైవ్ ఆర్డర్ స్లిప్" data-en="📝 LIVE ORDER SLIP (KOT)" data-hi="📝 लाइव ऑर्डर स्लिप">📝 లైవ్ ఆర్డర్ స్లిప్</span>
+                <span id="bookTableLabel">టేబుల్ 01</span>
             </div>
             
             <div class="writing-lines" id="orderPadLines">
-                <div class="empty-hint">ఇంకా ఏమీ రాయలేదు... పైన ఐటమ్స్ సెలెక్ట్ చేయండి, సూపర్‌వైజర్ ఇక్కడ నోట్ చేస్తారు ✍️</div>
+                <div class="empty-hint" data-te="ఇంకా ఏమీ రాయలేదు... పైన ఐటమ్స్ సెలెక్ట్ చేయండి, సూపర్‌వైజర్ ఇక్కడ నోట్ చేస్తారు ✍️" data-en="Nothing written yet... Select items above, the supervisor will note them here ✍️" data-hi="अभी कुछ नहीं लिखा... ऊपर से आइटम चुनें, सुपरवाइज़र यहाँ नोट करेंगे ✍️">ఇంకా ఏమీ రాయలేదు... పైన ఐటమ్స్ సెలెక్ట్ చేయండి, సూపర్‌వైజర్ ఇక్కడ నోట్ చేస్తారు ✍️</div>
             </div>
 
             <div style="border-top: 1.5px dashed #94a3b8; padding-top: 8px; margin-top: 8px; display: flex; justify-content: space-between; font-weight: 800; font-family: 'Rajdhani', sans-serif;">
-                <span>ESTIMATED BILL:</span>
+                <span data-te="అంచనా బిల్లు:" data-en="ESTIMATED BILL:" data-hi="अनुमानित बिल:">అంచనా బిల్లు:</span>
                 <span id="padTotalAmount" style="color: #16a34a; font-size: 16px;">₹0</span>
             </div>
         </div>
@@ -509,38 +528,173 @@
 
     <div class="bottom-bar" id="bottomNavBar">
         <button class="btn-speak" onclick="listenToVoiceOrder()">
-            <span>🎤</span> ఆర్డర్ చెప్పండి
+            <span>🎤</span> <span data-te="ఆర్డర్ చెప్పండి" data-en="Speak Your Order" data-hi="ऑर्डर बोलें">ఆర్డర్ చెప్పండి</span>
         </button>
         <button class="btn-order" onclick="sendOrderWhatsApp()">
-            <span>🛒</span> కిచెన్‌కు పంపండి (<span id="cartCount">0</span>)
+            <span>🛒</span> <span data-te="కిచెన్‌కు పంపండి" data-en="Send to Kitchen" data-hi="किचन को भेजें">కిచెన్‌కు పంపండి</span> (<span id="cartCount">0</span>)
         </button>
     </div>
 
     <!-- Footer: back to homepage + contact -->
     <footer style="text-align: center; padding: 18px 16px 26px; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); color: #94a3b8; font-size: 12.5px; line-height: 1.9;">
-        <a href="https://availoservices.in/" style="color: var(--brand-gold); font-weight: 800; text-decoration: none;">← హోమ్‌పేజీకి వెళ్ళండి</a>
+        <a href="https://availoservices.in/" style="color: var(--brand-gold); font-weight: 800; text-decoration: none;" data-te="← హోమ్‌పేజీకి వెళ్ళండి" data-en="← Go to Homepage" data-hi="← होमपेज पर जाएँ">← హోమ్‌పేజీకి వెళ్ళండి</a>
         <div style="margin-top: 8px;">
-            హెల్ప్‌లైన్: <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
+            <span data-te="హెల్ప్‌లైన్:" data-en="Helpline:" data-hi="हेल्पलाइन:">హెల్ప్‌లైన్:</span> <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
             &nbsp;·&nbsp;
             <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
         </div>
-        <div>AVAILO Digital Services · విజయవాడ &amp; గుంటూరు</div>
+        <div data-te="AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు" data-en="AVAILO Digital Services · Vijayawada &amp; Guntur" data-hi="AVAILO डिजिटल सर्विसेज़ · विजयवाड़ा और गुंटूर">AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు</div>
     </footer>
 
     <script>
         const params = new URLSearchParams(window.location.search);
-        const hotelName = params.get('hotel') || "అమరావతి గ్రాండ్";
-        const tableNumber = params.get('table') || "Table 01";
+        const hotelParam = params.get('hotel');
+        const tableParam = params.get('table');
+        // Kitchen-facing (WhatsApp) names stay Telugu by design; these two are
+        // only for the on-screen text below.
+        const hotelName = hotelParam || "అమరావతి గ్రాండ్";
+        const tableNumber = tableParam || "Table 01";
         const targetWhatsApp = params.get('desk') || "919966157369";
+
+        // On-screen venue names follow the selected language (defaults only;
+        // a ?hotel= / ?table= value passed in is a proper noun and is kept as-is).
+        const HOTEL_DISPLAY = { te: "అమరావతి గ్రాండ్", en: "Amaravati Grand", hi: "अमरावती ग्रैंड" };
+        const TABLE_DISPLAY = { te: "టేబుల్ 01", en: "Table 01", hi: "टेबल 01" };
+        function hotelDisplay() { return hotelParam || HOTEL_DISPLAY[currentLang]; }
+        function tableDisplay() { return tableParam ? tableParam.toUpperCase() : TABLE_DISPLAY[currentLang]; }
+        function renderVenueLabels() {
+            document.getElementById('badgeText').innerText = `${hotelDisplay().toUpperCase()} · ${tableDisplay().toUpperCase()}`;
+            const bookLabel = document.getElementById('bookTableLabel');
+            if (bookLabel) bookLabel.innerText = tableDisplay().toUpperCase();
+        }
 
         document.getElementById('badgeText').innerText = `${hotelName.toUpperCase()} · ${tableNumber.toUpperCase()}`;
         document.getElementById('bookTableLabel').innerText = `${tableNumber.toUpperCase()}`;
 
+        let currentLang = 'te';
+        const LANG_NEXT = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
+        const VOICE_LANG = { te: 'te-IN', en: 'en-IN', hi: 'hi-IN' };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+            document.documentElement.lang = currentLang;
+            document.body.classList.toggle('lang-en', currentLang === 'en');
+            document.body.classList.toggle('lang-hi', currentLang === 'hi');
+            const btn = document.getElementById('langBtn');
+            if (btn) btn.innerText = LANG_NEXT[currentLang];
+            document.title = UI_STRINGS.pageTitle[currentLang];
+            renderVenueLabels();
+            document.querySelectorAll('[data-te]').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang);
+                if (text) el.innerHTML = text;
+            });
+            renderOrderPad();
+            applyTrackerLang();
+        }
+
+        // All spoken / on-screen JS strings in three languages
+        const UI_STRINGS = {
+            pageTitle: {
+                te: 'AVAILO స్మార్ట్ డైన్ — ఆండ్రాయిడ్ సూపర్‌వైజర్',
+                en: 'AVAILO SMART DINE - ANDROID SUPERVISOR',
+                hi: 'AVAILO स्मार्ट डाइन — एंड्रॉइड सुपरवाइज़र'
+            },
+            greeting: {
+                te: 'నమస్కారం సర్! {hotel} కు స్వాగతం. మీ ఆర్డర్ చెప్పండి, నేను నోట్ చేసుకుంటాను.',
+                en: 'Hello Sir! Welcome to {hotel}. Please tell me your order, I will note it down.',
+                hi: 'नमस्ते सर! {hotel} में आपका स्वागत है। अपना ऑर्डर बताइए, मैं नोट कर लेता हूँ।'
+            },
+            tapGreeting: {
+                te: 'నమస్కారం సర్! నేను మీ ఆర్డర్ సూపర్‌వైజర్‌ని. మీ ఆర్డర్ చెప్పండి, నోట్ చేసుకుంటాను.',
+                en: 'Hello Sir! I am your order supervisor. Please tell me your order, I will note it down.',
+                hi: 'नमस्ते सर! मैं आपका ऑर्डर सुपरवाइज़र हूँ। अपना ऑर्डर बताइए, मैं नोट कर लेता हूँ।'
+            },
+            emptyHint: {
+                te: 'ఇంకా ఏమీ రాయలేదు... పైన ఐటమ్స్ సెలెక్ట్ చేయండి, సూపర్‌వైజర్ ఇక్కడ నోట్ చేస్తారు ✍️',
+                en: 'Nothing written yet... Select items above, the supervisor will note them here ✍️',
+                hi: 'अभी कुछ नहीं लिखा... ऊपर से आइटम चुनें, सुपरवाइज़र यहाँ नोट करेंगे ✍️'
+            },
+            voiceAlert: {
+                te: 'వాయిస్ రికగ్నిషన్ కోసం Chrome వాడండి.',
+                en: 'Please use Chrome for voice recognition.',
+                hi: 'वॉइस रिकग्निशन के लिए Chrome इस्तेमाल करें।'
+            },
+            listening: {
+                te: '🔴 వింటున్నాను సర్, మీ ఆర్డర్ చెప్పండి...',
+                en: '🔴 Listening Sir, please tell me your order...',
+                hi: '🔴 सुन रहा हूँ सर, अपना ऑर्डर बताइए...'
+            },
+            emptyOrder: {
+                te: 'ఒక్క ఐటమ్ అయినా చెప్పండి సర్, స్లిప్ లో రాసుకుంటాను.',
+                en: 'Please tell me at least one item, Sir, so I can write it on the slip.',
+                hi: 'कम से कम एक आइटम बताइए सर, मैं स्लिप पर लिख लेता हूँ।'
+            },
+            thankYou: {
+                te: 'థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు చేరింది. పది నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వచ్చేస్తుంది సర్!',
+                en: 'Thank you, Sir! Your order has reached the kitchen. It will arrive hot at your table within ten minutes, Sir!',
+                hi: 'धन्यवाद सर! आपका ऑर्डर किचन तक पहुँच गया है। दस मिनट में गरम-गरम आपके टेबल पर आ जाएगा सर!'
+            },
+            trackerHeading: {
+                te: 'ఆర్డర్ కిచెన్‌కు చేరింది!',
+                en: 'Order reached the kitchen!',
+                hi: 'ऑर्डर किचन तक पहुँच गया!'
+            },
+            trackerPara: {
+                te: 'సర్, మీ ఆర్డర్ చెఫ్ తయారుచేస్తున్నారు. పది నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వచ్చేస్తుంది!',
+                en: 'Sir, the chef is preparing your order. It will arrive hot at your table within ten minutes!',
+                hi: 'सर, शेफ आपका ऑर्डर बना रहे हैं। दस मिनट में गरम-गरम आपके टेबल पर आ जाएगा!'
+            },
+            billLabel: { te: 'మొత్తం బిల్లు:', en: 'Total Bill:', hi: 'कुल बिल:' },
+            trackerNote: {
+                te: 'ఆర్డర్ రెడీ అవ్వగానే కిచెన్ నుండి మీ వాట్సాప్‌కు మెసేజ్ వస్తుంది 📲',
+                en: 'As soon as the order is ready, you will get a message on your WhatsApp from the kitchen 📲',
+                hi: 'ऑर्डर तैयार होते ही किचन से आपके WhatsApp पर मैसेज आएगा 📲'
+            },
+            trackerStatus: {
+                te: 'స్థితి: కిచెన్‌లో తయారవుతోంది ⏳',
+                en: 'STATUS: PREPARING IN KITCHEN ⏳',
+                hi: 'स्थिति: किचन में तैयार हो रहा है ⏳'
+            },
+            newOrderBtn: {
+                te: '🔄 ఇంకేమైనా ఆర్డర్ చేయాలా?',
+                en: '🔄 Want to order anything else? (NEW ORDER)',
+                hi: '🔄 और कुछ ऑर्डर करना है?'
+            }
+        };
+
+        function ui(key, vars) {
+            let s = UI_STRINGS[key][currentLang] || UI_STRINGS[key].te;
+            if (vars) Object.keys(vars).forEach(k => { s = s.split('{' + k + '}').join(vars[k]); });
+            return s;
+        }
+
+        function dishName(key) { return menuData[key].name[currentLang]; }
+        function itemPrompts(key) {
+            const name = dishName(key);
+            return {
+                te: [
+                    `సరే సర్, ${name} నోట్ చేసుకున్నాను. నెక్స్ట్ ఆర్డర్ సర్?`,
+                    `${name} రాశాను సర్.. నెక్స్ట్ ఇంకా ఏం కావాలి సర్?`,
+                    'రైట్ సర్, నెక్స్ట్ ఆర్డర్ చెప్పండి..'
+                ],
+                en: [
+                    `Okay Sir, noted ${name}. Next order, Sir?`,
+                    `I have written ${name}, Sir. What else would you like next?`,
+                    'Right Sir, please tell me the next order.'
+                ],
+                hi: [
+                    `ठीक है सर, ${name} नोट कर लिया। अगला ऑर्डर सर?`,
+                    `${name} लिख लिया सर। आगे और क्या चाहिए सर?`,
+                    'ठीक है सर, अगला ऑर्डर बताइए।'
+                ]
+            }[currentLang];
+        }
+
         const menuData = {
-            vegBiryani: { name: "స్పెషల్ వెజ్ బిర్యానీ", price: 220, count: 0 },
-            paneerButter: { name: "పన్నీర్ బట్టర్ మసాలా", price: 180, count: 0 },
-            butterNaan: { name: "బట్టర్ నాన్ (2 Pcs)", price: 60, count: 0 },
-            waterBottle: { name: "మినరల్ వాటర్ (1L)", price: 25, count: 0 }
+            vegBiryani: { name: { te: "స్పెషల్ వెజ్ బిర్యానీ", en: "Special Veg Biryani", hi: "स्पेशल वेज बिरयानी" }, price: 220, count: 0 },
+            paneerButter: { name: { te: "పన్నీర్ బట్టర్ మసాలా", en: "Paneer Butter Masala", hi: "पनीर बटर मसाला" }, price: 180, count: 0 },
+            butterNaan: { name: { te: "బట్టర్ నాన్ (2 ముక్కలు)", en: "Butter Naan (2 Pcs)", hi: "बटर नान (2 पीस)" }, price: 60, count: 0 },
+            waterBottle: { name: { te: "మినరల్ వాటర్ (1 లీటర్)", en: "Mineral Water (1L)", hi: "मिनरल वॉटर (1 लीटर)" }, price: 25, count: 0 }
         };
 
         function speakGentSupervisor(text, mode = "") {
@@ -551,15 +705,17 @@
                 const utter = new SpeechSynthesisUtterance(text);
                 
                 const voices = window.speechSynthesis.getVoices();
-                const maleVoice = voices.find(v => (v.lang.includes('te') || v.lang.includes('en-IN')) && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('ravi') || v.name.toLowerCase().includes('pradeep')));
-                
+                const langCode = VOICE_LANG[currentLang];
+                const maleVoice = voices.find(v => v.lang === langCode && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('ravi') || v.name.toLowerCase().includes('pradeep')))
+                    || voices.find(v => v.lang === langCode);
+
                 if (maleVoice) {
                     utter.voice = maleVoice;
                 }
 
                 utter.pitch = 0.76;
                 utter.rate = 0.94;
-                utter.lang = 'te-IN';
+                utter.lang = langCode;
 
                 const stage = document.getElementById('robotStage');
                 
@@ -582,9 +738,16 @@
             }
         }
 
+        function speakSupervisorGreeting() {
+            speakGentSupervisor(UI_STRINGS.tapGreeting[currentLang]);
+        }
+
+        renderVenueLabels();
+        document.title = UI_STRINGS.pageTitle[currentLang];
+
         window.addEventListener('load', () => {
             setTimeout(() => {
-                speakGentSupervisor(`నమస్కారం సర్! ${hotelName} కు స్వాగతం. మీ ఆర్డర్ చెప్పండి, నేను నోట్ చేసుకుంటాను.`);
+                speakGentSupervisor(ui('greeting', { hotel: hotelDisplay() }));
             }, 800);
         });
 
@@ -596,11 +759,7 @@
                 renderOrderPad();
 
                 if (delta > 0) {
-                    const prompts = [
-                        `సరే సర్, ${menuData[key].name} నోట్ చేసుకున్నాను. నెక్స్ట్ ఆర్డర్ సర్?`,
-                        `${menuData[key].name} రాశాను సర్.. నెక్స్ట్ ఇంకా ఏం కావాలి సర్?`,
-                        `రైట్ సర్, నెక్స్ట్ ఆర్డర్ చెప్పండి..`
-                    ];
+                    const prompts = itemPrompts(key);
                     const randomVoice = prompts[Math.floor(Math.random() * prompts.length)];
                     speakGentSupervisor(randomVoice, "write");
                 }
@@ -609,6 +768,7 @@
 
         function renderOrderPad() {
             const padContainer = document.getElementById('orderPadLines');
+            if (!padContainer) return;
             let linesHtml = "";
             let total = 0;
             let totalCount = 0;
@@ -620,7 +780,7 @@
                     totalCount += menuData[k].count;
                     linesHtml += `
                         <div class="writing-line-item">
-                            <span>✍️ ${menuData[k].name} x ${menuData[k].count}</span>
+                            <span>✍️ ${dishName(k)} × ${menuData[k].count}</span>
                             <span>₹${itemTotal}</span>
                         </div>
                     `;
@@ -628,29 +788,32 @@
             }
 
             if (linesHtml === "") {
-                padContainer.innerHTML = `<div class="empty-hint">ఇంకా ఏమీ రాయలేదు... పైన ఐటమ్స్ సెలెక్ట్ చేయండి, సూపర్‌వైజర్ ఇక్కడ నోట్ చేస్తారు ✍️</div>`;
+                padContainer.innerHTML = `<div class="empty-hint">${UI_STRINGS.emptyHint[currentLang]}</div>`;
             } else {
                 padContainer.innerHTML = linesHtml;
             }
 
-            document.getElementById('padTotalAmount').innerText = `₹${total}`;
-            document.getElementById('cartCount').innerText = totalCount;
+            const padTotalEl = document.getElementById('padTotalAmount');
+            if (padTotalEl) padTotalEl.innerText = `₹${total}`;
+            const cartEl = document.getElementById('cartCount');
+            if (cartEl) cartEl.innerText = totalCount;
         }
 
         function listenToVoiceOrder() {
             const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) {
-                alert("వాయిస్ రికగ్నిషన్ కోసం Chrome వాడండి.");
+                alert(UI_STRINGS.voiceAlert[currentLang]);
                 return;
             }
             const rec = new SpeechRec();
-            rec.lang = 'te-IN';
+            rec.lang = VOICE_LANG[currentLang];
             rec.onstart = () => {
-                document.getElementById('supervisorText').innerText = "🔴 వింటున్నాను సర్, మీ ఆర్డర్ చెప్పండి...";
+                document.getElementById('supervisorText').innerText = UI_STRINGS.listening[currentLang];
             };
             rec.onresult = (e) => {
                 const spokenText = e.results[0][0].transcript;
-                speakGentSupervisor(`రాసుకున్నాను సర్: ${spokenText}`, "write");
+                const confirmPrefix = { te: 'రాసుకున్నాను సర్: ', en: 'Noted it down, Sir: ', hi: 'लिख लिया सर: ' }[currentLang];
+                speakGentSupervisor(`${confirmPrefix}${spokenText}`, "write");
                 
                 const msg = `*AVAILO SMART DINE - LIVE ORDER*\n-----------------------------\n*హోటల్:* ${hotelName}\n*టేబుల్:* ${tableNumber}\n*కస్టమర్ వాయిస్ ఆర్డర్:* ${spokenText}\n-----------------------------\n_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు ఆర్డర్ రెడీ అని రిప్లై పంపండి)_`;
                 setTimeout(() => {
@@ -667,13 +830,13 @@
             for (let k in menuData) {
                 if (menuData[k].count > 0) {
                     const cost = menuData[k].count * menuData[k].price;
-                    orderLines.push(`• ${menuData[k].name} x ${menuData[k].count} = ₹${cost}`);
+                    orderLines.push(`• ${menuData[k].name.te} x ${menuData[k].count} = ₹${cost}`);
                     grandTotal += cost;
                 }
             }
 
             if (orderLines.length === 0) {
-                speakGentSupervisor("ఒక్క ఐటమ్ అయినా చెప్పండి సర్, స్లిప్ లో రాసుకుంటాను.");
+                speakGentSupervisor(UI_STRINGS.emptyOrder[currentLang]);
                 return;
             }
 
@@ -687,36 +850,52 @@
             }, 1200);
         }
 
+        let trackerState = null;
+
         function displayOrderPreparingScreen(billAmount) {
+            trackerState = { billAmount: billAmount };
             const container = document.getElementById('mainContainer');
             container.innerHTML = `
                 <div class="tracker-card">
                     <div style="font-size: 38px; margin-bottom: 8px;">👨‍🍳🔥</div>
-                    <h3 style="color: var(--brand-cyan); font-family: 'Rajdhani', sans-serif; font-size: 21px; margin-bottom: 6px;">
-                        ఆర్డర్ కిచెన్‌కు చేరింది!
+                    <h3 id="trackerHeading" style="color: var(--brand-cyan); font-family: 'Rajdhani', sans-serif; font-size: 21px; margin-bottom: 6px;">
+                        ${UI_STRINGS.trackerHeading[currentLang]}
                     </h3>
-                    <p style="color: #ffffff; font-size: 14px; font-family: 'Ramabhadra', sans-serif; line-height: 1.5; margin-bottom: 12px;">
-                        సర్, మీ ఆర్డర్ చెఫ్ తయారుచేస్తున్నారు. పది నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వచ్చేస్తుంది!
+                    <p id="trackerPara" style="color: #ffffff; font-size: 14px; font-family: 'Ramabhadra', sans-serif; line-height: 1.5; margin-bottom: 12px;">
+                        ${UI_STRINGS.trackerPara[currentLang]}
                     </p>
                     
                     <div style="background: rgba(32, 221, 224, 0.1); border: 1.5px dashed var(--brand-cyan); border-radius: 10px; padding: 12px; margin: 12px 0;">
-                        <div style="color: var(--brand-gold); font-size: 13px; font-family: 'Rajdhani', sans-serif; font-weight: 800;">STATUS: PREPARING IN KITCHEN ⏳</div>
-                        <div style="color: #fff; font-size: 15px; font-weight: 700; margin-top: 4px;">మొత్తం బిల్లు: ₹${billAmount}</div>
+                        <div id="trackerStatus" style="color: var(--brand-gold); font-size: 13px; font-family: 'Rajdhani', sans-serif; font-weight: 800;">${UI_STRINGS.trackerStatus[currentLang]}</div>
+                        <div id="trackerBill" style="color: #fff; font-size: 15px; font-weight: 700; margin-top: 4px;">${UI_STRINGS.billLabel[currentLang]} ₹${billAmount}</div>
                     </div>
 
-                    <p style="color: #94a3b8; font-size: 12px;">
-                        ఆర్డర్ రెడీ అవ్వగానే కిచెన్ నుండి మీ వాట్సాప్‌కు మెసేజ్ వస్తుంది 📲
+                    <p id="trackerNote" style="color: #94a3b8; font-size: 12px;">
+                        ${UI_STRINGS.trackerNote[currentLang]}
                     </p>
                 </div>
             `;
 
             document.getElementById('bottomNavBar').innerHTML = `
-                <button onclick="location.reload()" style="width: 100%; background: var(--brand-cyan); color: #071426; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Rajdhani', sans-serif;">
-                    🔄 ఇంకేమైనా ఆర్డర్ చేయాలా? (NEW ORDER)
+                <button id="newOrderBtn" onclick="location.reload()" style="width: 100%; background: var(--brand-cyan); color: #071426; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Rajdhani', sans-serif;">
+                    ${UI_STRINGS.newOrderBtn[currentLang]}
                 </button>
             `;
 
-            speakGentSupervisor("థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు చేరింది. పది నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వచ్చేస్తుంది సర్!");
+            speakGentSupervisor(UI_STRINGS.thankYou[currentLang]);
+        }
+
+        // Re-apply the selected language to the tracker screen (built by JS,
+        // so the data-* sweep cannot reach it).
+        function applyTrackerLang() {
+            if (!trackerState) return;
+            const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
+            setText('trackerHeading', UI_STRINGS.trackerHeading[currentLang]);
+            setText('trackerPara', UI_STRINGS.trackerPara[currentLang]);
+            setText('trackerStatus', UI_STRINGS.trackerStatus[currentLang]);
+            setText('trackerBill', `${UI_STRINGS.billLabel[currentLang]} ₹${trackerState.billAmount}`);
+            setText('trackerNote', UI_STRINGS.trackerNote[currentLang]);
+            setText('newOrderBtn', UI_STRINGS.newOrderBtn[currentLang]);
         }
     </script>
 </body>
