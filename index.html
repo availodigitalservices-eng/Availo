@@ -1111,6 +1111,7 @@
                         Smarter experiences for hospitality businesses. QR-based digital menus and in-room service request solutions.
                     </p>
                     <a href="#business" class="srv-action-btn font-te-title" data-te="బిజినెస్ సొల్యూషన్స్ →" data-en="Business Solutions →">Business Solutions →</a>
+                    <a href="dine.html" class="srv-action-btn font-te-title" style="margin-top: 8px;" data-te="డెమో చూడండి →" data-en="View Demo →">View Demo →</a>
                 </div>
             </div>
 
@@ -1192,17 +1193,17 @@
             </div>
 
             <div class="b2b-grid">
-                <div class="b2b-item" onclick="openModal('trialApplyModal')">
+                <div class="b2b-item" onclick="openTrialModal('Restaurants')">
                     <span>🍽️</span>
                     <strong>AVAILO Dine</strong>
                     <small data-te="డిజిటల్ టేబుల్ ఆర్డరింగ్" data-en="Digital Table Ordering">Digital Table Ordering</small>
                 </div>
-                <div class="b2b-item" onclick="openModal('trialApplyModal')">
+                <div class="b2b-item" onclick="openTrialModal('Hotels &amp; Dining')">
                     <span>🏨</span>
                     <strong>AVAILO Stay</strong>
                     <small data-te="రూమ్ సర్వీస్ ఆటోమేషన్" data-en="Room Service Requests">Room Service Requests</small>
                 </div>
-                <div class="b2b-item" onclick="openModal('trialApplyModal')">
+                <div class="b2b-item" onclick="openTrialModal('Apartments (Smart Gate &amp; Care)')">
                     <span>🏢</span>
                     <strong>Society Gate</strong>
                     <small data-te="అపార్ట్‌మెంట్ డిజిటల్ పాస్" data-en="Apartment Gate Pass">Apartment Gate Pass</small>
@@ -1626,6 +1627,7 @@
         }
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function openTrialModal(category) { var sel = document.getElementById('trialCategory'); if (sel && category) sel.value = category; openModal('trialApplyModal'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
         function toggleLanguage() {

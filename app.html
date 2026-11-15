@@ -154,6 +154,7 @@
             gap: 8px;
             cursor: pointer;
             box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            text-decoration: none;
         }
 
         .action-card:active {
@@ -290,51 +291,52 @@
             <!-- Core Operations Grid -->
             <div class="section-title">
                 <span>ముఖ్యమైన సేవలు</span>
-                <span style="font-size: 12px; color: #008069; cursor: pointer;">అన్నీ చూడండి</span>
             </div>
 
             <div class="grid-2">
-                <div class="action-card" onclick="alert('ఆదివారం స్క్రాప్ స్లాట్ బుక్ చేయబడింది!')">
+                <a href="https://wa.me/919966157369?text=ఆదివారం%20స్క్రాప్%20పికప్%20కావాలి" class="action-card">
                     <div class="action-icon" style="background: #fef3c7; color: #d97706;">♻️</div>
                     <h5>సండే స్క్రాప్</h5>
                     <span>డోర్‌స్టెప్ తూకం & క్యాష్</span>
-                </div>
+                </a>
 
-                <div class="action-card" onclick="alert('వెరిఫైడ్ టెక్నీషియన్ హెల్ప్‌లైన్ కనెక్ట్ అవుతోంది...')">
+                <a href="https://wa.me/919966157369?text=రిపేర్స్%20కావాలి" class="action-card">
                     <div class="action-icon" style="background: #eff6ff; color: #0044bb;">🔧</div>
                     <h5>రిపేర్స్ & AMC</h5>
                     <span>ప్లంబర్, ఎలక్ట్రీషియన్, ఏసీ</span>
-                </div>
+                </a>
 
-                <div class="action-card" onclick="alert('గేట్ సెక్యూరిటీ డెస్క్ వివరాలు')">
+                <a href="gate.html" class="action-card">
                     <div class="action-icon" style="background: #f3e8ff; color: #7c3aed;">🚪</div>
                     <h5>స్మార్ట్ గేట్</h5>
                     <span>ప్రైవసీ విజిటర్ లాగ్</span>
-                </div>
+                </a>
 
-                <div class="action-card" onclick="alert('ఇన్సూరెన్స్ & క్లెయిమ్స్ డెస్క్')">
+                <a href="https://wa.me/919966157369?text=క్లెయిమ్స్%20సపోర్ట్%20కావాలి" class="action-card">
                     <div class="action-icon" style="background: #e0f2fe; color: #0284c7;">📑</div>
                     <h5>క్లెయిమ్స్ సపోర్ట్</h5>
                     <span>24/7 ప్రాపర్టీ షీల్డ్ హెల్ప్</span>
-                </div>
+                </a>
+            </div>
+
+            <!-- Helpline & Home Footer -->
+            <div style="text-align: center; font-size: 11px; color: #64748b; line-height: 1.9;">
+                హెల్ప్‌లైన్: <a href="tel:9966157369" style="color: #008069; font-weight: 700; text-decoration: none;">9966157369</a><br>
+                <a href="index.html" style="color: #0044bb; font-weight: 700; text-decoration: none;">‹ హోమ్‌కి వెళ్ళండి</a>
             </div>
 
         </div>
 
         <!-- Bottom Navigation Bar -->
         <div class="bottom-nav">
-            <div class="nav-item active">
+            <a href="index.html" class="nav-item active">
                 <span class="nav-icon">🏠</span>
                 <span>హోమ్</span>
-            </div>
-            <div class="nav-item">
-                <span class="nav-icon">🛡️</span>
-                <span>రక్షణ షీల్డ్</span>
-            </div>
-            <div class="nav-item">
+            </a>
+            <a href="https://wa.me/919966157369?text=ఆదివారం%20స్క్రాప్%20పికప్%20కావాలి" class="nav-item">
                 <span class="nav-icon">♻️</span>
                 <span>స్క్రాప్</span>
-            </div>
+            </a>
             <div class="nav-item" onclick="window.location.href='https://wa.me/919966157369'">
                 <span class="nav-icon">💬</span>
                 <span>సపోర్ట్</span>

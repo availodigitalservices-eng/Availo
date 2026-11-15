@@ -180,8 +180,12 @@
         </div>
     </div>
 
+    <div style="text-align: center; padding: 8px 16px; font-size: 11px; color: var(--text-sub); background: var(--panel-bg); border-top: var(--border-glow);">
+        హెల్ప్‌లైన్: <a href="tel:9966157369" style="color: var(--cyan-glow); text-decoration: none; font-weight: 600;">9966157369</a>
+    </div>
+
     <div class="input-bar">
-        <input type="text" id="chatInput" class="input-field te-body" placeholder="టైప్ చేయండి లేదా మైక్ నొక్కండి...">
+        <input type="text" id="chatInput" class="input-field te-body" placeholder="టైప్ చేయండి లేదా మైక్ నొక్కండి..." onkeydown="if(event.key==='Enter')submitToWhatsApp()">
         <button class="btn-circle btn-mic" onclick="startVoiceInput()">🎤</button>
         <button class="btn-circle btn-send" onclick="submitToWhatsApp()">➤</button>
     </div>

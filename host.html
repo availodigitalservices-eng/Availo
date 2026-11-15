@@ -372,7 +372,7 @@
             <div id="fallbackHost" class="fallback-host" style="display:none;">
                 <div style="font-size: 46px; margin-bottom: 6px;">👩‍💼</div>
                 <div style="font-size: 11px; color: var(--brand-cyan); font-weight: 800;">AVAILO HOST</div>
-                <div style="font-size: 10px; color: #94a3b8; margin-top: 2px;">Tap to hear voice</div>
+                <div style="font-size: 10px; color: #94a3b8; margin-top: 2px;">వాయిస్ వినడానికి నొక్కండి</div>
             </div>
         </div>
 
@@ -384,7 +384,7 @@
     <!-- 2. SMART MENU -->
     <div class="container">
         <div class="section-title">
-            <span id="menuHeading">MENU · SELECT ITEMS</span>
+            <span id="menuHeading">మెనూ · ఐటమ్స్ ఎంచుకోండి</span>
             <span id="totalPreview" style="color: var(--brand-cyan);">₹0</span>
         </div>
 
@@ -420,6 +420,17 @@
         </button>
     </div>
 
+    <!-- Footer: back to homepage + contact -->
+    <footer style="text-align: center; padding: 18px 16px 26px; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); color: #94a3b8; font-size: 12.5px; line-height: 1.9;">
+        <a href="https://availoservices.in/" style="color: var(--brand-gold); font-weight: 800; text-decoration: none;">← హోమ్‌పేజీకి వెళ్ళండి</a>
+        <div style="margin-top: 8px;">
+            హెల్ప్‌లైన్: <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
+            &nbsp;·&nbsp;
+            <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
+        </div>
+        <div>AVAILO Digital Services · విజయవాడ &amp; గుంటూరు</div>
+    </footer>
+
     <script>
         const params = new URLSearchParams(window.location.search);
         const hotelName = params.get('hotel') || "AVAILO DINE";
@@ -434,6 +445,7 @@
         const UI_TEXT = {
             te: {
                 welcome: `నమస్కారం! ${hotelName} కి స్వాగతం. నేను మీ వర్చువల్ వేటర్‌ని. మీకు ఏం కావాలో చెప్పండి లేదా కింద ఎంచుకోండి.`,
+                menuTitle: "మెనూ · ఐటమ్స్ ఎంచుకోండి",
                 micBtn: "మాట్లాడి ఆర్డర్ చేయండి",
                 cartBtn: "ఆర్డర్ చూడండి",
                 listening: "🔴 వింటున్నాను... ఉదాహరణకు 'ఒక మసాలా దోశ, రెండు కాఫీలు' అని చెప్పండి...",
@@ -446,6 +458,7 @@
             },
             en: {
                 welcome: `Welcome to ${hotelName}! I am your AVAILO virtual waiter. How may I help you today?`,
+                menuTitle: "MENU · SELECT ITEMS",
                 micBtn: "Voice Order",
                 cartBtn: "Review Order",
                 listening: "🔴 Listening... Say something like 'One Masala Dosa and two Coffees'...",
@@ -458,6 +471,7 @@
             },
             hi: {
                 welcome: `नमस्ते! ${hotelName} में आपका स्वागत है। मैं आपका वर्चुअल वेटर हूँ। मैं आपकी क्या मदद कर सकता हूँ?`,
+                menuTitle: "मेनू · आइटम चुनें",
                 micBtn: "बोलकर ऑर्डर करें",
                 cartBtn: "ऑर्डर देखें",
                 listening: "🔴 सुन रहा हूँ... जैसे 'एक मसाला डोसा और दो कॉफ़ी' बोलें...",
@@ -537,6 +551,7 @@
 
             document.getElementById('micLabel').innerText = UI_TEXT[lang].micBtn;
             document.getElementById('cartLabel').innerText = UI_TEXT[lang].cartBtn;
+            document.getElementById('menuHeading').innerText = UI_TEXT[lang].menuTitle;
             document.getElementById('modalTitle').innerText = UI_TEXT[lang].modalTitle;
             document.getElementById('modalTotalLabel').innerText = UI_TEXT[lang].totalLbl;
             document.getElementById('btnEdit').innerText = UI_TEXT[lang].editBtn;
@@ -613,6 +628,8 @@
                 let qty = 1;
                 if (transcript.includes('two') || transcript.includes('రెండు') || transcript.includes('दो') || transcript.includes('2')) qty = 2;
                 if (transcript.includes('three') || transcript.includes('మూడు') || transcript.includes('तीन') || transcript.includes('3')) qty = 3;
+                if (transcript.includes('four') || transcript.includes('నాలుగు') || transcript.includes('चार') || transcript.includes('4')) qty = 4;
+                if (transcript.includes('five') || transcript.includes('ఐదు') || transcript.includes('पाँच') || transcript.includes('5')) qty = 5;
 
                 MENU_ITEMS.forEach(item => {
                     if (item.keywords.some(kw => transcript.includes(kw))) {
@@ -623,9 +640,9 @@
 
                 renderMenu();
                 if (matchedAny) {
-                    speakHost(`"${transcript}" — కార్ట్‌లో యాడ్ చేశాను! ఆర్డర్ కన్ఫర్మ్ చేయడానికి కింద బటన్ నొక్కండి.`);
+                    speakHost(`${transcript} — కార్ట్‌లో యాడ్ చేశాను! ఆర్డర్ కన్ఫర్మ్ చేయడానికి కింద బటన్ నొక్కండి.`);
                 } else {
-                    speakHost(`మీరు "${transcript}" అన్నారు. కింద మెనూలో + నొక్కి కూడా ఎంచుకోవచ్చు.`);
+                    speakHost(`మీరు ${transcript} అన్నారు. కింద మెనూలో + నొక్కి కూడా ఎంచుకోవచ్చు.`);
                 }
             };
 
@@ -661,14 +678,14 @@
                 const sub = item.count * item.price;
                 grandTotal += sub;
                 return `• ${item.names.en} (${item.names.te}) x ${item.count} = ₹${sub}`;
-            }).join('%0A');
+            }).join('\n');
 
-            const msg = `*AVAILO AI HUMAN WAITER - ORDER*%0A-------------------------%0A*Restaurant:* ${hotelName}%0A*Table:* ${tableNo}%0A*Language:* ${currentLang.toUpperCase()}%0A-------------------------%0A${lines}%0A-------------------------%0A*Total Bill:* ₹${grandTotal}%0A*Time:* ${new Date().toLocaleTimeString()}`;
+            const msg = `*AVAILO AI HUMAN WAITER - ORDER*\n-------------------------\n*Restaurant:* ${hotelName}\n*Table:* ${tableNo}\n*Language:* ${currentLang.toUpperCase()}\n-------------------------\n${lines}\n-------------------------\n*Total Bill:* ₹${grandTotal}\n*Time:* ${new Date().toLocaleTimeString()}`;
 
             closeModal();
             speakHost("ధన్యవాదాలు! మీ ఆర్డర్ కిచెన్‌కు పంపబడుతోంది.");
             setTimeout(() => {
-                window.location.href = `https://wa.me/${kitchenWa}?text=${msg}`;
+                window.location.href = `https://wa.me/${kitchenWa}?text=${encodeURIComponent(msg)}`;
             }, 900);
         }
 

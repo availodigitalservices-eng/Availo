@@ -516,6 +516,17 @@
         </button>
     </div>
 
+    <!-- Footer: back to homepage + contact -->
+    <footer style="text-align: center; padding: 18px 16px 26px; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); color: #94a3b8; font-size: 12.5px; line-height: 1.9;">
+        <a href="https://availoservices.in/" style="color: var(--brand-gold); font-weight: 800; text-decoration: none;">← హోమ్‌పేజీకి వెళ్ళండి</a>
+        <div style="margin-top: 8px;">
+            హెల్ప్‌లైన్: <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
+            &nbsp;·&nbsp;
+            <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
+        </div>
+        <div>AVAILO Digital Services · విజయవాడ &amp; గుంటూరు</div>
+    </footer>
+
     <script>
         const params = new URLSearchParams(window.location.search);
         const hotelName = params.get('hotel') || "అమరావతి గ్రాండ్";
@@ -528,8 +539,8 @@
         const menuData = {
             vegBiryani: { name: "స్పెషల్ వెజ్ బిర్యానీ", price: 220, count: 0 },
             paneerButter: { name: "పన్నీర్ బట్టర్ మసాలా", price: 180, count: 0 },
-            butterNaan: { name: "బట్టర్ నాన్", price: 60, count: 0 },
-            waterBottle: { name: "మినరల్ వాటర్", price: 25, count: 0 }
+            butterNaan: { name: "బట్టర్ నాన్ (2 Pcs)", price: 60, count: 0 },
+            waterBottle: { name: "మినరల్ వాటర్ (1L)", price: 25, count: 0 }
         };
 
         function speakGentSupervisor(text, mode = "") {
@@ -641,8 +652,10 @@
                 const spokenText = e.results[0][0].transcript;
                 speakGentSupervisor(`రాసుకున్నాను సర్: ${spokenText}`, "write");
                 
-                const msg = `*AVAILO SMART DINE - LIVE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*కస్టమర్ వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0A_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు ఆర్డర్ రెడీ అని రిప్లై పంపండి)_`;
-                window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+                const msg = `*AVAILO SMART DINE - LIVE ORDER*\n-----------------------------\n*హోటల్:* ${hotelName}\n*టేబుల్:* ${tableNumber}\n*కస్టమర్ వాయిస్ ఆర్డర్:* ${spokenText}\n-----------------------------\n_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు ఆర్డర్ రెడీ అని రిప్లై పంపండి)_`;
+                setTimeout(() => {
+                    window.location.href = `https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`;
+                }, 1200);
             };
             rec.start();
         }
@@ -664,13 +677,13 @@
                 return;
             }
 
-            const itemsStr = orderLines.join('%0A');
-            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${new Date().toLocaleTimeString()}%0A-----------------------------%0A🔔 *కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక తిరిగి ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
+            const itemsStr = orderLines.join('\n');
+            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*\n-----------------------------\n*హోటల్:* ${hotelName}\n*టేబుల్:* ${tableNumber}\n-----------------------------\n${itemsStr}\n-----------------------------\n*మొత్తం బిల్లు:* ₹${grandTotal}\n*సమయం:* ${new Date().toLocaleTimeString()}\n-----------------------------\n🔔 *కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక తిరిగి ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
 
             displayOrderPreparingScreen(grandTotal);
 
             setTimeout(() => {
-                window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+                window.location.href = `https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`;
             }, 1200);
         }
 

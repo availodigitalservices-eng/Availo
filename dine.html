@@ -700,6 +700,29 @@
         </button>
     </div>
 
+    <!-- Footer: back to homepage + contact -->
+    <footer style="text-align: center; padding: 18px 16px 26px; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.10); color: #94a3b8; font-size: 12.5px; line-height: 1.9;">
+        <a href="https://availoservices.in/" style="color: var(--brand-gold); font-weight: 800; text-decoration: none;">← హోమ్‌పేజీకి వెళ్ళండి</a>
+        <div style="margin-top: 8px;">
+            హెల్ప్‌లైన్: <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
+            &nbsp;·&nbsp;
+            <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
+        </div>
+        <div>AVAILO Digital Services · విజయవాడ &amp; గుంటూరు</div>
+    </footer>
+
+    <!-- Order confirmation overlay -->
+    <div id="orderConfirmOverlay" style="display: none; position: fixed; inset: 0; background: rgba(3,11,30,0.88); z-index: 999; align-items: center; justify-content: center; padding: 16px;">
+        <div style="background: #0d284e; border: 1.5px solid var(--brand-gold); border-radius: 14px; padding: 18px 16px; max-width: 420px; width: 100%; color: #fff;">
+            <h3 style="font-family: 'Rajdhani', sans-serif; color: var(--brand-gold); font-size: 18px; font-weight: 800; margin-bottom: 10px;">ఆర్డర్ నిర్ధారణ</h3>
+            <div id="orderConfirmBody" style="font-size: 13.5px; line-height: 1.9; margin-bottom: 14px; color: #e2e8f0;"></div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="confirmOrderSend()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;">✅ నిర్ధారించి పంపండి</button>
+                <button onclick="closeOrderConfirm()" style="flex: 1; background: #334155; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer;">వెనక్కి</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const params = new URLSearchParams(window.location.search);
         const hotelName = params.get('hotel') || "అమరావతి గ్రాండ్";
@@ -906,12 +929,39 @@
                 speakGentVoice(`రాసుకున్నాను సర్: ${spokenText}`);
                 
                 const msg = `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0A_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు రిప్లై ఇవ్వండి)_`;
-                displayLiveTrackerScreen("Voice Order", 15);
-                setTimeout(() => {
-                    window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
-                }, 1200);
+                const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelName)} · టేబుల్ ${escHtml(tableNumber)}</div><div style="margin-top: 6px;">మీ వాయిస్ ఆర్డర్:</div><div style="font-weight: 700; color: #fff;">"${escHtml(spokenText)}"</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">ఈ ఆర్డర్‌ను WhatsApp ద్వారా కిచెన్‌కు పంపాలా?</div>`;
+                showOrderConfirm(summaryHtml, msg, "Voice Order");
             };
             rec.start();
+        }
+
+        let pendingOrderMsg = "";
+        let pendingOrderBill = "";
+
+        function escHtml(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+        function showOrderConfirm(summaryHtml, msg, billLabel) {
+            pendingOrderMsg = msg;
+            pendingOrderBill = billLabel;
+            document.getElementById('orderConfirmBody').innerHTML = summaryHtml;
+            document.getElementById('orderConfirmOverlay').style.display = 'flex';
+        }
+
+        function closeOrderConfirm() {
+            pendingOrderMsg = "";
+            pendingOrderBill = "";
+            document.getElementById('orderConfirmOverlay').style.display = 'none';
+        }
+
+        function confirmOrderSend() {
+            const msg = pendingOrderMsg;
+            const billLabel = pendingOrderBill;
+            if (!msg) { closeOrderConfirm(); return; }
+            closeOrderConfirm();
+            displayLiveTrackerScreen(billLabel, 15);
+            setTimeout(() => {
+                window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+            }, 1400);
         }
 
         function sendOrderWhatsApp() {
@@ -937,11 +987,11 @@
             const itemsStr = orderLines.join('%0A');
             const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${new Date().toLocaleTimeString()}%0A-----------------------------%0A🔔 *కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
 
-            displayLiveTrackerScreen(`₹${grandTotal}`, 15);
-
-            setTimeout(() => {
-                window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
-            }, 1400);
+            const summaryLines = orderLines.map(l => `<div>${escHtml(l)}</div>`).join('');
+            const noteLine = chefNote ? `<div style="margin-top: 6px;">చెఫ్ సూచన: ${escHtml(chefNote)}</div>` : '';
+            const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelName)} · టేబుల్ ${escHtml(tableNumber)}</div>${summaryLines}${noteLine}<div style="border-top: 1px dashed #94a3b8; margin-top: 8px; padding-top: 8px; font-weight: 800; color: #fff;">మొత్తం బిల్లు: ₹${grandTotal}</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">ఈ ఆర్డర్‌ను WhatsApp ద్వారా కిచెన్‌కు పంపాలా?</div>`;
+            speakGentVoice("మీ ఆర్డర్ సిద్ధంగా ఉంది సర్. నిర్ధారించి పంపండి.");
+            showOrderConfirm(summaryHtml, msg, `₹${grandTotal}`);
         }
 
         function requestTableService(itemLabel, voiceReply) {

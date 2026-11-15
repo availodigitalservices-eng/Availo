@@ -409,11 +409,105 @@
         }
 
         .footer-bar span { color: var(--gold); }
+
+        .footer-bar a { color: var(--cyan); text-decoration: none; }
+
+        .back-link {
+            align-self: flex-start;
+            color: var(--cyan);
+            font-size: 12.5px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        /* Order confirmation modal (same card/button style as the page) */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 8, 17, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-overlay.show { display: flex; }
+
+        .confirm-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg);
+            border: 1.5px solid rgba(32, 221, 224, 0.4);
+            border-radius: 18px;
+            padding: 18px 16px;
+            text-align: left;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+        }
+
+        .confirm-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .confirm-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13.5px;
+            padding: 7px 2px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .confirm-total {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--cyan);
+            padding-top: 10px;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .btn-confirm {
+            flex: 1.2;
+            background: var(--accent-green);
+            border: none;
+            color: #ffffff;
+            padding: 12px 8px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            background: rgba(32, 221, 224, 0.14);
+            border: 1.5px solid var(--cyan);
+            color: var(--cyan);
+            padding: 12px 8px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
     <div class="app-shell">
+        <a class="back-link" href="https://availoservices.in/">← అవైలో హోమ్</a>
         <!-- 1. Header -->
         <div class="brand-header">
             <div class="brand-title-wrap">
@@ -428,7 +522,7 @@
 
         <!-- 2. Pure Voice AI Stage -->
         <div class="voice-stage" id="voiceStage">
-            <div class="status-chip" id="statusChip">● TAP CORE TO START CONVERSATION</div>
+            <div class="status-chip" id="statusChip">● మాట్లాడటానికి మధ్య బటన్ నొక్కండి</div>
 
             <button class="ai-core-btn" id="aiCoreBtn" onclick="toggleConversation()" aria-label="Talk to AVAILO AI">
                 <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -464,7 +558,7 @@
                 <button class="lang-pill" onclick="switchLang('hi', this)">हिन्दी</button>
             </div>
             <div class="auto-loop-row">
-                <span>🔄 ఆటో-కంటిన్యూయస్ సంభాషణ (Auto-Listen)</span>
+                <span id="autoLoopLabel">🔄 ఆటో-కంటిన్యూయస్ సంభాషణ (Auto-Listen)</span>
                 <input type="checkbox" id="autoLoopToggle" checked style="width:18px; height:18px; accent-color:#20DDE0;">
             </div>
         </div>
@@ -479,15 +573,29 @@
 
         <!-- 5. Footer -->
         <div class="footer-bar">
-            Table No: <span id="tableNumber">01</span> · Powered by <span>AVAILO VOICE ENGINE</span>
+            Table No: <span id="tableNumber">01</span> · Powered by <span>AVAILO VOICE ENGINE</span><br>
+            Helpline: <a href="tel:9966157369">9966157369</a> · <a href="https://wa.me/919966157369">WhatsApp</a> · <a href="https://availoservices.in/">availoservices.in</a>
         </div>
     </div>
 
     <!-- 6. Bottom Dock -->
     <div class="bottom-dock">
         <div class="dock-inner">
-            <button class="btn-talk" onclick="startListening()">🎤 మాట్లాడండి</button>
-            <button class="btn-send-order" onclick="sendWhatsAppOrder()">🛒 ఆర్డర్ పంపండి (<span id="cartCount">0</span>)</button>
+            <button class="btn-talk" id="talkBtn" onclick="startListening()">🎤 మాట్లాడండి</button>
+            <button class="btn-send-order" onclick="sendWhatsAppOrder()">🛒 <span id="sendOrderLabel">ఆర్డర్ పంపండి</span> (<span id="cartCount">0</span>)</button>
+        </div>
+    </div>
+
+    <!-- Order confirmation modal -->
+    <div class="modal-overlay" id="confirmModal" onclick="if(event.target===this) closeConfirmModal()">
+        <div class="confirm-card" role="dialog" aria-modal="true">
+            <div class="confirm-title" id="confirmTitle">మీ ఆర్డర్ నిర్ధారించండి</div>
+            <div id="confirmSummary"></div>
+            <div class="confirm-total"><span id="confirmTotalLabel">మొత్తం బిల్</span><span id="confirmTotal">₹0</span></div>
+            <div class="confirm-actions">
+                <button class="btn-cancel" id="cancelOrderBtn" onclick="closeConfirmModal()">❌ రద్దు చేయండి</button>
+                <button class="btn-confirm" id="confirmOrderBtn" onclick="confirmWhatsAppOrder()">✅ కన్ఫర్మ్ చేసి పంపండి</button>
+            </div>
         </div>
     </div>
 
@@ -512,7 +620,7 @@
         const cleanDigits = (urlParams.get('table') || "01").replace(/[^0-9]/g, '');
         const tableParam = cleanDigits ? cleanDigits.slice(0, 3) : "01";
         const hotelParam = urlParams.get('hotel');
-        const kitchenWa = (urlParams.get('desk') || "919966157369").replace(/[^0-9]/g, '');
+        const kitchenWa = ((urlParams.get('desk') || "919966157369").replace(/[^0-9]/g, '') || "919966157369");
 
         document.getElementById('tableNumber').innerText = tableParam;
 
@@ -530,7 +638,24 @@
                 welcome: `నమస్కారం! ${hotelParam || "అమరావతి గ్రాండ్"} కి స్వాగతం. మీరు టేబుల్ ${tableParam} లో ఉన్నారు. మీకు ఏం కావాలో చెప్పండి?`,
                 specials: "ఈరోజు మా స్పెషల్ వెజ్ దమ్ బిర్యానీ 220 రూపాయలు, చికెన్ దమ్ బిర్యానీ 280 రూపాయలు, మరియు వేడివేడి మసాలా దోశ 80 రూపాయలు. ఏది యాడ్ చేయమంటారు?",
                 emptyWarn: "మీ కార్ట్‌లో ఇంకా ఏ ఐటమ్స్ లేవు. ముందుగా ఏదైనా ఐటమ్ చెప్పండి.",
-                confirming: (total) => `మీ మొత్తం బిల్ ${total} రూపాయలు అయింది. ఆర్డర్ ఇప్పుడే కిచెన్‌కు పంపిస్తున్నాను!`
+                confirming: (total) => `మీ మొత్తం బిల్ ${total} రూపాయలు అయింది. ఆర్డర్ ఇప్పుడే కిచెన్‌కు పంపిస్తున్నాను!`,
+                menuLabel: "మెనూ & లైవ్ బిల్",
+                autoLoop: "🔄 ఆటో-కంటిన్యూయస్ సంభాషణ (Auto-Listen)",
+                talkBtn: "🎤 మాట్లాడండి",
+                sendBtn: "ఆర్డర్ పంపండి",
+                chip: { tap: "● మాట్లాడటానికి మధ్య బటన్ నొక్కండి", ready: "● వినడానికి సిద్ధం", listening: "🔴 వింటున్నాను... మాట్లాడండి", speaking: "🔊 AI మాట్లాడుతోంది...", paused: "● ఆగిపోయింది" },
+                billEmpty: "మీరు ఇంకా ఏమీ ఆర్డర్ చేయలేదు. ఏం యాడ్ చేయమంటారు?",
+                billSummary: (qty, total) => `మీ ఆర్డర్‌లో ${qty} ఐటమ్స్ ఉన్నాయి, మొత్తం బిల్ ${total} రూపాయలు. ఆర్డర్ పంపమంటారా?`,
+                added: (name, qty, total) => `${qty} ${name} యాడ్ చేశాను. మొత్తం బిల్ ${total} రూపాయలు.`,
+                removed: (name) => `${name} తొలగించాను. ఇంకా ఏమైనా మార్చాలా?`,
+                upsellBiryani: "దీనికి తోడుగా చల్లని ఫిల్టర్ కాఫీ లేదా మసాలా దోశ యాడ్ చేయమంటారా? లేదంటే 'ఆర్డర్ కన్ఫర్మ్' అని చెప్పండి.",
+                upsellOther: "ఇంకా ఏమైనా కావాలా? లేదంటే 'ఆర్డర్ పంపించు' అని చెప్పండి.",
+                notUnderstood: (raw) => `మీరు "${raw}" అన్నారు. దయచేసి బిర్యానీ, దోశ లేదా కాఫీ అని చెప్పండి — లేదా 'స్పెషల్స్ ఏంటి' అని అడగండి.`,
+                noVoice: "వాయిస్ రికగ్నిషన్ Chrome లో బాగా పనిచేస్తుంది.",
+                confirmTitle: "మీ ఆర్డర్ నిర్ధారించండి",
+                confirmTotalLabel: "మొత్తం బిల్",
+                confirmBtn: "✅ కన్ఫర్మ్ చేసి పంపండి",
+                cancelBtn: "❌ రద్దు చేయండి"
             },
             en: {
                 code: "en-IN",
@@ -539,7 +664,24 @@
                 welcome: `Welcome to ${hotelParam || "Amaravati Grand"}! You are at Table ${tableParam}. What would you like to order today?`,
                 specials: "Today's specials are Special Veg Dum Biryani at 220 rupees, Chicken Dum Biryani at 280 rupees, and Masala Dosa at 80 rupees. Which one should I add?",
                 emptyWarn: "Your order list is empty. Please tell me what you would like to have.",
-                confirming: (total) => `Your total bill is ${total} rupees. Sending your order to the kitchen now!`
+                confirming: (total) => `Your total bill is ${total} rupees. Sending your order to the kitchen now!`,
+                menuLabel: "Menu & Live Bill",
+                autoLoop: "🔄 Auto-Continuous Conversation (Auto-Listen)",
+                talkBtn: "🎤 Talk",
+                sendBtn: "Send Order",
+                chip: { tap: "● TAP CORE TO START CONVERSATION", ready: "● READY TO LISTEN", listening: "🔴 LISTENING... SPEAK NOW", speaking: "🔊 AI SPEAKING...", paused: "● PAUSED" },
+                billEmpty: "You haven't ordered anything yet. What would you like to add?",
+                billSummary: (qty, total) => `You have ${qty} items totaling ${total} rupees. Should I send the order?`,
+                added: (name, qty, total) => `Added ${qty} ${name}. Total bill is ${total} rupees.`,
+                removed: (name) => `Removed ${name}. Would you like to change anything else?`,
+                upsellBiryani: "Would you like to add a cool filter coffee or masala dosa with it? Or say 'confirm order'.",
+                upsellOther: "Would you like anything else? Or say 'send order'.",
+                notUnderstood: (raw) => `You said "${raw}". Please say biryani, dosa or coffee — or ask 'what are the specials'.`,
+                noVoice: "Voice recognition works best in Chrome.",
+                confirmTitle: "Confirm Your Order",
+                confirmTotalLabel: "Total Bill",
+                confirmBtn: "✅ Confirm & Send",
+                cancelBtn: "❌ Cancel"
             },
             hi: {
                 code: "hi-IN",
@@ -548,7 +690,24 @@
                 welcome: `नमस्ते! ${hotelParam || "अमरावती ग्रैंड"} में आपका स्वागत है। आप टेबल नंबर ${tableParam} पर हैं। आज आप क्या ऑर्डर करना चाहेंगे?`,
                 specials: "आज के स्पेशल में वेज दम बिरयानी 220 रुपये, चिकन दम बिरयानी 280 रुपये और मसाला डोसा 80 रुपये है। क्या जोड़ूं?",
                 emptyWarn: "आपकी ऑर्डर लिस्ट खाली है। कृपया पहले कोई आइटम बोलें।",
-                confirming: (total) => `आपका कुल बिल ${total} रुपये है। आपका ऑर्डर अभी किचन में भेज रहा हूँ!`
+                confirming: (total) => `आपका कुल बिल ${total} रुपये है। आपका ऑर्डर अभी किचन में भेज रहा हूँ!`,
+                menuLabel: "मेनू और लाइव बिल",
+                autoLoop: "🔄 ऑटो-लगातार बातचीत (Auto-Listen)",
+                talkBtn: "🎤 बोलिए",
+                sendBtn: "ऑर्डर भेजें",
+                chip: { tap: "● बातचीत शुरू करने के लिए बीच का बटन दबाएं", ready: "● सुनने के लिए तैयार", listening: "🔴 सुन रहा हूँ... बोलिए", speaking: "🔊 AI बोल रहा है...", paused: "● रुका हुआ" },
+                billEmpty: "आपने अभी कुछ ऑर्डर नहीं किया है। क्या जोड़ूं?",
+                billSummary: (qty, total) => `आपके ऑर्डर में ${qty} आइटम हैं, कुल बिल ${total} रुपये है। क्या ऑर्डर भेज दूं?`,
+                added: (name, qty, total) => `${qty} ${name} जोड़ दिया। कुल बिल ${total} रुपये है।`,
+                removed: (name) => `${name} हटा दिया। क्या और कुछ बदलना है?`,
+                upsellBiryani: "क्या इसके साथ ठंडी फ़िल्टर कॉफ़ी या मसाला डोसा जोड़ूं? या 'ऑर्डर कन्फर्म' कहें।",
+                upsellOther: "क्या और कुछ चाहिए? या 'ऑर्डर भेजो' कहें।",
+                notUnderstood: (raw) => `आपने "${raw}" कहा। कृपया बिरयानी, डोसा या कॉफ़ी कहें — या 'स्पेशल क्या है' पूछें।`,
+                noVoice: "वॉइस रिकग्निशन Chrome में सबसे अच्छा काम करता है।",
+                confirmTitle: "अपना ऑर्डर कन्फर्म करें",
+                confirmTotalLabel: "कुल बिल",
+                confirmBtn: "✅ कन्फर्म करें और भेजें",
+                cancelBtn: "❌ रद्द करें"
             }
         };
 
@@ -611,9 +770,7 @@
             // 2. Check Bill Query
             if (text.includes('బిల్') || text.includes('ఎంత') || text.includes('bill') || text.includes('total') || text.includes('बिल')) {
                 const { qty, total } = getCartTotals();
-                const msg = currentLang === 'te'
-                    ? (qty === 0 ? "మీరు ఇంకా ఏమీ ఆర్డర్ చేయలేదు. ఏం యాడ్ చేయమంటారు?" : `మీ ఆర్డర్‌లో ${qty} ఐటమ్స్ ఉన్నాయి, మొత్తం బిల్ ${total} రూపాయలు. ఆర్డర్ పంపమంటారా?`)
-                    : `You have ${qty} items totaling ${total} rupees. Should I send the order?`;
+                const msg = qty === 0 ? LANG_DATA[currentLang].billEmpty : LANG_DATA[currentLang].billSummary(qty, total);
                 speakResponse(msg, true);
                 return;
             }
@@ -648,15 +805,15 @@
             if (matchedItem) {
                 const { total } = getCartTotals();
                 if (isRemove) {
-                    speakResponse(`${matchedItem.names[currentLang]} తొలగించాను. ఇంకా ఏమైనా మార్చాలా?`, true);
+                    speakResponse(LANG_DATA[currentLang].removed(matchedItem.names[currentLang]), true);
                 } else {
                     const upsell = matchedItem.id.includes('biryani')
-                        ? "దీనికి తోడుగా చల్లని ఫిల్టర్ కాఫీ లేదా మసాలా దోశ యాడ్ చేయమంటారా? లేదంటే 'ఆర్డర్ కన్ఫర్మ్' అని చెప్పండి."
-                        : "ఇంకా ఏమైనా కావాలా? లేదంటే 'ఆర్డర్ పంపించు' అని చెప్పండి.";
-                    speakResponse(`${qty} ${matchedItem.names[currentLang]} యాడ్ చేశాను. మొత్తం బిల్ ${total} రూపాయలు. ${upsell}`, true);
+                        ? LANG_DATA[currentLang].upsellBiryani
+                        : LANG_DATA[currentLang].upsellOther;
+                    speakResponse(`${LANG_DATA[currentLang].added(matchedItem.names[currentLang], qty, total)} ${upsell}`, true);
                 }
             } else {
-                speakResponse(`మీరు "${rawText}" అన్నారు. దయచేసి బిర్యానీ, దోశ లేదా కాఫీ అని చెప్పండి — లేదా 'స్పెషల్స్ ఏంటి' అని అడగండి.`, true);
+                speakResponse(LANG_DATA[currentLang].notUnderstood(rawText), true);
             }
         }
 
@@ -670,7 +827,7 @@
             }
 
             const onSpeechFinish = () => {
-                setStageUI('idle', '● READY TO LISTEN');
+                setStageUI('idle', LANG_DATA[currentLang].chip.ready);
                 if (autoListenAfter && document.getElementById('autoLoopToggle').checked) {
                     setTimeout(() => startListening(), 400);
                 }
@@ -683,7 +840,7 @@
             }
 
             try {
-                setStageUI('speaking', '🔊 AI SPEAKING...');
+                setStageUI('speaking', LANG_DATA[currentLang].chip.speaking);
                 const response = await fetch("https://api.sarvam.ai/text-to-speech", {
                     method: "POST",
                     headers: {
@@ -720,7 +877,7 @@
                 window.speechSynthesis.cancel();
                 const utter = new SpeechSynthesisUtterance(text);
                 utter.lang = LANG_DATA[currentLang].code;
-                setStageUI('speaking', '🔊 AI SPEAKING...');
+                setStageUI('speaking', LANG_DATA[currentLang].chip.speaking);
                 utter.onend = doneCb;
                 utter.onerror = doneCb;
                 window.speechSynthesis.speak(utter);
@@ -732,7 +889,7 @@
         function startListening() {
             const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) {
-                alert("Voice recognition works best in Chrome.");
+                alert(LANG_DATA[currentLang].noVoice);
                 return;
             }
             if (currentAudio) {
@@ -746,7 +903,7 @@
 
             recognition.onstart = () => {
                 isListening = true;
-                setStageUI('listening', '🔴 LISTENING... SPEAK NOW');
+                setStageUI('listening', LANG_DATA[currentLang].chip.listening);
             };
 
             recognition.onresult = (event) => {
@@ -757,13 +914,13 @@
 
             recognition.onerror = () => {
                 isListening = false;
-                setStageUI('idle', '● TAP MIC TO SPEAK');
+                setStageUI('idle', LANG_DATA[currentLang].chip.tap);
             };
 
             recognition.onend = () => {
                 isListening = false;
                 if (waveState === 'listening') {
-                    setStageUI('idle', '● TAP MIC TO SPEAK');
+                    setStageUI('idle', LANG_DATA[currentLang].chip.tap);
                 }
             };
 
@@ -773,7 +930,7 @@
         function toggleConversation() {
             if (isListening && recognition) {
                 recognition.stop();
-                setStageUI('idle', '● PAUSED');
+                setStageUI('idle', LANG_DATA[currentLang].chip.paused);
             } else {
                 speakResponse(LANG_DATA[currentLang].welcome, true);
             }
@@ -783,7 +940,13 @@
             currentLang = lang;
             document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
+            document.getElementById('menuLabel').innerText = LANG_DATA[lang].menuLabel;
+            document.getElementById('autoLoopLabel').innerText = LANG_DATA[lang].autoLoop;
+            document.getElementById('talkBtn').innerText = LANG_DATA[lang].talkBtn;
+            document.getElementById('sendOrderLabel').innerText = LANG_DATA[lang].sendBtn;
+            setStageUI('idle', LANG_DATA[lang].chip.tap);
             renderMenu();
+            if (document.getElementById('confirmModal').classList.contains('show')) buildConfirmSummary();
             speakResponse(LANG_DATA[lang].welcome, true);
         }
 
@@ -821,19 +984,47 @@
             document.getElementById('totalCostBadge').innerText = `₹${total}`;
         }
 
+        function buildConfirmSummary() {
+            const selected = MENU.filter(i => i.count > 0);
+            const { total } = getCartTotals();
+            document.getElementById('confirmTitle').innerText = LANG_DATA[currentLang].confirmTitle;
+            document.getElementById('confirmTotalLabel').innerText = LANG_DATA[currentLang].confirmTotalLabel;
+            document.getElementById('confirmTotal').innerText = '₹' + total;
+            document.getElementById('confirmSummary').innerHTML = selected.map(i =>
+                `<div class="confirm-line"><span>${i.names[currentLang]} × ${i.count}</span><span>₹${i.count * i.price}</span></div>`
+            ).join('');
+            document.getElementById('confirmOrderBtn').innerText = LANG_DATA[currentLang].confirmBtn;
+            document.getElementById('cancelOrderBtn').innerText = LANG_DATA[currentLang].cancelBtn;
+        }
+
         function sendWhatsAppOrder() {
             const selected = MENU.filter(i => i.count > 0);
             if (selected.length === 0) {
                 speakResponse(LANG_DATA[currentLang].emptyWarn, true);
                 return;
             }
+            buildConfirmSummary();
+            document.getElementById('confirmModal').classList.add('show');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+        }
+
+        function confirmWhatsAppOrder() {
+            const selected = MENU.filter(i => i.count > 0);
+            if (selected.length === 0) {
+                closeConfirmModal();
+                return;
+            }
+            closeConfirmModal();
             const { total } = getCartTotals();
-            const itemsStr = selected.map(i => `• ${i.names.en} (${i.names.te}) x ${i.count} = ₹${i.count * i.price}`).join('%0A');
-            const msg = `*AVAILO VOICE AI - KITCHEN ORDER*%0A-----------------------------%0A*Restaurant:* ${LANG_DATA.en.hotel}%0A*Table No:* ${tableParam}%0A*Language:* ${currentLang.toUpperCase()}%0A-----------------------------%0A${itemsStr}%0A-----------------------------%0A*Total Bill:* ₹${total}%0A*Time:* ${new Date().toLocaleTimeString()}`;
+            const itemsStr = selected.map(i => `• ${i.names.en} (${i.names.te}) x ${i.count} = ₹${i.count * i.price}`).join('\n');
+            const msg = `*AVAILO VOICE AI - KITCHEN ORDER*\n-----------------------------\n*Restaurant:* ${LANG_DATA.en.hotel}\n*Table No:* ${tableParam}\n*Language:* ${currentLang.toUpperCase()}\n-----------------------------\n${itemsStr}\n-----------------------------\n*Total Bill:* ₹${total}\n*Time:* ${new Date().toLocaleTimeString()}`;
 
             speakResponse(LANG_DATA[currentLang].confirming(total), false);
             setTimeout(() => {
-                window.location.href = `https://wa.me/${kitchenWa}?text=${msg}`;
+                window.location.href = `https://wa.me/${kitchenWa}?text=${encodeURIComponent(msg)}`;
             }, 2200);
         }
 

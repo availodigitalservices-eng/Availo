@@ -72,12 +72,13 @@
             <i class="fa-solid fa-house-chimney text-indigo-500 mr-1"></i> ఫ్లాట్ ఎంచుకోండి *
           </label>
           <select id="gateFlat" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+            <option value="" selected>ఫ్లాట్ ఎంచుకోండి</option>
             <option value="Flat 101">Flat 101</option>
             <option value="Flat 102">Flat 102</option>
             <option value="Flat 201">Flat 201</option>
             <option value="Flat 202">Flat 202</option>
             <option value="Flat 301">Flat 301</option>
-            <option value="Flat 302" selected>Flat 302</option>
+            <option value="Flat 302">Flat 302</option>
             <option value="Flat 401">Flat 401</option>
             <option value="Flat 402">Flat 402</option>
             <option value="Flat 501">Flat 501</option>
@@ -90,9 +91,10 @@
             <i class="fa-solid fa-motorcycle text-indigo-500 mr-1"></i> విజిటర్ రకం *
           </label>
           <select id="visitorType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+            <option value="" selected>విజిటర్ రకం ఎంచుకోండి</option>
             <option value="Swiggy / Zomato">Swiggy / Zomato</option>
             <option value="Amazon / Flipkart">Amazon / Flipkart</option>
-            <option value="Blinkit / Zepto / Instamart">Blinkit / Zepto</option>
+            <option value="Blinkit / Zepto / Instamart">Blinkit / Zepto / Instamart</option>
             <option value="Milk / Water / Newspaper">పాలు / వాటర్ క్యాన్</option>
             <option value="Courier / SpeedPost">ఇతర కొరియర్</option>
             <option value="Guest / Relatives">బంధువులు / అతిథి</option>
@@ -218,6 +220,7 @@
     <div class="text-center py-2 space-y-1">
       <p class="text-[11px] font-semibold text-slate-500">AVAILO Cluster Management Services, Vijayawada</p>
       <p class="text-[9px] text-slate-400">అపార్ట్‌మెంట్ సెక్యూరిటీ & జీరో-బ్రోకరేజ్ లోకల్ నెట్‌వర్క్</p>
+      <p class="text-[11px] font-semibold"><a href="tel:9966157369" class="text-indigo-600">హెల్ప్‌లైన్: 9966157369</a> &nbsp;•&nbsp; <a href="index.html" class="text-indigo-600">‹ హోమ్‌కి వెళ్ళండి</a></p>
     </div>
 
   </main>
@@ -268,13 +271,10 @@
     </div>
   </div>
 
-  <!-- Client-Side Telemetry & WhatsApp Automation Logic -->
+  <!-- WhatsApp Automation Logic -->
   <script>
     // 1. AVAILO అధికారిక అడ్మిన్ వాట్సాప్ నంబర్
     const AVAILO_ADMIN_WHATSAPP = "919966157369";
-
-    // 2. మీ గూగుల్ యాప్స్ స్క్రిప్ట్ వెబ్ యాప్ URL (ఇక్కడ చేర్చవచ్చు)
-    const BACKEND_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
 
     let activeServiceName = '';
 
@@ -288,35 +288,17 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // ఎవరికీ తెలియకుండా సైలెంట్‌గా డేటాను బ్యాకెండ్‌లో లాగ్ చేయడం (Stealth Telemetry)
-    function sendSilentTelemetry(payload) {
-      if (BACKEND_URL && BACKEND_URL.startsWith("http")) {
-        fetch(BACKEND_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        }).catch(err => console.log('Silent sync'));
-      }
-    }
-
     // 1. గేట్ పాస్ బటన్ నొక్కినప్పుడు WhatsApp + Camera ట్రిగ్గర్
     function triggerWhatsAppGateEntry() {
       const flat = document.getElementById('gateFlat').value;
       const visitor = document.getElementById('visitorType').value;
+      if (!flat || !visitor) {
+        alert('దయచేసి ఫ్లాట్ మరియు విజిటర్ రకం ఎంచుకోండి');
+        return;
+      }
       const detail = document.getElementById('visitorDetail').value || 'డెలివరీ ఎగ్జిక్యూటివ్';
       const now = new Date();
       const timeStr = now.toLocaleDateString('te-IN') + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-      // బ్యాకెండ్‌కు సైలెంట్ ఎంట్రీ
-      sendSilentTelemetry({
-        type: "గేట్ ఎంట్రీ",
-        flat: flat,
-        name: detail,
-        phone: "-",
-        notes: visitor,
-        timestamp: timeStr
-      });
 
       // WhatsApp మెసేజ్ ఫార్మాట్
       const msg = `🚨 *AVAILO గేట్ ఎంట్రీ పాస్*\n\n` +
@@ -355,16 +337,6 @@
       const notes = document.getElementById('issueNotes').value || 'సాధారణ తనిఖీ';
       const now = new Date();
       const timeStr = now.toLocaleDateString('te-IN') + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-      // బ్యాకెండ్‌కు సర్వీస్ లీడ్ ఎంట్రీ
-      sendSilentTelemetry({
-        type: "సర్వీస్ లీడ్",
-        flat: flat,
-        name: name,
-        phone: phone,
-        notes: `${activeServiceName} - ${notes}`,
-        timestamp: timeStr
-      });
 
       const text = `📋 *AVAILO హోమ్ సర్వీస్ రిజిస్ట్రేషన్*\n\n` +
                    `🛠️ *సర్వీస్:* ${activeServiceName}\n` +
