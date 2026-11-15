@@ -225,6 +225,7 @@
         /* Sub-category / Diet Filter Pills */
         .sub-filter-bar {
             display: flex;
+            flex-wrap: wrap;
             gap: 8px;
             margin-bottom: 12px;
         }
@@ -661,12 +662,8 @@
             <button class="cat-chip" onclick="selectCategory('DRINKS', this)" data-te="🥤 డ్రింక్స్" data-en="🥤 Drinks" data-hi="🥤 ड्रिंक्स">🥤 డ్రింక్స్</button>
         </div>
 
-        <!-- Sub-Categories (Diet Type Filter) -->
-        <div class="sub-filter-bar">
-            <button class="diet-pill active" id="diet_ALL" onclick="selectDiet('ALL')" data-te="అన్నీ" data-en="All" data-hi="सभी">అన్నీ</button>
-            <button class="diet-pill" id="diet_VEG" onclick="selectDiet('VEG')"><span class="dot-veg"></span> <span data-te="ప్యూర్ వెజ్" data-en="Pure Veg" data-hi="शुद्ध शाकाहारी">ప్యూర్ వెజ్</span></button>
-            <button class="diet-pill" id="diet_NONVEG" onclick="selectDiet('NONVEG')"><span class="dot-nonveg"></span> <span data-te="నాన్-వెజ్" data-en="Non-Veg" data-hi="मांसाहारी">నాన్-వెజ్</span></button>
-        </div>
+        <!-- Sub-Categories (built by renderSubBar — changes with the selected category) -->
+        <div class="sub-filter-bar" id="subBar"></div>
 
         <!-- Dynamic Menu Items Container -->
         <div class="items-list" id="menuItemsContainer"></div>
@@ -775,26 +772,48 @@
         // 🌟 EASY TO EDIT RESTAURANT MENU (Categories & Sub-categories)
         const HOTEL_MENU = [
             // STARTERS
-            { id: 'paneerTikka', cat: 'STARTERS', sub: { te: 'తందూరీ స్టార్టర్', en: 'Tandoori Starter', hi: 'तंदूरी स्टार्टर' }, diet: 'VEG', name: 'పన్నీర్ టిక్కా (6 ముక్కలు)', nameEn: 'Paneer Tikka (6 Pcs)', nameHi: 'पनीर टिक्का (6 पीस)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', descEn: 'Charcoal-grilled paneer', descHi: 'कोयले पर सेंका हुआ पनीर', price: 190, count: 0 },
-            { id: 'crispyCorn', cat: 'STARTERS', sub: { te: 'క్రిస్పీ స్నాక్', en: 'Crispy Snack', hi: 'क्रिस्पी स्नैक' }, diet: 'VEG', name: 'క్రిస్పీ చిల్లీ కార్న్', nameEn: 'Crispy Chilli Corn', nameHi: 'क्रिस्पी चिल्ली कॉर्न', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', descEn: 'Spicy sweet corn fry', descHi: 'मसालेदार स्वीट कॉर्न फ्राई', price: 150, count: 0 },
-            { id: 'chicken65', cat: 'STARTERS', sub: { te: 'ఆంధ్రా స్పెషల్', en: 'Andhra Special', hi: 'आंध्र स्पेशल' }, diet: 'NONVEG', name: 'చికెన్ 65 (బోన్‌లెస్)', nameEn: 'Chicken 65 (Boneless)', nameHi: 'चिकन 65 (बोनलेस)', desc: 'కరివేపాకు మసాలా ఫ్రై', descEn: 'Curry-leaf masala fry', descHi: 'करी पत्ता मसाला फ्राई', price: 220, count: 0 },
+            { id: 'paneerTikka', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', name: 'పన్నీర్ టిక్కా (6 ముక్కలు)', nameEn: 'Paneer Tikka (6 Pcs)', nameHi: 'पनीर टिक्का (6 पीस)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', descEn: 'Charcoal-grilled paneer', descHi: 'कोयले पर सेंका हुआ पनीर', price: 190, count: 0 },
+            { id: 'crispyCorn', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', name: 'క్రిస్పీ చిల్లీ కార్న్', nameEn: 'Crispy Chilli Corn', nameHi: 'क्रिस्पी चिल्ली कॉर्न', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', descEn: 'Spicy sweet corn fry', descHi: 'मसालेदार स्वीट कॉर्न फ्राई', price: 150, count: 0 },
+            { id: 'chicken65', cat: 'STARTERS', subcat: 'NONVEG_STARTERS', diet: 'NONVEG', name: 'చికెన్ 65 (బోన్‌లెస్)', nameEn: 'Chicken 65 (Boneless)', nameHi: 'चिकन 65 (बोनलेस)', desc: 'కరివేపాకు మసాలా ఫ్రై', descEn: 'Curry-leaf masala fry', descHi: 'करी पत्ता मसाला फ्राई', price: 220, count: 0 },
 
             // BIRYANIS
-            { id: 'vegDumBiryani', cat: 'BIRYANIS', sub: { te: 'హైదరాబాదీ దమ్', en: 'Hyderabadi Dum', hi: 'हैदराबादी दम' }, diet: 'VEG', name: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', nameEn: 'Special Veg Dum Biryani', nameHi: 'स्पेशल वेज दम बिरयानी', desc: 'మిర్చి కా సాలన్ & రైతా', descEn: 'Mirchi ka salan & raita', descHi: 'मिर्ची का सालन और रायता', price: 220, count: 0 },
-            { id: 'kajuBiryani', cat: 'BIRYANIS', sub: { te: 'చెఫ్ స్పెషల్', en: 'Chef Special', hi: 'शेफ स्पेशल' }, diet: 'VEG', name: 'జీడిపప్పు బిర్యానీ', nameEn: 'Cashew (Kaju) Biryani', nameHi: 'काजू बिरयानी', desc: 'నెయ్యిలో వేయించిన జీడిపప్పుతో', descEn: 'With cashews roasted in ghee', descHi: 'घी में भुने हुए काजू के साथ', price: 260, count: 0 },
-            { id: 'chickenDumBiryani', cat: 'BIRYANIS', sub: { te: 'సిగ్నేచర్ డిష్', en: 'Signature Dish', hi: 'सिग्नेचर डिश' }, diet: 'NONVEG', name: 'చికెన్ దమ్ బిర్యానీ', nameEn: 'Chicken Dum Biryani', nameHi: 'चिकन दम बिरयानी', desc: 'అసలైన దమ్ మసాలా రుచి', descEn: 'Authentic dum masala flavour', descHi: 'असली दम मसाले का स्वाद', price: 280, count: 0 },
+            { id: 'vegDumBiryani', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', name: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', nameEn: 'Special Veg Dum Biryani', nameHi: 'स्पेशल वेज दम बिरयानी', desc: 'మిర్చి కా సాలన్ & రైతా', descEn: 'Mirchi ka salan & raita', descHi: 'मिर्ची का सालन और रायता', price: 220, count: 0 },
+            { id: 'kajuBiryani', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', name: 'జీడిపప్పు బిర్యానీ', nameEn: 'Cashew (Kaju) Biryani', nameHi: 'काजू बिरयानी', desc: 'నెయ్యిలో వేయించిన జీడిపప్పుతో', descEn: 'With cashews roasted in ghee', descHi: 'घी में भुने हुए काजू के साथ', price: 260, count: 0 },
+            { id: 'chickenDumBiryani', cat: 'BIRYANIS', subcat: 'NONVEG_BIRYANI', diet: 'NONVEG', name: 'చికెన్ దమ్ బిర్యానీ', nameEn: 'Chicken Dum Biryani', nameHi: 'चिकन दम बिरयानी', desc: 'అసలైన దమ్ మసాలా రుచి', descEn: 'Authentic dum masala flavour', descHi: 'असली दम मसाले का स्वाद', price: 280, count: 0 },
 
             // CURRIES & ROTIS
-            { id: 'paneerButter', cat: 'CURRIES_ROTIS', sub: { te: 'రిచ్ గ్రేవీ', en: 'Rich Gravy', hi: 'रिच ग्रेवी' }, diet: 'VEG', name: 'పన్నీర్ బట్టర్ మసాలా', nameEn: 'Paneer Butter Masala', nameHi: 'पनीर बटर मसाला', desc: 'క్రీమీ టొమాటో & జీడిపప్పు గ్రేవీ', descEn: 'Creamy tomato & cashew gravy', descHi: 'क्रीमी टमाटर और काजू की ग्रेवी', price: 180, count: 0 },
-            { id: 'butterNaan', cat: 'CURRIES_ROTIS', sub: { te: 'తందూరీ బ్రెడ్', en: 'Tandoor Bread', hi: 'तंदूर ब्रेड' }, diet: 'VEG', name: 'బట్టర్ నాన్ (2 ముక్కలు)', nameEn: 'Butter Naan (2 Pcs)', nameHi: 'बटर नान (2 पीस)', desc: 'వేడి వేడి తందూరీ నాన్', descEn: 'Hot tandoori naan', descHi: 'गरमागरम तंदूरी नान', price: 60, count: 0 },
+            { id: 'paneerButter', cat: 'CURRIES_ROTIS', subcat: 'VEG_CURRIES', diet: 'VEG', name: 'పన్నీర్ బట్టర్ మసాలా', nameEn: 'Paneer Butter Masala', nameHi: 'पनीर बटर मसाला', desc: 'క్రీమీ టొమాటో & జీడిపప్పు గ్రేవీ', descEn: 'Creamy tomato & cashew gravy', descHi: 'क्रीमी टमाटर और काजू की ग्रेवी', price: 180, count: 0 },
+            { id: 'butterNaan', cat: 'CURRIES_ROTIS', subcat: 'BREADS', diet: 'VEG', name: 'బట్టర్ నాన్ (2 ముక్కలు)', nameEn: 'Butter Naan (2 Pcs)', nameHi: 'बटर नान (2 पीस)', desc: 'వేడి వేడి తందూరీ నాన్', descEn: 'Hot tandoori naan', descHi: 'गरमागरम तंदूरी नान', price: 60, count: 0 },
 
             // DRINKS
-            { id: 'sweetLassi', cat: 'DRINKS', sub: { te: 'కూలర్స్', en: 'Coolers', hi: 'कूलर्स' }, diet: 'VEG', name: 'స్పెషల్ స్వీట్ లస్సీ', nameEn: 'Special Sweet Lassi', nameHi: 'स्पेशल स्वीट लस्सी', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', descEn: 'Thick curd with almond flakes', descHi: 'गाढ़ा दही और बादाम के टुकड़े', price: 70, count: 0 },
-            { id: 'waterBottle', cat: 'DRINKS', sub: { te: 'బెవరేజెస్', en: 'Beverages', hi: 'पेय पदार्थ' }, diet: 'VEG', name: 'మినరల్ వాటర్ (1 లీటర్)', nameEn: 'Mineral Water (1L)', nameHi: 'मिनरल वॉटर (1 लीटर)', desc: 'కూల్డ్ వాటర్ బాటిల్', descEn: 'Chilled water bottle', descHi: 'ठंडी पानी की बोतल', price: 25, count: 0 }
+            { id: 'sweetLassi', cat: 'DRINKS', subcat: 'COOLERS', diet: 'VEG', name: 'స్పెషల్ స్వీట్ లస్సీ', nameEn: 'Special Sweet Lassi', nameHi: 'स्पेशल स्वीट लस्सी', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', descEn: 'Thick curd with almond flakes', descHi: 'गाढ़ा दही और बादाम के टुकड़े', price: 70, count: 0 },
+            { id: 'waterBottle', cat: 'DRINKS', subcat: 'WATER', diet: 'VEG', name: 'మినరల్ వాటర్ (1 లీటర్)', nameEn: 'Mineral Water (1L)', nameHi: 'मिनरल वॉटर (1 लीटर)', desc: 'కూల్డ్ వాటర్ బాటిల్', descEn: 'Chilled water bottle', descHi: 'ठंडी पानी की बोतल', price: 25, count: 0 }
         ];
+
+        // Sub-categories: two-level menu. Each category has its own sub-categories;
+        // every dish belongs to exactly one sub-category (item.subcat).
+        const SUBCATS = {
+            STARTERS: [
+                { id: 'VEG_STARTERS', dot: 'veg', label: { te: 'వెజ్ స్టార్టర్స్', en: 'Veg Starters', hi: 'वेज स्टार्टर्स' } },
+                { id: 'NONVEG_STARTERS', dot: 'nonveg', label: { te: 'నాన్-వెజ్ స్టార్టర్స్', en: 'Non-Veg Starters', hi: 'नॉन-वेज स्टार्टर्स' } }
+            ],
+            BIRYANIS: [
+                { id: 'VEG_BIRYANI', dot: 'veg', label: { te: 'వెజ్ బిర్యానీ', en: 'Veg Biryani', hi: 'वेज बिरयानी' } },
+                { id: 'NONVEG_BIRYANI', dot: 'nonveg', label: { te: 'నాన్-వెజ్ బిర్యానీ', en: 'Non-Veg Biryani', hi: 'नॉन-वेज बिरयानी' } }
+            ],
+            CURRIES_ROTIS: [
+                { id: 'VEG_CURRIES', dot: 'veg', label: { te: 'వెజ్ కర్రీస్', en: 'Veg Curries', hi: 'वेज करी' } },
+                { id: 'BREADS', dot: 'veg', label: { te: 'బ్రెడ్స్', en: 'Breads', hi: 'ब्रेड' } }
+            ],
+            DRINKS: [
+                { id: 'COOLERS', dot: 'veg', label: { te: 'కూలర్స్', en: 'Coolers', hi: 'कूलर्स' } },
+                { id: 'WATER', dot: 'veg', label: { te: 'వాటర్', en: 'Water', hi: 'पानी' } }
+            ]
+        };
 
         let currentCategory = 'ALL';
         let currentDiet = 'ALL';
+        let currentSub = 'ALL';
         let splitCount = 1;
         let currentGrandTotal = 0;
 
@@ -857,7 +876,14 @@
         }
         function itemName(item) { return currentLang === 'en' ? item.nameEn : currentLang === 'hi' ? item.nameHi : item.name; }
         function itemDesc(item) { return currentLang === 'en' ? item.descEn : currentLang === 'hi' ? item.descHi : item.desc; }
-        function itemSub(item) { return item.sub[currentLang] || item.sub.te; }
+        function subcatLabel(id) {
+            for (const cat in SUBCATS) {
+                const found = SUBCATS[cat].find(s => s.id === id);
+                if (found) return found.label[currentLang] || found.label.te;
+            }
+            return '';
+        }
+        function itemSub(item) { return subcatLabel(item.subcat); }
 
         // Same pattern as index.html toggleLanguage(), extended to 3 languages.
         function toggleLanguage() {
@@ -875,6 +901,7 @@
                 const text = el.getAttribute('data-' + currentLang + '-ph');
                 if (text) el.placeholder = text;
             });
+            renderSubBar();
             renderMenu();
             renderOrderPad();
             applyTrackerLang();
@@ -889,7 +916,8 @@
             const filtered = HOTEL_MENU.filter(item => {
                 const matchCat = (currentCategory === 'ALL' || item.cat === currentCategory);
                 const matchDiet = (currentDiet === 'ALL' || item.diet === currentDiet);
-                return matchCat && matchDiet;
+                const matchSub = (currentSub === 'ALL' || item.subcat === currentSub);
+                return matchCat && matchDiet && matchSub;
             });
 
             listEl.innerHTML = filtered.map(item => `
@@ -914,15 +942,48 @@
 
         function selectCategory(cat, btnEl) {
             currentCategory = cat;
+            currentSub = 'ALL';
+            currentDiet = 'ALL';
             document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
             btnEl.classList.add('active');
+            renderSubBar();
             renderMenu();
         }
 
-        function selectDiet(diet) {
-            currentDiet = diet;
-            document.querySelectorAll('.diet-pill').forEach(p => p.classList.remove('active'));
-            document.getElementById(`diet_${diet}`).classList.add('active');
+        // Sub-category bar: built fresh for the selected category, in the selected language.
+        // 'ALL' category shows the diet filter (All / Pure Veg / Non-Veg) as its sub-row.
+        function renderSubBar() {
+            const bar = document.getElementById('subBar');
+            if (!bar) return;
+            let chips;
+            if (currentCategory === 'ALL') {
+                chips = [
+                    { id: 'ALL', dot: null, label: { te: 'అన్నీ', en: 'All', hi: 'सभी' } },
+                    { id: 'VEG', dot: 'veg', label: { te: 'ప్యూర్ వెజ్', en: 'Pure Veg', hi: 'शुद्ध शाकाहारी' } },
+                    { id: 'NONVEG', dot: 'nonveg', label: { te: 'నాన్-వెజ్', en: 'Non-Veg', hi: 'मांसाहारी' } }
+                ];
+            } else {
+                chips = [{ id: 'ALL', dot: null, label: { te: 'అన్నీ', en: 'All', hi: 'सभी' } }].concat(SUBCATS[currentCategory]);
+            }
+            bar.innerHTML = chips.map(c => {
+                const active = currentCategory === 'ALL'
+                    ? (c.id === 'ALL' ? currentDiet === 'ALL' : currentDiet === c.id)
+                    : (currentSub === c.id);
+                const dotHtml = c.dot === 'veg' ? '<span class="dot-veg"></span> ' : c.dot === 'nonveg' ? '<span class="dot-nonveg"></span> ' : '';
+                const label = c.label[currentLang] || c.label.te;
+                return `<button class="diet-pill${active ? ' active' : ''}" onclick="selectSub('${c.id}')">${dotHtml}${label}</button>`;
+            }).join('');
+        }
+
+        function selectSub(id) {
+            if (currentCategory === 'ALL') {
+                currentDiet = id; // 'ALL', 'VEG' or 'NONVEG'
+                currentSub = 'ALL';
+            } else {
+                currentSub = id; // 'ALL' or a sub-category id
+                currentDiet = 'ALL';
+            }
+            renderSubBar();
             renderMenu();
         }
 
@@ -965,6 +1026,7 @@
         document.title = t('pageTitle');
 
         window.addEventListener('load', () => {
+            renderSubBar();
             renderMenu();
             setTimeout(() => {
                 const greet = getTimeGreeting();
