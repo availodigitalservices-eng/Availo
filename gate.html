@@ -83,21 +83,9 @@
       <div class="grid grid-cols-2 gap-2.5">
         <div>
           <label class="block text-[11px] font-bold text-slate-700 mb-1">
-            <i class="fa-solid fa-house-chimney text-indigo-500 mr-1"></i> <span data-te="ఫ్లాట్ ఎంచుకోండి *" data-en="Select Flat *" data-hi="फ्लैट चुनें *">ఫ్లాట్ ఎంచుకోండి *</span>
+            <i class="fa-solid fa-house-chimney text-indigo-500 mr-1"></i> <span data-te="ఫ్లాట్ నంబర్ టైప్ చేయండి *" data-en="Type Flat Number *" data-hi="फ्लैट चुनें *">ఫ్లాట్ నంబర్ టైప్ చేయండి *</span>
           </label>
-          <select id="gateFlat" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
-            <option value="" selected data-te="ఫ్లాట్ ఎంచుకోండి" data-en="Select Flat" data-hi="फ्लैट चुनें">ఫ్లాట్ ఎంచుకోండి</option>
-            <option value="Flat 101" data-te="ఫ్లాట్ 101" data-en="Flat 101" data-hi="फ़्लैट 101">ఫ్లాట్ 101</option>
-            <option value="Flat 102" data-te="ఫ్లాట్ 102" data-en="Flat 102" data-hi="फ़्लैट 102">ఫ్లాట్ 102</option>
-            <option value="Flat 201" data-te="ఫ్లాట్ 201" data-en="Flat 201" data-hi="फ़्लैट 201">ఫ్లాట్ 201</option>
-            <option value="Flat 202" data-te="ఫ్లాట్ 202" data-en="Flat 202" data-hi="फ़्लैट 202">ఫ్లాట్ 202</option>
-            <option value="Flat 301" data-te="ఫ్లాట్ 301" data-en="Flat 301" data-hi="फ़्लैट 301">ఫ్లాట్ 301</option>
-            <option value="Flat 302" data-te="ఫ్లాట్ 302" data-en="Flat 302" data-hi="फ़्लैट 302">ఫ్లాట్ 302</option>
-            <option value="Flat 401" data-te="ఫ్లాట్ 401" data-en="Flat 401" data-hi="फ़्लैट 401">ఫ్లాట్ 401</option>
-            <option value="Flat 402" data-te="ఫ్లాట్ 402" data-en="Flat 402" data-hi="फ़्लैट 402">ఫ్లాట్ 402</option>
-            <option value="Flat 501" data-te="ఫ్లాట్ 501" data-en="Flat 501" data-hi="फ़्लैट 501">ఫ్లాట్ 501</option>
-            <option value="Flat 502" data-te="ఫ్లాట్ 502" data-en="Flat 502" data-hi="फ़्लैट 502">ఫ్లాట్ 502</option>
-          </select>
+          <input type="text" id="gateFlat" data-ph-te="ఉదా: ఫ్లాట్ 302" data-ph-en="e.g.: Flat 302" data-ph-hi="उदा.: फ़्लैट 302" placeholder="ఉదా: ఫ్లాట్ 302" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
         </div>
 
         <div>
@@ -356,14 +344,14 @@
     };
 
     const GATE_ALERT = {
-      te: 'దయచేసి ఫ్లాట్ మరియు విజిటర్ రకం ఎంచుకోండి',
-      en: 'Please select the flat and visitor type',
-      hi: 'कृपया फ्लैट और विज़िटर का प्रकार चुनें'
+      te: 'దయచేసి ఫ్లాట్ నంబర్ టైప్ చేసి, విజిటర్ రకం ఎంచుకోండి',
+      en: 'Please type the flat number and select the visitor type',
+      hi: 'कृपया फ़्लैट नंबर लिखें और विज़िटर का प्रकार चुनें'
     };
     const GATE_ALERT_APT = {
-      te: 'దయచేసి అపార్ట్‌మెంట్ పేరు, ఫ్లాట్ మరియు విజిటర్ రకం ఎంచుకోండి',
-      en: 'Please fill the apartment name and select the flat and visitor type',
-      hi: 'कृपया अपार्टमेंट का नाम भरें और फ़्लैट व विज़िटर का प्रकार चुनें'
+      te: 'దయచేసి అపార్ట్‌మెంట్ పేరు, ఫ్లాట్ నంబర్ టైప్ చేసి, విజిటర్ రకం ఎంచుకోండి',
+      en: 'Please fill the apartment name, type the flat number and select the visitor type',
+      hi: 'कृपया अपार्टमेंट का नाम भरें, फ़्लैट नंबर लिखें और विज़िटर का प्रकार चुनें'
     };
     const DEFAULT_DETAIL = { te: 'డెలివరీ ఎగ్జిక్యూటివ్', en: 'Delivery Executive', hi: 'डिलीवरी एग्ज़ीक्यूटिव' };
     const DEFAULT_NOTES = { te: 'సాధారణ తనిఖీ', en: 'General check', hi: 'सामान्य जाँच' };
