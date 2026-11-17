@@ -571,12 +571,14 @@
         document.getElementById('badgeText').innerText = `${hotelName.toUpperCase()} · ${tableNumber.toUpperCase()}`;
         document.getElementById('bookTableLabel').innerText = `${tableNumber.toUpperCase()}`;
 
-        let currentLang = 'te';
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
         const LANG_NEXT = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
         const VOICE_LANG = { te: 'te-IN', en: 'en-IN', hi: 'hi-IN' };
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+        function toggleLanguage(forceLang) {
+            currentLang = forceLang || (currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te');
+            localStorage.setItem('availo_lang', currentLang);
             document.documentElement.lang = currentLang;
             document.body.classList.toggle('lang-en', currentLang === 'en');
             document.body.classList.toggle('lang-hi', currentLang === 'hi');
@@ -897,6 +899,9 @@
             setText('trackerNote', UI_STRINGS.trackerNote[currentLang]);
             setText('newOrderBtn', UI_STRINGS.newOrderBtn[currentLang]);
         }
+
+        // Apply the saved language on load (no cycling).
+        if (currentLang !== 'te') toggleLanguage(currentLang);
     </script>
 </body>
 </html>

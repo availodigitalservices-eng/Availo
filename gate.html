@@ -277,7 +277,8 @@
     // 1. AVAILO అధికారిక అడ్మిన్ వాట్సాప్ నంబర్
     const AVAILO_ADMIN_WHATSAPP = "919966157369";
 
-    let currentLang = 'te';
+    let currentLang = localStorage.getItem('availo_lang');
+    if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
     const LANG_NEXT = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
 
     // Service names/descriptions in all three languages (modal title + desc)
@@ -322,8 +323,9 @@
     const DEFAULT_DETAIL = { te: 'డెలివరీ ఎగ్జిక్యూటివ్', en: 'Delivery Executive', hi: 'डिलीवरी एग्ज़ीक्यूटिव' };
     const DEFAULT_NOTES = { te: 'సాధారణ తనిఖీ', en: 'General check', hi: 'सामान्य जाँच' };
 
-    function toggleLanguage() {
-      currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+    function toggleLanguage(forceLang) {
+      currentLang = forceLang || (currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te');
+      localStorage.setItem('availo_lang', currentLang);
       document.documentElement.lang = currentLang;
       document.body.classList.toggle('lang-en', currentLang === 'en');
       document.body.classList.toggle('lang-hi', currentLang === 'hi');
@@ -373,13 +375,8 @@
       const now = new Date();
       const timeStr = now.toLocaleDateString('te-IN') + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 
-      // WhatsApp మెసేజ్ ఫార్మాట్
-      const msg = `🚨 *AVAILO గేట్ ఎంట్రీ పాస్*\n\n` +
-                  `🏠 *ఫ్లాట్ నంబర్:* ${flat}\n` +
-                  `🛵 *డెలివరీ / విజిటర్:* ${visitor}\n` +
-                  `👤 *పేరు / వాహనం:* ${detail}\n` +
-                  `⏰ *సమయం:* ${timeStr}\n\n` +
-                  `📸 *(దయచేసి క్రింది కెమెరా ఐకాన్ నొక్కి సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి సెండ్ చేయండి)*`;
+      // WhatsApp మెసేజ్ ఫార్మాట్ — follows the selected site language.
+      const msg = currentLang === 'hi' ? `🚨 *AVAILO गेट एंट्री पास*\n\n🏠 *फ़्लैट नंबर:* ${flat}\n🛵 *डिलीवरी / विज़िटर:* ${visitor}\n👤 *नाम / वाहन:* ${detail}\n⏰ *समय:* ${timeStr}\n\n📸 *(कृपया नीचे कैमरा आइकन दबाकर सेल्फ़ी या पार्सल की फ़ोटो लेकर भेजें)*` : currentLang === 'en' ? `🚨 *AVAILO GATE ENTRY PASS*\n\n🏠 *Flat No:* ${flat}\n🛵 *Delivery / Visitor:* ${visitor}\n👤 *Name / Vehicle:* ${detail}\n⏰ *Time:* ${timeStr}\n\n📸 *(Please tap the camera icon below and send a selfie or parcel photo)*` : `🚨 *AVAILO గేట్ ఎంట్రీ పాస్*\n\n🏠 *ఫ్లాట్ నంబర్:* ${flat}\n🛵 *డెలివరీ / విజిటర్:* ${visitor}\n👤 *పేరు / వాహనం:* ${detail}\n⏰ *సమయం:* ${timeStr}\n\n📸 *(దయచేసి క్రింది కెమెరా ఐకాన్ నొక్కి సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి సెండ్ చేయండి)*`;
 
       // నేరుగా వాట్సాప్ చాట్‌లోకి వెళ్తుంది
       window.location.href = `https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`;
@@ -389,7 +386,7 @@
     function openServiceForm(key) {
       activeServiceKey = key;
       const t = SERVICE_TEXTS[key] || SERVICE_TEXTS.plumber;
-      activeServiceName = t.te[0];
+      activeServiceName = t[currentLang][0];
       document.getElementById('modalServiceName').innerText = t[currentLang][0];
       document.getElementById('modalServiceDesc').innerText = t[currentLang][1];
       const modal = document.getElementById('serviceModal');
@@ -413,17 +410,14 @@
       const now = new Date();
       const timeStr = now.toLocaleDateString('te-IN') + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 
-      const text = `📋 *AVAILO హోమ్ సర్వీస్ రిజిస్ట్రేషన్*\n\n` +
-                   `🛠️ *సర్వీస్:* ${activeServiceName}\n` +
-                   `🏠 *ఫ్లాట్:* ${flat}\n` +
-                   `👤 *కస్టమర్ పేరు:* ${name}\n` +
-                   `📞 *మొబైల్:* ${phone}\n` +
-                   `📝 *సమస్య వివరాలు:* ${notes}\n` +
-                   `⏰ *సమయం:* ${timeStr}`;
+      const text = currentLang === 'hi' ? `📋 *AVAILO होम सर्विस रजिस्ट्रेशन*\n\n🛠️ *सर्विस:* ${activeServiceName}\n🏠 *फ़्लैट:* ${flat}\n👤 *ग्राहक का नाम:* ${name}\n📞 *मोबाइल:* ${phone}\n📝 *समस्या का विवरण:* ${notes}\n⏰ *समय:* ${timeStr}` : currentLang === 'en' ? `📋 *AVAILO HOME SERVICE REGISTRATION*\n\n🛠️ *Service:* ${activeServiceName}\n🏠 *Flat:* ${flat}\n👤 *Customer Name:* ${name}\n📞 *Mobile:* ${phone}\n📝 *Issue Details:* ${notes}\n⏰ *Time:* ${timeStr}` : `📋 *AVAILO హోమ్ సర్వీస్ రిజిస్ట్రేషన్*\n\n🛠️ *సర్వీస్:* ${activeServiceName}\n🏠 *ఫ్లాట్:* ${flat}\n👤 *కస్టమర్ పేరు:* ${name}\n📞 *మొబైల్:* ${phone}\n📝 *సమస్య వివరాలు:* ${notes}\n⏰ *సమయం:* ${timeStr}`;
 
       closeServiceForm();
       window.location.href = `https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`;
     }
+
+    // Apply the saved language on load (no cycling).
+    if (currentLang !== 'te') toggleLanguage(currentLang);
   </script>
 </body>
 </html>

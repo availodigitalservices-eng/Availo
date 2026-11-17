@@ -818,7 +818,8 @@
         let currentGrandTotal = 0;
 
         // 🌐 LANGUAGE: Telugu (default) / English / Hindi — button shows NEXT language
-        let currentLang = 'te';
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
         const LANG_CODE = { te: 'te-IN', en: 'en-IN', hi: 'hi-IN' };
         const LANG_NEXT_LABEL = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
 
@@ -828,7 +829,7 @@
             greetAfternoon: { te: "శుభ మధ్యాహ్నం సర్!", en: "Good afternoon, sir!", hi: "शुभ दोपहर सर!" },
             greetEvening: { te: "శుభ సాయంత్రం సర్!", en: "Good evening, sir!", hi: "शुभ संध्या सर!" },
             welcomeSpeech: { te: "{greet} {hotel} కు హృదయపూర్వక స్వాగతం. మీరు {table} లో ఉన్నారు. మెనూ నుండి మీకు నచ్చినవి ఎంచుకోండి సర్.", en: "{greet} Welcome to {hotel}. You are at {table}. Please pick your favourites from the menu, sir.", hi: "{greet} {hotel} में आपका हार्दिक स्वागत है। आप {table} पर हैं। कृपया मेनू से अपनी पसंद की चीज़ें चुनिए।" },
-            hubGreeting: { te: "నమస్కారం సర్! నేను అవైలో స్మార్ట్ కన్సీర్జ్. కింద ఉన్న కేటగిరీల నుండి మీకు నచ్చిన వంటకాలు ఎంచుకోండి.", en: "Hello sir! I am the Availo Smart Concierge. Please pick your favourite dishes from the categories below.", hi: "नमस्ते सर! मैं अवेलो स्मार्ट कंसीयर्ज हूँ। नीचे दी गई कैटेगरी से अपनी पसंद के व्यंजन चुनिए।" },
+            hubGreeting: { te: "నమస్కారం సర్! నేను అవైలో స్మార్ట్ కన్సీర్జ్. కింద ఉన్న కేటగిరీల నుండి మీకు నచ్చిన వంటకాలు ఎంచుకోండి.", en: "Hello sir! I am the AVAILO Smart Concierge. Please pick your favourite dishes from the categories below.", hi: "नमस्ते सर! मैं अवैलो स्मार्ट कंसीयर्ज हूँ। नीचे दी गई कैटेगरी से अपनी पसंद के व्यंजन चुनिए।" },
             addedPrompt1: { te: "సరే సర్, {name} నోట్ చేసుకున్నాను. నెక్స్ట్ ఏం కావాలి సర్?", en: "Okay sir, noted {name}. What would you like next?", hi: "ठीक है सर, {name} नोट कर लिया। और क्या चाहिए सर?" },
             addedPrompt2: { te: "{name} యాడ్ చేశాను సర్.. ఇంకేమైనా కావాలా?", en: "Added {name}, sir. Would you like anything else?", hi: "{name} जोड़ दिया सर। और कुछ चाहिए?" },
             addedPrompt3: { te: "రైట్ సర్, రాసుకున్నాను..", en: "Right sir, noted down.", hi: "ठीक है सर, लिख लिया।" },
@@ -886,8 +887,9 @@
         function itemSub(item) { return subcatLabel(item.subcat); }
 
         // Same pattern as index.html toggleLanguage(), extended to 3 languages.
-        function toggleLanguage() {
-            currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+        function toggleLanguage(forceLang) {
+            currentLang = forceLang || (currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te');
+            localStorage.setItem('availo_lang', currentLang);
             document.documentElement.lang = currentLang;
             document.getElementById('langBtn').innerText = LANG_NEXT_LABEL[currentLang];
             document.title = t('pageTitle');
@@ -1116,7 +1118,9 @@
                 const spokenText = e.results[0][0].transcript;
                 speakGentVoice(tf('voiceNoted', { text: spokenText }));
                 
-                const msg = `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0A_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు రిప్లై ఇవ్వండి)_`;
+                // Voice-order frame follows the selected site language;
+                // the spoken order itself stays exactly as the customer said it.
+                const msg = currentLang === 'hi' ? `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*होटल:* ${hotelName}%0A*टेबल:* ${tableNumber}%0A*वॉइस ऑर्डर:* ${spokenText}%0A-----------------------------%0A_(किचन में तैयार होने के बाद इसी चैट में ग्राहक को जवाब दें)_` : currentLang === 'en' ? `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*Hotel:* ${hotelName}%0A*Table:* ${tableNumber}%0A*Voice Order:* ${spokenText}%0A-----------------------------%0A_(Please reply in this same chat after the kitchen prepares it)_` : `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0A_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు రిప్లై ఇవ్వండి)_`;
                 const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${t('tableLabel')} ${escHtml(tableDisplay())}</div><div style="margin-top: 6px;">${t('voiceOrderLabel')}</div><div style="font-weight: 700; color: #fff;">"${escHtml(spokenText)}"</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
                 showOrderConfirm(summaryHtml, msg, t('voiceOrderBill'));
             };
@@ -1309,6 +1313,9 @@
                 }
             }, 1000);
         }
+
+        // Apply the saved language on load (no cycling).
+        if (currentLang !== 'te') toggleLanguage(currentLang);
     </script>
 </body>
 </html>

@@ -619,7 +619,8 @@
 
         document.getElementById('tableNumber').innerText = tableParam;
 
-        let currentLang = 'te';
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
         let currentAudio = null;
         let recognition = null;
         let isListening = false;
@@ -961,8 +962,9 @@
             }
         }
 
-        function switchLang(lang, el) {
+        function switchLang(lang, el, silent) {
             currentLang = lang;
+            localStorage.setItem('availo_lang', currentLang);
             document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
             document.getElementById('menuLabel').innerText = LANG_DATA[lang].menuLabel;
@@ -979,7 +981,7 @@
             setStageUI('idle', LANG_DATA[lang].chip.tap);
             renderMenu();
             if (document.getElementById('confirmModal').classList.contains('show')) buildConfirmSummary();
-            speakResponse(LANG_DATA[lang].welcome, true);
+            if (!silent) speakResponse(LANG_DATA[lang].welcome, true);
         }
 
         function renderChips() {
@@ -1073,6 +1075,12 @@
         }
 
         window.addEventListener('load', () => { renderChips(); renderMenu(); });
+
+        // Restore the saved language on load (no welcome speech replay).
+        if (currentLang !== 'te') {
+            const savedPill = Array.from(document.querySelectorAll('.lang-pill')).find(b => (b.getAttribute('onclick') || '').includes("'" + currentLang + "'"));
+            if (savedPill) switchLang(currentLang, savedPill, true);
+        }
     </script>
 </body>
 </html>

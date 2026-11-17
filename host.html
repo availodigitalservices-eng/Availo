@@ -446,7 +446,8 @@
             document.getElementById('modalTable').innerText = `${w} ${tableNum}`;
         }
 
-        let currentLang = 'te';
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
 
         const UI_TEXT = {
             te: {
@@ -583,8 +584,9 @@
             updateTotals();
         }
 
-        function setLanguage(lang, btn) {
+        function setLanguage(lang, btn, silent) {
             currentLang = lang;
+            localStorage.setItem('availo_lang', currentLang);
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
@@ -604,7 +606,7 @@
             document.getElementById('regionLbl').innerText = UI_TEXT[lang].regionLbl;
 
             renderMenu();
-            speakHost(UI_TEXT[lang].welcome);
+            if (!silent) speakHost(UI_TEXT[lang].welcome);
         }
 
         function speakHost(text) {
@@ -739,6 +741,12 @@
             updateTableLabels();
             renderMenu();
         });
+
+        // Restore the saved language on load (no welcome speech replay).
+        if (currentLang !== 'te') {
+            const savedBtn = Array.from(document.querySelectorAll('.lang-btn')).find(b => (b.getAttribute('onclick') || '').includes("'" + currentLang + "'"));
+            if (savedBtn) setLanguage(currentLang, savedBtn, true);
+        }
     </script>
 </body>
 </html>

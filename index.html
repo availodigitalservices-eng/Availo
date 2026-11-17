@@ -923,7 +923,7 @@
             </p>
 
             <div class="stage-cta-row">
-                <a href="https://wa.me/919966157369?text=నమస్తే%20అవైలో%2C%20నాకు%20సర్వీస్%20కావాలి" class="stage-btn btn-order-whatsapp">
+                <a onclick="waLink('నమస్తే AVAILO, నాకు సర్వీస్ కావాలి', 'Hello AVAILO, I need a service', 'नमस्ते AVAILO, मुझे सर्विस चाहिए')" style="cursor: pointer;" class="stage-btn btn-order-whatsapp">
                     <span style="font-size: 18px;">🛒</span>
                     <span class="font-te-title" data-te="సర్వీస్ కావాలి" data-en="Need Service" data-hi="सर्विस चाहिए">సర్వీస్ కావాలి</span>
                     <small style="font-size: 9.5px; opacity: 0.9;" data-te="(WhatsApp ఆర్డర్)" data-en="(Order on WhatsApp)" data-hi="(WhatsApp ऑर्डर)">(WhatsApp ఆర్డర్)</small>
@@ -944,15 +944,14 @@
 
             <div class="qr-img-wrapper">
                 <img 
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwa.me%2F919966157369%3Ftext%3DHi%2520Availo%2C%2520I%2520want%2520to%2520book%2520service%2520or%2520inquire%2520about%2520Care%2520Services" 
-                    alt="Availo WhatsApp QR Code" data-alt-te="Availo WhatsApp QR కోడ్" data-alt-en="Availo WhatsApp QR Code" data-alt-hi="Availo WhatsApp QR कोड" 
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwa.me%2F919966157369%3Ftext%3DHi%2520AVAILO%2C%2520I%2520want%2520to%2520book%2520service%2520or%2520inquire%2520about%2520Care%2520Services" 
+                    alt="AVAILO WhatsApp QR Code" data-alt-te="AVAILO WhatsApp QR కోడ్" data-alt-en="AVAILO WhatsApp QR Code" data-alt-hi="AVAILO WhatsApp QR कोड" 
                 />
             </div>
 
             <div>
-                <a href="https://wa.me/919966157369?text=Hi%20Availo,%20I%20want%20to%20book%20service%20or%20inquire%20about%20Care%20Services" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
+                <a onclick="waLink('హలో AVAILO, నాకు సర్వీస్ బుక్ చేయాలి లేదా కేర్ సర్వీసుల గురించి అడగాలి', 'Hi AVAILO, I want to book service or inquire about Care Services', 'नमस्ते AVAILO, मुझे सर्विस बुक करनी है या केयर सर्विसेज़ के बारे में पूछना है')" 
+                   style="cursor: pointer;"
                    class="qr-chat-btn font-te-title"
                    data-te="💬 WhatsApp లో చాట్ చేయండి"
                    data-en="💬 Chat on WhatsApp" data-hi="💬 WhatsApp पर चैट करें">
@@ -1007,12 +1006,13 @@
                         <div>
                             <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🏠 ఫ్లాట్ ఎంచుకోండి *" data-en="🏠 Select Flat *" data-hi="🏠 फ़्लैट चुनें *">🏠 ఫ్లాట్ ఎంచుకోండి *</label>
                             <select id="gateFlatNo" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 12.5px; font-weight: 600; background: #fff;">
+                                <option value="" selected data-te="ఫ్లాట్ ఎంచుకోండి" data-en="Select Flat" data-hi="फ़्लैट चुनें">ఫ్లాట్ ఎంచుకోండి</option>
                                 <option value="Flat 101" data-te="ఫ్లాట్ 101" data-en="Flat 101" data-hi="फ्लैट 101">Flat 101</option>
                                 <option value="Flat 102" data-te="ఫ్లాట్ 102" data-en="Flat 102" data-hi="फ्लैट 102">Flat 102</option>
                                 <option value="Flat 201" data-te="ఫ్లాట్ 201" data-en="Flat 201" data-hi="फ्लैट 201">Flat 201</option>
                                 <option value="Flat 202" data-te="ఫ్లాట్ 202" data-en="Flat 202" data-hi="फ्लैट 202">Flat 202</option>
                                 <option value="Flat 301" data-te="ఫ్లాట్ 301" data-en="Flat 301" data-hi="फ्लैट 301">Flat 301</option>
-                                <option value="Flat 302" selected data-te="ఫ్లాట్ 302" data-en="Flat 302" data-hi="फ्लैट 302">Flat 302</option>
+                                <option value="Flat 302" data-te="ఫ్లాట్ 302" data-en="Flat 302" data-hi="फ्लैट 302">Flat 302</option>
                                 <option value="Flat 401" data-te="ఫ్లాట్ 401" data-en="Flat 401" data-hi="फ्लैट 401">Flat 401</option>
                                 <option value="Flat 402" data-te="ఫ్లాట్ 402" data-en="Flat 402" data-hi="फ्लैट 402">Flat 402</option>
                             </select>
@@ -1020,7 +1020,8 @@
                         <div>
                             <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🛵 విజిటర్ రకం *" data-en="🛵 Visitor Type *" data-hi="🛵 विज़िटर का प्रकार *">🛵 విజిటర్ రకం *</label>
                             <select id="gateVisitorType" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 12.5px; font-weight: 600; background: #fff;">
-                                <option value="Swiggy / Zomato" selected>Swiggy / Zomato</option>
+                                <option value="" selected data-te="విజిటర్ రకం ఎంచుకోండి" data-en="Select Visitor Type" data-hi="विज़िटर का प्रकार चुनें">విజిటర్ రకం ఎంచుకోండి</option>
+                                <option value="Swiggy / Zomato">Swiggy / Zomato</option>
                                 <option value="Amazon / Flipkart">Amazon / Flipkart</option>
                                 <option value="Blinkit / Zepto">Blinkit / Zepto</option>
                                 <option value="బంధువులు / అతిథి" data-te="బంధువులు / అతిథి" data-en="Relatives / Guest" data-hi="रिश्तेदार / अतिथि">బంధువులు / అతిథి</option>
@@ -1095,7 +1096,7 @@
                     <p class="font-te-body" data-te="ఎలక్ట్రికల్, ప్లంబింగ్, ఏసీ రిపేర్, స్క్రాప్ పికప్ మరియు గ్రోసరీ డెలివరీ సేవల కోసం మా డెస్క్‌తో కనెక్ట్ అవ్వండి." data-en="Connect with verified technicians and home service providers based on availability and location." data-hi="इलेक्ट्रिकल, प्लंबिंग, एसी रिपेयर, स्क्रैप पिकअप और ग्रोसरी डिलीवरी सेवाओं के लिए हमारे डेस्क से कनेक्ट करें।">
                         Connect with verified technicians and home service providers based on availability and location.
                     </p>
-                    <a href="https://wa.me/919966157369?text=Hi%20Availo,%20I%20need%20Home%20Services" class="srv-action-btn font-te-title" data-te="సర్వీస్ రిక్వెస్ట్ చేయండి →" data-en="Request a Service →" data-hi="सर्विस रिक्वेस्ट करें →">Request a Service →</a>
+                    <a onclick="waLink('హలో AVAILO, నాకు హోమ్ సర్వీసెస్ కావాలి', 'Hi AVAILO, I need Home Services', 'नमस्ते AVAILO, मुझे होम सर्विसेज़ चाहिए')" style="cursor: pointer;" class="srv-action-btn font-te-title" data-te="సర్వీస్ రిక్వెస్ట్ చేయండి →" data-en="Request a Service →" data-hi="सर्विस रिक्वेस्ट करें →">Request a Service →</a>
                 </div>
             </div>
 
@@ -1141,7 +1142,7 @@
                     <p class="font-te-body" data-te="టేబుల్స్‌పై అమర్చే స్మార్ట్ QR క్యూబ్. కస్టమర్ల ఆర్డర్లు, సర్వీస్ రిక్వెస్ట్‌లను నేరుగా మీ బిజినెస్ WhatsApp కే అనుసంధానిస్తుంది." data-en="A QR-based business interaction concept for table ordering and service requests. Payments go directly to the business." data-hi="टेबल पर रखी जाने वाली स्मार्ट QR क्यूब। ग्राहकों के ऑर्डर और सर्विस रिक्वेस्ट सीधे आपके बिज़नेस WhatsApp से जुड़ जाते हैं।">
                         A QR-based business interaction concept for table ordering and service requests. Payments go directly to the business.
                     </p>
-                    <a href="https://wa.me/919966157369?text=Interested%20in%20AVAILO%20Smart%20Cube%20Pilot" class="srv-action-btn font-te-title" data-te="స్మార్ట్ క్యూబ్ వివరాలు →" data-en="Discover Smart Cube →" data-hi="स्मार्ट क्यूब के बारे में जानें →">Discover Smart Cube →</a>
+                    <a onclick="waLink('AVAILO స్మార్ట్ క్యూబ్ పైలట్ గురించి ఆసక్తి ఉంది', 'Interested in AVAILO Smart Cube Pilot', 'AVAILO स्मार्ट क्यूब पायलट में रुचि है')" style="cursor: pointer;" class="srv-action-btn font-te-title" data-te="స్మార్ట్ క్యూబ్ వివరాలు →" data-en="Discover Smart Cube →" data-hi="स्मार्ट क्यूब के बारे में जानें →">Discover Smart Cube →</a>
                 </div>
             </div>
 
@@ -1229,13 +1230,13 @@
                     <div class="jio-bar-icon">🦚</div>
                     <div class="jio-bar-text">
                         <h3 class="font-te-title" data-te="మయూరతో మాట్లాడండి" data-en="Speak to Mayura" data-hi="मयूरा से बात करें">Speak to Mayura</h3>
-                        <p class="font-te-body" data-te="వాయిస్ అసిస్టెంట్ ద్వారా ఆర్డర్ చేయండి" data-en="Order with Voice Assistant" data-hi="वॉइस असिस्टेंट से ऑर्डर करें">వాయిస్ అసిస్టెంట్ ద్వారా ఆర్డర్ చేయండి</p>
+                        <p class="font-te-body" data-te="మయూర పరిచయం వినండి" data-en="Hear Mayura's greeting" data-hi="मयूरा का परिचय सुनें">మయూర పరిచయం వినండి</p>
                     </div>
                 </div>
                 <div class="jio-bar-arrow">›</div>
             </div>
 
-            <a href="https://wa.me/919966157369?text=Hello%20Availo%2C%20I%20want%20to%20chat" class="jio-bar-item">
+            <a onclick="waLink('హలో AVAILO, నేను చాట్ చేయాలనుకుంటున్నాను', 'Hello AVAILO, I want to chat', 'नमस्ते AVAILO, मैं चैट करना चाहता हूँ')" style="cursor: pointer;" class="jio-bar-item">
                 <div class="jio-bar-left">
                     <div class="jio-bar-icon">💬</div>
                     <div class="jio-bar-text">
@@ -1294,37 +1295,29 @@
 
         <!-- 06 — How It Works -->
         <section class="how-box">
-            <h3 class="font-te-title" style="font-size: 15.5px; margin-bottom: 14px; color: var(--brand-navy);" data-te="సేవలు ఎలా పొందాలి? (4 దశలు)" data-en="How It Works (4 Steps)" data-hi="सेवाएँ कैसे पाएँ? (4 चरण)">How It Works (4 Steps)</h3>
+            <h3 class="font-te-title" style="font-size: 15.5px; margin-bottom: 14px; color: var(--brand-navy);" data-te="ఎలా పని చేస్తుంది (3 దశలు)" data-en="How It Works (3 Steps)" data-hi="यह कैसे काम करता है (3 चरण)">ఎలా పని చేస్తుంది (3 దశలు)</h3>
             
             <div class="step-item">
                 <div class="step-num">1</div>
                 <div class="step-txt">
-                    <strong data-te="అవసరం ఎంచుకోండి" data-en="Select Your Service" data-hi="अपनी ज़रूरत चुनें">Select Your Service</strong>
-                    <p data-te="మీకు అవసరమైన సేవ లేదా కేర్ ప్లాన్‌ను ఎంచుకోండి." data-en="Identify what assistance or business tool you require." data-hi="आपको जो सेवा या केयर प्लान चाहिए, उसे चुनें।">Identify what assistance or business tool you require.</p>
+                    <strong data-te="01. స్కాన్ చేయండి" data-en="01. Scan QR" data-hi="01. QR स्कैन करें">01. స్కాన్ చేయండి</strong>
+                    <p data-te="QR కోడ్‌ను స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు." data-en="Scan QR code — no app download needed." data-hi="QR कोड स्कैन करें — ऐप डाउनलोड की ज़रूरत नहीं।">QR కోడ్‌ను స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు.</p>
                 </div>
             </div>
 
             <div class="step-item">
                 <div class="step-num">2</div>
                 <div class="step-txt">
-                    <strong data-te="వివరాలు పంపండి" data-en="Submit Requirement" data-hi="विवरण भेजें">Submit Requirement</strong>
-                    <p data-te="WhatsApp ద్వారా లొకేషన్ మరియు ప్రాథమిక వివరాలు పంపండి." data-en="Share flat/location details with our coordination desk." data-hi="WhatsApp से लोकेशन और शुरुआती विवरण भेजें।">Share flat/location details with our coordination desk.</p>
+                    <strong data-te="02. మాట్లాడండి" data-en="02. Send Voice Note" data-hi="02. वॉइस नोट भेजें">02. మాట్లాడండి</strong>
+                    <p data-te="WhatsApp లో మీకు కావాల్సిన సర్వీస్ గురించి చిన్న వాయిస్ నోట్ ఇవ్వండి." data-en="Send a quick voice note on WhatsApp about your requirement." data-hi="WhatsApp पर अपनी ज़रूरी सर्विस के बारे में एक छोटा वॉइस नोट भेजें।">WhatsApp లో మీకు కావాల్సిన సర్వీస్ గురించి చిన్న వాయిస్ నోట్ ఇవ్వండి.</p>
                 </div>
             </div>
 
             <div class="step-item">
                 <div class="step-num">3</div>
                 <div class="step-txt">
-                    <strong data-te="అందుబాటు నిర్ధారణ" data-en="Confirm Availability" data-hi="उपलब्धता की पुष्टि">Confirm Availability</strong>
-                    <p data-te="సర్వీస్ స్లాట్ మరియు అదనపు ఖర్చులు ఉంటే ముందుగానే తెలుసుకోండి." data-en="We verify partner schedule and transparent pricing upfront." data-hi="सर्विस स्लॉट और अतिरिक्त खर्च, यदि कोई हो, पहले ही जान लें।">We verify partner schedule and transparent pricing upfront.</p>
-                </div>
-            </div>
-
-            <div class="step-item">
-                <div class="step-num">4</div>
-                <div class="step-txt">
-                    <strong data-te="సేవను పొందండి" data-en="Get Assistance" data-hi="सेवा पाएँ">Get Assistance</strong>
-                    <p data-te="వెరిఫైడ్ ప్రొవైడర్ ద్వారా నేరుగా మీ డోర్‌స్టెప్ వద్ద సేవను పొందండి." data-en="Verified provider delivers the task with status updates." data-hi="वेरिफ़ाइड प्रोवाइडर से सीधे अपने डोरस्टेप पर सेवा पाएँ।">Verified provider delivers the task with status updates.</p>
+                    <strong data-te="03. డోర్ డెలివరీ" data-en="03. Doorstep Delivery" data-hi="03. डोरस्टेप डिलीवरी">03. డోర్ డెలివరీ</strong>
+                    <p data-te="వెరిఫైడ్ ప్రొఫెషనల్ సర్వీస్‌తో నేరుగా మీ డోర్ వద్దకు చేరుకుంటారు." data-en="Our verified professional delivers service straight to your doorstep." data-hi="हमारे वेरिफ़ाइड प्रोफ़ेशनल सीधे आपके दरवाज़े तक सेवा पहुँचाते हैं।">వెరిఫైడ్ ప్రొఫెషనల్ సర్వీస్‌తో నేరుగా మీ డోర్ వద్దకు చేరుకుంటారు.</p>
                 </div>
             </div>
         </section>
@@ -1347,7 +1340,7 @@
     <!-- Fixed Bottom Bar -->
     <div class="fixed-call-hub">
         <a href="tel:9966157369" class="hub-btn btn-call font-te-title" data-te="కాల్ చేయండి" data-en="Call Helpline" data-hi="कॉल करें">Call Helpline</a>
-        <a href="https://wa.me/919966157369?text=Hello%20Availo" class="hub-btn btn-chat font-te-title" data-te="WhatsApp ఆర్డర్" data-en="WhatsApp Desk" data-hi="WhatsApp डेस्क">WhatsApp ఆర్డర్</a>
+        <a onclick="waLink('హలో AVAILO', 'Hello AVAILO', 'नमस्ते AVAILO')" style="cursor: pointer;" class="hub-btn btn-chat font-te-title" data-te="WhatsApp ఆర్డర్" data-en="WhatsApp Desk" data-hi="WhatsApp डेस्क">WhatsApp ఆర్డర్</a>
     </div>
 
     <!-- ================= MODALS SECTION ================= -->
@@ -1598,13 +1591,22 @@
         function hidePageLoader() {
             const loader = document.getElementById("page-loader");
             if (loader && !loader.classList.contains("loader-hidden")) {
-                setTimeout(() => { loader.classList.add("loader-hidden"); }, 350);
+                loader.classList.add("loader-hidden");
             }
         }
-        window.addEventListener("load", hidePageLoader);
-        setTimeout(hidePageLoader, 1200);
+        // Show the loader only on the first visit of a session; repeat loads
+        // in the same session skip it entirely.
+        if (sessionStorage.getItem('availo_seen_loader')) {
+            const _loader = document.getElementById("page-loader");
+            if (_loader) _loader.remove();
+        } else {
+            sessionStorage.setItem('availo_seen_loader', '1');
+            document.addEventListener("DOMContentLoaded", hidePageLoader);
+            setTimeout(hidePageLoader, 300);
+        }
 
-        let currentLang = 'te';
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
 
         // Real-Time Live Clock Updater
         function updateLiveClock() {
@@ -1657,12 +1659,43 @@
 
         function toggleLanguage() {
             currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+            localStorage.setItem('availo_lang', currentLang);
             applyLanguage();
+        }
+
+        // Mayura voice warm-up: load the browser's TTS voices once so a tap
+        // never fires before any voice is available (desktop Chrome often has
+        // no te-IN voice and would otherwise drop the greeting silently).
+        let mayuraVoices = [];
+        let mayuraPulseTimer = null;
+        function loadMayuraVoices() { mayuraVoices = window.speechSynthesis.getVoices(); }
+        if ('speechSynthesis' in window) {
+            loadMayuraVoices();
+            window.speechSynthesis.onvoiceschanged = loadMayuraVoices;
+        }
+
+        function setMayuraSpeaking(on) {
+            const promptEl = document.getElementById('promptTxt');
+            const core = document.querySelector('.radar-mayura-core');
+            if (mayuraPulseTimer) { clearInterval(mayuraPulseTimer); mayuraPulseTimer = null; }
+            if (core) core.style.transform = '';
+            if (!promptEl) return;
+            if (on) {
+                promptEl.innerHTML = currentLang === 'te' ? '🎙️ మయూర మాట్లాడుతోంది…' : currentLang === 'hi' ? '🎙️ मयूरा बोल रही है…' : '🎙️ Mayura is speaking…';
+                if (core) {
+                    let big = false;
+                    mayuraPulseTimer = setInterval(() => { big = !big; core.style.transform = big ? 'scale(1.12)' : ''; }, 350);
+                }
+            } else {
+                const def = promptEl.getAttribute('data-' + currentLang);
+                if (def) promptEl.innerHTML = def;
+            }
         }
 
         function speakMayura() {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
+                setMayuraSpeaking(false);
                 let speechText = "";
                 let voiceLang = "te-IN";
 
@@ -1673,26 +1706,46 @@
                     speechText = "नमस्ते! मैं आपकी अवैलो मयूरा हूँ। स्कैन करें और अपने डोरस्टेप पर ही सर्विस पाएँ। साइड मेनू को टच करके सभी सेवाएँ देखें।";
                     voiceLang = 'hi-IN';
                 } else {
-                    speechText = "Welcome to Availo Digital Services! One platform, multiple possibilities. Touch the side menu to explore all verified services.";
+                    speechText = "Welcome to AVAILO Digital Services! One platform, multiple possibilities. Touch the side menu to explore all verified services.";
                     voiceLang = 'en-IN';
                 }
 
                 const utterance = new SpeechSynthesisUtterance(speechText);
                 utterance.lang = voiceLang;
                 utterance.rate = 0.95;
+                // Pick a real voice matching the language, English as fallback.
+                const v = mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(voiceLang.slice(0, 2)))
+                       || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith('en'));
+                if (v) utterance.voice = v;
+                // A tap must never produce silence: show the greeting as text
+                // if speech fails, and always clear the speaking state.
+                utterance.onend = () => setMayuraSpeaking(false);
+                utterance.onerror = () => { setMayuraSpeaking(false); const p = document.getElementById('promptTxt'); if (p) p.innerHTML = speechText; };
+                setMayuraSpeaking(true);
                 window.speechSynthesis.speak(utterance);
             } else {
                 alert(currentLang === 'te' ? "నమస్కారం! AVAILO కేర్ కి స్వాగతం." : currentLang === 'hi' ? "नमस्ते! AVAILO केयर में आपका स्वागत है!" : "Welcome to AVAILO Care!");
             }
         }
 
+        // Open WhatsApp with a message in the selected site language.
+        function waLink(te, en, hi) {
+            const t = currentLang === 'hi' ? hi : currentLang === 'en' ? en : te;
+            window.location.href = 'https://wa.me/919966157369?text=' + encodeURIComponent(t);
+        }
+
         // Send Gate Pass via WhatsApp
         function sendGateSecurityPass() {
             const flat = document.getElementById('gateFlatNo').value;
             const visitor = document.getElementById('gateVisitorType').value;
-            const details = document.getElementById('gateDeliveryDetails').value.trim() || (currentLang === 'hi' ? 'नाम दर्ज नहीं किया गया' : currentLang === 'en' ? 'Name not entered' : 'పేరు నమోదు చేయలేదు');
+            const details = document.getElementById('gateDeliveryDetails').value.trim();
 
-            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*फ़्लैट नंबर:* ${flat}%0A*विज़िटर का प्रकार:* ${visitor}%0A*विवरण / वाहन:* ${details}%0A------------------------------%0Aसुरक्षा वेरिफ़िकेशन के लिए फ़ोटो/सेल्फ़ी जोड़ी गई है।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Flat No:* ${flat}%0A*Visitor Type:* ${visitor}%0A*Details / Vehicle:* ${details}%0A------------------------------%0APhoto/selfie attached for security verification.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*ఫ్లాట్ నంబర్:* ${flat}%0A*విజిటర్ రకం:* ${visitor}%0A*వివరాలు / బండి:* ${details}%0A------------------------------%0Aసెక్యూరిటీ వెరిఫికేషన్ కోసం ఫోటో/సెల్ఫీ జోడించబడింది.`;
+            if (!flat || !visitor || !details) {
+                alert(currentLang === 'te' ? 'దయచేసి ఫ్లాట్, విజిటర్ రకం మరియు పేరు/బండి నంబర్ నింపండి.' : currentLang === 'hi' ? 'कृपया फ्लैट, विज़िटर का प्रकार और नाम/गाड़ी नंबर भरें।' : 'Please select the flat, visitor type and enter the name / vehicle number.');
+                return;
+            }
+
+            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*फ़्लैट नंबर:* ${flat}%0A*विज़िटर का प्रकार:* ${visitor}%0A*विवरण / वाहन:* ${details}%0A------------------------------%0A📸 कृपया WhatsApp कैमरे से सेल्फ़ी या पार्सल की फ़ोटो लेकर भेजें — तभी गेट पास वेरिफ़ाई होगा।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Flat No:* ${flat}%0A*Visitor Type:* ${visitor}%0A*Details / Vehicle:* ${details}%0A------------------------------%0A📸 Please take a selfie or parcel photo with the WhatsApp camera and send it — only then is the gate pass verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*ఫ్లాట్ నంబర్:* ${flat}%0A*విజిటర్ రకం:* ${visitor}%0A*వివరాలు / బండి:* ${details}%0A------------------------------%0A📸 దయచేసి WhatsApp కెమెరాతో సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి సెండ్ చేయండి — అప్పుడే గేట్ పాస్ వెరిఫై అవుతుంది.`;
             window.location.href = `https://wa.me/919966157369?text=${msg}`;
         }
 

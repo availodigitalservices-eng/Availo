@@ -117,7 +117,7 @@
 
     <div class="container">
         <h1 class="te-heading" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</h1>
-        <div class="sub-meta" data-te="చివరిగా అప్‌డేట్ చేయబడింది: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)" data-en="Last updated: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)" data-hi="अंतिम अपडेट: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)">చివరిగా అప్‌డేట్ చేయబడింది: 2026 • Availo Digital Services (UDYAM-AP-20-0109827)</div>
+        <div class="sub-meta" data-te="చివరిగా అప్‌డేట్ చేయబడింది: 2026 • AVAILO Digital Services (UDYAM-AP-20-0109827)" data-en="Last updated: 2026 • AVAILO Digital Services (UDYAM-AP-20-0109827)" data-hi="अंतिम अपडेट: 2026 • AVAILO Digital Services (UDYAM-AP-20-0109827)">చివరిగా అప్‌డేట్ చేయబడింది: 2026 • AVAILO Digital Services (UDYAM-AP-20-0109827)</div>
 
         <div class="block-card">
             <h3 class="te-heading" data-te="మేము ఏమి సేకరిస్తాము" data-en="What We Collect" data-hi="हम क्या जानकारी लेते हैं">మేము ఏమి సేకరిస్తాము</h3>
@@ -151,13 +151,15 @@
     <script>
         // 3-language toggle (mirrors index.html toggleLanguage, extended te -> en -> hi -> te).
         // Button label always shows the NEXT language.
-        let currentLang = 'te';
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
         const LANG_ORDER = ['te', 'en', 'hi'];
         const LANG_BTN_LABEL = { te: 'English', en: 'हिन्दी', hi: 'తెలుగు' };
 
-        function toggleLanguage() {
-            const next = LANG_ORDER[(LANG_ORDER.indexOf(currentLang) + 1) % LANG_ORDER.length];
+        function toggleLanguage(forceLang) {
+            const next = forceLang || LANG_ORDER[(LANG_ORDER.indexOf(currentLang) + 1) % LANG_ORDER.length];
             currentLang = next;
+            localStorage.setItem('availo_lang', currentLang);
             document.documentElement.lang = currentLang;
             document.getElementById('langBtn').innerText = LANG_BTN_LABEL[currentLang];
 
@@ -166,6 +168,8 @@
                 if (text) el.innerHTML = text;
             });
         }
+        // Apply the saved language on load (no cycling).
+        if (currentLang !== 'te') toggleLanguage(currentLang);
     </script>
 
 </body>

@@ -172,7 +172,7 @@
     <div class="chat-header-profile">
         <div class="mayura-circle-chat">🦚</div>
         <h3 class="te-heading" style="font-size: 16px;">AVAILO OneChat</h3>
-        <p class="te-body" style="font-size: 12px; color: var(--text-sub);" data-te="నమస్కారం! నేను మీ అవైలో మయూరను." data-en="Hello! I am your Availo Mayura." data-hi="नमस्ते! मैं आपकी Availo मयूरा हूँ।">నమస్కారం! నేను మీ అవైలో మయూరను.</p>
+        <p class="te-body" style="font-size: 12px; color: var(--text-sub);" data-te="నమస్కారం! నేను మీ అవైలో మయూరను." data-en="Hello! I am your AVAILO Mayura." data-hi="नमस्ते! मैं आपकी AVAILO मयूरा हूँ।">నమస్కారం! నేను మీ అవైలో మయూరను.</p>
     </div>
 
     <div class="chat-body">
@@ -181,16 +181,16 @@
             <p class="te-body" style="font-size: 12.5px; color: var(--text-sub); margin-top: 4px;" data-te="క్రింద ఉన్న సర్వీస్‌ను ఎంచుకోండి:" data-en="Choose a service below:" data-hi="नीचे दी गई सेवा चुनें:">క్రింద ఉన్న సర్వీస్‌ను ఎంచుకోండి:</p>
 
             <div class="quick-links">
-                <a href="https://wa.me/919966157369?text=హోమ్%20రిపేర్స్%20(ఎలక్ట్రికల్/ప్లంబింగ్)%20కావాలి" class="quick-btn">
+                <a onclick="waLink('హోమ్ రిపేర్స్ (ఎలక్ట్రికల్/ప్లంబింగ్) కావాలి', 'Home repairs (Electrical / Plumbing) needed', 'होम रिपेयर (इलेक्ट्रिकल / प्लंबिंग) चाहिए')" style="cursor: pointer;" class="quick-btn">
                     <span>🛠️</span> <span class="te-heading" data-te="హోమ్ రిపేర్స్ (ఎలక్ట్రికల్ / ప్లంబర్)" data-en="Home Repairs (Electrical / Plumber)" data-hi="होम रिपेयर (इलेक्ट्रिकल / प्लंबर)">హోమ్ రిపేర్స్ (ఎలక్ట్రికల్ / ప్లంబర్)</span>
                 </a>
-                <a href="https://wa.me/919966157369?text=డైలీ%20కిరాణా%20ఆర్డర్" class="quick-btn">
+                <a onclick="waLink('డైలీ కిరాణా ఆర్డర్', 'Daily grocery order', 'रोज़ाना किराना ऑर्डर')" style="cursor: pointer;" class="quick-btn">
                     <span>🛒</span> <span class="te-heading" data-te="డైలీ కిరాణా &amp; తాజా సరుకులు" data-en="Daily Grocery &amp; Fresh Items" data-hi="रोज़ाना किराना और ताज़ा सामान">డైలీ కిరాణా & తాజా సరుకులు</span>
                 </a>
-                <a href="https://wa.me/919966157369?text=NRI%20పేరెంట్స్%20కేర్%20సపోర్ట్" class="quick-btn">
+                <a onclick="waLink('NRI పేరెంట్స్ కేర్ సపోర్ట్', 'NRI Parents Care Support', 'NRI पेरेंट्स केयर सपोर्ट')" style="cursor: pointer;" class="quick-btn">
                     <span>👴</span> <span class="te-heading" data-te="NRI పేరెంట్స్ కేర్ సపోర్ట్" data-en="NRI Parents Care Support" data-hi="NRI पेरेंट्स केयर सपोर्ट">NRI పేరెంట్స్ కేర్ సపోర్ట్</span>
                 </a>
-                <a href="https://wa.me/919966157369?text=ఈ-వేస్ట్%20మరియు%20స్క్రాప్%20పికప్" class="quick-btn">
+                <a onclick="waLink('ఈ-వేస్ట్ మరియు స్క్రాప్ పికప్', 'E-waste and scrap pickup', 'ई-वेस्ट और स्क्रैप पिकअप')" style="cursor: pointer;" class="quick-btn">
                     <span>♻️</span> <span class="te-heading" data-te="ఈ-వేస్ట్ &amp; స్క్రాప్ పికప్" data-en="E-Waste &amp; Scrap Pickup" data-hi="ई-वेस्ट और स्क्रैप पिकअप">ఈ-వేస్ట్ & స్క్రాప్ పికప్</span>
                 </a>
             </div>
@@ -208,13 +208,14 @@
     </div>
 
     <script>
-        let currentLang = 'te';
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
         const LANG_NEXT = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
         const VOICE_LANG = { te: 'te-IN', en: 'en-IN', hi: 'hi-IN' };
         const DEFAULT_GREETING = {
             te: 'నమస్తే అవైలో, నాకు సర్వీస్ కావాలి',
-            en: 'Hello Availo, I need a service',
-            hi: 'नमस्ते Availo, मुझे सर्विस चाहिए'
+            en: 'Hello AVAILO, I need a service',
+            hi: 'नमस्ते AVAILO, मुझे सर्विस चाहिए'
         };
         const VOICE_ALERT = {
             te: 'వాయిస్ టైపింగ్ సదుపాయం కోసం WhatsApp ఉపయోగించండి.',
@@ -222,8 +223,15 @@
             hi: 'वॉइस टाइपिंग के लिए WhatsApp इस्तेमाल करें।'
         };
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+        // Open WhatsApp with a message in the selected site language.
+        function waLink(te, en, hi) {
+            const t = currentLang === 'hi' ? hi : currentLang === 'en' ? en : te;
+            window.location.href = 'https://wa.me/919966157369?text=' + encodeURIComponent(t);
+        }
+
+        function toggleLanguage(forceLang) {
+            currentLang = forceLang || (currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te');
+            localStorage.setItem('availo_lang', currentLang);
             document.documentElement.lang = currentLang;
             document.body.classList.toggle('lang-en', currentLang === 'en');
             document.body.classList.toggle('lang-hi', currentLang === 'hi');
@@ -238,6 +246,8 @@
                 if (text) el.placeholder = text;
             });
         }
+        // Apply the saved language on load (no cycling).
+        if (currentLang !== 'te') toggleLanguage(currentLang);
 
         function submitToWhatsApp() {
             const input = document.getElementById('chatInput').value.trim();
