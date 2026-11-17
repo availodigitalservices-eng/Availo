@@ -84,6 +84,7 @@
             📌 <b>ఇది ముఖ్యం:</b> ఈ పేజీని టాబ్లెట్‌లో తెరిచి ఉంచండి — టాబ్లెట్ ఆఫ్ చేయొద్దు, పేజీ మూయొద్దు.
             బ్రౌజర్ సౌండ్‌ను అనుమతించదు కాబట్టి, ముందు పైన ఉన్న <b>సౌండ్ బటన్‌ను ఒక్కసారి నొక్కాలి</b> — ఆ తర్వాతే బజర్ + వాయిస్ వినిపిస్తాయి.
             కొత్త ఆర్డర్ లేదా రీఫిల్ వచ్చిన ప్రతిసారీ బజర్ <b>3 సార్లు</b> మోగి, తెలుగులో ఒకసారి చెప్తుంది.
+            పేజీ తెరిచినప్పుడు గత ఆర్డర్లు కూడా కనిపిస్తాయి (బజర్ లేకుండా). ✅ చూశాను నొక్కితే ఆ ఆర్డర్ కిచెన్ డిస్‌ప్లే నుంచి పూర్తిగా తొలగిపోతుంది.
         </div>
 
         <div class="actions">
@@ -194,7 +195,13 @@
             speakTelugu('టెస్ట్ — కిచెన్ డిస్‌ప్లే సౌండ్ పనిచేస్తోంది.');
         });
 
+        // Clear all: deletes every order/refill from Firebase too, so an
+        // acknowledged order never comes back on refresh or another device.
         document.getElementById('clearBtn').addEventListener('click', function () {
+            if (db) {
+                db.ref('availo-kitchen-v1/orders').remove().catch(function () {});
+                db.ref('availo-kitchen-v1/refills').remove().catch(function () {});
+            }
             eventsEl.innerHTML = '';
             eventsEl.appendChild(emptyMsg);
             emptyMsg.style.display = 'block';
@@ -212,7 +219,7 @@
             return 'టేబుల్ ' + num + ' కొత్త ఆర్డర్ వచ్చింది' + (d.items ? ' — ' + d.items : '');
         }
 
-        function addCard(type, d) {
+        function addCard(type, d, key, node) {
             if (emptyMsg) emptyMsg.style.display = 'none';
             const card = document.createElement('div');
             card.className = 'card' + (type === 'refill' ? ' refill' : '');
@@ -227,20 +234,26 @@
                 '<div class="card-meta">' + meta.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
                 '<button class="ack-btn">✅ చూశాను</button>';
             card.querySelector('.ack-btn').addEventListener('click', function () {
+                // Acknowledge = delete from Firebase, so this order never
+                // comes back on refresh or on another device. (The WhatsApp
+                // message still holds the order record.)
+                if (key && node && db) {
+                    db.ref('availo-kitchen-v1/' + node + '/' + key).remove().catch(function () {});
+                }
                 card.remove();
                 if (!eventsEl.querySelector('.card')) emptyMsg.style.display = 'block';
             });
             eventsEl.prepend(card);
         }
 
-        function handleEvent(type, d) {
-            addCard(type, d || {});
+        function handleEvent(type, d, key, node) {
+            addCard(type, d || {}, key, node);
             if (!soundOn) return;
             buzzTimes(3);
             speakTelugu(announceText(type, d || {}));
         }
 
-        // ---- Firebase listeners (skip events already present at page load) ----
+        // ---- Firebase: history (last 20 per node, silent) + live events (buzz + announce) ----
         let db = null;
         try {
             if (typeof firebase === 'undefined') throw new Error('Firebase SDK లోడ్ కాలేదు');
@@ -256,16 +269,41 @@
                 connStatus.textContent = on ? '🟢 కనెక్ట్ అయ్యింది' : '🔴 కనెక్ట్ కాలేదు — ఇంటర్నెట్ చూడండి';
             });
 
+            // History + live: load the last 20 events per node SILENTLY (no
+            // buzzer, no voice), then listen for NEW events only (buzz +
+            // announce). child_added fires for existing children when first
+            // attached, so events arriving while history loads are queued and
+            // replayed only if they are newer than the history snapshot
+            // (Firebase push keys are chronological).
             const seen = { orders: new Set(), refills: new Set() };
             function armListener(node, type) {
                 const ref = db.ref('availo-kitchen-v1/' + node);
-                ref.once('value').then(function (snap) {
-                    snap.forEach(function (child) { seen[node].add(child.key); });
-                    ref.on('child_added', function (child) {
-                        if (seen[node].has(child.key)) return;
-                        seen[node].add(child.key);
-                        handleEvent(type, child.val() || {});
+                let historyReady = false;
+                let newestHistoryKey = null;
+                const pending = [];
+                ref.on('child_added', function (child) {
+                    if (seen[node].has(child.key)) return;
+                    if (!historyReady) { pending.push(child); return; }
+                    if (newestHistoryKey && child.key <= newestHistoryKey) return;
+                    seen[node].add(child.key);
+                    handleEvent(type, child.val() || {}, child.key, node);
+                });
+                ref.orderByKey().limitToLast(20).once('value').then(function (snap) {
+                    const kids = [];
+                    snap.forEach(function (c) { kids.push(c); });
+                    kids.forEach(function (c) {
+                        seen[node].add(c.key);
+                        addCard(type, c.val() || {}, c.key, node);
                     });
+                    if (kids.length) newestHistoryKey = kids[kids.length - 1].key;
+                    historyReady = true;
+                    pending.forEach(function (c) {
+                        if (seen[node].has(c.key)) return;
+                        if (newestHistoryKey && c.key <= newestHistoryKey) return;
+                        seen[node].add(c.key);
+                        handleEvent(type, c.val() || {}, c.key, node);
+                    });
+                    pending.length = 0;
                 }).catch(function (err) { showDbError(err.message || 'డేటా చదవలేకపోయాం'); });
             }
             armListener('orders', 'order');
