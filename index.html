@@ -191,6 +191,11 @@
             padding: 16px 14px;
         }
 
+        /* Desktop: wide centred layout (mobile layout unchanged) */
+        @media (min-width: 1024px) {
+            .container { max-width: 1080px; }
+        }
+
         /* Top Scan Banner */
         .scan-strip-banner {
             background: linear-gradient(135deg, #071426 0%, #0d284e 100%);
@@ -285,6 +290,20 @@
         }
 
         .radar-mayura-core:active { transform: scale(0.92); }
+
+        /* Mayura speaking indicator: pulsing ring + glow while she speaks */
+        @keyframes mayuraPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(32, 221, 224, 0.45); }
+            50% { transform: scale(1.12); box-shadow: 0 0 42px rgba(32, 221, 224, 0.85), 0 0 0 12px rgba(32, 221, 224, 0.12); }
+        }
+        .radar-mayura-core.speaking { animation: mayuraPulse 0.7s ease-in-out infinite; }
+        .mayura-voice-pill.speaking { box-shadow: 0 0 18px rgba(32, 221, 224, 0.65); border-color: #ffffff; }
+
+        /* Gate pass quick-select visitor chips (min 44px tap targets) */
+        .visitor-chip { min-height: 44px; padding: 10px 14px; border-radius: 999px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #334155; font-size: 13px; font-weight: 700; cursor: pointer; }
+        .visitor-chip.active { background: #16a34a; border-color: #16a34a; color: #ffffff; }
+        .gate-warn { display: none; background: #fef2f2; border: 1.5px solid #dc2626; color: #b91c1c; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; line-height: 1.5; }
+        .gate-confirm { display: none; background: #f0fdf4; border: 1.5px solid #16a34a; border-radius: 12px; padding: 14px; margin-top: 12px; text-align: center; }
 
         .stage-region-tag {
             color: var(--brand-gold);
@@ -1002,10 +1021,15 @@
                         <span style="font-size: 10px; color: var(--brand-navy); background: #eff6ff; padding: 2px 6px; border-radius: 4px; font-weight: 700;" data-te="తక్షణ అలర్ట్" data-en="Instant Alert" data-hi="तुरंत अलर्ट">తక్షణ అలర్ట్</span>
                     </div>
 
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🏢 అపార్ట్‌మెంట్ పేరు *" data-en="🏢 Apartment Name *" data-hi="🏢 अपार्टमेंट का नाम *">🏢 అపార్ట్‌మెంట్ పేరు *</label>
+                        <input type="text" id="gateApartment" data-ph-te="ఉదా: శ్రీ సాయి హైట్స్" data-ph-en="e.g. Sri Sai Heights" data-ph-hi="उदा: श्री साई हाइट्स" placeholder="ఉదా: శ్రీ సాయి హైట్స్" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px;">
+                    </div>
+
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
                         <div>
                             <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🏠 ఫ్లాట్ ఎంచుకోండి *" data-en="🏠 Select Flat *" data-hi="🏠 फ़्लैट चुनें *">🏠 ఫ్లాట్ ఎంచుకోండి *</label>
-                            <select id="gateFlatNo" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 12.5px; font-weight: 600; background: #fff;">
+                            <select id="gateFlatNo" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-weight: 600; background: #fff;">
                                 <option value="" selected data-te="ఫ్లాట్ ఎంచుకోండి" data-en="Select Flat" data-hi="फ़्लैट चुनें">ఫ్లాట్ ఎంచుకోండి</option>
                                 <option value="Flat 101" data-te="ఫ్లాట్ 101" data-en="Flat 101" data-hi="फ्लैट 101">Flat 101</option>
                                 <option value="Flat 102" data-te="ఫ్లాట్ 102" data-en="Flat 102" data-hi="फ्लैट 102">Flat 102</option>
@@ -1019,7 +1043,7 @@
                         </div>
                         <div>
                             <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🛵 విజిటర్ రకం *" data-en="🛵 Visitor Type *" data-hi="🛵 विज़िटर का प्रकार *">🛵 విజిటర్ రకం *</label>
-                            <select id="gateVisitorType" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 12.5px; font-weight: 600; background: #fff;">
+                            <select id="gateVisitorType" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-weight: 600; background: #fff;">
                                 <option value="" selected data-te="విజిటర్ రకం ఎంచుకోండి" data-en="Select Visitor Type" data-hi="विज़िटर का प्रकार चुनें">విజిటర్ రకం ఎంచుకోండి</option>
                                 <option value="Swiggy / Zomato">Swiggy / Zomato</option>
                                 <option value="Amazon / Flipkart">Amazon / Flipkart</option>
@@ -1031,14 +1055,18 @@
                         </div>
                     </div>
 
+                    <div id="gateVisitorChips" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;"></div>
+
                     <div style="margin-bottom: 12px;">
                         <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🪪 డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:" data-en="🪪 Delivery Person / Vehicle No:" data-hi="🪪 डिलीवरी व्यक्ति का नाम या वाहन नंबर:">🪪 డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:</label>
-                        <input type="text" id="gateDeliveryDetails" data-ph-te="ఉదా: రాము (AP 16 AB 1234)" data-ph-en="e.g. Ramu (AP 16 AB 1234)" data-ph-hi="उदा: रामू (AP 16 AB 1234)" placeholder="ఉదా: రాము (AP 16 AB 1234)" style="width: 100%; padding: 9px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px;">
+                        <input type="text" id="gateDeliveryDetails" data-ph-te="ఉదా: రాము (AP 16 AB 1234)" data-ph-en="e.g. Ramu (AP 16 AB 1234)" data-ph-hi="उदा: रामू (AP 16 AB 1234)" placeholder="ఉదా: రాము (AP 16 AB 1234)" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px;">
                     </div>
 
                     <button onclick="sendGateSecurityPass()" style="width: 100%; background: #16a34a; color: #ffffff; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);" data-te="📷 వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి" data-en="📷 Take Photo & Send Pass on WhatsApp" data-hi="📷 WhatsApp पर सेल्फ़ी लेकर पास भेजें">
                         <span>📷</span> వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి
                     </button>
+
+                    <div id="gateWarning" class="gate-warn" role="alert"></div>
 
                     <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 8px; padding: 10px; margin-top: 10px; display: flex; gap: 8px; align-items: flex-start;">
                         <span style="font-size: 16px;">🛡️</span>
@@ -1046,6 +1074,16 @@
                             <strong>సెక్యూరిటీ రూల్:</strong> బటన్ నొక్కగానే వాట్సాప్ తెరుచుకుంటుంది. వాట్సాప్ లోని కెమెరాతో సెల్ఫీ లేదా డెలివరీ బాక్స్ ఫోటో తీసి సెండ్ కొడితే గేట్ పాస్ వెరిఫై అవుతుంది.
                         </p>
                     </div>
+                </div>
+
+                <!-- Gate pass confirmation: reference number + dynamic stamp -->
+                <div id="gateConfirmPanel" class="gate-confirm">
+                    <div id="gateRefLine" style="font-size: 13px; font-weight: 800; color: #166534; margin-bottom: 10px;"></div>
+                    <canvas id="gateStampCanvas" width="900" height="620" style="width: 100%; max-width: 420px; height: auto; border-radius: 8px; background: #ffffff;"></canvas>
+                    <div style="margin-top: 10px;">
+                        <button onclick="downloadGateStamp()" style="background: #16a34a; color: #ffffff; border: none; border-radius: 8px; padding: 12px 18px; font-size: 14px; font-weight: 800; cursor: pointer;" data-te="⬇️ స్టాంప్ డౌన్‌లోడ్ చేయండి" data-en="⬇️ Download Stamp" data-hi="⬇️ स्टैम्प डाउनलोड करें">⬇️ స్టాంప్ డౌన్‌లోడ్ చేయండి</button>
+                    </div>
+                    <p style="font-size: 12px; color: #475569; margin-top: 8px;" data-te="దీన్ని WhatsAppలో కస్టమర్‌కి పంపండి" data-en="Send this to the customer on WhatsApp" data-hi="इसे WhatsApp पर कस्टमर को भेजें">దీన్ని WhatsAppలో కస్టమర్‌కి పంపండి</p>
                 </div>
 
                 <div style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; cursor: pointer;" onclick="openModal('trialApplyModal')">
@@ -1322,11 +1360,35 @@
             </div>
         </section>
 
+        <!-- Company Profile + Areas -->
+        <section id="company-profile" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px; margin-bottom: 18px;">
+            <h2 style="font-size: 16px; font-weight: 800; color: var(--brand-navy); margin-bottom: 10px;" data-te="🏢 కంపెనీ ప్రొఫైల్" data-en="🏢 Company Profile" data-hi="🏢 कंपनी प्रोफ़ाइल">🏢 కంపెనీ ప్రొఫైల్</h2>
+            <div style="font-size: 13px; color: #334155; line-height: 1.9;">
+                <p><strong>AVAILO Digital Services</strong> — <span data-te="రిజిస్టర్డ్ MSME సంస్థ" data-en="Registered MSME Entity" data-hi="रजिस्टर्ड MSME संस्था">రిజిస్టర్డ్ MSME సంస్థ</span></p>
+                <p><span data-te="ఉద్యమ్ రిజిస్ట్రేషన్:" data-en="Udyam Registration:" data-hi="उद्यम रजिस्ट्रेशन:">ఉద్యమ్ రిజిస్ట్రేషన్:</span> <strong>UDYAM-AP-20-0109827</strong></p>
+                <p><span data-te="రకం:" data-en="Type:" data-hi="प्रकार:">రకం:</span> <span data-te="మైక్రో ఎంటర్‌ప్రైజ్ · సర్వీసెస్ · రిజిస్టర్డ్ 24/08/2026" data-en="Micro enterprise · Services · Registered 24/08/2026" data-hi="माइक्रो एंटरप्राइज़ · सर्विसेज़ · रजिस्टर्ड 24/08/2026">మైక్రో ఎంటర్‌ప్రైజ్ · సర్వీసెస్ · రిజిస్టర్డ్ 24/08/2026</span></p>
+                <p><span data-te="చిరునామా:" data-en="Address:" data-hi="पता:">చిరునామా:</span> 1-492, Srinagar Colony, Navata Transport Road, Kanuru, Vijayawada, Andhra Pradesh — 520007</p>
+                <p><span data-te="ఈమెయిల్:" data-en="Email:" data-hi="ईमेल:">ఈమెయిల్:</span> <a href="mailto:availodigitalservices@gmail.com" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;">availodigitalservices@gmail.com</a></p>
+                <p><span data-te="వాట్సాప్ నంబర్ 1:" data-en="WhatsApp 1:" data-hi="WhatsApp 1:">వాట్సాప్ నంబర్ 1:</span> <a href="https://wa.me/919966157369" style="color: #16a34a; font-weight: 700; text-decoration: none;">9966157369</a> &nbsp;·&nbsp; <span data-te="వాట్సాప్ నంబర్ 2 (బ్యాకప్):" data-en="WhatsApp 2 (backup):" data-hi="WhatsApp 2 (बैकअप):">వాట్సాప్ నంబర్ 2 (బ్యాకప్):</span> <a href="tel:8686761098" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;">8686761098</a></p>
+                <p style="color: #166534; font-weight: 700;" data-te="📞 మిస్డ్ కాల్ అయితే మేము కాల్ చేస్తాం" data-en="📞 Give a missed call — we will call you back" data-hi="📞 मिस्ड कॉल दीजिए — हम आपको कॉल करेंगे">📞 మిస్డ్ కాల్ అయితే మేము కాల్ చేస్తాం</p>
+                <p><span data-te="సర్వీస్ సమయాలు:" data-en="Service hours:" data-hi="सर्विस का समय:">సర్వీస్ సమయాలు:</span> <span data-te="రోజూ ఉదయం 7:00 – రాత్రి 9:00 · ఎమర్జెన్సీ 24/7" data-en="Daily 7:00 AM – 9:00 PM · Emergency 24/7" data-hi="रोज़ सुबह 7:00 – रात 9:00 · इमरजेंसी 24/7">రోజూ ఉదయం 7:00 – రాత్రి 9:00 · ఎమర్జెన్సీ 24/7</span></p>
+            </div>
+            <h3 style="font-size: 14px; font-weight: 800; color: var(--brand-navy); margin: 14px 0 8px;" data-te="📍 మేము సేవ చేసే ప్రాంతాలు" data-en="📍 Areas We Serve" data-hi="📍 हम जिन क्षेत्रों में सेवा देते हैं">📍 మేము సేవ చేసే ప్రాంతాలు</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <span style="background: #eff6ff; border: 1px solid #93c5fd; color: var(--brand-navy); padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;" data-te="బెంజ్ సర్కిల్, విజయవాడ" data-en="Benz Circle, Vijayawada" data-hi="बेंज़ सर्किल, विजयवाड़ा">బెంజ్ సర్కిల్, విజయవాడ</span>
+                <span style="background: #eff6ff; border: 1px solid #93c5fd; color: var(--brand-navy); padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;" data-te="పటమట, విజయవాడ" data-en="Patamata, Vijayawada" data-hi="पटमटा, विजयवाड़ा">పటమట, విజయవాడ</span>
+                <span style="background: #eff6ff; border: 1px solid #93c5fd; color: var(--brand-navy); padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;" data-te="బ్రాడీపేట, విజయవాడ" data-en="Brodipet, Vijayawada" data-hi="ब्रॉडीपेट, विजयवाड़ा">బ్రాడీపేట, విజయవాడ</span>
+            </div>
+            <p style="font-size: 12.5px; color: #64748b; margin-top: 8px;" data-te="మీ ఏరియా లిస్ట్‌లో లేకపోతే WhatsAppలో అడగండి" data-en="If your area is not in the list, ask on WhatsApp" data-hi="आपका क्षेत्र सूची में नहीं है तो WhatsApp पर पूछें">మీ ఏరియా లిస్ట్‌లో లేకపోతే WhatsAppలో అడగండి</p>
+        </section>
+
         <!-- Footer -->
         <footer style="text-align: center; padding: 18px 10px; font-size: 11.5px; color: #64748b;">
             <p style="font-weight: 700; color: var(--brand-navy); font-size: 12.5px;" data-te="AVAILO డిజిటల్ సర్వీసెస్" data-en="AVAILO DIGITAL SERVICES" data-hi="AVAILO डिजिटल सर्विसेज़">AVAILO DIGITAL SERVICES</p>
             <p style="margin-top: 4px;" data-te="రిజిస్టర్డ్ MSME సంస్థ · విజయవాడ & గుంటూరు ప్రాంతం" data-en="Registered MSME Entity · Vijayawada & Guntur Region" data-hi="रजिस्टर्ड MSME संस्था · विजयवाड़ा और गुंटूर क्षेत्र">Registered MSME Entity · Vijayawada & Guntur Region</p>
             <p style="margin-top: 2px;" data-te="డైరెక్ట్ హెల్ప్‌లైన్: +91 9966157369" data-en="Direct Helpline: +91 9966157369" data-hi="डायरेक्ट हेल्पलाइन: +91 9966157369">Direct Helpline: +91 9966157369</p>
+            <p style="margin-top: 2px;" data-te="వాట్సాప్ నంబర్ 2 (బ్యాకప్): 8686761098 · మిస్డ్ కాల్ అయితే మేము కాల్ చేస్తాం" data-en="WhatsApp 2 (backup): 8686761098 · Give a missed call — we will call you back" data-hi="WhatsApp 2 (बैकअप): 8686761098 · मिस्ड कॉल दीजिए — हम आपको कॉल करेंगे">WhatsApp 2 (backup): 8686761098 · Give a missed call — we will call you back</p>
+            <p style="margin-top: 8px; font-size: 12px;"><a href="privacy.html" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a> &nbsp;·&nbsp; <a href="#company-profile" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="కంపెనీ ప్రొఫైల్" data-en="Company Profile" data-hi="कंपनी प्रोफ़ाइल">కంపెనీ ప్రొఫైల్</a></p>
             <p style="margin-top: 10px; font-size: 11px;" data-te="© 2026 AVAILO. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి. స్పష్టమైన పరిధి & పారదర్శక నిబంధనలు వర్తిస్తాయి." data-en="© 2026 AVAILO. All Rights Reserved. Clear Scope & Transparent Terms Apply." data-hi="© 2026 AVAILO. सभी अधिकार सुरक्षित। स्पष्ट दायरा और पारदर्शी नियम लागू होते हैं।">© 2026 AVAILO. All Rights Reserved. Clear Scope & Transparent Terms Apply.</p>
         </footer>
 
@@ -1399,6 +1461,7 @@
                 <button onclick="submitTrialApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో అప్లికేషన్ సమర్పించండి" data-en="💬 Submit Application on WhatsApp" data-hi="💬 WhatsApp पर आवेदन जमा करें">
                     💬 WhatsApp లో అప్లికేషన్ సమర్పించండి
                 </button>
+                <div id="trialConfirmLine" style="display: none; background: #f0fdf4; border: 1.5px solid #16a34a; color: #166534; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
             </div>
         </div>
     </div>
@@ -1488,6 +1551,7 @@
                     <input type="text" id="nriNeeds" data-ph-te="నెలవారీ మందులు, ఆరోగ్య పరీక్షలు" data-ph-en="Monthly Medicines, Health Checkups" data-ph-hi="मासिक दवाइयाँ, स्वास्थ्य जाँच" placeholder="Monthly Medicines, Health Checkups" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
                 </div>
                 <button onclick="submitNRIApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో అప్లికేషన్ పంపండి" data-en="💬 Submit on WhatsApp" data-hi="💬 WhatsApp पर आवेदन भेजें">💬 WhatsApp లో అప్లికేషన్ పంపండి</button>
+                <div id="nriConfirmLine" style="display: none; background: #f0fdf4; border: 1.5px solid #16a34a; color: #166534; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
             </div>
         </div>
     </div>
@@ -1551,6 +1615,22 @@
                 <p><strong data-te="ప్ర: సర్వీస్ ప్రొవైడర్స్ వెరిఫైడ్ అయినవారేనా?" data-en="Q: Are service providers verified?" data-hi="प्र: क्या सर्विस प्रोवाइडर वेरिफ़ाइड हैं?">Q: సర్వీస్ ప్రొవైడర్స్ వెరిఫైడ్ అయినవారేనా?</strong><br><span data-te="జ: ఖచ్చితంగా! ప్రతి ప్రొవైడర్‌కు ఫోటో ఐడీ కార్డ్ మరియు బ్యాక్‌గ్రౌండ్ వెరిఫికేషన్ ఉంటుంది." data-en="A: Absolutely! Every provider carries verified ID and background verification." data-hi="उ: बिल्कुल! हर प्रोवाइडर के पास फ़ोटो आईडी कार्ड और बैकग्राउंड वेरिफ़िकेशन होता है।">A: ఖచ్చితంగా! ప్రతి ప్రొవైడర్‌కు ఫోటో ఐడీ కార్డ్ మరియు బ్యాక్‌గ్రౌండ్ వెరిఫికేషన్ ఉంటుంది.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
                 <p><strong data-te="ప్ర: మహిళల ఫోన్ నంబర్లు భద్రమేనా?" data-en="Q: Are female users numbers secure?" data-hi="प्र: क्या महिलाओं के फ़ोन नंबर सुरक्षित हैं?">Q: మహిళల ఫోన్ నంబర్లు భద్రమేనా?</strong><br><span data-te="జ: పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది, సిబ్బందికి ఫోన్ నంబర్లు కనిపించవు." data-en="A: Full phone masking security is deployed to safeguard user privacy." data-hi="उ: पूरी फ़ोन मास्किंग सुरक्षा है, स्टाफ़ को फ़ोन नंबर दिखाई नहीं देते।">A: పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది, సిబ్బందికి ఫోన్ నంబర్లు కనిపించవు.</span></p>
+                <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
+                <p><strong data-te="ప్ర: AVAILO ఎలా పని చేస్తుంది?" data-en="Q: How does AVAILO work?" data-hi="प्र: AVAILO कैसे काम करता है?">Q: AVAILO ఎలా పని చేస్తుంది?</strong><br><span data-te="జ: 3 దశలు — 1) QR కోడ్ స్కాన్ చేయండి, 2) WhatsAppలో వాయిస్ నోట్ పంపండి, 3) వెరిఫైడ్ ప్రొఫెషనల్ మీ డోర్‌స్టెప్ వద్దకు వస్తారు. యాప్ డౌన్‌లోడ్ అవసరం లేదు." data-en="A: 3 steps — 1) Scan the QR code, 2) Send a voice note on WhatsApp, 3) A verified professional comes to your doorstep. No app download needed." data-hi="उ: 3 चरण — 1) QR कोड स्कैन करें, 2) WhatsApp पर वॉइस नोट भेजें, 3) वेरिफ़ाइड प्रोफ़ेशनल आपके दरवाज़े तक आएँगे। ऐप डाउनलोड की ज़रूरत नहीं।">A: 3 దశలు — 1) QR కోడ్ స్కాన్ చేయండి, 2) WhatsAppలో వాయిస్ నోట్ పంపండి, 3) వెరిఫైడ్ ప్రొఫెషనల్ మీ డోర్‌స్టెప్ వద్దకు వస్తారు. యాప్ డౌన్‌లోడ్ అవసరం లేదు.</span></p>
+                <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
+                <p><strong data-te="ప్ర: ఏయే ప్రాంతాల్లో సర్వీస్ ఉంది?" data-en="Q: Which areas do you serve?" data-hi="प्र: आप किन क्षेत्रों में सेवा देते हैं?">Q: ఏయే ప్రాంతాల్లో సర్వీస్ ఉంది?</strong><br><span data-te="జ: విజయవాడ &amp; గుంటూరు. ప్రస్తుతం బెంజ్ సర్కిల్, పటమట, బ్రాడీపేట ప్రాంతాల్లో సర్వీస్ అందుబాటులో ఉంది. మీ ఏరియా లిస్ట్‌లో లేకపోతే WhatsAppలో అడగండి." data-en="A: Vijayawada &amp; Guntur. Service is currently available in Benz Circle, Patamata and Brodipet. If your area is not in the list, ask on WhatsApp." data-hi="उ: विजयवाड़ा और गुंटूर। अभी बेंज़ सर्किल, पटमटा और ब्रॉडीपेट में सेवा उपलब्ध है। आपका क्षेत्र सूची में नहीं है तो WhatsApp पर पूछें।">A: విజయవాడ &amp; గుంటూరు. ప్రస్తుతం బెంజ్ సర్కిల్, పటమట, బ్రాడీపేట ప్రాంతాల్లో సర్వీస్ అందుబాటులో ఉంది. మీ ఏరియా లిస్ట్‌లో లేకపోతే WhatsAppలో అడగండి.</span></p>
+                <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
+                <p><strong data-te="ప్ర: సర్వీస్ సమయాలు ఏమిటి?" data-en="Q: What are the service hours?" data-hi="प्र: सर्विस का समय क्या है?">Q: సర్వీస్ సమయాలు ఏమిటి?</strong><br><span data-te="జ: రోజూ ఉదయం 7:00 – రాత్రి 9:00. ఎమర్జెన్సీ రెస్పాన్స్ 24/7 అందుబాటులో ఉంటుంది." data-en="A: Daily 7:00 AM – 9:00 PM. Emergency response is available 24/7." data-hi="उ: रोज़ सुबह 7:00 – रात 9:00। इमरजेंसी रिस्पॉन्स 24/7 उपलब्ध है।">A: రోజూ ఉదయం 7:00 – రాత్రి 9:00. ఎమర్జెన్సీ రెస్పాన్స్ 24/7 అందుబాటులో ఉంటుంది.</span></p>
+                <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
+                <p><strong data-te="ప్ర: సర్వీస్ ధరలు ఎలా తెలుస్తాయి? ఎలా చెల్లించాలి?" data-en="Q: How do I know the service charges? How do I pay?" data-hi="प्र: सर्विस का शुल्क कैसे पता चलेगा? भुगतान कैसे करें?">Q: సర్వీస్ ధరలు ఎలా తెలుస్తాయి? ఎలా చెల్లించాలి?</strong><br><span data-te="జ: సర్వీస్ ధర సర్వీస్‌కు ముందు WhatsAppలో నిర్ధారించబడుతుంది. మూడవ పక్షం బిల్లింగ్ నేరుగా చెల్లించదగినది మరియు పారదర్శకమైనది. వివరాల కోసం WhatsAppలో అడగండి." data-en="A: The service charge is confirmed on WhatsApp before the service. Third-party billing is directly payable and transparent. Ask on WhatsApp for details." data-hi="उ: सर्विस का शुल्क सर्विस से पहले WhatsApp पर पक्का किया जाता है। तीसरे पक्ष की बिलिंग सीधे देय और पारदर्शी है। विवरण के लिए WhatsApp पर पूछें।">A: సర్వీస్ ధర సర్వీస్‌కు ముందు WhatsAppలో నిర్ధారించబడుతుంది. మూడవ పక్షం బిల్లింగ్ నేరుగా చెల్లించదగినది మరియు పారదర్శకమైనది. వివరాల కోసం WhatsAppలో అడగండి.</span></p>
+                <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
+                <p><strong data-te="ప్ర: NRI తల్లిదండ్రుల సంరక్షణ ప్లాన్ల ధరలు ఏమిటి? విదేశం నుంచి ఎలా చెల్లించాలి?" data-en="Q: What are the NRI Parents Care plan prices? How do I pay from abroad?" data-hi="प्र: NRI माता-पिता की देखभाल प्लान की कीमतें क्या हैं? विदेश से भुगतान कैसे करें?">Q: NRI తల్లిదండ్రుల సంరక్షణ ప్లాన్ల ధరలు ఏమిటి? విదేశం నుంచి ఎలా చెల్లించాలి?</strong><br><span data-te="జ: ప్లాన్లు — కేర్ ₹2,499/నెల, ప్లస్ ₹4,999/నెల, ఎలైట్ VIP ₹9,999/నెల. విదేశం నుంచి చెల్లింపు విధానం కోసం వివరాల కోసం WhatsAppలో అడగండి." data-en="A: Plans — Care ₹2,499/month, Plus ₹4,999/month, Elite VIP ₹9,999/month. For the payment method from abroad, ask on WhatsApp for details." data-hi="उ: प्लान — केयर ₹2,499/माह, प्लस ₹4,999/माह, एलीट VIP ₹9,999/माह। विदेश से भुगतान के तरीके के लिए WhatsApp पर पूछें।">A: ప్లాన్లు — కేర్ ₹2,499/నెల, ప్లస్ ₹4,999/నెల, ఎలైట్ VIP ₹9,999/నెల. విదేశం నుంచి చెల్లింపు విధానం కోసం వివరాల కోసం WhatsAppలో అడగండి.</span></p>
+                <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
+                <p><strong data-te="ప్ర: గేట్ పాస్ ఎలా పని చేస్తుంది?" data-en="Q: How does the Gate Pass work?" data-hi="प्र: गेट पास कैसे काम करता है?">Q: గేట్ పాస్ ఎలా పని చేస్తుంది?</strong><br><span data-te="జ: అపార్ట్‌మెంట్ పేరు, ఫ్లాట్, విజిటర్ రకం, పేరు/బండి నంబర్ నింపి బటన్ నొక్కండి — WhatsApp తెరుచుకుంటుంది. WhatsApp కెమెరాతో సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి పంపితే పాస్ వెరిఫై అవుతుంది. మీకు రిఫరెన్స్ నంబర్ మరియు వెరిఫైడ్ స్టాంప్ కూడా వస్తాయి." data-en="A: Fill the apartment name, flat, visitor type and name / vehicle number, then tap the button — WhatsApp opens. Send a selfie or parcel photo with the WhatsApp camera to verify the pass. You also get a reference number and a verified stamp." data-hi="उ: अपार्टमेंट का नाम, फ़्लैट, विज़िटर का प्रकार और नाम/गाड़ी नंबर भरकर बटन दबाएँ — WhatsApp खुल जाएगा। WhatsApp कैमरे से सेल्फी या पार्सल की फ़ोटो भेजने पर पास वेरिफ़ाई होगा। आपको रेफ़रेंस नंबर और वेरिफ़ाइड स्टैम्प भी मिलेंगे।">A: అపార్ట్‌మెంట్ పేరు, ఫ్లాట్, విజిటర్ రకం, పేరు/బండి నంబర్ నింపి బటన్ నొక్కండి — WhatsApp తెరుచుకుంటుంది. WhatsApp కెమెరాతో సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి పంపితే పాస్ వెరిఫై అవుతుంది. మీకు రిఫరెన్స్ నంబర్ మరియు వెరిఫైడ్ స్టాంప్ కూడా వస్తాయి.</span></p>
+                <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
+                <p><strong data-te="ప్ర: ఉచిత ట్రయల్ (1 వారం పైలట్)లో ఏ సర్వీసులు ఉంటాయి?" data-en="Q: Which services are included in the free trial (1-week pilot)?" data-hi="प्र: मुफ़्त ट्रायल (1 हफ़्ते का पायलट) में कौन-सी सेवाएँ शामिल हैं?">Q: ఉచిత ట్రయల్ (1 వారం పైలట్)లో ఏ సర్వీసులు ఉంటాయి?</strong><br><span data-te="జ: ట్రయల్ 1 వారం పైలట్. ఏ సర్వీసులు ఉంటాయో వివరాల కోసం WhatsAppలో అడగండి — మా టీమ్ తక్షణమే వివరిస్తుంది." data-en="A: The trial is a 1-week pilot. For which services are included, ask on WhatsApp for details — our team will explain right away." data-hi="उ: ट्रायल 1 हफ़्ते का पायलट है। कौन-सी सेवाएँ शामिल हैं, इसके लिए WhatsApp पर पूछें — हमारी टीम तुरंत बताएगी।">A: ట్రయల్ 1 వారం పైలట్. ఏ సర్వీసులు ఉంటాయో వివరాల కోసం WhatsAppలో అడగండి — మా టీమ్ తక్షణమే వివరిస్తుంది.</span></p>
+                <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
+                <p><strong data-te="ప్ర: బుకింగ్‌ను రద్దు చేయాలన్నా, మార్చాలన్నా ఎలా?" data-en="Q: How do I cancel or change a booking?" data-hi="प्र: बुकिंग रद्द या बदलनी हो तो क्या करें?">Q: బుకింగ్‌ను రద్దు చేయాలన్నా, మార్చాలన్నా ఎలా?</strong><br><span data-te="జ: మీ రిఫరెన్స్ నంబర్‌తో WhatsAppలో మాకు మెసేజ్ చేయండి — మా టీమ్ రద్దు / మార్పు వివరాలు తెలియజేస్తుంది." data-en="A: Message us on WhatsApp with your reference number — our team will share the cancellation / change details." data-hi="उ: अपने रेफ़रेंस नंबर के साथ WhatsApp पर हमें मैसेज करें — हमारी टीम रद्द / बदलाव के विवरण बताएगी।">A: మీ రిఫరెన్స్ నంబర్‌తో WhatsAppలో మాకు మెసేజ్ చేయండి — మా టీమ్ రద్దు / మార్పు వివరాలు తెలియజేస్తుంది.</span></p>
             </div>
         </div>
     </div>
@@ -1577,10 +1657,25 @@
                         <a href="https://wa.me/919966157369" style="font-size: 15px; font-weight: 700; color: var(--call-green); text-decoration: none;">+91 99661 57369</a>
                     </div>
                 </div>
+                <div style="margin-bottom: 14px; display: flex; align-items: center; gap: 12px;">
+                    <div style="font-size: 22px;">📱</div>
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted);" data-te="వాట్సాప్ నంబర్ 2 (బ్యాకప్)" data-en="WhatsApp 2 (backup)" data-hi="WhatsApp 2 (बैकअप)">వాట్సాప్ నంబర్ 2 (బ్యాకప్)</div>
+                        <a href="tel:8686761098" style="font-size: 16px; font-weight: 700; color: var(--brand-navy); text-decoration: none;">8686761098</a>
+                    </div>
+                </div>
+                <div style="margin-bottom: 14px; display: flex; align-items: center; gap: 12px;">
+                    <div style="font-size: 22px;">✉️</div>
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted);" data-te="ఈమెయిల్" data-en="Email" data-hi="ईमेल">ఈమెయిల్</div>
+                        <a href="mailto:availodigitalservices@gmail.com" style="font-size: 14px; font-weight: 700; color: var(--brand-navy); text-decoration: none;">availodigitalservices@gmail.com</a>
+                    </div>
+                </div>
                 <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: 8px; padding: 12px; font-size: 12px; color: #475569;">
                     <p data-te="⏰ డైలీ సర్వీస్: ఉదయం 7:00 – రాత్రి 9:00" data-en="⏰ Daily Hours: 7:00 AM – 9:00 PM" data-hi="⏰ डेली सर्विस: सुबह 7:00 – रात 9:00">⏰ <strong>డైలీ సర్వీస్:</strong> ఉదయం 7:00 – రాత్రి 9:00</p>
                     <p style="margin-top: 4px;" data-te="🚨 ఎమర్జెన్సీ రెస్పాన్స్: 24/7" data-en="🚨 Emergency Response: 24/7" data-hi="🚨 इमरजेंसी रिस्पॉन्स: 24/7">🚨 <strong>ఎమర్జెన్సీ రెస్పాన్స్:</strong> 24/7</p>
                     <p style="margin-top: 4px;" data-te="📍 ప్రాంతం: విజయవాడ & గుంటూరు రీజియన్" data-en="📍 Region: Vijayawada & Guntur Region" data-hi="📍 क्षेत्र: विजयवाड़ा और गुंटूर रीजन">📍 <strong>ప్రాంతం:</strong> విజయవాడ & గుంటూరు రీజియన్</p>
+                    <p style="margin-top: 4px;" data-te="📞 మిస్డ్ కాల్ అయితే మేము కాల్ చేస్తాం" data-en="📞 Give a missed call — we will call you back" data-hi="📞 मिस्ड कॉल दीजिए — हम आपको कॉल करेंगे">📞 మిస్డ్ కాల్ అయితే మేము కాల్ చేస్తాం</p>
                 </div>
             </div>
         </div>
@@ -1667,7 +1762,6 @@
         // never fires before any voice is available (desktop Chrome often has
         // no te-IN voice and would otherwise drop the greeting silently).
         let mayuraVoices = [];
-        let mayuraPulseTimer = null;
         function loadMayuraVoices() { mayuraVoices = window.speechSynthesis.getVoices(); }
         if ('speechSynthesis' in window) {
             loadMayuraVoices();
@@ -1677,16 +1771,16 @@
         function setMayuraSpeaking(on) {
             const promptEl = document.getElementById('promptTxt');
             const core = document.querySelector('.radar-mayura-core');
-            if (mayuraPulseTimer) { clearInterval(mayuraPulseTimer); mayuraPulseTimer = null; }
-            if (core) core.style.transform = '';
+            const pill = document.querySelector('.mayura-voice-pill');
             if (!promptEl) return;
             if (on) {
                 promptEl.innerHTML = currentLang === 'te' ? '🎙️ మయూర మాట్లాడుతోంది…' : currentLang === 'hi' ? '🎙️ मयूरा बोल रही है…' : '🎙️ Mayura is speaking…';
-                if (core) {
-                    let big = false;
-                    mayuraPulseTimer = setInterval(() => { big = !big; core.style.transform = big ? 'scale(1.12)' : ''; }, 350);
-                }
+                // Reflow-restart the pulse animation so every tap visibly re-triggers it.
+                if (core) { core.classList.remove('speaking'); void core.offsetWidth; core.classList.add('speaking'); }
+                if (pill) { pill.classList.remove('speaking'); void pill.offsetWidth; pill.classList.add('speaking'); }
             } else {
+                if (core) core.classList.remove('speaking');
+                if (pill) pill.classList.remove('speaking');
                 const def = promptEl.getAttribute('data-' + currentLang);
                 if (def) promptEl.innerHTML = def;
             }
@@ -1734,19 +1828,127 @@
             window.location.href = 'https://wa.me/919966157369?text=' + encodeURIComponent(t);
         }
 
+        // Reference numbers: AV-YYYYMMDD-XXXX (4 random digits).
+        function availoRef() {
+            const d = new Date();
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return 'AV-' + y + m + day + '-' + String(Math.floor(1000 + Math.random() * 9000));
+        }
+        function availoRefLine(ref) {
+            return currentLang === 'te' ? '✅ రిఫరెన్స్ నంబర్: ' + ref : currentLang === 'hi' ? '✅ रेफ़रेंस नंबर: ' + ref : '✅ Reference No: ' + ref;
+        }
+
+        // Dynamic gate-pass stamp (canvas, same green design as the user's stamp:
+        // green double border + dashed inner border, VERIFIED & SAVED, apartment,
+        // DD-MMM-YYYY + GRANTED, Powered by AVAILO below the stamp).
+        const STAMP_GREEN = '#00703c';
+        function stampDateStr(d) {
+            const M = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            return String(d.getDate()).padStart(2, '0') + '-' + M[d.getMonth()] + '-' + d.getFullYear();
+        }
+        function drawGateStamp(canvas, apartmentName) {
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width, H = canvas.height;
+            ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H);
+            ctx.strokeStyle = STAMP_GREEN; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.lineWidth = 12; ctx.strokeRect(16, 16, W - 32, 470);
+            ctx.lineWidth = 4; ctx.strokeRect(38, 38, W - 76, 426);
+            ctx.lineWidth = 3; ctx.setLineDash([16, 11]); ctx.strokeRect(60, 60, W - 120, 382); ctx.setLineDash([]);
+            ctx.fillStyle = STAMP_GREEN;
+            ctx.font = 'bold 46px Arial, sans-serif';
+            ctx.fillText('★ VERIFIED & SAVED ★', W / 2, 140);
+            ctx.font = 'bold 66px Arial, sans-serif';
+            ctx.fillText(String(apartmentName || '').toUpperCase(), W / 2, 245);
+            ctx.font = 'bold 44px Arial, sans-serif';
+            ctx.fillText(stampDateStr(new Date()) + '  \u2022  GRANTED', W / 2, 350);
+            ctx.font = 'bold 30px Arial, sans-serif';
+            ctx.fillText('Powered by AVAILO', W / 2, 560);
+        }
+        function downloadGateStamp() {
+            const c = document.getElementById('gateStampCanvas');
+            if (!c) return;
+            const a = document.createElement('a');
+            a.href = c.toDataURL('image/png');
+            a.download = 'availo-gate-pass-stamp.png';
+            a.click();
+        }
+
+        // Gate form: visitor quick-select chips built from the select options.
+        function buildGateVisitorChips() {
+            const sel = document.getElementById('gateVisitorType');
+            const wrap = document.getElementById('gateVisitorChips');
+            if (!sel || !wrap) return;
+            wrap.innerHTML = '';
+            Array.from(sel.options).forEach(opt => {
+                if (!opt.value) return;
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'visitor-chip';
+                b.setAttribute('data-value', opt.value);
+                const te = opt.getAttribute('data-te') || opt.textContent;
+                const en = opt.getAttribute('data-en') || opt.textContent;
+                const hi = opt.getAttribute('data-hi') || opt.textContent;
+                b.setAttribute('data-te', te); b.setAttribute('data-en', en); b.setAttribute('data-hi', hi);
+                b.textContent = currentLang === 'hi' ? hi : currentLang === 'en' ? en : te;
+                b.onclick = () => { sel.value = opt.value; syncGateVisitorChips(); };
+                wrap.appendChild(b);
+            });
+            syncGateVisitorChips();
+            sel.addEventListener('change', syncGateVisitorChips);
+        }
+        function syncGateVisitorChips() {
+            const sel = document.getElementById('gateVisitorType');
+            if (!sel) return;
+            document.querySelectorAll('#gateVisitorChips .visitor-chip').forEach(c => {
+                c.classList.toggle('active', c.getAttribute('data-value') === sel.value);
+            });
+        }
+        // Remember the apartment name + last flat/name the user entered.
+        function initGateFormMemory() {
+            try {
+                const apt = localStorage.getItem('availo_apartment');
+                if (apt) document.getElementById('gateApartment').value = apt;
+                const last = JSON.parse(localStorage.getItem('availo_gate_last') || 'null');
+                if (last) {
+                    if (last.flat) document.getElementById('gateFlatNo').value = last.flat;
+                    if (last.name) document.getElementById('gateDeliveryDetails').value = last.name;
+                }
+            } catch (e) {}
+        }
+
         // Send Gate Pass via WhatsApp
         function sendGateSecurityPass() {
+            const apt = document.getElementById('gateApartment').value.trim();
             const flat = document.getElementById('gateFlatNo').value;
             const visitor = document.getElementById('gateVisitorType').value;
             const details = document.getElementById('gateDeliveryDetails').value.trim();
+            const warn = document.getElementById('gateWarning');
 
-            if (!flat || !visitor || !details) {
-                alert(currentLang === 'te' ? 'దయచేసి ఫ్లాట్, విజిటర్ రకం మరియు పేరు/బండి నంబర్ నింపండి.' : currentLang === 'hi' ? 'कृपया फ्लैट, विज़िटर का प्रकार और नाम/गाड़ी नंबर भरें।' : 'Please select the flat, visitor type and enter the name / vehicle number.');
+            if (!apt || !flat || !visitor || !details) {
+                const msg = currentLang === 'te' ? '⚠️ దయచేసి అపార్ట్‌మెంట్ పేరు, ఫ్లాట్, విజిటర్ రకం మరియు పేరు/బండి నంబర్ నింపండి.' : currentLang === 'hi' ? '⚠️ कृपया अपार्टमेंट का नाम, फ़्लैट, विज़िटर का प्रकार और नाम/गाड़ी नंबर भरें।' : '⚠️ Please fill the apartment name, flat, visitor type and name / vehicle number.';
+                if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
+                alert(msg);
                 return;
             }
+            if (warn) warn.style.display = 'none';
+            try {
+                localStorage.setItem('availo_apartment', apt);
+                localStorage.setItem('availo_gate_last', JSON.stringify({ flat: flat, name: details }));
+            } catch (e) {}
 
-            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*फ़्लैट नंबर:* ${flat}%0A*विज़िटर का प्रकार:* ${visitor}%0A*विवरण / वाहन:* ${details}%0A------------------------------%0A📸 कृपया WhatsApp कैमरे से सेल्फ़ी या पार्सल की फ़ोटो लेकर भेजें — तभी गेट पास वेरिफ़ाई होगा।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Flat No:* ${flat}%0A*Visitor Type:* ${visitor}%0A*Details / Vehicle:* ${details}%0A------------------------------%0A📸 Please take a selfie or parcel photo with the WhatsApp camera and send it — only then is the gate pass verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*ఫ్లాట్ నంబర్:* ${flat}%0A*విజిటర్ రకం:* ${visitor}%0A*వివరాలు / బండి:* ${details}%0A------------------------------%0A📸 దయచేసి WhatsApp కెమెరాతో సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి సెండ్ చేయండి — అప్పుడే గేట్ పాస్ వెరిఫై అవుతుంది.`;
-            window.location.href = `https://wa.me/919966157369?text=${msg}`;
+            const ref = availoRef();
+            const refLine = document.getElementById('gateRefLine');
+            if (refLine) refLine.textContent = availoRefLine(ref);
+            drawGateStamp(document.getElementById('gateStampCanvas'), apt);
+            const panel = document.getElementById('gateConfirmPanel');
+            if (panel) panel.style.display = 'block';
+
+            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*अपार्टमेंट:* ${apt}%0A*फ़्लैट नंबर:* ${flat}%0A*विज़िटर का प्रकार:* ${visitor}%0A*विवरण / वाहन:* ${details}%0A------------------------------%0A📸 कृपया WhatsApp कैमरे से सेल्फ़ी या पार्सल की फ़ोटो लेकर भेजें — तभी गेट पास वेरिफ़ाई होगा।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Reference No:* ${ref}%0A*Apartment:* ${apt}%0A*Flat No:* ${flat}%0A*Visitor Type:* ${visitor}%0A*Details / Vehicle:* ${details}%0A------------------------------%0A📸 Please take a selfie or parcel photo with the WhatsApp camera and send it — only then is the gate pass verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*అపార్ట్‌మెంట్:* ${apt}%0A*ఫ్లాట్ నంబర్:* ${flat}%0A*విజిటర్ రకం:* ${visitor}%0A*వివరాలు / బండి:* ${details}%0A------------------------------%0A📸 దయచేసి WhatsApp కెమెరాతో సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి సెండ్ చేయండి — అప్పుడే గేట్ పాస్ వెరిఫై అవుతుంది.`;
+            // Brief delay so the reference + stamp are visible before WhatsApp opens.
+            setTimeout(() => { window.location.href = `https://wa.me/919966157369?text=${msg}`; }, 1800);
         }
 
         // Submit Trial / Subscription Application
@@ -1763,8 +1965,12 @@
                 return;
             }
 
-            const msg = currentLang === 'hi' ? `*AVAILO ट्रायल / सब्सक्रिप्शन आवेदन*%0A------------------------------%0A*कैटेगरी:* ${category}%0A*प्लान का प्रकार:* ${planType}%0A*बिज़नेस/अपार्टमेंट:* ${businessName}%0A*संपर्क व्यक्ति:* ${contactName}%0A*WhatsApp:* ${phone}%0A*क्षेत्र:* ${location}%0A------------------------------%0Aऑनबोर्डिंग / ट्रायल विवरण में रुचि है।` : currentLang === 'en' ? `*AVAILO Trial / Subscription Application*%0A------------------------------%0A*Category:* ${category}%0A*Plan Type:* ${planType}%0A*Business/Apartment:* ${businessName}%0A*Contact Person:* ${contactName}%0A*WhatsApp:* ${phone}%0A*Location:* ${location}%0A------------------------------%0AInterested in onboarding / trial details.` : `*AVAILO ట్రయల్ / సబ్‌స్క్రిప్షన్ అప్లికేషన్*%0A------------------------------%0A*కేటగిరీ:* ${category}%0A*ప్లాన్ రకం:* ${planType}%0A*సంస్థ/అపార్ట్‌మెంట్:* ${businessName}%0A*సంప్రదింపు వ్యక్తి:* ${contactName}%0A*WhatsApp:* ${phone}%0A*ప్రాంతం:* ${location}%0A------------------------------%0Aఆన్‌బోర్డింగ్ / ట్రయల్ వివరాలపై ఆసక్తి ఉంది.`;
-            window.location.href = `https://wa.me/919966157369?text=${msg}`;
+            const ref = availoRef();
+            const cl = document.getElementById('trialConfirmLine');
+            if (cl) { cl.textContent = availoRefLine(ref); cl.style.display = 'block'; }
+
+            const msg = currentLang === 'hi' ? `*AVAILO ट्रायल / सब्सक्रिप्शन आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*कैटेगरी:* ${category}%0A*प्लान का प्रकार:* ${planType}%0A*बिज़नेस/अपार्टमेंट:* ${businessName}%0A*संपर्क व्यक्ति:* ${contactName}%0A*WhatsApp:* ${phone}%0A*क्षेत्र:* ${location}%0A------------------------------%0Aऑनबोर्डिंग / ट्रायल विवरण में रुचि है।` : currentLang === 'en' ? `*AVAILO Trial / Subscription Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Category:* ${category}%0A*Plan Type:* ${planType}%0A*Business/Apartment:* ${businessName}%0A*Contact Person:* ${contactName}%0A*WhatsApp:* ${phone}%0A*Location:* ${location}%0A------------------------------%0AInterested in onboarding / trial details.` : `*AVAILO ట్రయల్ / సబ్‌స్క్రిప్షన్ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*కేటగిరీ:* ${category}%0A*ప్లాన్ రకం:* ${planType}%0A*సంస్థ/అపార్ట్‌మెంట్:* ${businessName}%0A*సంప్రదింపు వ్యక్తి:* ${contactName}%0A*WhatsApp:* ${phone}%0A*ప్రాంతం:* ${location}%0A------------------------------%0Aఆన్‌బోర్డింగ్ / ట్రయల్ వివరాలపై ఆసక్తి ఉంది.`;
+            setTimeout(() => { window.location.href = `https://wa.me/919966157369?text=${msg}`; }, 1800);
         }
 
         // Select NRI Plan & Open Form
@@ -1788,9 +1994,15 @@
                 return;
             }
 
-            const msg = currentLang === 'hi' ? `*AVAILO NRI माता-पिता की देखभाल आवेदन*%0A------------------------------%0A*प्लान:* ${plan}%0A*प्रायोजक:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*माता-पिता का नाम:* ${parentsName}%0A*पता:* ${address}%0A*ज़रूरतें:* ${needs}%0A------------------------------%0Aएक्टिवेशन के लिए कनेक्ट हो रहा है।` : currentLang === 'en' ? `*AVAILO NRI Parents Care Application*%0A------------------------------%0A*Plan:* ${plan}%0A*Sponsor:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*Parents Name:* ${parentsName}%0A*Address:* ${address}%0A*Needs:* ${needs}%0A------------------------------%0AConnecting for Activation.` : `*AVAILO NRI తల్లిదండ్రుల సంరక్షణ అప్లికేషన్*%0A------------------------------%0A*ప్లాన్:* ${plan}%0A*స్పాన్సర్:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*తల్లిదండ్రుల పేరు:* ${parentsName}%0A*చిరునామా:* ${address}%0A*అవసరాలు:* ${needs}%0A------------------------------%0Aయాక్టివేషన్ కోసం కనెక్ట్ అవుతోంది.`;
-            window.location.href = `https://wa.me/919966157369?text=${msg}`;
+            const ref = availoRef();
+            const cl = document.getElementById('nriConfirmLine');
+            if (cl) { cl.textContent = availoRefLine(ref); cl.style.display = 'block'; }
+
+            const msg = currentLang === 'hi' ? `*AVAILO NRI माता-पिता की देखभाल आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*प्लान:* ${plan}%0A*प्रायोजक:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*माता-पिता का नाम:* ${parentsName}%0A*पता:* ${address}%0A*ज़रूरतें:* ${needs}%0A------------------------------%0Aएक्टिवेशन के लिए कनेक्ट हो रहा है।` : currentLang === 'en' ? `*AVAILO NRI Parents Care Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Plan:* ${plan}%0A*Sponsor:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*Parents Name:* ${parentsName}%0A*Address:* ${address}%0A*Needs:* ${needs}%0A------------------------------%0AConnecting for Activation.` : `*AVAILO NRI తల్లిదండ్రుల సంరక్షణ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*ప్లాన్:* ${plan}%0A*స్పాన్సర్:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*తల్లిదండ్రుల పేరు:* ${parentsName}%0A*చిరునామా:* ${address}%0A*అవసరాలు:* ${needs}%0A------------------------------%0Aయాక్టివేషన్ కోసం కనెక్ట్ అవుతోంది.`;
+            setTimeout(() => { window.location.href = `https://wa.me/919966157369?text=${msg}`; }, 1800);
         }
+        initGateFormMemory();
+        buildGateVisitorChips();
         applyLanguage();
     </script>
 </body>

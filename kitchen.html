@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Display - AVAILO</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Ramabhadra&family=Suranna&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #030b1e;
+            color: #ffffff;
+            font-family: 'Inter', 'Ramabhadra', 'Noto Sans Devanagari', sans-serif;
+            line-height: 1.5;
+            padding: 16px;
+        }
+        .wrap { max-width: 900px; margin: 0 auto; }
+        h1 { font-size: 30px; color: #00e5ff; text-align: center; margin-bottom: 2px; }
+        .sub { text-align: center; color: #94a3b8; font-size: 14px; margin-bottom: 14px; }
+        .conn { text-align: center; font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+
+        #soundBtn {
+            display: block; width: 100%; padding: 22px 16px; font-size: 24px; font-weight: 800;
+            background: #f59e0b; color: #111827; border: none; border-radius: 16px; cursor: pointer;
+            font-family: 'Ramabhadra', sans-serif;
+        }
+        #soundBtn.on { background: #16a34a; color: #ffffff; }
+        #soundWarn {
+            margin-top: 10px; background: #7f1d1d; color: #fecaca; border: 2px solid #ef4444;
+            border-radius: 12px; padding: 14px; font-size: 17px; font-weight: 700; text-align: center;
+        }
+        .note {
+            margin-top: 12px; background: #071530; border: 1px solid rgba(0,229,255,0.35);
+            border-radius: 12px; padding: 12px 14px; font-size: 14px; color: #cbd5e1;
+        }
+        .actions { display: flex; gap: 10px; margin: 16px 0; }
+        .actions button {
+            flex: 1; padding: 14px; font-size: 16px; font-weight: 800; border: none; border-radius: 12px;
+            cursor: pointer; font-family: 'Ramabhadra', sans-serif;
+        }
+        #testBtn { background: #0ea5e9; color: #ffffff; }
+        #clearBtn { background: #334155; color: #ffffff; }
+        #events { display: flex; flex-direction: column; gap: 14px; }
+        .empty { text-align: center; color: #64748b; font-size: 16px; padding: 30px 10px; }
+
+        .card {
+            background: #ffffff; color: #0f172a; border-radius: 16px; padding: 18px;
+            border-left: 14px solid #16a34a;
+        }
+        .card.refill { border-left-color: #f59e0b; }
+        .card-type { font-size: 15px; font-weight: 800; color: #475569; }
+        .card-table { font-size: 64px; font-weight: 800; line-height: 1.1; color: #0f172a; }
+        .card-body { font-size: 22px; font-weight: 700; margin-top: 4px; word-wrap: break-word; }
+        .card-meta { font-size: 14px; color: #64748b; margin-top: 8px; }
+        .ack-btn {
+            margin-top: 14px; width: 100%; padding: 14px; font-size: 19px; font-weight: 800;
+            background: #16a34a; color: #ffffff; border: none; border-radius: 12px; cursor: pointer;
+            font-family: 'Ramabhadra', sans-serif;
+        }
+        #dbError {
+            display: none; margin-top: 12px; background: #7f1d1d; color: #fecaca;
+            border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 700; text-align: center;
+        }
+        .footer { text-align: center; color: #64748b; font-size: 12px; margin-top: 20px; }
+        .footer a { color: #00e5ff; text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>🍳 AVAILO కిచెన్ డిస్‌ప్లే</h1>
+        <div class="sub">కొత్త ఆర్డర్ / రీఫిల్ వస్తే బజర్ మోగి, తెలుగులో చెప్తుంది</div>
+        <div class="conn" id="connStatus">⏳ కనెక్ట్ అవుతోంది…</div>
+
+        <button id="soundBtn">🔊 సౌండ్ ఆన్ చెయ్యడానికి నొక్కండి</button>
+        <div id="soundWarn">⚠️ సౌండ్ ఆఫ్‌లో ఉంది — బజర్ / వాయిస్ వినిపించదు. పైన ఉన్న బటన్‌ను ఒక్కసారి నొక్కండి.</div>
+        <div id="dbError"></div>
+
+        <div class="note">
+            📌 <b>ఇది ముఖ్యం:</b> ఈ పేజీని టాబ్లెట్‌లో తెరిచి ఉంచండి — టాబ్లెట్ ఆఫ్ చేయొద్దు, పేజీ మూయొద్దు.
+            బ్రౌజర్ సౌండ్‌ను అనుమతించదు కాబట్టి, ముందు పైన ఉన్న <b>సౌండ్ బటన్‌ను ఒక్కసారి నొక్కాలి</b> — ఆ తర్వాతే బజర్ + వాయిస్ వినిపిస్తాయి.
+            కొత్త ఆర్డర్ లేదా రీఫిల్ వచ్చిన ప్రతిసారీ బజర్ <b>3 సార్లు</b> మోగి, తెలుగులో ఒకసారి చెప్తుంది.
+        </div>
+
+        <div class="actions">
+            <button id="testBtn">🔔 బజర్ టెస్ట్</button>
+            <button id="clearBtn">🗑️ అన్నీ తొలగించు</button>
+        </div>
+
+        <div id="events">
+            <div class="empty" id="emptyMsg">ఇంకా ఆర్డర్లు లేవు — కొత్త ఆర్డర్ వస్తే ఇక్కడ కనిపిస్తుంది.</div>
+        </div>
+
+        <div class="footer">
+            <a href="index.html">← హోమ్‌పేజీకి వెళ్ళండి</a> &nbsp;·&nbsp; AVAILO Digital Services · Vijayawada &amp; Guntur
+        </div>
+    </div>
+
+    <script>
+        // Availo Kitchen — free Spark project "availo-kitchen".
+        // Public client config by design; security comes from the RTDB rules
+        // (only node availo-kitchen-v1 is open for read+write).
+        const firebaseConfig = {
+            apiKey: "AIzaSyCbLfAb7tDu7vdr73oEjl414BjGBdlGw-Q",
+            authDomain: "availo-kitchen.firebaseapp.com",
+            databaseURL: "https://availo-kitchen-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "availo-kitchen",
+            storageBucket: "availo-kitchen.firebasestorage.app",
+            messagingSenderId: "182835141482",
+            appId: "1:182835141482:web:8cbbffe83fcfd4cf9aa313"
+        };
+
+        const eventsEl = document.getElementById('events');
+        const emptyMsg = document.getElementById('emptyMsg');
+        const soundBtn = document.getElementById('soundBtn');
+        const soundWarn = document.getElementById('soundWarn');
+        const connStatus = document.getElementById('connStatus');
+        const dbErrorEl = document.getElementById('dbError');
+
+        let audioCtx = null;
+        let soundOn = false;
+
+        function showDbError(msg) {
+            dbErrorEl.style.display = 'block';
+            dbErrorEl.textContent = '⚠️ కిచెన్ డిస్‌ప్లే కనెక్ట్ కాలేదు: ' + msg + ' — ఇంటర్నెట్ చూసి పేజీని రిఫ్రెష్ చేయండి.';
+        }
+
+        // ---- Sound: loud buzzer via Web Audio (no external audio file) ----
+        function beep(freq, dur, delay) {
+            if (!audioCtx) return;
+            const t0 = audioCtx.currentTime + delay;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(freq, t0);
+            gain.gain.setValueAtTime(0.0001, t0);
+            gain.gain.exponentialRampToValueAtTime(0.5, t0 + 0.02);
+            gain.gain.setValueAtTime(0.5, t0 + dur - 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t0);
+            osc.stop(t0 + dur + 0.05);
+        }
+
+        function buzzTimes(n) {
+            if (!soundOn || !audioCtx) return;
+            for (let i = 0; i < n; i++) beep(880, 0.45, i * 0.65);
+        }
+
+        // ---- Voice: Telugu announcement, en fallback ----
+        function speakTelugu(text) {
+            try {
+                if (!('speechSynthesis' in window)) return;
+                const u = new SpeechSynthesisUtterance(text);
+                const voices = speechSynthesis.getVoices();
+                const te = voices.find(v => v.lang && v.lang.toLowerCase().indexOf('te') === 0);
+                const en = voices.find(v => v.lang && v.lang.toLowerCase().indexOf('en-in') === 0)
+                    || voices.find(v => v.lang && v.lang.toLowerCase().indexOf('en') === 0);
+                if (te) { u.lang = te.lang; u.voice = te; }
+                else if (en) { u.lang = en.lang; u.voice = en; }
+                else u.lang = 'te-IN';
+                u.rate = 1;
+                u.volume = 1;
+                speechSynthesis.speak(u);
+            } catch (e) { /* sound is best-effort; the card still shows */ }
+        }
+
+        // Browsers block autoplay audio: staff must tap once to enable sound.
+        soundBtn.addEventListener('click', function () {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                soundOn = true;
+                soundWarn.style.display = 'none';
+                soundBtn.textContent = '🔊 సౌండ్ ఆన్‌లో ఉంది ✅';
+                soundBtn.classList.add('on');
+                buzzTimes(1); // test beep
+            } catch (e) {
+                showDbError('సౌండ్ ఆన్ చేయలేకపోయాం — బ్రౌజర్ సెట్టింగ్స్ చూడండి.');
+            }
+        });
+
+        document.getElementById('testBtn').addEventListener('click', function () {
+            if (!soundOn) {
+                alert('ముందు పైన ఉన్న "సౌండ్ ఆన్" బటన్ నొక్కండి.');
+                return;
+            }
+            buzzTimes(3);
+            speakTelugu('టెస్ట్ — కిచెన్ డిస్‌ప్లే సౌండ్ పనిచేస్తోంది.');
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', function () {
+            eventsEl.innerHTML = '';
+            eventsEl.appendChild(emptyMsg);
+            emptyMsg.style.display = 'block';
+        });
+
+        // ---- Event cards (newest first) ----
+        function tableDigits(table) {
+            const m = String(table || '').match(/\d+/);
+            return m ? m[0] : String(table || '');
+        }
+
+        function announceText(type, d) {
+            const num = tableDigits(d.table);
+            if (type === 'refill') return 'టేబుల్ ' + num + 'కి ' + (d.text || '') + ' కావాలి';
+            return 'టేబుల్ ' + num + ' కొత్త ఆర్డర్ వచ్చింది' + (d.items ? ' — ' + d.items : '');
+        }
+
+        function addCard(type, d) {
+            if (emptyMsg) emptyMsg.style.display = 'none';
+            const card = document.createElement('div');
+            card.className = 'card' + (type === 'refill' ? ' refill' : '');
+            const isRefill = type === 'refill';
+            const title = isRefill ? '🔔 రీఫిల్ / సర్వీస్' : '🆕 కొత్త ఆర్డర్';
+            const body = isRefill ? (d.text || '') : (d.items || '');
+            const meta = [d.hotel, d.time, d.ref ? ('Ref: ' + d.ref) : ''].filter(Boolean).join(' · ');
+            card.innerHTML =
+                '<div class="card-type">' + title + '</div>' +
+                '<div class="card-table">టేబుల్ ' + tableDigits(d.table) + '</div>' +
+                '<div class="card-body">' + body.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+                '<div class="card-meta">' + meta.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+                '<button class="ack-btn">✅ చూశాను</button>';
+            card.querySelector('.ack-btn').addEventListener('click', function () {
+                card.remove();
+                if (!eventsEl.querySelector('.card')) emptyMsg.style.display = 'block';
+            });
+            eventsEl.prepend(card);
+        }
+
+        function handleEvent(type, d) {
+            addCard(type, d || {});
+            if (!soundOn) return;
+            buzzTimes(3);
+            speakTelugu(announceText(type, d || {}));
+        }
+
+        // ---- Firebase listeners (skip events already present at page load) ----
+        let db = null;
+        try {
+            if (typeof firebase === 'undefined') throw new Error('Firebase SDK లోడ్ కాలేదు');
+            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+            db = firebase.database();
+        } catch (e) {
+            showDbError(e.message || 'Firebase ప్రారంభం కాలేదు');
+        }
+
+        if (db) {
+            db.ref('.info/connected').on('value', function (snap) {
+                const on = snap.val() === true;
+                connStatus.textContent = on ? '🟢 కనెక్ట్ అయ్యింది' : '🔴 కనెక్ట్ కాలేదు — ఇంటర్నెట్ చూడండి';
+            });
+
+            const seen = { orders: new Set(), refills: new Set() };
+            function armListener(node, type) {
+                const ref = db.ref('availo-kitchen-v1/' + node);
+                ref.once('value').then(function (snap) {
+                    snap.forEach(function (child) { seen[node].add(child.key); });
+                    ref.on('child_added', function (child) {
+                        if (seen[node].has(child.key)) return;
+                        seen[node].add(child.key);
+                        handleEvent(type, child.val() || {});
+                    });
+                }).catch(function (err) { showDbError(err.message || 'డేటా చదవలేకపోయాం'); });
+            }
+            armListener('orders', 'order');
+            armListener('refills', 'refill');
+        }
+    </script>
+
+</body>
+</html>

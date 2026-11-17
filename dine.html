@@ -181,6 +181,11 @@
             margin: 0 auto;
         }
 
+        /* Desktop: wide centred layout (mobile layout unchanged) */
+        @media (min-width: 1024px) {
+            .content-wrap { max-width: 1080px; }
+        }
+
         .filter-row {
             display: flex;
             justify-content: space-between;
@@ -281,7 +286,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
         }
+
+        .dish-photo {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .dish-text { flex: 1; min-width: 0; }
 
         .dish-badge-row {
             display: flex;
@@ -625,6 +641,8 @@
             gap: 6px;
         }
     </style>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -722,6 +740,8 @@
             <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
         </div>
         <div data-te="AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు" data-en="AVAILO Digital Services · Vijayawada &amp; Guntur" data-hi="AVAILO डिजिटल सर्विसेज़ · विजयवाड़ा और गुंटूर">AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు</div>
+        <div style="margin-top: 6px; font-size: 11px;"><a href="privacy.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a></div>
+        <div style="margin-top: 6px; font-size: 11px;" data-te="📷 ఫోటోలు: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju" data-en="📷 Photos: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju" data-hi="📷 फ़ोटो: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju">📷 Photos: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju</div>
     </footer>
 
     <!-- Order confirmation overlay -->
@@ -737,6 +757,36 @@
     </div>
 
     <script>
+
+        // ---- Availo Kitchen (Firebase, free Spark) — fire-and-forget alerts ----
+        // The WhatsApp flow below never waits on Firebase: every push is wrapped
+        // in try/catch and returns immediately on failure.
+        const KITCHEN_FIREBASE_CONFIG = {
+            apiKey: "AIzaSyCbLfAb7tDu7vdr73oEjl414BjGBdlGw-Q",
+            authDomain: "availo-kitchen.firebaseapp.com",
+            databaseURL: "https://availo-kitchen-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "availo-kitchen",
+            storageBucket: "availo-kitchen.firebasestorage.app",
+            messagingSenderId: "182835141482",
+            appId: "1:182835141482:web:8cbbffe83fcfd4cf9aa313"
+        };
+        let kitchenDb = null;
+        try {
+            if (typeof firebase !== 'undefined' && !firebase.apps.length) firebase.initializeApp(KITCHEN_FIREBASE_CONFIG);
+            if (typeof firebase !== 'undefined') kitchenDb = firebase.database();
+        } catch (e) { kitchenDb = null; }
+        function availoRef() {
+            const d = new Date();
+            const ymd = d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+            return 'AV-' + ymd + '-' + String(Math.floor(1000 + Math.random() * 9000));
+        }
+        function pushKitchenEvent(node, payload) {
+            try {
+                if (!kitchenDb) return;
+                kitchenDb.ref('availo-kitchen-v1/' + node).push(Object.assign({ ts: Date.now() }, payload));
+            } catch (e) { /* never block the WhatsApp flow */ }
+        }
+
         const params = new URLSearchParams(window.location.search);
         const hotelParam = params.get('hotel');
         const tableParam = params.get('table');
@@ -772,21 +822,21 @@
         // 🌟 EASY TO EDIT RESTAURANT MENU (Categories & Sub-categories)
         const HOTEL_MENU = [
             // STARTERS
-            { id: 'paneerTikka', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', name: 'పన్నీర్ టిక్కా (6 ముక్కలు)', nameEn: 'Paneer Tikka (6 Pcs)', nameHi: 'पनीर टिक्का (6 पीस)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', descEn: 'Charcoal-grilled paneer', descHi: 'कोयले पर सेंका हुआ पनीर', price: 190, count: 0 },
+            { id: 'paneerTikka', photo: 'images/dine/paneer-tikka.jpg', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', name: 'పన్నీర్ టిక్కా (6 ముక్కలు)', nameEn: 'Paneer Tikka (6 Pcs)', nameHi: 'पनीर टिक्का (6 पीस)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', descEn: 'Charcoal-grilled paneer', descHi: 'कोयले पर सेंका हुआ पनीर', price: 190, count: 0 },
             { id: 'crispyCorn', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', name: 'క్రిస్పీ చిల్లీ కార్న్', nameEn: 'Crispy Chilli Corn', nameHi: 'क्रिस्पी चिल्ली कॉर्न', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', descEn: 'Spicy sweet corn fry', descHi: 'मसालेदार स्वीट कॉर्न फ्राई', price: 150, count: 0 },
-            { id: 'chicken65', cat: 'STARTERS', subcat: 'NONVEG_STARTERS', diet: 'NONVEG', name: 'చికెన్ 65 (బోన్‌లెస్)', nameEn: 'Chicken 65 (Boneless)', nameHi: 'चिकन 65 (बोनलेस)', desc: 'కరివేపాకు మసాలా ఫ్రై', descEn: 'Curry-leaf masala fry', descHi: 'करी पत्ता मसाला फ्राई', price: 220, count: 0 },
+            { id: 'chicken65', photo: 'images/dine/chicken-65.jpg', cat: 'STARTERS', subcat: 'NONVEG_STARTERS', diet: 'NONVEG', name: 'చికెన్ 65 (బోన్‌లెస్)', nameEn: 'Chicken 65 (Boneless)', nameHi: 'चिकन 65 (बोनलेस)', desc: 'కరివేపాకు మసాలా ఫ్రై', descEn: 'Curry-leaf masala fry', descHi: 'करी पत्ता मसाला फ्राई', price: 220, count: 0 },
 
             // BIRYANIS
-            { id: 'vegDumBiryani', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', name: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', nameEn: 'Special Veg Dum Biryani', nameHi: 'स्पेशल वेज दम बिरयानी', desc: 'మిర్చి కా సాలన్ & రైతా', descEn: 'Mirchi ka salan & raita', descHi: 'मिर्ची का सालन और रायता', price: 220, count: 0 },
-            { id: 'kajuBiryani', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', name: 'జీడిపప్పు బిర్యానీ', nameEn: 'Cashew (Kaju) Biryani', nameHi: 'काजू बिरयानी', desc: 'నెయ్యిలో వేయించిన జీడిపప్పుతో', descEn: 'With cashews roasted in ghee', descHi: 'घी में भुने हुए काजू के साथ', price: 260, count: 0 },
-            { id: 'chickenDumBiryani', cat: 'BIRYANIS', subcat: 'NONVEG_BIRYANI', diet: 'NONVEG', name: 'చికెన్ దమ్ బిర్యానీ', nameEn: 'Chicken Dum Biryani', nameHi: 'चिकन दम बिरयानी', desc: 'అసలైన దమ్ మసాలా రుచి', descEn: 'Authentic dum masala flavour', descHi: 'असली दम मसाले का स्वाद', price: 280, count: 0 },
+            { id: 'vegDumBiryani', photo: 'images/dine/veg-biryani.jpg', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', name: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', nameEn: 'Special Veg Dum Biryani', nameHi: 'स्पेशल वेज दम बिरयानी', desc: 'మిర్చి కా సాలన్ & రైతా', descEn: 'Mirchi ka salan & raita', descHi: 'मिर्ची का सालन और रायता', price: 220, count: 0 },
+            { id: 'kajuBiryani', photo: 'images/dine/kaju-biryani.jpg', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', name: 'జీడిపప్పు బిర్యానీ', nameEn: 'Cashew (Kaju) Biryani', nameHi: 'काजू बिरयानी', desc: 'నెయ్యిలో వేయించిన జీడిపప్పుతో', descEn: 'With cashews roasted in ghee', descHi: 'घी में भुने हुए काजू के साथ', price: 260, count: 0 },
+            { id: 'chickenDumBiryani', photo: 'images/dine/chicken-biryani.jpg', cat: 'BIRYANIS', subcat: 'NONVEG_BIRYANI', diet: 'NONVEG', name: 'చికెన్ దమ్ బిర్యానీ', nameEn: 'Chicken Dum Biryani', nameHi: 'चिकन दम बिरयानी', desc: 'అసలైన దమ్ మసాలా రుచి', descEn: 'Authentic dum masala flavour', descHi: 'असली दम मसाले का स्वाद', price: 280, count: 0 },
 
             // CURRIES & ROTIS
-            { id: 'paneerButter', cat: 'CURRIES_ROTIS', subcat: 'VEG_CURRIES', diet: 'VEG', name: 'పన్నీర్ బట్టర్ మసాలా', nameEn: 'Paneer Butter Masala', nameHi: 'पनीर बटर मसाला', desc: 'క్రీమీ టొమాటో & జీడిపప్పు గ్రేవీ', descEn: 'Creamy tomato & cashew gravy', descHi: 'क्रीमी टमाटर और काजू की ग्रेवी', price: 180, count: 0 },
-            { id: 'butterNaan', cat: 'CURRIES_ROTIS', subcat: 'BREADS', diet: 'VEG', name: 'బట్టర్ నాన్ (2 ముక్కలు)', nameEn: 'Butter Naan (2 Pcs)', nameHi: 'बटर नान (2 पीस)', desc: 'వేడి వేడి తందూరీ నాన్', descEn: 'Hot tandoori naan', descHi: 'गरमागरम तंदूरी नान', price: 60, count: 0 },
+            { id: 'paneerButter', photo: 'images/dine/paneer-butter-masala.jpg', cat: 'CURRIES_ROTIS', subcat: 'VEG_CURRIES', diet: 'VEG', name: 'పన్నీర్ బట్టర్ మసాలా', nameEn: 'Paneer Butter Masala', nameHi: 'पनीर बटर मसाला', desc: 'క్రీమీ టొమాటో & జీడిపప్పు గ్రేవీ', descEn: 'Creamy tomato & cashew gravy', descHi: 'क्रीमी टमाटर और काजू की ग्रेवी', price: 180, count: 0 },
+            { id: 'butterNaan', photo: 'images/dine/butter-naan.jpg', cat: 'CURRIES_ROTIS', subcat: 'BREADS', diet: 'VEG', name: 'బట్టర్ నాన్ (2 ముక్కలు)', nameEn: 'Butter Naan (2 Pcs)', nameHi: 'बटर नान (2 पीस)', desc: 'వేడి వేడి తందూరీ నాన్', descEn: 'Hot tandoori naan', descHi: 'गरमागरम तंदूरी नान', price: 60, count: 0 },
 
             // DRINKS
-            { id: 'sweetLassi', cat: 'DRINKS', subcat: 'COOLERS', diet: 'VEG', name: 'స్పెషల్ స్వీట్ లస్సీ', nameEn: 'Special Sweet Lassi', nameHi: 'स्पेशल स्वीट लस्सी', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', descEn: 'Thick curd with almond flakes', descHi: 'गाढ़ा दही और बादाम के टुकड़े', price: 70, count: 0 },
+            { id: 'sweetLassi', photo: 'images/dine/sweet-lassi.jpg', cat: 'DRINKS', subcat: 'COOLERS', diet: 'VEG', name: 'స్పెషల్ స్వీట్ లస్సీ', nameEn: 'Special Sweet Lassi', nameHi: 'स्पेशल स्वीट लस्सी', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', descEn: 'Thick curd with almond flakes', descHi: 'गाढ़ा दही और बादाम के टुकड़े', price: 70, count: 0 },
             { id: 'waterBottle', cat: 'DRINKS', subcat: 'WATER', diet: 'VEG', name: 'మినరల్ వాటర్ (1 లీటర్)', nameEn: 'Mineral Water (1L)', nameHi: 'मिनरल वॉटर (1 लीटर)', desc: 'కూల్డ్ వాటర్ బాటిల్', descEn: 'Chilled water bottle', descHi: 'ठंडी पानी की बोतल', price: 25, count: 0 }
         ];
 
@@ -853,6 +903,7 @@
             addMoreFood: { te: "🔄 ఇంకా ఏమైనా ఫుడ్ ఆర్డర్ చేయండి", en: "🔄 Order more food", hi: "🔄 और खाना ऑर्डर कीजिए" },
             thankYouSpeak: { te: "థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. మధ్యలో ఉల్లిపాయలు, నిమ్మకాయ, పెరుగు లేదా ఏసీ అడ్జస్ట్‌మెంట్ కోసం కింద బటన్లు వాడుకోండి సర్.", en: "Thank you, sir! Your order has gone to the kitchen. It will reach your table hot in fifteen minutes. Meanwhile, use the buttons below for onions, lemon, curd or AC adjustment, sir.", hi: "धन्यवाद सर! आपका ऑर्डर किचन चला गया है। पंद्रह मिनट में गरमागरम आपकी टेबल पर आ जाएगा। बीच में प्याज़, नींबू, दही या एसी के लिए नीचे दिए गए बटन इस्तेमाल कीजिए सर।" },
             trackerTitle: { te: "లైవ్ ఆర్డర్ ట్రాకర్", en: "LIVE ORDER TRACKER", hi: "लाइव ऑर्डर ट्रैकर" },
+            orderSentKitchen: { te: "✅ ఆర్డర్ కిచెన్‌కి వెళ్ళింది", en: "✅ Order sent to the kitchen", hi: "✅ ऑर्डर किचन भेज दिया गया" },
             progressSuffix: { te: "పూర్తయింది", en: "COMPLETED", hi: "पूरा हुआ" },
             readyText: { te: "సిద్ధం!", en: "READY!", hi: "तैयार!" },
             readyServe: { te: "100% సర్వ్ చేయడానికి సిద్ధం", en: "100% READY TO SERVE", hi: "100% परोसने के लिए तैयार" }
@@ -861,12 +912,12 @@
         // One-tap refill buttons: on-screen label + spoken reply follow the selected
         // language; wa (WhatsApp message to the kitchen) stays Telugu for kitchen staff.
         const REFILLS = [
-            { label: { te: "🧅 ఉల్లిపాయ & నిమ్మకాయ", en: "🧅 Onion & Lemon", hi: "🧅 प्याज़ और नींबू" }, wa: "ఉల్లిపాయలు & నిమ్మకాయ (Onions & Lemon)", reply: { te: "ఉల్లిపాయలు, నిమ్మకాయ పంపించమని కిచెన్‌కు చెప్తున్నాను సర్.", en: "I am asking the kitchen to send onions and lemon, sir.", hi: "मैं किचन से प्याज़ और नींबू भिजवाने के लिए कह रहा हूँ सर।" }, bill: false },
-            { label: { te: "🥣 పెరుగు / రైతా", en: "🥣 Curd / Raita", hi: "🥣 दही / रायता" }, wa: "పెరుగు / రైతా (Extra Curd / Raita)", reply: { te: "ఎక్స్‌ట్రా పెరుగు పంపించమని చెప్తున్నాను సర్.", en: "I am asking them to send extra curd, sir.", hi: "मैं एक्स्ट्रा दही भिजवाने के लिए कह रहा हूँ सर।" }, bill: false },
-            { label: { te: "💧 మంచినీళ్లు", en: "💧 Drinking Water", hi: "💧 पीने का पानी" }, wa: "మంచినీళ్లు (Drinking Water)", reply: { te: "మంచినీళ్లు పంపిస్తున్నాము సర్.", en: "We are sending drinking water, sir.", hi: "पीने का पानी भिजवा रहे हैं सर।" }, bill: false },
-            { label: { te: "🧻 టిష్యూ పేపర్స్", en: "🧻 Tissue Papers", hi: "🧻 टिशू पेपर" }, wa: "టిష్యూ పేపర్స్ / సాల్ట్ (Tissues & Salt)", reply: { te: "టిష్యూ పేపర్స్ పంపిస్తున్నాము సర్.", en: "We are sending tissue papers, sir.", hi: "टिशू पेपर भिजवा रहे हैं सर।" }, bill: false },
-            { label: { te: "❄️ ఏసీ అడ్జస్ట్ చేయండి", en: "❄️ Adjust AC", hi: "❄️ एसी ठीक कीजिए" }, wa: "AC కూలింగ్ అడ్జస్ట్ చేయండి (Adjust AC)", reply: { te: "ఏసీ టెంపరేచర్ అడ్జస్ట్ చేయమని స్టాఫ్‌కు చెప్తున్నాను సర్.", en: "I am asking the staff to adjust the AC temperature, sir.", hi: "मैं स्टाफ़ से एसी का तापमान ठीक करने के लिए कह रहा हूँ सर।" }, bill: false },
-            { label: { te: "🧾 బిల్లు పంపండి", en: "🧾 Send the Bill", hi: "🧾 बिल भेजिए" }, wa: "బిల్లు పంపండి (Request Final Bill)", reply: { te: "మీ టేబుల్ బిల్లు సిద్ధం చేయమని కౌంటర్‌కు చెప్తున్నాను సర్.", en: "I am asking the counter to prepare your table's bill, sir.", hi: "मैं काउंटर से आपकी टेबल का बिल तैयार करने के लिए कह रहा हूँ सर।" }, bill: true }
+            { label: { te: "🧅 ఉల్లిపాయ & నిమ్మకాయ", en: "🧅 Onion & Lemon", hi: "🧅 प्याज़ और नींबू" }, loud: { te: "ఉల్లిపాయ & నిమ్మకాయ కావాలి", en: "ONION & LEMON NEEDED", hi: "प्याज़ और नींबू चाहिए" }, wa: "ఉల్లిపాయలు & నిమ్మకాయ (Onions & Lemon)", reply: { te: "ఉల్లిపాయలు, నిమ్మకాయ పంపించమని కిచెన్‌కు చెప్తున్నాను సర్.", en: "I am asking the kitchen to send onions and lemon, sir.", hi: "मैं किचन से प्याज़ और नींबू भिजवाने के लिए कह रहा हूँ सर।" }, bill: false },
+            { label: { te: "🥣 పెరుగు / రైతా", en: "🥣 Curd / Raita", hi: "🥣 दही / रायता" }, loud: { te: "పెరుగు / రైతా కావాలి", en: "CURD / RAITA NEEDED", hi: "दही / रायता चाहिए" }, wa: "పెరుగు / రైతా (Extra Curd / Raita)", reply: { te: "ఎక్స్‌ట్రా పెరుగు పంపించమని చెప్తున్నాను సర్.", en: "I am asking them to send extra curd, sir.", hi: "मैं एक्स्ट्रा दही भिजवाने के लिए कह रहा हूँ सर।" }, bill: false },
+            { label: { te: "💧 మంచినీళ్లు", en: "💧 Drinking Water", hi: "💧 पीने का पानी" }, loud: { te: "మంచినీళ్లు కావాలి", en: "DRINKING WATER NEEDED", hi: "पीने का पानी चाहिए" }, wa: "మంచినీళ్లు (Drinking Water)", reply: { te: "మంచినీళ్లు పంపిస్తున్నాము సర్.", en: "We are sending drinking water, sir.", hi: "पीने का पानी भिजवा रहे हैं सर।" }, bill: false },
+            { label: { te: "🧻 టిష్యూ పేపర్స్", en: "🧻 Tissue Papers", hi: "🧻 टिशू पेपर" }, loud: { te: "టిష్యూ పేపర్స్ కావాలి", en: "TISSUE PAPERS NEEDED", hi: "टिशू पेपर चाहिए" }, wa: "టిష్యూ పేపర్స్ / సాల్ట్ (Tissues & Salt)", reply: { te: "టిష్యూ పేపర్స్ పంపిస్తున్నాము సర్.", en: "We are sending tissue papers, sir.", hi: "टिशू पेपर भिजवा रहे हैं सर।" }, bill: false },
+            { label: { te: "❄️ ఏసీ అడ్జస్ట్ చేయండి", en: "❄️ Adjust AC", hi: "❄️ एसी ठीक कीजिए" }, loud: { te: "ఏసీ అడ్జస్ట్ చేయాలి", en: "ADJUST AC", hi: "एसी ठीक कीजिए" }, wa: "AC కూలింగ్ అడ్జస్ట్ చేయండి (Adjust AC)", reply: { te: "ఏసీ టెంపరేచర్ అడ్జస్ట్ చేయమని స్టాఫ్‌కు చెప్తున్నాను సర్.", en: "I am asking the staff to adjust the AC temperature, sir.", hi: "मैं स्टाफ़ से एसी का तापमान ठीक करने के लिए कह रहा हूँ सर।" }, bill: false },
+            { label: { te: "🧾 బిల్లు పంపండి", en: "🧾 Send the Bill", hi: "🧾 बिल भेजिए" }, loud: { te: "బిల్లు కావాలి", en: "BILL NEEDED", hi: "बिल चाहिए" }, wa: "బిల్లు పంపండి (Request Final Bill)", reply: { te: "మీ టేబుల్ బిల్లు సిద్ధం చేయమని కౌంటర్‌కు చెప్తున్నాను సర్.", en: "I am asking the counter to prepare your table's bill, sir.", hi: "मैं काउंटर से आपकी टेबल का बिल तैयार करने के लिए कह रहा हूँ सर।" }, bill: true }
         ];
 
         function t(key) { const v = STR[key]; return v ? (v[currentLang] || v.te) : ''; }
@@ -924,7 +975,8 @@
 
             listEl.innerHTML = filtered.map(item => `
                 <div class="dish-row">
-                    <div>
+                    ${item.photo ? `<img class="dish-photo" src="${item.photo}" alt="">` : ''}
+                    <div class="dish-text">
                         <div class="dish-badge-row">
                             <span class="${item.diet === 'VEG' ? 'dot-veg' : 'dot-nonveg'}"></span>
                             <span class="sub-tag">${itemSub(item)}</span>
@@ -1122,6 +1174,8 @@
                 // the spoken order itself stays exactly as the customer said it.
                 const msg = currentLang === 'hi' ? `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*होटल:* ${hotelName}%0A*टेबल:* ${tableNumber}%0A*वॉइस ऑर्डर:* ${spokenText}%0A-----------------------------%0A_(किचन में तैयार होने के बाद इसी चैट में ग्राहक को जवाब दें)_` : currentLang === 'en' ? `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*Hotel:* ${hotelName}%0A*Table:* ${tableNumber}%0A*Voice Order:* ${spokenText}%0A-----------------------------%0A_(Please reply in this same chat after the kitchen prepares it)_` : `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0A_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు రిప్లై ఇవ్వండి)_`;
                 const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${t('tableLabel')} ${escHtml(tableDisplay())}</div><div style="margin-top: 6px;">${t('voiceOrderLabel')}</div><div style="font-weight: 700; color: #fff;">"${escHtml(spokenText)}"</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
+            pendingOrderItems = spokenText;
+            pendingOrderRef = availoRef();
                 showOrderConfirm(summaryHtml, msg, t('voiceOrderBill'));
             };
             rec.start();
@@ -1129,6 +1183,8 @@
 
         let pendingOrderMsg = "";
         let pendingOrderBill = "";
+        let pendingOrderItems = "";
+        let pendingOrderRef = "";
 
         function escHtml(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
@@ -1150,7 +1206,8 @@
             const billLabel = pendingOrderBill;
             if (!msg) { closeOrderConfirm(); return; }
             closeOrderConfirm();
-            displayLiveTrackerScreen(billLabel, 15);
+            displayLiveTrackerScreen(billLabel, 15, pendingOrderRef);
+            pushKitchenEvent('orders', { table: tableNumber, hotel: hotelName, items: pendingOrderItems || billLabel, time: new Date().toLocaleTimeString(), ref: pendingOrderRef || '' });
             setTimeout(() => {
                 window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
             }, 1400);
@@ -1187,16 +1244,23 @@
             const noteLine = chefNote ? `<div style="margin-top: 6px;">${t('chefNoteLabel')} ${escHtml(chefNote)}</div>` : '';
             const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${t('tableLabel')} ${escHtml(tableDisplay())}</div>${summaryLines}${noteLine}<div style="border-top: 1px dashed #94a3b8; margin-top: 8px; padding-top: 8px; font-weight: 800; color: #fff;">${t('totalBillLabel')} ₹${grandTotal}</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
             speakGentVoice(t('orderReadySpeak'));
+            pendingOrderItems = orderLines.join(', ');
+            pendingOrderRef = availoRef();
             showOrderConfirm(summaryHtml, msg, `₹${grandTotal}`);
         }
 
+        // Loud refill alert: bell + TABLE number first, short, in the site language,
+        // so the kitchen notices it on WhatsApp. (No buzzer/backend in this batch.)
         function requestTableService(idx) {
             const r = REFILLS[idx];
             if (!r) return;
             speakGentVoice(r.reply[currentLang]);
-            const msg = `*AVAILO TABLE REFILL / SERVICE*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*కావలసినవి:* ${r.wa}%0A*సమయం:* ${new Date().toLocaleTimeString()}`;
+            const tableNum = (String(tableNumber).match(/\d+/) || [tableNumber])[0];
+            const loudText = (r.loud && (r.loud[currentLang] || r.loud.te)) || r.label[currentLang];
+            const msg = `🔔🔔 TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}`;
+            pushKitchenEvent('refills', { table: tableNum, text: loudText, time: new Date().toLocaleTimeString(), ref: availoRef() });
             setTimeout(() => {
-                window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
+                window.location.href = `https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`;
             }, 900);
         }
 
@@ -1204,13 +1268,15 @@
         let lastPct = 35;
         let trackerReady = false;
 
-        function displayLiveTrackerScreen(billInfo, minutes) {
+        function displayLiveTrackerScreen(billInfo, minutes, orderRef) {
             trackerState = { billInfo: billInfo };
             trackerReady = false;
             lastPct = 35;
             const container = document.getElementById('mainContainer');
             container.innerHTML = `
                 <div class="tracker-card">
+                    <div style="background: #16a34a; color: #ffffff; border-radius: 10px; padding: 12px; font-size: 15px; font-weight: 800; text-align: center; margin-bottom: 12px;">${t('orderSentKitchen')}</div>
+                    ${orderRef ? `<div style="font-size: 12.5px; color: #94a3b8; font-weight: 700; text-align: center; margin-bottom: 12px;">Ref: ${orderRef}</div>` : ''}
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                         <span id="trackerTitle" style="font-size: 12px; color: var(--brand-gold); font-family: 'Rajdhani', sans-serif; font-weight: 800;">${t('trackerTitle')}</span>
                         <span style="font-size: 12px; color: var(--brand-cyan); font-family: 'Rajdhani', sans-serif; font-weight: 800;" id="progressPercent">${'35% ' + t('progressSuffix')}</span>

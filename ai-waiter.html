@@ -45,6 +45,11 @@
             text-align: center;
         }
 
+        /* Desktop: wide centred layout (mobile layout unchanged) */
+        @media (min-width: 1024px) {
+            .app-shell { max-width: 720px; }
+        }
+
         /* 1. TOP HEADER */
         .brand-header {
             width: 100%;
@@ -570,6 +575,7 @@
         <div class="footer-bar">
             <span id="tableNoLbl">టేబుల్ నం:</span> <span id="tableNumber">01</span> · <span id="poweredByLbl">AVAILO VOICE ENGINE ద్వారా</span><br>
             <span id="helplineLbl">హెల్ప్‌లైన్:</span> <a href="tel:9966157369">9966157369</a> · <a href="https://wa.me/919966157369">WhatsApp</a> · <a href="https://availoservices.in/">availoservices.in</a>
+            <br><a id="privacyLink" href="privacy.html">గోప్యతా విధానం</a> · <a id="termsLink" href="terms.html">నిబంధనలు</a>
         </div>
     </div>
 
@@ -642,6 +648,8 @@
                 tableNoLabel: "టేబుల్ నం:",
                 poweredBy: "AVAILO VOICE ENGINE ద్వారా",
                 helplineLabel: "హెల్ప్‌లైన్:",
+                privacyLink: "గోప్యతా విధానం",
+                termsLink: "నిబంధనలు",
                 talkBtn: "🎤 మాట్లాడండి",
                 sendBtn: "ఆర్డర్ పంపండి",
                 chip: { tap: "● మాట్లాడటానికి మధ్య బటన్ నొక్కండి", ready: "● వినడానికి సిద్ధం", listening: "🔴 వింటున్నాను... మాట్లాడండి", speaking: "🔊 AI మాట్లాడుతోంది...", paused: "● ఆగిపోయింది" },
@@ -678,6 +686,8 @@
                 tableNoLabel: "Table No:",
                 poweredBy: "Powered by AVAILO VOICE ENGINE",
                 helplineLabel: "Helpline:",
+                privacyLink: "Privacy Policy",
+                termsLink: "Terms",
                 talkBtn: "🎤 Talk",
                 sendBtn: "Send Order",
                 chip: { tap: "● TAP CORE TO START CONVERSATION", ready: "● READY TO LISTEN", listening: "🔴 LISTENING... SPEAK NOW", speaking: "🔊 AI SPEAKING...", paused: "● PAUSED" },
@@ -714,6 +724,8 @@
                 tableNoLabel: "टेबल नं:",
                 poweredBy: "AVAILO VOICE ENGINE द्वारा",
                 helplineLabel: "हेल्पलाइन:",
+                privacyLink: "गोपनीयता नीति",
+                termsLink: "नियम",
                 talkBtn: "🎤 बोलिए",
                 sendBtn: "ऑर्डर भेजें",
                 chip: { tap: "● बातचीत शुरू करने के लिए बीच का बटन दबाएं", ready: "● सुनने के लिए तैयार", listening: "🔴 सुन रहा हूँ... बोलिए", speaking: "🔊 AI बोल रहा है...", paused: "● रुका हुआ" },
@@ -974,6 +986,8 @@
             document.getElementById('tableNoLbl').innerText = LANG_DATA[lang].tableNoLabel;
             document.getElementById('poweredByLbl').innerText = LANG_DATA[lang].poweredBy;
             document.getElementById('helplineLbl').innerText = LANG_DATA[lang].helplineLabel;
+            document.getElementById('privacyLink').innerText = LANG_DATA[lang].privacyLink;
+            document.getElementById('termsLink').innerText = LANG_DATA[lang].termsLink;
             document.getElementById('talkBtn').innerText = LANG_DATA[lang].talkBtn;
             document.getElementById('sendOrderLabel').innerText = LANG_DATA[lang].sendBtn;
             document.getElementById('backLink').innerText = LANG_DATA[lang].backLink;

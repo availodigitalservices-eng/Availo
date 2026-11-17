@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>AVAILO Smart Gate & Society Care Desk</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Desktop: wide centred layout (mobile layout unchanged) */
+    @media (min-width: 1024px) { .max-w-md { max-width: 900px !important; } }
+  </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @keyframes pulse-subtle {
@@ -12,6 +16,15 @@
       50% { opacity: 0.95; transform: scale(0.99); }
     }
     .pulse-btn { animation: pulse-subtle 3s infinite ease-in-out; }
+    /* Gate pass quick-select visitor chips (min 44px tap targets) */
+    .visitor-chip { min-height: 44px; padding: 10px 14px; border-radius: 999px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #334155; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .visitor-chip.active { background: #4f46e5; border-color: #4f46e5; color: #ffffff; }
+    .gate-warn { display: none; background: #fef2f2; border: 1.5px solid #dc2626; color: #b91c1c; border-radius: 12px; padding: 10px 12px; margin-top: 10px; font-size: 12px; font-weight: 700; line-height: 1.5; }
+    .gate-confirm { display: none; background: #f0fdf4; border: 1.5px solid #16a34a; border-radius: 16px; padding: 14px; text-align: center; }
+    /* Desktop: wide centred layout for header + main (modal stays phone-width) */
+    @media (min-width: 1024px) {
+      header .max-w-md, main.max-w-md { max-width: 1080px !important; }
+    }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans antialiased pb-20 select-none">
@@ -72,7 +85,7 @@
           <label class="block text-[11px] font-bold text-slate-700 mb-1">
             <i class="fa-solid fa-house-chimney text-indigo-500 mr-1"></i> <span data-te="ఫ్లాట్ ఎంచుకోండి *" data-en="Select Flat *" data-hi="फ्लैट चुनें *">ఫ్లాట్ ఎంచుకోండి *</span>
           </label>
-          <select id="gateFlat" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+          <select id="gateFlat" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
             <option value="" selected data-te="ఫ్లాట్ ఎంచుకోండి" data-en="Select Flat" data-hi="फ्लैट चुनें">ఫ్లాట్ ఎంచుకోండి</option>
             <option value="Flat 101" data-te="ఫ్లాట్ 101" data-en="Flat 101" data-hi="फ़्लैट 101">ఫ్లాట్ 101</option>
             <option value="Flat 102" data-te="ఫ్లాట్ 102" data-en="Flat 102" data-hi="फ़्लैट 102">ఫ్లాట్ 102</option>
@@ -91,7 +104,7 @@
           <label class="block text-[11px] font-bold text-slate-700 mb-1">
             <i class="fa-solid fa-motorcycle text-indigo-500 mr-1"></i> <span data-te="విజిటర్ రకం *" data-en="Visitor Type *" data-hi="विज़िटर का प्रकार *">విజిటర్ రకం *</span>
           </label>
-          <select id="visitorType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+          <select id="visitorType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
             <option value="" selected data-te="విజిటర్ రకం ఎంచుకోండి" data-en="Select Visitor Type" data-hi="विज़िटर का प्रकार चुनें">విజిటర్ రకం ఎంచుకోండి</option>
             <option value="Swiggy / Zomato">Swiggy / Zomato</option>
             <option value="Amazon / Flipkart">Amazon / Flipkart</option>
@@ -104,12 +117,23 @@
         </div>
       </div>
 
+      <!-- Apartment Name (for the verified stamp) -->
+      <div>
+        <label class="block text-[11px] font-bold text-slate-700 mb-1">
+          <i class="fa-solid fa-building text-indigo-500 mr-1"></i> <span data-te="అపార్ట్‌మెంట్ పేరు *" data-en="Apartment Name *" data-hi="अपार्टमेंट का नाम *">అపార్ట్‌మెంట్ పేరు *</span>
+        </label>
+        <input type="text" id="gateApartment" placeholder="ఉదా: శ్రీ సాయి హైట్స్" data-ph-te="ఉదా: శ్రీ సాయి హైట్స్" data-ph-en="e.g. Sri Sai Heights" data-ph-hi="उदा: श्री साई हाइट्स" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+      </div>
+
+      <!-- Visitor quick-select chips -->
+      <div id="gateVisitorChips" class="flex flex-wrap gap-2"></div>
+
       <!-- Visitor Details / Vehicle Number -->
       <div>
         <label class="block text-[11px] font-bold text-slate-700 mb-1">
           <i class="fa-solid fa-id-card text-indigo-500 mr-1"></i> <span data-te="డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:" data-en="Delivery person name or vehicle number:" data-hi="डिलीवरी बॉय का नाम या गाड़ी नंबर:">డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:</span>
         </label>
-        <input type="text" id="visitorDetail" placeholder="ఉదా: రాము (AP 16 AB 1234)" data-ph-te="ఉదా: రాము (AP 16 AB 1234)" data-ph-en="e.g.: Ramu (AP 16 AB 1234)" data-ph-hi="उदा.: रामू (AP 16 AB 1234)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none">
+        <input type="text" id="visitorDetail" placeholder="ఉదా: రాము (AP 16 AB 1234)" data-ph-te="ఉదా: రాము (AP 16 AB 1234)" data-ph-en="e.g.: Ramu (AP 16 AB 1234)" data-ph-hi="उदा.: रामू (AP 16 AB 1234)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
       </div>
 
       <!-- Primary Action: WhatsApp Camera Pass Generator -->
@@ -118,9 +142,21 @@
         <span data-te="వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి" data-en="Take a selfie on WhatsApp &amp; send the pass" data-hi="WhatsApp पर सेल्फी लेकर पास भेजें">వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి</span>
       </button>
 
+      <div id="gateWarning" class="gate-warn" role="alert"></div>
+
       <div class="bg-amber-50 rounded-xl p-2.5 border border-amber-200/70 text-[10px] text-amber-900 flex items-start gap-2">
         <i class="fa-solid fa-shield-cat text-amber-600 text-sm mt-0.5"></i>
         <p data-te="<strong>సెక్యూరిటీ రూల్:</strong> బటన్ నొక్కగానే వాట్సాప్ తెరుచుకుంటుంది. వాట్సాప్ లోని కెమెరాతో సెల్ఫీ లేదా డెలివరీ బాక్స్ ఫోటో తీసి సెండ్ కొడితే గేట్ పాస్ వెరిఫై అవుతుంది." data-en="<strong>Security Rule:</strong> Tapping the button opens WhatsApp. Take a selfie or a photo of the delivery box with the WhatsApp camera and send it to verify the gate pass." data-hi="<strong>सुरक्षा नियम:</strong> बटन दबाते ही WhatsApp खुल जाएगा। WhatsApp कैमरे से सेल्फी या डिलीवरी बॉक्स की फोटो लेकर भेजें, गेट पास वेरिफ़ाई हो जाएगा।"><strong>సెక్యూరిటీ రూల్:</strong> బటన్ నొక్కగానే వాట్సాప్ తెరుచుకుంటుంది. వాట్సాప్ లోని కెమెరాతో సెల్ఫీ లేదా డెలివరీ బాక్స్ ఫోటో తీసి సెండ్ కొడితే గేట్ పాస్ వెరిఫై అవుతుంది.</p>
+      </div>
+
+      <!-- Gate pass confirmation: reference + dynamic stamp -->
+      <div id="gateConfirmPanel" class="gate-confirm">
+        <div id="gateRefLine" class="text-[13px] font-extrabold text-emerald-800 mb-2.5"></div>
+        <canvas id="gateStampCanvas" width="900" height="620" class="w-full max-w-[420px] h-auto rounded-lg bg-white mx-auto"></canvas>
+        <div class="mt-2.5">
+          <button onclick="downloadGateStamp()" class="bg-emerald-600 text-white font-extrabold py-3 px-5 rounded-2xl text-xs shadow-lg" data-te="⬇️ స్టాంప్ డౌన్‌లోడ్ చేయండి" data-en="⬇️ Download Stamp" data-hi="⬇️ स्टैम्प डाउनलोड करें">⬇️ స్టాంప్ డౌన్‌లోడ్ చేయండి</button>
+        </div>
+        <p class="text-[11px] text-slate-500 mt-2" data-te="దీన్ని WhatsAppలో కస్టమర్‌కి పంపండి" data-en="Send this to the customer on WhatsApp" data-hi="इसे WhatsApp पर कस्टमर को भेजें">దీన్ని WhatsAppలో కస్టమర్‌కి పంపండి</p>
       </div>
     </section>
 
@@ -222,6 +258,8 @@
       <p class="text-[11px] font-semibold text-slate-500" data-te="అవైలో క్లస్టర్ మేనేజ్‌మెంట్ సర్వీసెస్, విజయవాడ" data-en="AVAILO Cluster Management Services, Vijayawada" data-hi="अवैलो क्लस्टर मैनेजमेंट सर्विसेज़, विजयवाड़ा">అవైలో క్లస్టర్ మేనేజ్‌మెంట్ సర్వీసెస్, విజయవాడ</p>
       <p class="text-[9px] text-slate-400" data-te="అపార్ట్‌మెంట్ సెక్యూరిటీ &amp; జీరో-బ్రోకరేజ్ లోకల్ నెట్‌వర్క్" data-en="Apartment security &amp; zero-brokerage local network" data-hi="अपार्टमेंट सुरक्षा और ज़ीरो-ब्रोकरेज लोकल नेटवर्क">అపార్ట్‌మెంట్ సెక్యూరిటీ &amp; జీరో-బ్రోకరేజ్ లోకల్ నెట్‌వర్క్</p>
       <p class="text-[11px] font-semibold"><a href="tel:9966157369" class="text-indigo-600"><span data-te="హెల్ప్‌లైన్:" data-en="Helpline:" data-hi="हेल्पलाइन:">హెల్ప్‌లైన్:</span> 9966157369</a> &nbsp;•&nbsp; <a href="index.html" class="text-indigo-600" data-te="‹ హోమ్‌కి వెళ్ళండి" data-en="‹ Go to Home" data-hi="‹ होम पर जाएँ">‹ హోమ్‌కి వెళ్ళండి</a></p>
+      <p class="text-[11px] font-semibold"><span data-te="వాట్సాప్ 2 (బ్యాకప్):" data-en="WhatsApp 2 (backup):" data-hi="WhatsApp 2 (बैकअप):">వాట్సాప్ 2 (బ్యాకప్):</span> <a href="tel:8686761098" class="text-indigo-600">8686761098</a> &nbsp;•&nbsp; <a href="privacy.html" class="text-indigo-600" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;•&nbsp; <a href="terms.html" class="text-indigo-600" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a></p>
+      <p class="text-[10px] text-slate-400" data-te="మిస్డ్ కాల్ అయితే మేము కాల్ చేస్తాం" data-en="Give a missed call — we will call you back" data-hi="मिस्ड कॉल दीजिए — हम आपको कॉल करेंगे">మిస్డ్ కాల్ అయితే మేము కాల్ చేస్తాం</p>
     </div>
 
   </main>
@@ -263,6 +301,8 @@
           <i class="fa-solid fa-clock-rotate-left text-indigo-600 text-xs mt-0.5"></i>
           <span data-te="ట్రయల్ బుకింగ్: ఈ వివరాలు మా డెస్క్‌కు చేరగానే సొసైటీ వెరిఫైడ్ టెక్నీషియన్ మీకు కాల్ చేసి సమయం నిర్ధారిస్తారు." data-en="Trial booking: Once these details reach our desk, a society-verified technician will call you and confirm the time." data-hi="ट्रायल बुकिंग: ये विवरण हमारे डेस्क तक पहुँचते ही सोसाइटी-वेरिफाइड टेक्नीशियन आपको कॉल करके समय पक्का करेंगे।">ట్రయల్ బుకింగ్: ఈ వివరాలు మా డెస్క్‌కు చేరగానే సొసైటీ వెరిఫైడ్ టెక్నీషియన్ మీకు కాల్ చేసి సమయం నిర్ధారిస్తారు.</span>
         </div>
+
+        <div id="serviceConfirmLine" class="hidden bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-xl p-2.5 text-[11px] font-bold text-center"></div>
 
         <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-extrabold py-3.5 rounded-2xl text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition">
           <i class="fa-brands fa-whatsapp text-sm"></i>
@@ -320,6 +360,11 @@
       en: 'Please select the flat and visitor type',
       hi: 'कृपया फ्लैट और विज़िटर का प्रकार चुनें'
     };
+    const GATE_ALERT_APT = {
+      te: 'దయచేసి అపార్ట్‌మెంట్ పేరు, ఫ్లాట్ మరియు విజిటర్ రకం ఎంచుకోండి',
+      en: 'Please fill the apartment name and select the flat and visitor type',
+      hi: 'कृपया अपार्टमेंट का नाम भरें और फ़्लैट व विज़िटर का प्रकार चुनें'
+    };
     const DEFAULT_DETAIL = { te: 'డెలివరీ ఎగ్జిక్యూటివ్', en: 'Delivery Executive', hi: 'डिलीवरी एग्ज़ीक्यूटिव' };
     const DEFAULT_NOTES = { te: 'సాధారణ తనిఖీ', en: 'General check', hi: 'सामान्य जाँच' };
 
@@ -363,23 +408,154 @@
     setInterval(updateClock, 1000);
     updateClock();
 
+    // Reference numbers: AV-YYYYMMDD-XXXX (4 random digits).
+    function availoRef() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return 'AV-' + y + m + day + '-' + String(Math.floor(1000 + Math.random() * 9000));
+    }
+    function availoRefLine(ref) {
+      return currentLang === 'te' ? '✅ రిఫరెన్స్ నంబర్: ' + ref : currentLang === 'hi' ? '✅ रेफ़रेंस नंबर: ' + ref : '✅ Reference No: ' + ref;
+    }
+
+    // Dynamic gate-pass stamp (canvas, same green design as the user's stamp).
+    const STAMP_GREEN = '#00703c';
+    function stampDateStr(d) {
+      const M = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+      return String(d.getDate()).padStart(2, '0') + '-' + M[d.getMonth()] + '-' + d.getFullYear();
+    }
+    function drawGateStamp(canvas, apartmentName) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width, H = canvas.height;
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = STAMP_GREEN; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.lineWidth = 12; ctx.strokeRect(16, 16, W - 32, 470);
+      ctx.lineWidth = 4; ctx.strokeRect(38, 38, W - 76, 426);
+      ctx.lineWidth = 3; ctx.setLineDash([16, 11]); ctx.strokeRect(60, 60, W - 120, 382); ctx.setLineDash([]);
+      ctx.fillStyle = STAMP_GREEN;
+      ctx.font = 'bold 46px Arial, sans-serif';
+      ctx.fillText('★ VERIFIED & SAVED ★', W / 2, 140);
+      ctx.font = 'bold 66px Arial, sans-serif';
+      ctx.fillText(String(apartmentName || '').toUpperCase(), W / 2, 245);
+      ctx.font = 'bold 44px Arial, sans-serif';
+      ctx.fillText(stampDateStr(new Date()) + '  \u2022  GRANTED', W / 2, 350);
+      ctx.font = 'bold 30px Arial, sans-serif';
+      ctx.fillText('Powered by AVAILO', W / 2, 560);
+    }
+    function downloadGateStamp() {
+      const c = document.getElementById('gateStampCanvas');
+      if (!c) return;
+      const a = document.createElement('a');
+      a.href = c.toDataURL('image/png');
+      a.download = 'availo-gate-pass-stamp.png';
+      a.click();
+    }
+
+    // Gate form: visitor quick-select chips built from the select options.
+    function buildGateVisitorChips() {
+      const sel = document.getElementById('visitorType');
+      const wrap = document.getElementById('gateVisitorChips');
+      if (!sel || !wrap) return;
+      wrap.innerHTML = '';
+      Array.from(sel.options).forEach(opt => {
+        if (!opt.value) return;
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'visitor-chip';
+        b.setAttribute('data-value', opt.value);
+        const te = opt.getAttribute('data-te') || opt.textContent;
+        const en = opt.getAttribute('data-en') || opt.textContent;
+        const hi = opt.getAttribute('data-hi') || opt.textContent;
+        b.setAttribute('data-te', te); b.setAttribute('data-en', en); b.setAttribute('data-hi', hi);
+        b.textContent = currentLang === 'hi' ? hi : currentLang === 'en' ? en : te;
+        b.onclick = () => { sel.value = opt.value; syncGateVisitorChips(); };
+        wrap.appendChild(b);
+      });
+      syncGateVisitorChips();
+      sel.addEventListener('change', syncGateVisitorChips);
+    }
+    function syncGateVisitorChips() {
+      const sel = document.getElementById('visitorType');
+      if (!sel) return;
+      document.querySelectorAll('#gateVisitorChips .visitor-chip').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-value') === sel.value);
+      });
+    }
+    function initGateFormMemory() {
+      try {
+        const apt = localStorage.getItem('availo_apartment');
+        if (apt) document.getElementById('gateApartment').value = apt;
+        const last = JSON.parse(localStorage.getItem('availo_gate_last') || 'null');
+        if (last) {
+          if (last.flat) document.getElementById('gateFlat').value = last.flat;
+          if (last.name) document.getElementById('visitorDetail').value = last.name;
+        }
+      } catch (e) {}
+    }
+
+    // 1. గేట్ పాస్ బటన్ నొక్కినప్పుడు WhatsApp + Camera ట్రిగ్గర్
     // 1. గేట్ పాస్ బటన్ నొక్కినప్పుడు WhatsApp + Camera ట్రిగ్గర్
     function triggerWhatsAppGateEntry() {
+      const apt = document.getElementById('gateApartment').value.trim();
       const flat = document.getElementById('gateFlat').value;
       const visitor = document.getElementById('visitorType').value;
-      if (!flat || !visitor) {
-        alert(GATE_ALERT[currentLang]);
+      const warn = document.getElementById('gateWarning');
+      if (!apt || !flat || !visitor) {
+        const msg = GATE_ALERT_APT[currentLang];
+        if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
+        alert(msg);
         return;
       }
-      const detail = document.getElementById('visitorDetail').value || DEFAULT_DETAIL[currentLang];
+      if (warn) warn.style.display = 'none';
+      const detail = document.getElementById('visitorDetail').value.trim() || DEFAULT_DETAIL[currentLang];
+      try {
+        localStorage.setItem('availo_apartment', apt);
+        localStorage.setItem('availo_gate_last', JSON.stringify({ flat: flat, name: document.getElementById('visitorDetail').value.trim() }));
+      } catch (e) {}
+      const ref = availoRef();
+      const refLine = document.getElementById('gateRefLine');
+      if (refLine) refLine.textContent = availoRefLine(ref);
+      drawGateStamp(document.getElementById('gateStampCanvas'), apt);
+      const panel = document.getElementById('gateConfirmPanel');
+      if (panel) panel.style.display = 'block';
       const now = new Date();
       const timeStr = now.toLocaleDateString('te-IN') + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 
       // WhatsApp మెసేజ్ ఫార్మాట్ — follows the selected site language.
-      const msg = currentLang === 'hi' ? `🚨 *AVAILO गेट एंट्री पास*\n\n🏠 *फ़्लैट नंबर:* ${flat}\n🛵 *डिलीवरी / विज़िटर:* ${visitor}\n👤 *नाम / वाहन:* ${detail}\n⏰ *समय:* ${timeStr}\n\n📸 *(कृपया नीचे कैमरा आइकन दबाकर सेल्फ़ी या पार्सल की फ़ोटो लेकर भेजें)*` : currentLang === 'en' ? `🚨 *AVAILO GATE ENTRY PASS*\n\n🏠 *Flat No:* ${flat}\n🛵 *Delivery / Visitor:* ${visitor}\n👤 *Name / Vehicle:* ${detail}\n⏰ *Time:* ${timeStr}\n\n📸 *(Please tap the camera icon below and send a selfie or parcel photo)*` : `🚨 *AVAILO గేట్ ఎంట్రీ పాస్*\n\n🏠 *ఫ్లాట్ నంబర్:* ${flat}\n🛵 *డెలివరీ / విజిటర్:* ${visitor}\n👤 *పేరు / వాహనం:* ${detail}\n⏰ *సమయం:* ${timeStr}\n\n📸 *(దయచేసి క్రింది కెమెరా ఐకాన్ నొక్కి సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి సెండ్ చేయండి)*`;
+      const msg = currentLang === 'hi' ? `🚨 *AVAILO गेट एंट्री पास*
 
-      // నేరుగా వాట్సాప్ చాట్‌లోకి వెళ్తుంది
-      window.location.href = `https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+*रेफ़रेंस नंबर:* ${ref}
+*अपार्टमेंट:* ${apt}
+🏠 *फ़्लैट नंबर:* ${flat}
+🛵 *डिलीवरी / विज़िटर:* ${visitor}
+👤 *नाम / वाहन:* ${detail}
+⏰ *समय:* ${timeStr}
+
+📸 *(कृपया नीचे कैमरा आइकन दबाकर सेल्फ़ी या पार्सल की फ़ोटो लेकर भेजें)*` : currentLang === 'en' ? `🚨 *AVAILO GATE ENTRY PASS*
+
+*Reference No:* ${ref}
+*Apartment:* ${apt}
+🏠 *Flat No:* ${flat}
+🛵 *Delivery / Visitor:* ${visitor}
+👤 *Name / Vehicle:* ${detail}
+⏰ *Time:* ${timeStr}
+
+📸 *(Please tap the camera icon below and send a selfie or parcel photo)*` : `🚨 *AVAILO గేట్ ఎంట్రీ పాస్*
+
+*రిఫరెన్స్ నంబర్:* ${ref}
+*అపార్ట్‌మెంట్:* ${apt}
+🏠 *ఫ్లాట్ నంబర్:* ${flat}
+🛵 *డెలివరీ / విజిటర్:* ${visitor}
+👤 *పేరు / వాహనం:* ${detail}
+⏰ *సమయం:* ${timeStr}
+
+📸 *(దయచేసి క్రింది కెమెరా ఐకాన్ నొక్కి సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి సెండ్ చేయండి)*`;
+
+      // Brief delay so the reference + stamp are visible before WhatsApp opens.
+      setTimeout(() => { window.location.href = `https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`; }, 1800);
     }
 
     // 2. సర్వీస్ మోడల్ ఓపెన్ & క్లోజ్ హ్యాండ్లర్లు
@@ -401,6 +577,7 @@
     }
 
     // 3. సర్వీస్ బుకింగ్ సబ్‌మిట్ చేసినప్పుడు
+    // 3. సర్వీస్ బుకింగ్ సబ్‌మిట్ చేసినప్పుడు
     function submitServiceBooking(e) {
       e.preventDefault();
       const flat = document.getElementById('flatNo').value;
@@ -410,12 +587,44 @@
       const now = new Date();
       const timeStr = now.toLocaleDateString('te-IN') + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 
-      const text = currentLang === 'hi' ? `📋 *AVAILO होम सर्विस रजिस्ट्रेशन*\n\n🛠️ *सर्विस:* ${activeServiceName}\n🏠 *फ़्लैट:* ${flat}\n👤 *ग्राहक का नाम:* ${name}\n📞 *मोबाइल:* ${phone}\n📝 *समस्या का विवरण:* ${notes}\n⏰ *समय:* ${timeStr}` : currentLang === 'en' ? `📋 *AVAILO HOME SERVICE REGISTRATION*\n\n🛠️ *Service:* ${activeServiceName}\n🏠 *Flat:* ${flat}\n👤 *Customer Name:* ${name}\n📞 *Mobile:* ${phone}\n📝 *Issue Details:* ${notes}\n⏰ *Time:* ${timeStr}` : `📋 *AVAILO హోమ్ సర్వీస్ రిజిస్ట్రేషన్*\n\n🛠️ *సర్వీస్:* ${activeServiceName}\n🏠 *ఫ్లాట్:* ${flat}\n👤 *కస్టమర్ పేరు:* ${name}\n📞 *మొబైల్:* ${phone}\n📝 *సమస్య వివరాలు:* ${notes}\n⏰ *సమయం:* ${timeStr}`;
+      const ref = availoRef();
+      const cl = document.getElementById('serviceConfirmLine');
+      if (cl) { cl.textContent = availoRefLine(ref); cl.classList.remove('hidden'); }
 
-      closeServiceForm();
-      window.location.href = `https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`;
+      const text = currentLang === 'hi' ? `📋 *AVAILO होम सर्विस रजिस्ट्रेशन*
+
+*रेफ़रेंस नंबर:* ${ref}
+🛠️ *सर्विस:* ${activeServiceName}
+🏠 *फ़्लैट:* ${flat}
+👤 *ग्राहक का नाम:* ${name}
+📞 *मोबाइल:* ${phone}
+📝 *समस्या का विवरण:* ${notes}
+⏰ *समय:* ${timeStr}` : currentLang === 'en' ? `📋 *AVAILO HOME SERVICE REGISTRATION*
+
+*Reference No:* ${ref}
+🛠️ *Service:* ${activeServiceName}
+🏠 *Flat:* ${flat}
+👤 *Customer Name:* ${name}
+📞 *Mobile:* ${phone}
+📝 *Issue Details:* ${notes}
+⏰ *Time:* ${timeStr}` : `📋 *AVAILO హోమ్ సర్వీస్ రిజిస్ట్రేషన్*
+
+*రిఫరెన్స్ నంబర్:* ${ref}
+🛠️ *సర్వీస్:* ${activeServiceName}
+🏠 *ఫ్లాట్:* ${flat}
+👤 *కస్టమర్ పేరు:* ${name}
+📞 *మొబైల్:* ${phone}
+📝 *సమస్య వివరాలు:* ${notes}
+⏰ *సమయం:* ${timeStr}`;
+
+      setTimeout(() => {
+        closeServiceForm();
+        window.location.href = `https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`;
+      }, 1800);
     }
 
+    initGateFormMemory();
+    buildGateVisitorChips();
     // Apply the saved language on load (no cycling).
     if (currentLang !== 'te') toggleLanguage(currentLang);
   </script>

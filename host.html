@@ -156,6 +156,11 @@
             padding: 14px;
         }
 
+        /* Desktop: wide centred layout (mobile layout unchanged) */
+        @media (min-width: 1024px) {
+            .container { max-width: 1080px; }
+        }
+
         .section-title {
             font-family: 'Rajdhani', sans-serif;
             font-size: 15px;
@@ -428,6 +433,9 @@
             &nbsp;·&nbsp;
             <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
         </div>
+        <div style="margin-top: 8px;">
+            <a id="privacyLink" href="privacy.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a id="termsLink" href="terms.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;">నిబంధనలు</a>
+        </div>
         <div id="regionLbl">AVAILO Digital Services · విజయవాడ &amp; గుంటూరు</div>
     </footer>
 
@@ -470,6 +478,8 @@
                 homeLink: "← హోమ్‌పేజీకి వెళ్ళండి",
                 helplineLbl: "హెల్ప్‌లైన్:",
                 regionLbl: "AVAILO Digital Services · విజయవాడ & గుంటూరు",
+                privacyLink: "గోప్యతా విధానం",
+                termsLink: "నిబంధనలు",
                 voiceAdded: (t) => `${t} — కార్ట్‌లో యాడ్ చేశాను! ఆర్డర్ కన్ఫర్మ్ చేయడానికి కింద బటన్ నొక్కండి.`,
                 voiceNotMatched: (t) => `మీరు ${t} అన్నారు. కింద మెనూలో + నొక్కి కూడా ఎంచుకోవచ్చు.`,
                 orderSent: "ధన్యవాదాలు! మీ ఆర్డర్ కిచెన్‌కు పంపబడుతోంది."
@@ -494,6 +504,8 @@
                 homeLink: "← Go to Homepage",
                 helplineLbl: "Helpline:",
                 regionLbl: "AVAILO Digital Services · Vijayawada & Guntur",
+                privacyLink: "Privacy Policy",
+                termsLink: "Terms",
                 voiceAdded: (t) => `${t} — added to your cart! Tap the button below to confirm your order.`,
                 voiceNotMatched: (t) => `You said ${t}. You can also tap + in the menu below to select.`,
                 orderSent: "Thank you! Your order is being sent to the kitchen."
@@ -518,6 +530,8 @@
                 homeLink: "← होमपेज पर जाएं",
                 helplineLbl: "हेल्पलाइन:",
                 regionLbl: "AVAILO Digital Services · विजयवाड़ा और गुंटूर",
+                privacyLink: "गोपनीयता नीति",
+                termsLink: "नियम",
                 voiceAdded: (t) => `${t} — कार्ट में जोड़ दिया! ऑर्डर कन्फर्म करने के लिए नीचे का बटन दबाएं।`,
                 voiceNotMatched: (t) => `आपने ${t} कहा। आप नीचे मेनू में + दबाकर भी चुन सकते हैं।`,
                 orderSent: "धन्यवाद! आपका ऑर्डर किचन में भेजा जा रहा है।"
@@ -604,6 +618,8 @@
             document.getElementById('homeLink').innerText = UI_TEXT[lang].homeLink;
             document.getElementById('helplineLbl').innerText = UI_TEXT[lang].helplineLbl;
             document.getElementById('regionLbl').innerText = UI_TEXT[lang].regionLbl;
+            document.getElementById('privacyLink').innerText = UI_TEXT[lang].privacyLink;
+            document.getElementById('termsLink').innerText = UI_TEXT[lang].termsLink;
 
             renderMenu();
             if (!silent) speakHost(UI_TEXT[lang].welcome);
