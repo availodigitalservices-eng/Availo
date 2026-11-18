@@ -283,7 +283,7 @@
             </div>
             <div style="display: flex; align-items: center; gap: 8px;">
                 <span class="status-badge" data-te="● యాక్టివ్ ప్రొటెక్షన్" data-en="● Active Protection" data-hi="● सक्रिय सुरक्षा">● యాక్టివ్ ప్రొటెక్షన్</span>
-                <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+                <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
             </div>
         </div>
 
@@ -357,7 +357,7 @@
                 <span class="nav-icon">♻️</span>
                 <span data-te="స్క్రాప్" data-en="Scrap" data-hi="स्क्रैप">స్క్రాప్</span>
             </a>
-            <div class="nav-item" onclick="window.location.href='https://wa.me/919966157369'">
+            <div class="nav-item" onclick="window.open('https://wa.me/919966157369','_blank','noopener')">
                 <span class="nav-icon">💬</span>
                 <span data-te="సపోర్ట్" data-en="Support" data-hi="सपोर्ट">సపోర్ట్</span>
             </div>
@@ -367,12 +367,12 @@
     <script>
         let currentLang = localStorage.getItem('availo_lang');
         if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
-        const LANG_NEXT = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
+        const LANG_CURRENT = { te: 'తెలుగు', en: 'English', hi: 'हिन्दी' };
 
         // Open WhatsApp with a message in the selected site language.
         function waLink(te, en, hi) {
             const t = currentLang === 'hi' ? hi : currentLang === 'en' ? en : te;
-            window.location.href = 'https://wa.me/919966157369?text=' + encodeURIComponent(t);
+            window.open('https://wa.me/919966157369?text=' + encodeURIComponent(t), '_blank', 'noopener');
         }
 
         function toggleLanguage(forceLang) {
@@ -382,14 +382,16 @@
             document.body.classList.toggle('lang-en', currentLang === 'en');
             document.body.classList.toggle('lang-hi', currentLang === 'hi');
             const btn = document.getElementById('langBtn');
-            if (btn) btn.innerText = LANG_NEXT[currentLang];
+            if (btn) btn.innerText = LANG_CURRENT[currentLang];
             document.querySelectorAll('[data-te]').forEach(el => {
                 const text = el.getAttribute('data-' + currentLang);
                 if (text) el.innerHTML = text;
             });
         }
         // Apply the saved language on load (no cycling).
-        if (currentLang !== 'te') toggleLanguage(currentLang);
+        // Apply the saved language on load (no cycling) and show the CURRENT
+        // language on the button.
+        toggleLanguage(currentLang);
     </script>
 </body>
 </html>

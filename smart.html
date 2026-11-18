@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AVAILO స్మార్ట్ డైన్ — ఆండ్రాయిడ్ సూపర్‌వైజర్</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -359,7 +361,7 @@
 <body>
 
     <div id="robotStage" class="stage-box">
-        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
         <div class="venue-pill" id="badgeText">అమరావతి గ్రాండ్ · టేబుల్ 01</div>
         
         <div class="supervisor-stage" id="supStage" onclick="speakSupervisorGreeting()">
@@ -546,7 +548,7 @@
         <div style="margin-top: 8px;">
             <span data-te="హెల్ప్‌లైన్:" data-en="Helpline:" data-hi="हेल्पलाइन:">హెల్ప్‌లైన్:</span> <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
             &nbsp;·&nbsp;
-            <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
+            <a href="https://wa.me/919966157369" target="_blank" rel="noopener" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
         </div>
         <div style="margin-top: 6px; font-size: 11px;"><a href="privacy.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a></div>
         <div data-te="AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు" data-en="AVAILO Digital Services · Vijayawada &amp; Guntur" data-hi="AVAILO डिजिटल सर्विसेज़ · विजयवाड़ा और गुंटूर">AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు</div>
@@ -579,7 +581,7 @@
 
         let currentLang = localStorage.getItem('availo_lang');
         if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
-        const LANG_NEXT = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
+        const LANG_CURRENT = { te: 'తెలుగు', en: 'English', hi: 'हिन्दी' };
         const VOICE_LANG = { te: 'te-IN', en: 'en-IN', hi: 'hi-IN' };
 
         function toggleLanguage(forceLang) {
@@ -589,7 +591,7 @@
             document.body.classList.toggle('lang-en', currentLang === 'en');
             document.body.classList.toggle('lang-hi', currentLang === 'hi');
             const btn = document.getElementById('langBtn');
-            if (btn) btn.innerText = LANG_NEXT[currentLang];
+            if (btn) btn.innerText = LANG_CURRENT[currentLang];
             document.title = UI_STRINGS.pageTitle[currentLang];
             renderVenueLabels();
             document.querySelectorAll('[data-te]').forEach(el => {
@@ -742,7 +744,10 @@
                     stage.classList.remove('taking-order');
                 };
 
-                window.speechSynthesis.speak(utter);
+                // 150 ms gap after cancel(): desktop Chrome cancels a new
+                // utterance spoken in the same task as cancel(). The text is
+                // already shown instantly above, so this is not a UI delay.
+                setTimeout(() => window.speechSynthesis.speak(utter), 150);
             }
         }
 
@@ -754,9 +759,7 @@
         document.title = UI_STRINGS.pageTitle[currentLang];
 
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                speakGentSupervisor(ui('greeting', { hotel: hotelDisplay() }));
-            }, 800);
+            speakGentSupervisor(ui('greeting', { hotel: hotelDisplay() }));
         });
 
         function modifyItem(key, delta) {
@@ -824,9 +827,10 @@
                 speakGentSupervisor(`${confirmPrefix}${spokenText}`, "write");
                 
                 const msg = `*AVAILO SMART DINE - LIVE ORDER*\n-----------------------------\n*హోటల్:* ${hotelName}\n*టేబుల్:* ${tableNumber}\n*కస్టమర్ వాయిస్ ఆర్డర్:* ${spokenText}\n-----------------------------\n_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు ఆర్డర్ రెడీ అని రిప్లై పంపండి)_`;
-                setTimeout(() => {
-                    window.location.href = `https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`;
-                }, 1200);
+                // Voice result fires async (no user gesture), so a popup
+                // blocker may refuse window.open — fall back to same-tab.
+                const waWin = window.open(`https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+                if (!waWin) window.location.href = `https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`;
             };
             rec.start();
         }
@@ -853,9 +857,7 @@
 
             displayOrderPreparingScreen(grandTotal);
 
-            setTimeout(() => {
-                window.location.href = `https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`;
-            }, 1200);
+            window.open(`https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
         }
 
         let trackerState = null;
@@ -907,7 +909,9 @@
         }
 
         // Apply the saved language on load (no cycling).
-        if (currentLang !== 'te') toggleLanguage(currentLang);
+        // Apply the saved language on load (no cycling) and show the CURRENT
+        // language on the button.
+        toggleLanguage(currentLang);
     </script>
 </body>
 </html>

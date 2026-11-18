@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Cube - AVAILO</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@600;700&family=Ramabhadra&family=Suranna&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #030b1e;
+            --panel-bg: #071530;
+            --cyan-glow: #00e5ff;
+            --text-sub: #94a3b8;
+            --border-glow: 1px solid rgba(0, 229, 255, 0.35);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Inter', 'Ramabhadra', 'Noto Sans Devanagari', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        .te-heading { font-family: 'Ramabhadra', sans-serif; }
+        .te-body { font-family: 'Suranna', serif; }
+
+        header {
+            background: var(--panel-bg);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: var(--border-glow);
+        }
+
+        .back-link {
+            color: var(--cyan-glow);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+
+        .container {
+            padding: 22px 18px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Desktop: wide centred layout (mobile layout unchanged) */
+        @media (min-width: 1024px) {
+            .container { max-width: 900px; }
+        }
+
+        h1 {
+            font-size: 22px;
+            color: var(--cyan-glow);
+            margin-bottom: 4px;
+        }
+
+        .sub-meta {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+        }
+
+        .block-card {
+            background: var(--panel-bg);
+            border: var(--border-glow);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .block-card h3 {
+            font-size: 15px;
+            color: var(--cyan-glow);
+            margin-bottom: 8px;
+        }
+
+        .block-card p, .block-card li {
+            font-size: 13.5px;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+
+        ol, ul { padding-left: 18px; }
+
+        .pilot-badge {
+            display: inline-block;
+            background: #f59e0b;
+            color: #1e293b;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        .photo-placeholder {
+            background: #0b1e3f;
+            border: 1px dashed rgba(0, 229, 255, 0.4);
+            border-radius: 8px;
+            padding: 34px 16px;
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .spec-cell {
+            background: #0b1e3f;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .spec-cell b {
+            display: block;
+            color: #ffffff;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .spec-cell span {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .cta-btn {
+            display: block;
+            width: 100%;
+            background: #25d366;
+            color: #ffffff;
+            border: none;
+            font-size: 15px;
+            font-weight: 800;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="te-heading" style="color: #fff; font-size: 16px;" data-te="AVAILO స్మార్ట్ క్యూబ్" data-en="AVAILO SMART CUBE" data-hi="AVAILO स्मार्ट क्यूब">AVAILO స్మార్ట్ క్యూబ్</div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <a class="back-link" href="index.html" data-te="← హోమ్" data-en="← Home" data-hi="← होम">← హోమ్</a>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <span class="pilot-badge" data-te="🚀 పైలట్ ప్రోగ్రామ్" data-en="🚀 Pilot Programme" data-hi="🚀 पायलट प्रोग्राम">🚀 పైలట్ ప్రోగ్రామ్</span>
+        <h1 class="te-heading" data-te="AVAILO స్మార్ట్ క్యూబ్" data-en="AVAILO Smart Cube" data-hi="AVAILO स्मार्ट क्यूब">AVAILO స్మార్ట్ క్యూబ్</h1>
+        <p class="sub-meta" data-te="టేబుల్‌పై ఉండే స్మార్ట్ QR ఆర్డరింగ్ క్యూబ్ — రెస్టారెంట్లు &amp; హోటళ్ల కోసం" data-en="A table-top smart QR ordering cube — for restaurants &amp; hotels" data-hi="टेबल पर रखने वाला स्मार्ट QR ऑर्डरिंग क्यूब — रेस्टोरेंट और होटलों के लिए">టేబుల్‌పై ఉండే స్మార్ట్ QR ఆర్డరింగ్ క్యూబ్ — రెస్టారెంట్లు &amp; హోటళ్ల కోసం</p>
+
+        <div class="photo-placeholder">
+            <div style="font-size: 34px; margin-bottom: 6px;">📷</div>
+            <div data-te="స్మార్ట్ క్యూబ్ ఫోటో త్వరలో వస్తుంది" data-en="Smart Cube photo coming soon" data-hi="स्मार्ट क्यूब की फ़ोटो जल्द आ रही है">స్మార్ట్ క్యూబ్ ఫోటో త్వరలో వస్తుంది</div>
+        </div>
+
+        <div class="block-card">
+            <h3 class="te-heading" data-te="స్పెసిఫికేషన్లు" data-en="Specifications" data-hi="विशेषताएँ">స్పెసిఫికేషన్లు</h3>
+            <div class="spec-grid">
+                <div class="spec-cell"><b data-te="📐 8-అంగుళాల డిస్‌ప్లే" data-en="📐 8-inch display" data-hi="📐 8-इंच डिस्प्ले">📐 8-అంగుళాల డిస్‌ప్లే</b><span data-te="టేబుల్‌పై ఉండే కాంపాక్ట్ క్యూబ్" data-en="Compact table-top cube" data-hi="कॉम्पैक्ट टेबल-टॉप क्यूब">టేబుల్‌పై ఉండే కాంపాక్ట్ క్యూబ్</span></div>
+                <div class="spec-cell"><b data-te="🔄 360° వ్యూ" data-en="🔄 360° view" data-hi="🔄 360° व्यू">🔄 360° వ్యూ</b><span data-te="టేబుల్ చుట్టూ అందరికీ కనిపిస్తుంది" data-en="Visible to everyone around the table" data-hi="टेबल के चारों ओर सभी को दिखता है">టేబుల్ చుట్టూ అందరికీ కనిపిస్తుంది</span></div>
+                <div class="spec-cell"><b data-te="📱 QR ఆర్డరింగ్" data-en="📱 QR ordering" data-hi="📱 QR ऑर्डरिंग">📱 QR ఆర్డరింగ్</b><span data-te="QR స్కాన్ చేస్తే మెనూ తెరుచుకుంటుంది — యాప్ వద్దు" data-en="Scan the QR to open the menu — no app needed" data-hi="QR स्कैन करते ही मेनू खुल जाता है — ऐप नहीं चाहिए">QR స్కాన్ చేస్తే మెనూ తెరుచుకుంటుంది — యాప్ వద్దు</span></div>
+                <div class="spec-cell"><b data-te="👨‍🍳 కిచెన్ / కౌంటర్‌కు ఆర్డర్" data-en="👨‍🍳 Order to kitchen / counter" data-hi="👨‍🍳 किचन / काउंटर को ऑर्डर">👨‍🍳 కిచెన్ / కౌంటర్‌కు ఆర్డర్</b><span data-te="ఆర్డర్ నేరుగా కిచెన్‌కు వెళ్తుంది" data-en="The order goes straight to the kitchen" data-hi="ऑर्डर सीधे किचन जाता है">ఆర్డర్ నేరుగా కిచెన్‌కు వెళ్తుంది</span></div>
+                <div class="spec-cell"><b data-te="🛎️ సిబ్బంది డెలివరీ" data-en="🛎️ Staff delivers" data-hi="🛎️ स्टाफ़ डिलीवर करता है">🛎️ సిబ్బంది డెలివరీ</b><span data-te="ఆర్డర్‌ను సిబ్బంది మీ టేబుల్‌కు తెస్తారు" data-en="Staff bring the order to your table" data-hi="स्टाफ़ ऑर्डर आपकी टेबल पर लाता है">ఆర్డర్‌ను సిబ్బంది మీ టేబుల్‌కు తెస్తారు</span></div>
+                <div class="spec-cell"><b data-te="💬 WhatsApp ఆర్డర్" data-en="💬 WhatsApp order" data-hi="💬 WhatsApp ऑर्डर">💬 WhatsApp ఆర్డర్</b><span data-te="ఆర్డర్లు WhatsApp ద్వారా వస్తాయి" data-en="Orders arrive over WhatsApp" data-hi="ऑर्डर WhatsApp से आते हैं">ఆర్డర్లు WhatsApp ద్వారా వస్తాయి</span></div>
+            </div>
+        </div>
+
+        <div class="block-card">
+            <h3 class="te-heading" data-te="ఎలా పనిచేస్తుంది" data-en="How It Works" data-hi="यह कैसे काम करता है">ఎలా పనిచేస్తుంది</h3>
+            <ol class="te-body">
+                <li data-te="క్యూబ్‌పై ఉన్న QR కోడ్‌ను స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు." data-en="Scan the QR code on the cube — no app download needed." data-hi="क्यूब पर QR कोड स्कैन करें — ऐप डाउनलोड की ज़रूरत नहीं।">క్యూబ్‌పై ఉన్న QR కోడ్‌ను స్కాన్ చేయండి — యాప్ డౌన్‌లోడ్ అవసరం లేదు.</li>
+                <li data-te="టేబుల్ నుంచే మెనూ చూసి ఆర్డర్ చేయండి (వాయిస్ లేదా టచ్)." data-en="Browse the menu and order right from your table (voice or touch)." data-hi="टेबल से ही मेनू देखकर ऑर्डर करें (वॉयस या टच)।">టేబుల్ నుంచే మెనూ చూసి ఆర్డర్ చేయండి (వాయిస్ లేదా టచ్).</li>
+                <li data-te="వెరిఫైడ్ సిబ్బంది ఆర్డర్‌ను నేరుగా మీ టేబుల్‌కు తెస్తారు." data-en="Verified staff bring the order straight to your table." data-hi="वेरिफ़ाइड स्टाफ़ ऑर्डर सीधे आपकी टेबल पर लाता है।">వెరిఫైడ్ సిబ్బంది ఆర్డర్‌ను నేరుగా మీ టేబుల్‌కు తెస్తారు.</li>
+            </ol>
+        </div>
+
+        <div class="block-card">
+            <h3 class="te-heading" data-te="ఒక వారం ట్రయల్ — రెస్టారెంట్లు &amp; హోటళ్లకు" data-en="One-Week Trial — for Restaurants &amp; Hotels" data-hi="एक हफ़्ते का ट्रायल — रेस्टोरेंट और होटलों के लिए">ఒక వారం ట్రయల్ — రెస్టారెంట్లు &amp; హోటళ్లకు</h3>
+            <p class="te-body" data-te="విజయవాడ &amp; గుంటూరులోని రెస్టారెంట్లు మరియు హోటళ్లు స్మార్ట్ క్యూబ్‌ను ఒక వారం పాటు ట్రయల్‌గా వాడుకోవచ్చు. ట్రయల్ తర్వాత కొనసాగించాలా వద్దా అనేది మీ నిర్ణయం." data-en="Restaurants and hotels in Vijayawada &amp; Guntur can try the Smart Cube for one week. After the trial, continuing is entirely your decision." data-hi="विजयवाड़ा और गुंटूर के रेस्टोरेंट और होटल स्मार्ट क्यूब को एक हफ़्ते तक ट्रायल पर इस्तेमाल कर सकते हैं। ट्रायल के बाद जारी रखना है या नहीं, यह आपका फ़ैसला है।">విజయవాడ &amp; గుంటూరులోని రెస్టారెంట్లు మరియు హోటళ్లు స్మార్ట్ క్యూబ్‌ను ఒక వారం పాటు ట్రయల్‌గా వాడుకోవచ్చు. ట్రయల్ తర్వాత కొనసాగించాలా వద్దా అనేది మీ నిర్ణయం.</p>
+            <p class="te-body" data-te="ధర: త్వరలో ప్రకటిస్తాం. వివరాల కోసం WhatsApp చేయండి." data-en="Price: to be announced soon. Message us on WhatsApp for details." data-hi="कीमत: जल्द घोषित की जाएगी। विवरण के लिए WhatsApp करें।">ధర: త్వరలో ప్రకటిస్తాం. వివరాల కోసం WhatsApp చేయండి.</p>
+            <a class="cta-btn" href="javascript:void(0)" onclick="openCubeWhatsApp()" data-te="💬 స్మార్ట్ క్యూబ్ ట్రయల్ కోసం WhatsApp చేయండి" data-en="💬 WhatsApp us for a Smart Cube trial" data-hi="💬 स्मार्ट क्यूब ट्रायल के लिए WhatsApp करें">💬 స్మార్ట్ క్యూబ్ ట్రయల్ కోసం WhatsApp చేయండి</a>
+        </div>
+
+        <div class="block-card">
+            <h3 class="te-heading" data-te="మమ్మల్ని సంప్రదించండి" data-en="Contact Us" data-hi="हमसे संपर्क करें">మమ్మల్ని సంప్రదించండి</h3>
+            <p class="te-body" data-te="వాట్సాప్ 1: <strong>9966157369</strong>" data-en="WhatsApp 1: <strong>9966157369</strong>" data-hi="WhatsApp 1: <strong>9966157369</strong>">వాట్సాప్ 1: <strong>9966157369</strong></p>
+            <p class="te-body" data-te="వాట్సాప్ 2 (బ్యాకప్): <strong>8686761098</strong>" data-en="WhatsApp 2 (backup): <strong>8686761098</strong>" data-hi="WhatsApp 2 (बैकअप): <strong>8686761098</strong>">వాట్సాప్ 2 (బ్యాకప్): <strong>8686761098</strong></p>
+            <p class="te-body" data-te="ఇమెయిల్: <strong>availodigitalservices@gmail.com</strong>" data-en="Email: <strong>availodigitalservices@gmail.com</strong>" data-hi="ईमेल: <strong>availodigitalservices@gmail.com</strong>">ఇమెయిల్: <strong>availodigitalservices@gmail.com</strong></p>
+            <p class="te-body" data-te="చిరునామా: 1-492, శ్రీనగర్ కాలనీ, నవత ట్రాన్స్‌పోర్ట్ రోడ్, కనూరు, విజయవాడ, ఆంధ్రప్రదేశ్ — 520007" data-en="Address: 1-492, Srinagar Colony, Navata Transport Road, Kanuru, Vijayawada, Andhra Pradesh — 520007" data-hi="पता: 1-492, श्रीनगर कॉलोनी, नवता ट्रांसपोर्ट रोड, कनूरु, विजयवाड़ा, आंध्र प्रदेश — 520007">చిరునామా: 1-492, శ్రీనగర్ కాలనీ, నవత ట్రాన్స్‌పోర్ట్ రోడ్, కనూరు, విజయవాడ, ఆంధ్రప్రదేశ్ — 520007</p>
+            <p class="te-body" data-te="MSME: UDYAM-AP-20-0109827 (AVAILO Digital Services)" data-en="MSME: UDYAM-AP-20-0109827 (AVAILO Digital Services)" data-hi="MSME: UDYAM-AP-20-0109827 (AVAILO Digital Services)">MSME: UDYAM-AP-20-0109827 (AVAILO Digital Services)</p>
+        </div>
+
+        <footer style="text-align: center; font-size: 12px; color: #94a3b8; line-height: 2; margin-top: 8px; padding-top: 14px; border-top: 1px solid rgba(0,229,255,0.35);">
+            <a href="index.html" style="color: var(--cyan-glow); font-weight: 700; text-decoration: none;" data-te="హోమ్" data-en="Home" data-hi="होम">హోమ్</a> &nbsp;·&nbsp; <a href="privacy.html" style="color: var(--cyan-glow); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--cyan-glow); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a>
+        </footer>
+    </div>
+
+    <script>
+        // Button label always shows the CURRENT language.
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
+        const LANG_ORDER = ['te', 'en', 'hi'];
+        const LANG_BTN_LABEL = { te: 'తెలుగు', en: 'English', hi: 'हिन्दी' };
+
+        function toggleLanguage(forceLang) {
+            const next = forceLang || LANG_ORDER[(LANG_ORDER.indexOf(currentLang) + 1) % LANG_ORDER.length];
+            currentLang = next;
+            localStorage.setItem('availo_lang', currentLang);
+            document.documentElement.lang = currentLang;
+            document.getElementById('langBtn').innerText = LANG_BTN_LABEL[currentLang];
+
+            document.querySelectorAll('[data-te]').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang);
+                if (text) el.innerHTML = text;
+            });
+        }
+
+        function openCubeWhatsApp() {
+            const msg = currentLang === 'hi' ? 'नमस्ते AVAILO! मुझे अपने रेस्टोरेंट / होटल के लिए Smart Cube का एक हफ़्ते का ट्रायल चाहिए। कृपया विवरण भेजें।'
+                : currentLang === 'en' ? 'Hello AVAILO! I want a one-week Smart Cube trial for my restaurant / hotel. Please share the details.'
+                : 'నమస్కారం AVAILO! నా రెస్టారెంట్ / హోటల్ కోసం స్మార్ట్ క్యూబ్ ఒక వారం ట్రయల్ కావాలి. వివరాలు పంపండి.';
+            window.open('https://wa.me/919966157369?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+        }
+
+        // Apply the saved language on load (no cycling) and show the CURRENT
+        // language on the button.
+        toggleLanguage(currentLang);
+    </script>
+
+</body>
+</html>

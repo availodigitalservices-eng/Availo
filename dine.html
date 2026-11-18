@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AVAILO స్మార్ట్ డైన్ — టేబుల్ కన్సియర్జ్</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -651,7 +653,7 @@
         <div class="top-meta-bar">
             <div class="venue-pill" id="badgeText">అమరావతి గ్రాండ్ · టేబుల్ 01</div>
             <div class="live-clock-pill" id="liveClock">--:--</div>
-            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
         </div>
         
         <div class="ai-voice-hub" onclick="speakHubGreeting()">
@@ -749,11 +751,11 @@
         <div style="margin-top: 8px;">
             <span data-te="హెల్ప్‌లైన్:" data-en="Helpline:" data-hi="हेल्पलाइन:">హెల్ప్‌లైన్:</span> <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
             &nbsp;·&nbsp;
-            <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
+            <a href="https://wa.me/919966157369" target="_blank" rel="noopener" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
         </div>
         <div data-te="AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు" data-en="AVAILO Digital Services · Vijayawada &amp; Guntur" data-hi="AVAILO डिजिटल सर्विसेज़ · विजयवाड़ा और गुंटूर">AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు</div>
         <div style="margin-top: 6px; font-size: 11px;"><a href="privacy.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a></div>
-        <div style="margin-top: 6px; font-size: 11px;" data-te="📷 ఫోటోలు: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju" data-en="📷 Photos: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju" data-hi="📷 फ़ोटो: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju">📷 Photos: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju</div>
+        <div style="margin-top: 6px; font-size: 11px;" data-te="📷 ఫోటోలు: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata" data-en="📷 Photos: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata" data-hi="📷 फ़ोटो: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata">📷 Photos: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata</div>
     </footer>
 
     <!-- Order confirmation overlay -->
@@ -835,7 +837,7 @@
         const HOTEL_MENU = [
             // STARTERS
             { id: 'paneerTikka', photo: 'images/dine/paneer-tikka.jpg', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', name: 'పన్నీర్ టిక్కా (6 ముక్కలు)', nameEn: 'Paneer Tikka (6 Pcs)', nameHi: 'पनीर टिक्का (6 पीस)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', descEn: 'Charcoal-grilled paneer', descHi: 'कोयले पर सेंका हुआ पनीर', price: 190, count: 0 },
-            { id: 'crispyCorn', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', name: 'క్రిస్పీ చిల్లీ కార్న్', nameEn: 'Crispy Chilli Corn', nameHi: 'क्रिस्पी चिल्ली कॉर्न', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', descEn: 'Spicy sweet corn fry', descHi: 'मसालेदार स्वीट कॉर्न फ्राई', price: 150, count: 0 },
+            { id: 'crispyCorn', photo: 'images/dine/crispy-chilli-corn.jpg', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', name: 'క్రిస్పీ చిల్లీ కార్న్', nameEn: 'Crispy Chilli Corn', nameHi: 'क्रिस्पी चिल्ली कॉर्न', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', descEn: 'Spicy sweet corn fry', descHi: 'मसालेदार स्वीट कॉर्न फ्राई', price: 150, count: 0 },
             { id: 'chicken65', photo: 'images/dine/chicken-65.jpg', cat: 'STARTERS', subcat: 'NONVEG_STARTERS', diet: 'NONVEG', name: 'చికెన్ 65 (బోన్‌లెస్)', nameEn: 'Chicken 65 (Boneless)', nameHi: 'चिकन 65 (बोनलेस)', desc: 'కరివేపాకు మసాలా ఫ్రై', descEn: 'Curry-leaf masala fry', descHi: 'करी पत्ता मसाला फ्राई', price: 220, count: 0 },
 
             // BIRYANIS
@@ -849,7 +851,7 @@
 
             // DRINKS
             { id: 'sweetLassi', photo: 'images/dine/sweet-lassi.jpg', cat: 'DRINKS', subcat: 'COOLERS', diet: 'VEG', name: 'స్పెషల్ స్వీట్ లస్సీ', nameEn: 'Special Sweet Lassi', nameHi: 'स्पेशल स्वीट लस्सी', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', descEn: 'Thick curd with almond flakes', descHi: 'गाढ़ा दही और बादाम के टुकड़े', price: 70, count: 0 },
-            { id: 'waterBottle', cat: 'DRINKS', subcat: 'WATER', diet: 'VEG', name: 'మినరల్ వాటర్ (1 లీటర్)', nameEn: 'Mineral Water (1L)', nameHi: 'मिनरल वॉटर (1 लीटर)', desc: 'కూల్డ్ వాటర్ బాటిల్', descEn: 'Chilled water bottle', descHi: 'ठंडी पानी की बोतल', price: 25, count: 0 }
+            { id: 'waterBottle', photo: 'images/dine/mineral-water-bottle.jpg', cat: 'DRINKS', subcat: 'WATER', diet: 'VEG', name: 'మినరల్ వాటర్ (1 లీటర్)', nameEn: 'Mineral Water (1L)', nameHi: 'मिनरल वॉटर (1 लीटर)', desc: 'కూల్డ్ వాటర్ బాటిల్', descEn: 'Chilled water bottle', descHi: 'ठंडी पानी की बोतल', price: 25, count: 0 }
         ];
 
         // Sub-categories: two-level menu. Each category has its own sub-categories;
@@ -883,7 +885,7 @@
         let currentLang = localStorage.getItem('availo_lang');
         if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
         const LANG_CODE = { te: 'te-IN', en: 'en-IN', hi: 'hi-IN' };
-        const LANG_NEXT_LABEL = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
+        const LANG_CURRENT = { te: 'తెలుగు', en: 'English', hi: 'हिन्दी' };
 
         const STR = {
             pageTitle: { te: "AVAILO స్మార్ట్ డైన్ — టేబుల్ కన్సియర్జ్", en: "AVAILO SMART DINE - NEXT-GEN TABLE CONCIERGE", hi: "AVAILO स्मार्ट डाइन — टेबल कंसीयर्ज" },
@@ -900,6 +902,9 @@
             emptyHint: { te: "పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️", en: "Select items above — they will be noted here ✍️", hi: "ऊपर से आइटम चुनिए, यहाँ नोट हो जाएँगे ✍️" },
             voiceChromeAlert: { te: "వాయిస్ రికగ్నిషన్ కోసం Chrome వాడండి.", en: "Please use Chrome for voice recognition.", hi: "वॉयस पहचान के लिए कृपया Chrome इस्तेमाल कीजिए।" },
             listening: { te: "🔴 వింటున్నాను సర్, మీ ఆర్డర్ చెప్పండి...", en: "🔴 Listening, sir — please tell me your order...", hi: "🔴 सुन रहा हूँ सर, अपना ऑर्डर बताइए..." },
+            voiceMicDenied: { te: "🎙️ మైక్ అనుమతి లేదు సర్ — బ్రౌజర్ సెట్టింగ్స్‌లో మైక్ ఆన్ చేసి మళ్ళీ ప్రయత్నించండి, లేదా టచ్‌తో ఆర్డర్ చేయండి.", en: "🎙️ Microphone not allowed, sir — please allow the mic in browser settings and try again, or order by touch.", hi: "🎙️ माइक की अनुमति नहीं है सर — ब्राउज़र सेटिंग्स में माइक चालू करके फिर से कोशिश करें, या टच से ऑर्डर करें।" },
+            voiceNoSpeech: { te: "🎙️ మీ మాట వినబడలేదు సర్ — మళ్ళీ చెప్పండి, లేదా టచ్‌తో ఆర్డర్ చేయండి.", en: "🎙️ I could not hear you, sir — please say it again, or order by touch.", hi: "🎙️ आपकी बात सुनाई नहीं दी सर — फिर से कहिए, या टच से ऑर्डर करें।" },
+            voiceError: { te: "🎙️ వాయిస్ ఆర్డర్ ఇప్పుడు పని చేయట్లేదు సర్ — టచ్‌తో ఆర్డర్ చేయండి లేదా WhatsAppలో వాయిస్ నోట్ పంపండి.", en: "🎙️ Voice order is not working right now, sir — please order by touch or send a voice note on WhatsApp.", hi: "🎙️ वॉयस ऑर्डर अभी काम नहीं कर रहा है सर — टच से ऑर्डर करें या WhatsApp पर वॉयस नोट भेजें।" },
             voiceNoted: { te: "రాసుకున్నాను సర్: {text}", en: "Noted down, sir: {text}", hi: "लिख लिया सर: {text}" },
             voiceOrderLabel: { te: "మీ వాయిస్ ఆర్డర్:", en: "Your voice order:", hi: "आपका वॉयस ऑर्डर:" },
             voiceOrderBill: { te: "వాయిస్ ఆర్డర్", en: "Voice Order", hi: "वॉयस ऑर्डर" },
@@ -954,7 +959,7 @@
             currentLang = forceLang || (currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te');
             localStorage.setItem('availo_lang', currentLang);
             document.documentElement.lang = currentLang;
-            document.getElementById('langBtn').innerText = LANG_NEXT_LABEL[currentLang];
+            document.getElementById('langBtn').innerText = LANG_CURRENT[currentLang];
             document.title = t('pageTitle');
             renderVenueLabels();
 
@@ -987,7 +992,7 @@
 
             listEl.innerHTML = filtered.map(item => `
                 <div class="dish-row">
-                    ${item.photo ? `<img class="dish-photo" src="${item.photo}" alt="">` : ''}
+                    ${item.photo ? `<img class="dish-photo" src="${item.photo}" alt="" loading="lazy">` : ''}
                     <div class="dish-text">
                         <div class="dish-badge-row">
                             <span class="${item.diet === 'VEG' ? 'dot-veg' : 'dot-nonveg'}"></span>
@@ -1084,7 +1089,10 @@
                 utter.onend = () => stage.classList.remove('speaking');
                 utter.onerror = () => stage.classList.remove('speaking');
 
-                window.speechSynthesis.speak(utter);
+                // 150 ms gap after cancel(): desktop Chrome cancels a new
+                // utterance spoken in the same task as cancel(). The text is
+                // already shown instantly above, so this is not a UI delay.
+                setTimeout(() => window.speechSynthesis.speak(utter), 150);
             }
         }
 
@@ -1094,10 +1102,8 @@
         window.addEventListener('load', () => {
             renderSubBar();
             renderMenu();
-            setTimeout(() => {
-                const greet = getTimeGreeting();
-                speakGentVoice(tf('welcomeSpeech', { greet: greet, hotel: hotelDisplay(), table: tableDisplay() }));
-            }, 600);
+            const greet = getTimeGreeting();
+            speakGentVoice(tf('welcomeSpeech', { greet: greet, hotel: hotelDisplay(), table: tableDisplay() }));
         });
 
         function modifyItem(id, delta) {
@@ -1178,6 +1184,13 @@
             rec.onstart = () => {
                 document.getElementById('supervisorText').innerText = t('listening');
             };
+            rec.onerror = (e) => {
+                const err = (e && e.error) || '';
+                const msg = err === 'not-allowed' || err === 'service-not-allowed' ? t('voiceMicDenied')
+                    : err === 'no-speech' ? t('voiceNoSpeech') : t('voiceError');
+                document.getElementById('supervisorText').innerText = msg;
+                speakGentVoice(msg);
+            };
             rec.onresult = (e) => {
                 const spokenText = e.results[0][0].transcript;
                 speakGentVoice(tf('voiceNoted', { text: spokenText }));
@@ -1220,9 +1233,7 @@
             closeOrderConfirm();
             displayLiveTrackerScreen(billLabel, 15, pendingOrderRef);
             pushKitchenEvent('orders', { table: tableNumber, hotel: hotelName, items: pendingOrderItems || billLabel, time: new Date().toLocaleTimeString(), ref: pendingOrderRef || '' });
-            setTimeout(() => {
-                window.location.href = `https://wa.me/${targetWhatsApp}?text=${msg}`;
-            }, 1400);
+            window.open(`https://wa.me/${targetWhatsApp}?text=${msg}`, '_blank', 'noopener');
         }
 
         function sendOrderWhatsApp() {
@@ -1263,17 +1274,26 @@
 
         // Loud refill alert: bell + TABLE number first, short, in the site language,
         // so the kitchen notices it on WhatsApp. (No buzzer/backend in this batch.)
+        // The BILL entry includes the full items list + total, not just "BILL NEEDED".
         function requestTableService(idx) {
             const r = REFILLS[idx];
             if (!r) return;
             speakGentVoice(r.reply[currentLang]);
             const tableNum = (String(tableNumber).match(/\d+/) || [tableNumber])[0];
             const loudText = (r.loud && (r.loud[currentLang] || r.loud.te)) || r.label[currentLang];
-            const msg = `🔔🔔 TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}`;
+            let msg = `🔔🔔 TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}`;
+            if (r.bill) {
+                let lines = [];
+                let total = 0;
+                HOTEL_MENU.forEach(item => {
+                    if (item.count > 0) { lines.push(`• ${item.name} x ${item.count} = ₹${item.count * item.price}`); total += item.count * item.price; }
+                });
+                const itemsStr = lines.length ? lines.join('\n') : (currentLang === 'hi' ? '(कार्ट खाली है — कृपया बिल भेजें)' : currentLang === 'en' ? '(Cart is empty — please send the bill)' : '(కార్ట్ ఖాళీగా ఉంది — దయచేసి బిల్లు పంపండి)');
+                const totalLabel = currentLang === 'hi' ? 'कुल बिल' : currentLang === 'en' ? 'Total Bill' : 'మొత్తం బిల్లు';
+                msg = `🔔🔔 TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}\n-----------------------------\n${itemsStr}\n-----------------------------\n*${totalLabel}:* ₹${total}`;
+            }
             pushKitchenEvent('refills', { table: tableNum, text: loudText, time: new Date().toLocaleTimeString(), ref: availoRef() });
-            setTimeout(() => {
-                window.location.href = `https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`;
-            }, 900);
+            window.open(`https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
         }
 
         let trackerState = null;
@@ -1392,8 +1412,9 @@
             }, 1000);
         }
 
-        // Apply the saved language on load (no cycling).
-        if (currentLang !== 'te') toggleLanguage(currentLang);
+        // Apply the saved language on load (no cycling) and show the CURRENT
+        // language on the button.
+        toggleLanguage(currentLang);
     </script>
 </body>
 </html>

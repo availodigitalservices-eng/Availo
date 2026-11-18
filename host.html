@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AVAILO AI HUMAN WAITER - SMART DINE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -431,7 +433,7 @@
         <div style="margin-top: 8px;">
             <span id="helplineLbl">హెల్ప్‌లైన్:</span> <a href="tel:9966157369" style="color: #e2e8f0; font-weight: 700; text-decoration: none;">9966157369</a>
             &nbsp;·&nbsp;
-            <a href="https://wa.me/919966157369" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
+            <a href="https://wa.me/919966157369" target="_blank" rel="noopener" style="color: #25D366; font-weight: 700; text-decoration: none;">WhatsApp</a>
         </div>
         <div style="margin-top: 8px;">
             <a id="privacyLink" href="privacy.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a id="termsLink" href="terms.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;">నిబంధనలు</a>
@@ -640,7 +642,10 @@
                 utter.onend = () => frame.classList.remove('speaking');
                 utter.onerror = () => frame.classList.remove('speaking');
 
-                window.speechSynthesis.speak(utter);
+                // 150 ms gap after cancel(): desktop Chrome cancels a new
+                // utterance spoken in the same task as cancel(). The text is
+                // already shown instantly above, so this is not a UI delay.
+                setTimeout(() => window.speechSynthesis.speak(utter), 150);
             }
         }
 
@@ -748,9 +753,7 @@
 
             closeModal();
             speakHost(UI_TEXT[currentLang].orderSent);
-            setTimeout(() => {
-                window.location.href = `https://wa.me/${kitchenWa}?text=${encodeURIComponent(msg)}`;
-            }, 900);
+            window.open(`https://wa.me/${kitchenWa}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
         }
 
         window.addEventListener('load', () => {

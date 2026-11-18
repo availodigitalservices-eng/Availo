@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="text-right flex items-center gap-2">
-        <button id="langBtn" onclick="toggleLanguage()" class="text-[11px] font-extrabold px-2.5 py-1 rounded-lg border border-amber-400/70 text-amber-300 bg-white/10">English</button>
+        <button id="langBtn" onclick="toggleLanguage()" class="text-[11px] font-extrabold px-2.5 py-1 rounded-lg border border-amber-400/70 text-amber-300 bg-white/10">తెలుగు</button>
         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
           <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-400 animate-ping"></span> <span data-te="లైవ్ వెరిఫైడ్" data-en="Live Verified" data-hi="लाइव वेरिफाइड">లైవ్ వెరిఫైడ్</span>
         </span>
@@ -60,7 +60,7 @@
       <div class="flex items-center space-x-2">
         <i class="fa-solid fa-building-user text-indigo-600 text-base"></i>
         <div>
-          <p class="font-bold text-slate-800" data-te="విజయవాడ రెసిడెన్సీ క్లస్టర్" data-en="Vijayawada Residency Cluster" data-hi="विजयवाड़ा रेज़िडेंसी क्लस्टर">విజయవాడ రెసిడెన్సీ క్లస్టర్</p>
+          <p class="font-bold text-slate-800" data-te="అవైలో పైలట్ క్లస్టర్" data-en="AVAILO Pilot Cluster" data-hi="AVAILO पायलट क्लस्टर">అవైలో పైలట్ క్లస్టర్</p>
           <p class="text-[10px] text-slate-500" data-te="24/7 డిజిటల్ గేట్ ఎంట్రీ సిస్టమ్" data-en="24/7 Digital Gate Entry System" data-hi="24/7 डिजिटल गेट एंट्री सिस्टम">24/7 డిజిటల్ గేట్ ఎంట్రీ సిస్టమ్</p>
         </div>
       </div>
@@ -74,67 +74,77 @@
       <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
         <div class="flex items-center space-x-2">
           <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">1</span>
-          <h2 class="text-sm font-bold text-slate-900" data-te="గేట్ విజిటర్ &amp; డెలివరీ పాస్" data-en="Gate Visitor &amp; Delivery Pass" data-hi="गेट विज़िटर और डिलीवरी पास">గేట్ విజిటర్ &amp; డెలివరీ పాస్</h2>
+          <h2 class="text-sm font-bold text-slate-900" data-te="గేట్ పాస్ — 3 దశలు" data-en="Gate Pass — 3 Steps" data-hi="गेट पास — 3 चरण">గేట్ పాస్ — 3 దశలు</h2>
         </div>
         <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-semibold" data-te="తక్షణ అలర్ట్" data-en="Instant Alert" data-hi="तुरंत अलर्ट">తక్షణ అలర్ట్</span>
       </div>
 
-      <!-- Flat & Category Selection Grid -->
-      <div class="grid grid-cols-2 gap-2.5">
-        <div>
-          <label class="block text-[11px] font-bold text-slate-700 mb-1">
-            <i class="fa-solid fa-house-chimney text-indigo-500 mr-1"></i> <span data-te="ఫ్లాట్ నంబర్ టైప్ చేయండి *" data-en="Type Flat Number *" data-hi="फ्लैट चुनें *">ఫ్లాట్ నంబర్ టైప్ చేయండి *</span>
-          </label>
-          <input type="text" id="gateFlat" data-ph-te="ఉదా: ఫ్లాట్ 302" data-ph-en="e.g.: Flat 302" data-ph-hi="उदा.: फ़्लैट 302" placeholder="ఉదా: ఫ్లాట్ 302" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
-        </div>
-
-        <div>
-          <label class="block text-[11px] font-bold text-slate-700 mb-1">
-            <i class="fa-solid fa-motorcycle text-indigo-500 mr-1"></i> <span data-te="విజిటర్ రకం *" data-en="Visitor Type *" data-hi="विज़िटर का प्रकार *">విజిటర్ రకం *</span>
-          </label>
-          <select id="visitorType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
-            <option value="" selected data-te="విజిటర్ రకం ఎంచుకోండి" data-en="Select Visitor Type" data-hi="विज़िटर का प्रकार चुनें">విజిటర్ రకం ఎంచుకోండి</option>
-            <option value="Swiggy / Zomato">Swiggy / Zomato</option>
-            <option value="Amazon / Flipkart">Amazon / Flipkart</option>
-            <option value="Blinkit / Zepto / Instamart">Blinkit / Zepto / Instamart</option>
-            <option value="Milk / Water / Newspaper" data-te="పాలు / వాటర్ క్యాన్" data-en="Milk / Water Can" data-hi="दूध / पानी का कैन">పాలు / వాటర్ క్యాన్</option>
-            <option value="Courier / SpeedPost" data-te="ఇతర కొరియర్" data-en="Other Courier" data-hi="अन्य कूरियर">ఇతర కొరియర్</option>
-            <option value="Guest / Relatives" data-te="బంధువులు / అతిథి" data-en="Relatives / Guest" data-hi="रिश्तेदार / मेहमान">బంధువులు / అతిథి</option>
-            <option value="Cab / Auto (Uber/Ola)" data-te="క్యాబ్ / ఆటో పికప్" data-en="Cab / Auto Pickup" data-hi="कैब / ऑटो पिकअप">క్యాబ్ / ఆటో పికప్</option>
-          </select>
-        </div>
+      <!-- 3-step gate pass: 1 Scan (apartment from QR) · 2 Flat + Partner · 3 Photo → Stamp -->
+      <div class="flex gap-1.5 mb-3.5 text-[11px] font-extrabold">
+        <span class="flex-1 text-center bg-indigo-50 border border-indigo-200 text-indigo-800 rounded-full py-1.5" data-te="① స్కాన్" data-en="① Scan" data-hi="① स्कैन">① స్కాన్</span>
+        <span class="flex-1 text-center bg-indigo-50 border border-indigo-200 text-indigo-800 rounded-full py-1.5" data-te="② ఫ్లాట్ + పార్టనర్" data-en="② Flat + Partner" data-hi="② फ़्लैट + पार्टनर">② ఫ్లాట్ + పార్టనర్</span>
+        <span class="flex-1 text-center bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full py-1.5" data-te="③ ఫోటో → స్టాంప్" data-en="③ Photo → Stamp" data-hi="③ फ़ोटो → स्टैम्प">③ ఫోటో → స్టాంప్</span>
       </div>
 
-      <!-- Apartment Name (for the verified stamp) -->
-      <div>
+      <!-- Step 1 — apartment comes from the QR scan (?apt=) or memory; asked only when unknown -->
+      <div id="gateAptKnown" style="display: none;" class="bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 text-[13px] font-extrabold text-emerald-800 mb-3.5">🏢 <span id="gateAptChipName"></span> <span class="font-semibold text-slate-500" data-te="· QR స్కాన్ ద్వారా" data-en="· via QR scan" data-hi="· QR स्कैन से">· QR స్కాన్ ద్వారా</span></div>
+      <div id="gateAptUnknown" class="mb-3.5">
         <label class="block text-[11px] font-bold text-slate-700 mb-1">
-          <i class="fa-solid fa-building text-indigo-500 mr-1"></i> <span data-te="అపార్ట్‌మెంట్ పేరు *" data-en="Apartment Name *" data-hi="अपार्टमेंट का नाम *">అపార్ట్‌మెంట్ పేరు *</span>
+          <i class="fa-solid fa-building text-indigo-500 mr-1"></i> <span data-te="అపార్ట్‌మెంట్ పేరు * (QR స్కాన్‌లో రాకపోతే ఒక్కసారి రాయండి)" data-en="Apartment Name * (type once if the QR scan did not fill it)" data-hi="अपार्टमेंट का नाम * (QR स्कैन से न भरे तो एक बार लिखें)">అపార్ట్‌మెంట్ పేరు * (QR స్కాన్‌లో రాకపోతే ఒక్కసారి రాయండి)</span>
         </label>
         <input type="text" id="gateApartment" placeholder="ఉదా: శ్రీ సాయి హైట్స్" data-ph-te="ఉదా: శ్రీ సాయి హైట్స్" data-ph-en="e.g. Sri Sai Heights" data-ph-hi="उदा: श्री साई हाइट्स" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
       </div>
 
-      <!-- Visitor quick-select chips -->
-      <div id="gateVisitorChips" class="flex flex-wrap gap-2"></div>
-
-      <!-- Visitor Details / Vehicle Number -->
-      <div>
+      <!-- Step 2 — flat + delivery partner (chips; free text only for Other) -->
+      <div class="mb-3.5">
         <label class="block text-[11px] font-bold text-slate-700 mb-1">
-          <i class="fa-solid fa-id-card text-indigo-500 mr-1"></i> <span data-te="డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:" data-en="Delivery person name or vehicle number:" data-hi="डिलीवरी बॉय का नाम या गाड़ी नंबर:">డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:</span>
+          <i class="fa-solid fa-house-chimney text-indigo-500 mr-1"></i> <span data-te="ఫ్లాట్ నంబర్ టైప్ చేయండి *" data-en="Type Flat Number *" data-hi="फ़्लैट नंबर लिखें *">ఫ్లాట్ నంబర్ టైప్ చేయండి *</span>
         </label>
-        <input type="text" id="visitorDetail" placeholder="ఉదా: రాము (AP 16 AB 1234)" data-ph-te="ఉదా: రాము (AP 16 AB 1234)" data-ph-en="e.g.: Ramu (AP 16 AB 1234)" data-ph-hi="उदा.: रामू (AP 16 AB 1234)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+        <input type="text" id="gateFlat" data-ph-te="ఉదా: ఫ్లాట్ 302" data-ph-en="e.g.: Flat 302" data-ph-hi="उदा.: फ़्लैट 302" placeholder="ఉదా: ఫ్లాట్ 302" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+      </div>
+      <div class="mb-3.5">
+        <label class="block text-[11px] font-bold text-slate-700 mb-1.5">
+          <i class="fa-solid fa-motorcycle text-indigo-500 mr-1"></i> <span data-te="డెలివరీ పార్టనర్ ఏమిటి? *" data-en="Which delivery partner? *" data-hi="डिलीवरी पार्टनर कौन है? *">డెలివరీ పార్టనర్ ఏమిటి? *</span>
+        </label>
+        <div id="gatePartnerChips" class="flex flex-wrap gap-2"></div>
+        <input type="text" id="gatePartnerOther" data-ph-te="పార్టనర్ పేరు రాయండి" data-ph-en="Type partner name" data-ph-hi="पार्टनर का नाम लिखें" placeholder="పార్టనర్ పేరు రాయండి" style="display: none;" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none mt-2">
       </div>
 
-      <!-- Primary Action: WhatsApp Camera Pass Generator -->
+      <!-- Step 3 — photo capture (REQUIRED before the stamp) + remember-me -->
+      <div class="mb-3.5">
+        <label class="block text-[11px] font-bold text-slate-700 mb-1.5">
+          <i class="fa-solid fa-camera text-indigo-500 mr-1"></i> <span data-te="డెలివరీ ఫోటో తీయండి * (ఫోటో లేకుండా స్టాంప్ రాదు)" data-en="Take the delivery photo * (no stamp without a photo)" data-hi="डिलीवरी फ़ोटो लें * (बिना फ़ोटो स्टैम्प नहीं मिलेगा)">డెలివరీ ఫోటో తీయండి * (ఫోటో లేకుండా స్టాంప్ రాదు)</span>
+        </label>
+        <input type="file" id="gatePhotoInput" accept="image/*" capture="environment" onchange="onGatePhotoSelected(event)" class="hidden">
+        <input type="file" id="gatePhotoGallery" accept="image/*" onchange="onGatePhotoSelected(event)" class="hidden">
+        <div class="grid grid-cols-2 gap-2.5">
+          <button type="button" onclick="document.getElementById('gatePhotoInput').click()" class="bg-slate-900 text-white font-bold py-3.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2"><i class="fa-solid fa-camera"></i> <span data-te="📷 కెమెరా తెరవండి" data-en="📷 Open camera" data-hi="📷 कैमरा खोलें">📷 కెమెరా తెరవండి</span></button>
+          <button type="button" onclick="document.getElementById('gatePhotoGallery').click()" class="bg-white border-2 border-slate-300 text-slate-700 font-bold py-3.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2"><i class="fa-solid fa-image"></i> <span data-te="🖼️ ఫోటో ఎంచుకోండి" data-en="🖼️ Choose photo" data-hi="🖼️ फ़ोटो चुनें">🖼️ ఫోటో ఎంచుకోండి</span></button>
+        </div>
+        <div id="gatePhotoPreview" style="display: none;" class="mt-2 items-center gap-2">
+          <img id="gatePhotoThumb" alt="" class="w-12 h-12 object-cover rounded-lg border border-slate-200">
+          <span class="text-xs font-bold text-emerald-700" data-te="✅ ఫోటో జతచేయబడింది — స్టాంప్ సిద్ధం" data-en="✅ Photo attached — stamp ready" data-hi="✅ फ़ोटो जोड़ दी गई — स्टैम्प तैयार है">✅ ఫోటో జతచేయబడింది — స్టాంప్ సిద్ధం</span>
+          <button type="button" onclick="clearGatePhoto()" class="ml-auto text-xs font-bold text-rose-600 underline" data-te="తొలగించు" data-en="Remove" data-hi="हटाएँ">తొలగించు</button>
+        </div>
+        <p class="text-[11px] text-slate-500 mt-1.5" data-te="ఫోటో ఈ ఫోన్‌లోనే ఉంటుంది — అది WhatsAppకి అప్లోడ్ కాదు, సర్వర్‌కు వెళ్లదు." data-en="The photo stays on this phone — it is not uploaded to WhatsApp or any server." data-hi="फ़ोटो इसी फ़ोन में रहती है — यह WhatsApp या किसी सर्वर पर अपलोड नहीं होती।">ఫోటో ఈ ఫోన్‌లోనే ఉంటుంది — అది WhatsAppకి అప్లోడ్ కాదు, సర్వర్‌కు వెళ్లదు.</p>
+      </div>
+      <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 mb-1">
+        <input type="checkbox" id="gateRemember" class="w-4 h-4 accent-indigo-600">
+        <span data-te="ఈ ఫోన్‌లో నా వివరాలు గుర్తుంచుకోండి" data-en="Remember my details on this phone" data-hi="इस फ़ोन पर मेरा विवरण याद रखें">ఈ ఫోన్‌లో నా వివరాలు గుర్తుంచుకోండి</span>
+      </label>
+      <button type="button" onclick="clearGateMemory()" style="background: none; border: none; color: #dc2626; font-size: 12px; font-weight: 700; cursor: pointer; padding: 0; margin-bottom: 12px;" data-te="🗑️ సేవ్ చేసిన వివరాలు తొలగించండి" data-en="🗑️ Clear saved details" data-hi="🗑️ सेव किया गया विवरण हटाएँ">🗑️ సేవ్ చేసిన వివరాలు తొలగించండి</button>
+
+      <!-- Primary Action: verify with photo, then send the pass -->
       <button onclick="triggerWhatsAppGateEntry()" class="pulse-btn w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold py-3.5 px-4 rounded-2xl text-xs shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2.5 transition">
         <i class="fa-solid fa-camera text-base"></i>
-        <span data-te="వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి" data-en="Take a selfie on WhatsApp &amp; send the pass" data-hi="WhatsApp पर सेल्फी लेकर पास भेजें">వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి</span>
+        <span data-te="✅ ఫోటోతో వెరిఫై చేసి పాస్ పంపండి" data-en="✅ Verify with photo &amp; send pass" data-hi="✅ फ़ोटो से वेरिफ़ाई करके पास भेजें">✅ ఫోటోతో వెరిఫై చేసి పాస్ పంపండి</span>
       </button>
 
       <div id="gateWarning" class="gate-warn" role="alert"></div>
 
       <div class="bg-amber-50 rounded-xl p-2.5 border border-amber-200/70 text-[10px] text-amber-900 flex items-start gap-2">
         <i class="fa-solid fa-shield-cat text-amber-600 text-sm mt-0.5"></i>
-        <p data-te="<strong>సెక్యూరిటీ రూల్:</strong> బటన్ నొక్కగానే వాట్సాప్ తెరుచుకుంటుంది. వాట్సాప్ లోని కెమెరాతో సెల్ఫీ లేదా డెలివరీ బాక్స్ ఫోటో తీసి సెండ్ కొడితే గేట్ పాస్ వెరిఫై అవుతుంది." data-en="<strong>Security Rule:</strong> Tapping the button opens WhatsApp. Take a selfie or a photo of the delivery box with the WhatsApp camera and send it to verify the gate pass." data-hi="<strong>सुरक्षा नियम:</strong> बटन दबाते ही WhatsApp खुल जाएगा। WhatsApp कैमरे से सेल्फी या डिलीवरी बॉक्स की फोटो लेकर भेजें, गेट पास वेरिफ़ाई हो जाएगा।"><strong>సెక్యూరిటీ రూల్:</strong> బటన్ నొక్కగానే వాట్సాప్ తెరుచుకుంటుంది. వాట్సాప్ లోని కెమెరాతో సెల్ఫీ లేదా డెలివరీ బాక్స్ ఫోటో తీసి సెండ్ కొడితే గేట్ పాస్ వెరిఫై అవుతుంది.</p>
+        <p data-te="<strong>సెక్యూరిటీ రూల్:</strong> 3 దశలు మాత్రమే — స్కాన్, ఫ్లాట్ + డెలివరీ పార్టనర్, ఫోటో. ఫోటో తీస్తేనే వెరిఫైడ్ స్టాంప్ వస్తుంది." data-en="<strong>Security Rule:</strong> Only 3 steps — Scan, Flat + delivery partner, Photo. The verified stamp is issued only after the photo is taken." data-hi="<strong>सुरक्षा नियम:</strong> सिर्फ़ 3 चरण — स्कैन, फ़्लैट + डिलीवरी पार्टनर, फ़ोटो। फ़ोटो लेने पर ही वेरिफ़ाइड स्टैम्प मिलेगा।"><strong>సెక్యూరిటీ రూల్:</strong> 3 దశలు మాత్రమే — స్కాన్, ఫ్లాట్ + డెలివరీ పార్టనర్, ఫోటో. ఫోటో తీస్తేనే వెరిఫైడ్ స్టాంప్ వస్తుంది.</p>
       </div>
 
       <!-- Gate pass confirmation: reference + dynamic stamp -->
@@ -174,6 +184,7 @@
         </div>
         <span class="text-[10px] bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-md font-bold" data-te="క్లస్టర్ కేర్" data-en="Cluster Care" data-hi="क्लस्टर केयर">క్లస్టర్ కేర్</span>
       </div>
+      <p class="text-[11px]"><a href="index.html#rate-card" class="text-indigo-600 font-bold underline" data-te="💰 సర్వీస్ రేట్లు చూడండి" data-en="💰 See service rates" data-hi="💰 सर्विस रेट देखें">💰 సర్వీస్ రేట్లు చూడండి</a></p>
 
       <!-- Service Selection Cards Grid -->
       <div class="grid grid-cols-2 gap-2.5">
@@ -307,7 +318,7 @@
 
     let currentLang = localStorage.getItem('availo_lang');
     if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
-    const LANG_NEXT = { te: 'English', en: 'हिंदी', hi: 'తెలుగు' };
+    const LANG_CURRENT = { te: 'తెలుగు', en: 'English', hi: 'हिन्दी' };
 
     // Service names/descriptions in all three languages (modal title + desc)
     const SERVICE_TEXTS = {
@@ -343,17 +354,6 @@
       }
     };
 
-    const GATE_ALERT = {
-      te: 'దయచేసి ఫ్లాట్ నంబర్ టైప్ చేసి, విజిటర్ రకం ఎంచుకోండి',
-      en: 'Please type the flat number and select the visitor type',
-      hi: 'कृपया फ़्लैट नंबर लिखें और विज़िटर का प्रकार चुनें'
-    };
-    const GATE_ALERT_APT = {
-      te: 'దయచేసి అపార్ట్‌మెంట్ పేరు, ఫ్లాట్ నంబర్ టైప్ చేసి, విజిటర్ రకం ఎంచుకోండి',
-      en: 'Please fill the apartment name, type the flat number and select the visitor type',
-      hi: 'कृपया अपार्टमेंट का नाम भरें, फ़्लैट नंबर लिखें और विज़िटर का प्रकार चुनें'
-    };
-    const DEFAULT_DETAIL = { te: 'డెలివరీ ఎగ్జిక్యూటివ్', en: 'Delivery Executive', hi: 'डिलीवरी एग्ज़ीक्यूटिव' };
     const DEFAULT_NOTES = { te: 'సాధారణ తనిఖీ', en: 'General check', hi: 'सामान्य जाँच' };
 
     function toggleLanguage(forceLang) {
@@ -363,7 +363,7 @@
       document.body.classList.toggle('lang-en', currentLang === 'en');
       document.body.classList.toggle('lang-hi', currentLang === 'hi');
       const btn = document.getElementById('langBtn');
-      if (btn) btn.innerText = LANG_NEXT[currentLang];
+      if (btn) btn.innerText = LANG_CURRENT[currentLang];
       document.querySelectorAll('[data-te]').forEach(el => {
         const text = el.getAttribute('data-' + currentLang);
         if (text) el.innerHTML = text;
@@ -414,7 +414,7 @@
       const M = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
       return String(d.getDate()).padStart(2, '0') + '-' + M[d.getMonth()] + '-' + d.getFullYear();
     }
-    function drawGateStamp(canvas, apartmentName) {
+    function drawGateStamp(canvas, apartmentName, partnerName, flatNo) {
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       const W = canvas.width, H = canvas.height;
@@ -427,9 +427,12 @@
       ctx.font = 'bold 46px Arial, sans-serif';
       ctx.fillText('★ VERIFIED & SAVED ★', W / 2, 140);
       ctx.font = 'bold 66px Arial, sans-serif';
-      ctx.fillText(String(apartmentName || '').toUpperCase(), W / 2, 245);
+      ctx.fillText(String(apartmentName || '').toUpperCase(), W / 2, 225);
+      ctx.font = 'bold 40px Arial, sans-serif';
+      ctx.fillText(String(partnerName || ''), W / 2, 295);
+      ctx.fillText(String(flatNo || ''), W / 2, 340);
       ctx.font = 'bold 44px Arial, sans-serif';
-      ctx.fillText(stampDateStr(new Date()) + '  \u2022  GRANTED', W / 2, 350);
+      ctx.fillText(stampDateStr(new Date()) + '  \u2022  GRANTED', W / 2, 395);
       ctx.font = 'bold 30px Arial, sans-serif';
       ctx.fillText('Powered by AVAILO', W / 2, 560);
     }
@@ -442,71 +445,146 @@
       a.click();
     }
 
-    // Gate form: visitor quick-select chips built from the select options.
-    function buildGateVisitorChips() {
-      const sel = document.getElementById('visitorType');
-      const wrap = document.getElementById('gateVisitorChips');
-      if (!sel || !wrap) return;
+    // Gate form: delivery-partner quick-select chips (Step 2).
+    const GATE_PARTNERS = ['Swiggy', 'Zomato', 'Amazon', 'Flipkart', 'Dunzo'];
+    let gatePartner = '';
+    let gateApartmentName = '';
+    function styleGatePartnerChip(b, active) {
+      b.style.minHeight = '44px'; b.style.padding = '10px 14px'; b.style.borderRadius = '999px';
+      b.style.border = '1.5px solid ' + (active ? '#4f46e5' : '#cbd5e1');
+      b.style.background = active ? '#4f46e5' : '#ffffff';
+      b.style.color = active ? '#ffffff' : '#334155';
+      b.style.fontSize = '12px'; b.style.fontWeight = '700'; b.style.cursor = 'pointer';
+    }
+    function buildGatePartnerChips() {
+      const wrap = document.getElementById('gatePartnerChips');
+      if (!wrap) return;
       wrap.innerHTML = '';
-      Array.from(sel.options).forEach(opt => {
-        if (!opt.value) return;
+      GATE_PARTNERS.concat(['Other']).forEach(name => {
         const b = document.createElement('button');
         b.type = 'button';
-        b.className = 'visitor-chip';
-        b.setAttribute('data-value', opt.value);
-        const te = opt.getAttribute('data-te') || opt.textContent;
-        const en = opt.getAttribute('data-en') || opt.textContent;
-        const hi = opt.getAttribute('data-hi') || opt.textContent;
-        b.setAttribute('data-te', te); b.setAttribute('data-en', en); b.setAttribute('data-hi', hi);
-        b.textContent = currentLang === 'hi' ? hi : currentLang === 'en' ? en : te;
-        b.onclick = () => { sel.value = opt.value; syncGateVisitorChips(); };
+        b.setAttribute('data-value', name);
+        b.textContent = name === 'Other' ? (currentLang === 'te' ? 'ఇతరము' : currentLang === 'hi' ? 'अन्य' : 'Other') : name;
+        styleGatePartnerChip(b, false);
+        b.onclick = () => {
+          gatePartner = name;
+          const other = document.getElementById('gatePartnerOther');
+          if (other) other.style.display = name === 'Other' ? 'block' : 'none';
+          wrap.querySelectorAll('button').forEach(c => styleGatePartnerChip(c, c.getAttribute('data-value') === name));
+        };
         wrap.appendChild(b);
       });
-      syncGateVisitorChips();
-      sel.addEventListener('change', syncGateVisitorChips);
     }
-    function syncGateVisitorChips() {
-      const sel = document.getElementById('visitorType');
-      if (!sel) return;
-      document.querySelectorAll('#gateVisitorChips .visitor-chip').forEach(c => {
-        c.classList.toggle('active', c.getAttribute('data-value') === sel.value);
-      });
+    // Gate photo (REQUIRED before the stamp) + remember-me (opt-in only).
+    let gatePhotoAttached = false;
+    let gatePhotoObjectUrl = null;
+    function onGatePhotoSelected(ev) {
+      const file = ev && ev.target && ev.target.files && ev.target.files[0];
+      const warn = document.getElementById('gateWarning');
+      if (!file) return;
+      if (!file.type || file.type.indexOf('image/') !== 0) {
+        if (warn) { warn.textContent = currentLang === 'te' ? 'దయచేసి ఫోటో (ఇమేజ్) మాత్రమే ఎంచుకోండి.' : currentLang === 'hi' ? 'कृपया सिर्फ़ फ़ोटो (इमेज) चुनें।' : 'Please choose a photo (image) only.'; warn.style.display = 'block'; }
+        ev.target.value = '';
+        return;
+      }
+      gatePhotoAttached = true;
+      if (gatePhotoObjectUrl) URL.revokeObjectURL(gatePhotoObjectUrl);
+      gatePhotoObjectUrl = URL.createObjectURL(file);
+      const thumb = document.getElementById('gatePhotoThumb');
+      if (thumb) thumb.src = gatePhotoObjectUrl;
+      const prev = document.getElementById('gatePhotoPreview');
+      if (prev) prev.style.display = 'flex';
+      if (warn) warn.style.display = 'none';
+      ev.target.value = '';
     }
+    function clearGatePhoto() {
+      gatePhotoAttached = false;
+      if (gatePhotoObjectUrl) { URL.revokeObjectURL(gatePhotoObjectUrl); gatePhotoObjectUrl = null; }
+      const prev = document.getElementById('gatePhotoPreview');
+      if (prev) prev.style.display = 'none';
+    }
+    function clearGateMemory() {
+      try { localStorage.removeItem('availo_apartment'); localStorage.removeItem('availo_gate_last'); localStorage.removeItem('availo_gate_remember'); } catch (e) {}
+      const apt = document.getElementById('gateApartment'); if (apt) apt.value = '';
+      const flat = document.getElementById('gateFlat'); if (flat) flat.value = '';
+      const cb = document.getElementById('gateRemember'); if (cb) cb.checked = false;
+      const known = document.getElementById('gateAptKnown'); if (known) known.style.display = 'none';
+      const unknown = document.getElementById('gateAptUnknown'); if (unknown) unknown.style.display = 'block';
+      gateApartmentName = '';
+    }
+    // Step 1 — apartment comes from the QR scan (?apt=) or from opt-in
+    // memory. Stale saves from before the opt-in rule are wiped on load
+    // so they never surface on a shared phone.
     function initGateFormMemory() {
       try {
-        const apt = localStorage.getItem('availo_apartment');
-        if (apt) document.getElementById('gateApartment').value = apt;
-        const last = JSON.parse(localStorage.getItem('availo_gate_last') || 'null');
-        if (last) {
-          if (last.flat) document.getElementById('gateFlat').value = last.flat;
-          if (last.name) document.getElementById('visitorDetail').value = last.name;
+        const params = new URLSearchParams(window.location.search);
+        const aptParam = (params.get('apt') || params.get('apartment') || '').trim();
+        if (localStorage.getItem('availo_gate_remember') !== '1') {
+          localStorage.removeItem('availo_apartment');
+          localStorage.removeItem('availo_gate_last');
         }
+        let apt = aptParam;
+        if (!apt && localStorage.getItem('availo_gate_remember') === '1') {
+          apt = localStorage.getItem('availo_apartment') || '';
+        }
+        const last = JSON.parse(localStorage.getItem('availo_gate_last') || 'null');
+        if (last && last.flat && localStorage.getItem('availo_gate_remember') === '1') {
+          document.getElementById('gateFlat').value = last.flat;
+        }
+        if (apt) {
+          gateApartmentName = apt;
+          const chip = document.getElementById('gateAptChipName');
+          if (chip) chip.textContent = apt;
+          const known = document.getElementById('gateAptKnown'); if (known) known.style.display = 'block';
+          const unknown = document.getElementById('gateAptUnknown'); if (unknown) unknown.style.display = 'none';
+        }
+        const cb = document.getElementById('gateRemember');
+        if (cb && localStorage.getItem('availo_gate_remember') === '1') cb.checked = true;
       } catch (e) {}
     }
 
-    // 1. గేట్ పాస్ బటన్ నొక్కినప్పుడు WhatsApp + Camera ట్రిగ్గర్
-    // 1. గేట్ పాస్ బటన్ నొక్కినప్పుడు WhatsApp + Camera ట్రిగ్గర్
+    // 1. గేట్ పాస్ — exactly 3 steps: Scan (apartment from QR), Flat +
+    // delivery partner, Photo → stamp. No visitor-name or vehicle-number
+    // field: the delivery partner IS the identifier.
     function triggerWhatsAppGateEntry() {
-      const apt = document.getElementById('gateApartment').value.trim();
-      const flat = document.getElementById('gateFlat').value;
-      const visitor = document.getElementById('visitorType').value;
+      const aptInput = document.getElementById('gateApartment');
+      const apt = (gateApartmentName || (aptInput ? aptInput.value.trim() : ''));
+      const flat = document.getElementById('gateFlat').value.trim();
+      const otherInput = document.getElementById('gatePartnerOther');
+      const partner = gatePartner === 'Other' ? (otherInput ? otherInput.value.trim() : '') : gatePartner;
       const warn = document.getElementById('gateWarning');
-      if (!apt || !flat || !visitor) {
-        const msg = GATE_ALERT_APT[currentLang];
+      if (!apt || !flat || !partner) {
+        const msg = currentLang === 'te' ? '⚠️ దయచేసి అపార్ట్‌మెంట్ పేరు, ఫ్లాట్ నంబర్ రాసి, డెలివరీ పార్టనర్ ఎంచుకోండి.' : currentLang === 'hi' ? '⚠️ कृपया अपार्टमेंट का नाम, फ़्लैट नंबर लिखें और डिलीवरी पार्टनर चुनें।' : '⚠️ Please fill the apartment name, flat number and pick the delivery partner.';
         if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
         alert(msg);
         return;
       }
+      if (!gatePhotoAttached) {
+        const msg = currentLang === 'te' ? '📷 ముందుగా డెలివరీ ఫోటో తీయండి — ఫోటో లేకుండా వెరిఫైడ్ స్టాంప్ రాదు.' : currentLang === 'hi' ? '📷 पहले डिलीवरी फ़ोटो लें — बिना फ़ोटो वेरिफ़ाइड स्टैम्प नहीं मिलेगा।' : '📷 Take the delivery photo first — no verified stamp without a photo.';
+        if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
+        alert(msg);
+        const cam = document.getElementById('gatePhotoInput');
+        if (cam) cam.click();
+        return;
+      }
       if (warn) warn.style.display = 'none';
-      const detail = document.getElementById('visitorDetail').value.trim() || DEFAULT_DETAIL[currentLang];
+      // Save apartment + flat ONLY if the user opted in on this phone.
+      const remember = document.getElementById('gateRemember');
       try {
-        localStorage.setItem('availo_apartment', apt);
-        localStorage.setItem('availo_gate_last', JSON.stringify({ flat: flat, name: document.getElementById('visitorDetail').value.trim() }));
+        if (remember && remember.checked) {
+          localStorage.setItem('availo_gate_remember', '1');
+          localStorage.setItem('availo_apartment', apt);
+          localStorage.setItem('availo_gate_last', JSON.stringify({ flat: flat }));
+        } else {
+          localStorage.removeItem('availo_gate_remember');
+          localStorage.removeItem('availo_apartment');
+          localStorage.removeItem('availo_gate_last');
+        }
       } catch (e) {}
       const ref = availoRef();
       const refLine = document.getElementById('gateRefLine');
       if (refLine) refLine.textContent = availoRefLine(ref);
-      drawGateStamp(document.getElementById('gateStampCanvas'), apt);
+      drawGateStamp(document.getElementById('gateStampCanvas'), apt, partner, flat);
       const panel = document.getElementById('gateConfirmPanel');
       if (panel) panel.style.display = 'block';
       const now = new Date();
@@ -518,32 +596,28 @@
 *रेफ़रेंस नंबर:* ${ref}
 *अपार्टमेंट:* ${apt}
 🏠 *फ़्लैट नंबर:* ${flat}
-🛵 *डिलीवरी / विज़िटर:* ${visitor}
-👤 *नाम / वाहन:* ${detail}
+🛵 *डिलीवरी पार्टनर:* ${partner}
 ⏰ *समय:* ${timeStr}
 
-📸 *(कृपया नीचे कैमरा आइकन दबाकर सेल्फ़ी या पार्सल की फ़ोटो लेकर भेजें)*` : currentLang === 'en' ? `🚨 *AVAILO GATE ENTRY PASS*
+📸 फ़ोटो: साइट पर ली गई ✅ वेरिफ़ाई हो गया।` : currentLang === 'en' ? `🚨 *AVAILO GATE ENTRY PASS*
 
 *Reference No:* ${ref}
 *Apartment:* ${apt}
 🏠 *Flat No:* ${flat}
-🛵 *Delivery / Visitor:* ${visitor}
-👤 *Name / Vehicle:* ${detail}
+🛵 *Delivery Partner:* ${partner}
 ⏰ *Time:* ${timeStr}
 
-📸 *(Please tap the camera icon below and send a selfie or parcel photo)*` : `🚨 *AVAILO గేట్ ఎంట్రీ పాస్*
+📸 Photo: taken on site ✅ Verified.` : `🚨 *AVAILO గేట్ ఎంట్రీ పాస్*
 
 *రిఫరెన్స్ నంబర్:* ${ref}
 *అపార్ట్‌మెంట్:* ${apt}
 🏠 *ఫ్లాట్ నంబర్:* ${flat}
-🛵 *డెలివరీ / విజిటర్:* ${visitor}
-👤 *పేరు / వాహనం:* ${detail}
+🛵 *డెలివరీ పార్టనర్:* ${partner}
 ⏰ *సమయం:* ${timeStr}
 
-📸 *(దయచేసి క్రింది కెమెరా ఐకాన్ నొక్కి సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి సెండ్ చేయండి)*`;
+📸 ఫోటో: సైట్‌లో తీయబడింది ✅ వెరిఫై చేయబడింది.`;
 
-      // Brief delay so the reference + stamp are visible before WhatsApp opens.
-      setTimeout(() => { window.location.href = `https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`; }, 1800);
+      window.open(`https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
     }
 
     // 2. సర్వీస్ మోడల్ ఓపెన్ & క్లోజ్ హ్యాండ్లర్లు
@@ -605,16 +679,15 @@
 📝 *సమస్య వివరాలు:* ${notes}
 ⏰ *సమయం:* ${timeStr}`;
 
-      setTimeout(() => {
-        closeServiceForm();
-        window.location.href = `https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`;
-      }, 1800);
+      closeServiceForm();
+      window.open(`https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
     }
 
     initGateFormMemory();
-    buildGateVisitorChips();
-    // Apply the saved language on load (no cycling).
-    if (currentLang !== 'te') toggleLanguage(currentLang);
+    buildGatePartnerChips();
+    // Apply the saved language on load and show the CURRENT language on the
+    // button (no cycling).
+    toggleLanguage(currentLang);
   </script>
 </body>
 </html>

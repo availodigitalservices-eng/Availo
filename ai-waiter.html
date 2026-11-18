@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AVAILO AI VOICE CONCIERGE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -574,7 +576,7 @@
         <!-- 5. Footer -->
         <div class="footer-bar">
             <span id="tableNoLbl">టేబుల్ నం:</span> <span id="tableNumber">01</span> · <span id="poweredByLbl">AVAILO VOICE ENGINE ద్వారా</span><br>
-            <span id="helplineLbl">హెల్ప్‌లైన్:</span> <a href="tel:9966157369">9966157369</a> · <a href="https://wa.me/919966157369">WhatsApp</a> · <a href="https://availoservices.in/">availoservices.in</a>
+            <span id="helplineLbl">హెల్ప్‌లైన్:</span> <a href="tel:9966157369">9966157369</a> · <a href="https://wa.me/919966157369" target="_blank" rel="noopener">WhatsApp</a> · <a href="https://availoservices.in/">availoservices.in</a>
             <br><a id="privacyLink" href="privacy.html">గోప్యతా విధానం</a> · <a id="termsLink" href="terms.html">నిబంధనలు</a>
         </div>
     </div>
@@ -867,7 +869,7 @@
             const onSpeechFinish = () => {
                 setStageUI('idle', LANG_DATA[currentLang].chip.ready);
                 if (autoListenAfter && document.getElementById('autoLoopToggle').checked) {
-                    setTimeout(() => startListening(), 400);
+                    startListening();
                 }
             };
 
@@ -918,7 +920,9 @@
                 setStageUI('speaking', LANG_DATA[currentLang].chip.speaking);
                 utter.onend = doneCb;
                 utter.onerror = doneCb;
-                window.speechSynthesis.speak(utter);
+                // 150 ms gap after cancel(): desktop Chrome cancels a new
+                // utterance spoken in the same task as cancel().
+                setTimeout(() => window.speechSynthesis.speak(utter), 150);
             } else {
                 doneCb();
             }
@@ -1083,9 +1087,7 @@
             const msg = `*AVAILO VOICE AI - KITCHEN ORDER*\n-----------------------------\n*Restaurant:* ${LANG_DATA.en.hotel}\n*Table No:* ${tableParam}\n*Language:* ${currentLang.toUpperCase()}\n-----------------------------\n${itemsStr}\n-----------------------------\n*Total Bill:* ₹${total}\n*Time:* ${new Date().toLocaleTimeString()}`;
 
             speakResponse(LANG_DATA[currentLang].confirming(total), false);
-            setTimeout(() => {
-                window.location.href = `https://wa.me/${kitchenWa}?text=${encodeURIComponent(msg)}`;
-            }, 2200);
+            window.open(`https://wa.me/${kitchenWa}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
         }
 
         window.addEventListener('load', () => { renderChips(); renderMenu(); });

@@ -882,7 +882,7 @@
         <div class="header-actions">
             <!-- Real-Time Live Clock Display -->
             <div class="live-time-badge" id="liveTimeClock">11:43:00 PM</div>
-            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
             <button class="menu-btn" onclick="toggleDrawer()">☰</button>
         </div>
     </header>
@@ -1005,63 +1005,81 @@
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span style="font-size: 20px;">🏢</span>
                         <div>
-                            <strong style="font-size: 13px; color: #1e293b; display: block;" data-te="విజయవాడ రెసిడెన్సీ క్లస్టర్" data-en="Vijayawada Residency Cluster" data-hi="विजयवाड़ा रेज़िडेंसी क्लस्टर">విజయవాడ రెసిడెన్సీ క్లస్టర్</strong>
+                            <strong style="font-size: 13px; color: #1e293b; display: block;" data-te="అవైలో పైలట్ క్లస్టర్" data-en="AVAILO Pilot Cluster" data-hi="AVAILO पायलट क्लस्टर">అవైలో పైలట్ క్లస్టర్</strong>
                             <small style="font-size: 10.5px; color: #64748b;" data-te="24/7 డిజిటల్ గేట్ ఎంట్రీ సిస్టమ్" data-en="24/7 Digital Gate Entry System" data-hi="24/7 डिजिटल गेट एंट्री सिस्टम">24/7 డిజిటల్ గేట్ ఎంట్రీ సిస్టమ్</small>
                         </div>
                     </div>
-                    <span style="font-size: 11px; color: #64748b; font-weight: 600;" data-te="లైవ్ డెస్క్" data-en="Live Desk" data-hi="लाइव डेस्क">లైవ్ డెస్క్</span>
+                    <span style="font-size: 11px; color: #64748b; font-weight: 600;" data-te="సొసైటీ డెస్క్" data-en="Society Desk" data-hi="सोसाइटी डेस्क">సొసైటీ డెస్క్</span>
                 </div>
 
                 <div style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; background: #ffffff; margin-bottom: 14px;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="background: #eff6ff; color: var(--brand-navy); width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;">1</span>
-                            <strong style="font-size: 14px; color: #1e293b;" data-te="గేట్ విజిటర్ & డెలివరీ పాస్" data-en="Gate Visitor & Delivery Pass" data-hi="गेट विज़िटर और डिलीवरी पास">గేట్ విజిటర్ & డెలివరీ పాస్</strong>
+                            <strong style="font-size: 14px; color: #1e293b;" data-te="గేట్ పాస్ — 3 దశలు" data-en="Gate Pass — 3 Steps" data-hi="गेट पास — 3 चरण">గేట్ పాస్ — 3 దశలు</strong>
                         </div>
                         <span style="font-size: 10px; color: var(--brand-navy); background: #eff6ff; padding: 2px 6px; border-radius: 4px; font-weight: 700;" data-te="తక్షణ అలర్ట్" data-en="Instant Alert" data-hi="तुरंत अलर्ट">తక్షణ అలర్ట్</span>
                     </div>
 
-                    <div style="margin-bottom: 12px;">
-                        <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🏢 అపార్ట్‌మెంట్ పేరు *" data-en="🏢 Apartment Name *" data-hi="🏢 अपार्टमेंट का नाम *">🏢 అపార్ట్‌మెంట్ పేరు *</label>
+                    <!-- 3-step gate pass: 1 Scan (apartment from QR) · 2 Flat + Partner · 3 Photo → Stamp -->
+                    <div style="display: flex; gap: 6px; margin-bottom: 14px; font-size: 11px; font-weight: 800;">
+                        <span style="flex: 1; text-align: center; background: #eff6ff; border: 1px solid #93c5fd; color: #0f2a5c; border-radius: 999px; padding: 7px 4px;" data-te="① స్కాన్" data-en="① Scan" data-hi="① स्कैन">① స్కాన్</span>
+                        <span style="flex: 1; text-align: center; background: #eff6ff; border: 1px solid #93c5fd; color: #0f2a5c; border-radius: 999px; padding: 7px 4px;" data-te="② ఫ్లాట్ + పార్టనర్" data-en="② Flat + Partner" data-hi="② फ़्लैट + पार्टनर">② ఫ్లాట్ + పార్టనర్</span>
+                        <span style="flex: 1; text-align: center; background: #f0fdf4; border: 1px solid #86efac; color: #166534; border-radius: 999px; padding: 7px 4px;" data-te="③ ఫోటో → స్టాంప్" data-en="③ Photo → Stamp" data-hi="③ फ़ोटो → स्टैम्प">③ ఫోటో → స్టాంప్</span>
+                    </div>
+
+                    <!-- Step 1 — apartment comes from the QR scan (?apt=) or memory; asked only when unknown -->
+                    <div id="gateAptKnown" style="display: none; background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; font-size: 13px; font-weight: 800; color: #166534;">🏢 <span id="gateAptChipName"></span> <span style="font-weight: 600; color: #64748b;" data-te="· QR స్కాన్ ద్వారా" data-en="· via QR scan" data-hi="· QR स्कैन से">· QR స్కాన్ ద్వారా</span></div>
+                    <div id="gateAptUnknown" style="margin-bottom: 12px;">
+                        <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🏢 అపార్ట్‌మెంట్ పేరు * (QR స్కాన్‌లో రాకపోతే ఒక్కసారి రాయండి)" data-en="🏢 Apartment Name * (type once if the QR scan did not fill it)" data-hi="🏢 अपार्टमेंट का नाम * (QR स्कैन से न भरे तो एक बार लिखें)">🏢 అపార్ట్‌మెంట్ పేరు * (QR స్కాన్‌లో రాకపోతే ఒక్కసారి రాయండి)</label>
                         <input type="text" id="gateApartment" data-ph-te="ఉదా: శ్రీ సాయి హైట్స్" data-ph-en="e.g. Sri Sai Heights" data-ph-hi="उदा: श्री साई हाइट्स" placeholder="ఉదా: శ్రీ సాయి హైట్స్" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px;">
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
-                        <div>
-                            <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🏠 ఫ్లాట్ నంబర్ టైప్ చేయండి *" data-en="🏠 Type Flat Number *" data-hi="🏠 फ़्लैट नंबर लिखें *">🏠 ఫ్లాట్ నంబర్ టైప్ చేయండి *</label>
-                            <input type="text" id="gateFlatNo" data-ph-te="ఉదా: ఫ్లాట్ 302" data-ph-en="e.g.: Flat 302" data-ph-hi="उदा.: फ़्लैट 302" placeholder="ఉదా: ఫ్లాట్ 302" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-weight: 600; background: #fff;">
-                        </div>
-                        <div>
-                            <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🛵 విజిటర్ రకం *" data-en="🛵 Visitor Type *" data-hi="🛵 विज़िटर का प्रकार *">🛵 విజిటర్ రకం *</label>
-                            <select id="gateVisitorType" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-weight: 600; background: #fff;">
-                                <option value="" selected data-te="విజిటర్ రకం ఎంచుకోండి" data-en="Select Visitor Type" data-hi="विज़िटर का प्रकार चुनें">విజిటర్ రకం ఎంచుకోండి</option>
-                                <option value="Swiggy / Zomato">Swiggy / Zomato</option>
-                                <option value="Amazon / Flipkart">Amazon / Flipkart</option>
-                                <option value="Blinkit / Zepto">Blinkit / Zepto</option>
-                                <option value="బంధువులు / అతిథి" data-te="బంధువులు / అతిథి" data-en="Relatives / Guest" data-hi="रिश्तेदार / अतिथि">బంధువులు / అతిథి</option>
-                                <option value="క్యాబ్ / ఆటో డ్రైవర్" data-te="క్యాబ్ / ఆటో డ్రైవర్" data-en="Cab / Auto Driver" data-hi="कैब / ऑटो ड्राइवर">క్యాబ్ / ఆటో డ్రైవర్</option>
-                                <option value="సర్వీస్ టెక్నీషియన్" data-te="సర్వీస్ టెక్నీషియన్" data-en="Service Technician" data-hi="सर्विस टेक्नीशियन">సర్వీస్ టెక్నీషియన్</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div id="gateVisitorChips" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;"></div>
-
+                    <!-- Step 2 — flat + delivery partner (chips; free text only for Other) -->
                     <div style="margin-bottom: 12px;">
-                        <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🪪 డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:" data-en="🪪 Delivery Person / Vehicle No:" data-hi="🪪 डिलीवरी व्यक्ति का नाम या वाहन नंबर:">🪪 డెలివరీ బాయ్ పేరు లేదా బండి నంబర్:</label>
-                        <input type="text" id="gateDeliveryDetails" data-ph-te="ఉదా: రాము (AP 16 AB 1234)" data-ph-en="e.g. Ramu (AP 16 AB 1234)" data-ph-hi="उदा: रामू (AP 16 AB 1234)" placeholder="ఉదా: రాము (AP 16 AB 1234)" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px;">
+                        <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🏠 ఫ్లాట్ నంబర్ టైప్ చేయండి *" data-en="🏠 Type Flat Number *" data-hi="🏠 फ़्लैट नंबर लिखें *">🏠 ఫ్లాట్ నంబర్ టైప్ చేయండి *</label>
+                        <input type="text" id="gateFlatNo" data-ph-te="ఉదా: ఫ్లాట్ 302" data-ph-en="e.g.: Flat 302" data-ph-hi="उदा.: फ़्लैट 302" placeholder="ఉదా: ఫ్లాట్ 302" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-weight: 600; background: #fff;">
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 6px;" data-te="🛵 డెలివరీ పార్టనర్ ఏమిటి? *" data-en="🛵 Which delivery partner? *" data-hi="🛵 डिलीवरी पार्टनर कौन है? *">🛵 డెలివరీ పార్టనర్ ఏమిటి? *</label>
+                        <div id="gatePartnerChips" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+                        <input type="text" id="gatePartnerOther" data-ph-te="పార్టనర్ పేరు రాయండి" data-ph-en="Type partner name" data-ph-hi="पार्टनर का नाम लिखें" placeholder="పార్టనర్ పేరు రాయండి" style="display: none; width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; margin-top: 8px;">
                     </div>
 
-                    <button onclick="sendGateSecurityPass()" style="width: 100%; background: #16a34a; color: #ffffff; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);" data-te="📷 వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి" data-en="📷 Take Photo & Send Pass on WhatsApp" data-hi="📷 WhatsApp पर सेल्फ़ी लेकर पास भेजें">
-                        <span>📷</span> వాట్సాప్‌లో సెల్ఫీ దిగి పాస్ పంపండి
+                    <!-- Visitor / parcel photo: REQUIRED before the VERIFIED stamp -->
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="📷 విజిటర్ / పార్సెల్ ఫోటో *" data-en="📷 Visitor / Parcel Photo *" data-hi="📷 विज़िटर / पार्सल फ़ोटो *">📷 విజిటర్ / పార్సెల్ ఫోటో *</label>
+                        <div style="display: flex; gap: 8px;">
+                            <button type="button" onclick="document.getElementById('gatePhotoInput').click()" style="flex: 1; background: #eff6ff; border: 1.5px solid #93c5fd; color: #0f2a5c; padding: 11px; border-radius: 8px; font-size: 13px; font-weight: 800; cursor: pointer;" data-te="📷 ఫోటో తీయండి" data-en="📷 Take Photo" data-hi="📷 फ़ोटो लें">📷 ఫోటో తీయండి</button>
+                            <button type="button" onclick="document.getElementById('gatePhotoGallery').click()" style="flex: 1; background: #f8fafc; border: 1.5px solid #cbd5e1; color: #334155; padding: 11px; border-radius: 8px; font-size: 13px; font-weight: 800; cursor: pointer;" data-te="🖼️ గ్యాలరీ నుంచి" data-en="🖼️ From Gallery" data-hi="🖼️ गैलरी से">🖼️ గ్యాలరీ నుంచి</button>
+                        </div>
+                        <input type="file" id="gatePhotoInput" accept="image/*" capture="environment" style="display: none;" onchange="onGatePhotoSelected(event)">
+                        <input type="file" id="gatePhotoGallery" accept="image/*" style="display: none;" onchange="onGatePhotoSelected(event)">
+                        <div id="gatePhotoPreview" style="display: none; margin-top: 8px; align-items: center; gap: 10px;">
+                            <img id="gatePhotoThumb" alt="" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; border: 2px solid #16a34a;">
+                            <span style="font-size: 12px; font-weight: 800; color: #166534;" data-te="✓ ఫోటో జతచేయబడింది" data-en="✓ Photo attached" data-hi="✓ फ़ोटो जुड़ गई">✓ ఫోటో జతచేయబడింది</span>
+                            <button type="button" onclick="clearGatePhoto()" style="background: none; border: none; color: #dc2626; font-size: 12px; font-weight: 800; cursor: pointer;" data-te="✕ తీసివేయండి" data-en="✕ Remove" data-hi="✕ हटाएँ">✕ తీసివేయండి</button>
+                        </div>
+                        <p style="font-size: 11px; color: #64748b; margin-top: 6px; line-height: 1.5;" data-te="ఫోటో జతచేస్తేనే VERIFIED స్టాంప్ వస్తుంది. ఫోటో లేకుండా పాస్ వెరిఫై కాదు. ఫోటో మీ ఫోన్‌లోనే ఉంటుంది — సైట్‌లో ఎక్కడా సేవ్ చేయబడదు." data-en="The VERIFIED stamp is issued only after a photo is attached. Without a photo the pass is not verified. The photo stays on your phone — it is never saved on the site." data-hi="फ़ोटो जोड़ने पर ही VERIFIED स्टैम्प मिलेगा। बिना फ़ोटो पास वेरिफ़ाई नहीं होगा। फ़ोटो आपके फ़ोन में ही रहती है — साइट पर कहीं सेव नहीं होती।">ఫోటో జతచేస్తేనే VERIFIED స్టాంప్ వస్తుంది. ఫోటో లేకుండా పాస్ వెరిఫై కాదు. ఫోటో మీ ఫోన్‌లోనే ఉంటుంది — సైట్‌లో ఎక్కడా సేవ్ చేయబడదు.</p>
+                    </div>
+
+                    <!-- Remember on this phone: opt-in only (default OFF) -->
+                    <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #334155; margin-bottom: 4px; cursor: pointer;">
+                        <input type="checkbox" id="gateRemember" style="margin-top: 2px; width: 16px; height: 16px;">
+                        <span data-te="ఈ ఫోన్‌లో నా వివరాలు గుర్తుంచుకోండి (షేర్డ్ / వేరే వాళ్ళ ఫోన్‌లో టిక్ చేయవద్దు)" data-en="Remember my details on this phone (do not tick on a shared / someone else's phone)" data-hi="मेरा विवरण इस फ़ोन पर याद रखें (शेयर्ड / किसी और के फ़ोन पर टिक न करें)">ఈ ఫోన్‌లో నా వివరాలు గుర్తుంచుకోండి (షేర్డ్ / వేరే వాళ్ళ ఫోన్‌లో టిక్ చేయవద్దు)</span>
+                    </label>
+                    <button type="button" onclick="clearGateMemory()" style="background: none; border: none; color: #dc2626; font-size: 12px; font-weight: 700; cursor: pointer; padding: 0; margin-bottom: 12px;" data-te="🗑️ సేవ్ చేసిన వివరాలు తొలగించండి" data-en="🗑️ Clear saved details" data-hi="🗑️ सेव किया गया विवरण हटाएँ">🗑️ సేవ్ చేసిన వివరాలు తొలగించండి</button>
+
+                    <button onclick="sendGateSecurityPass()" style="width: 100%; background: #16a34a; color: #ffffff; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);" data-te="✅ ఫోటోతో వెరిఫై చేసి పాస్ పంపండి" data-en="✅ Verify with Photo & Send Pass" data-hi="✅ फ़ोटो से वेरिफ़ाई करके पास भेजें">
+                        <span>📷</span> ✅ ఫోటోతో వెరిఫై చేసి పాస్ పంపండి
                     </button>
 
                     <div id="gateWarning" class="gate-warn" role="alert"></div>
 
                     <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 8px; padding: 10px; margin-top: 10px; display: flex; gap: 8px; align-items: flex-start;">
                         <span style="font-size: 16px;">🛡️</span>
-                        <p style="font-size: 11px; color: #92400e; line-height: 1.4;" data-te="సెక్యూరిటీ రూల్: బటన్ నొక్కగానే వాట్సాప్ తెరుచుకుంటుంది. వాట్సాప్ లోని కెమెరాతో సెల్ఫీ లేదా డెలివరీ బాక్స్ ఫోటో తీసి సెండ్ కొడితే గేట్ పాస్ వెరిఫై అవుతుంది." data-en="Security Rule: Tap button to open WhatsApp. Capture photo with camera to verify gate pass." data-hi="सुरक्षा नियम: बटन दबाते ही WhatsApp खुल जाएगा। WhatsApp के कैमरे से सेल्फ़ी या डिलीवरी बॉक्स की फ़ोटो लेकर भेजें, तो गेट पास वेरिफ़ाई हो जाएगा।">
-                            <strong>సెక్యూరిటీ రూల్:</strong> బటన్ నొక్కగానే వాట్సాప్ తెరుచుకుంటుంది. వాట్సాప్ లోని కెమెరాతో సెల్ఫీ లేదా డెలివరీ బాక్స్ ఫోటో తీసి సెండ్ కొడితే గేట్ పాస్ వెరిఫై అవుతుంది.
+                        <p style="font-size: 11px; color: #92400e; line-height: 1.4;" data-te="సెక్యూరిటీ రూల్: 3 దశలు మాత్రమే — ① QR స్కాన్, ② ఫ్లాట్ + డెలివరీ పార్టనర్, ③ ఫోటో. ఫోటో జతచేస్తేనే VERIFIED స్టాంప్ వస్తుంది." data-en="Security Rule: Only 3 steps — ① QR scan, ② Flat + delivery partner, ③ Photo. The VERIFIED stamp is issued only after the photo." data-hi="सुरक्षा नियम: सिर्फ़ 3 चरण — ① QR स्कैन, ② फ़्लैट + डिलीवरी पार्टनर, ③ फ़ोटो। फ़ोटो जोड़ने पर ही VERIFIED स्टैम्प मिलेगा।">
+                            <strong>సెక్యూరిటీ రూల్:</strong> 3 దశలు మాత్రమే — ① QR స్కాన్, ② ఫ్లాట్ + డెలివరీ పార్టనర్, ③ ఫోటో. ఫోటో జతచేస్తేనే VERIFIED స్టాంప్ వస్తుంది.
                         </p>
                     </div>
                 </div>
@@ -1101,7 +1119,7 @@
             <!-- 1. AVAILO Care -->
             <div class="srv-card">
                 <div class="srv-card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=600&auto=format&fit=crop&q=80" alt="NRI Parents Care" data-alt-te="NRI తల్లిదండ్రుల సంరక్షణ" data-alt-en="NRI Parents Care" data-alt-hi="NRI माता-पिता की देखभाल">
+                    <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=600&auto=format&fit=crop&q=80" alt="NRI Parents Care" data-alt-te="NRI తల్లిదండ్రుల సంరక్షణ" data-alt-en="NRI Parents Care" data-alt-hi="NRI माता-पिता की देखभाल" loading="lazy" decoding="async">
                     <span class="srv-status-badge" data-te="లైవ్ సర్వీస్" data-en="Active Service" data-hi="लाइव सर्विस">Active Service</span>
                 </div>
                 <div class="srv-card-body">
@@ -1116,7 +1134,7 @@
             <!-- 2. AVAILO Home Services -->
             <div class="srv-card">
                 <div class="srv-card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&auto=format&fit=crop&q=80" alt="Home Services" data-alt-te="హోమ్ సర్వీసెస్" data-alt-en="Home Services" data-alt-hi="होम सर्विसेज़">
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&auto=format&fit=crop&q=80" alt="Home Services" data-alt-te="హోమ్ సర్వీసెస్" data-alt-en="Home Services" data-alt-hi="होम सर्विसेज़" loading="lazy" decoding="async">
                     <span class="srv-status-badge" data-te="లైవ్ సర్వీస్" data-en="Active Service" data-hi="लाइव सर्विस">Active Service</span>
                 </div>
                 <div class="srv-card-body">
@@ -1125,13 +1143,14 @@
                         Connect with verified technicians and home service providers based on availability and location.
                     </p>
                     <a onclick="waLink('హలో AVAILO, నాకు హోమ్ సర్వీసెస్ కావాలి', 'Hi AVAILO, I need Home Services', 'नमस्ते AVAILO, मुझे होम सर्विसेज़ चाहिए')" style="cursor: pointer;" class="srv-action-btn font-te-title" data-te="సర్వీస్ రిక్వెస్ట్ చేయండి →" data-en="Request a Service →" data-hi="सर्विस रिक्वेस्ट करें →">Request a Service →</a>
+                    <a href="#rate-card" class="srv-action-btn font-te-title" style="margin-top: 8px; background: #eff6ff; color: var(--brand-navy); border: 1px solid #93c5fd;" data-te="💰 సర్వీస్ రేట్లు చూడండి →" data-en="💰 See Service Rates →" data-hi="💰 सर्विस रेट देखें →">💰 సర్వీస్ రేట్లు చూడండి →</a>
                 </div>
             </div>
 
             <!-- 3. AVAILO Dine & Stay -->
             <div class="srv-card">
                 <div class="srv-card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&auto=format&fit=crop&q=80" alt="Dine and Stay" data-alt-te="డైన్ మరియు స్టే" data-alt-en="Dine and Stay" data-alt-hi="डाइन और स्टे">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&auto=format&fit=crop&q=80" alt="Dine and Stay" data-alt-te="డైన్ మరియు స్టే" data-alt-en="Dine and Stay" data-alt-hi="डाइन और स्टे" loading="lazy" decoding="async">
                     <span class="srv-status-badge" data-te="పైలట్ ఫేజ్" data-en="Pilot Phase" data-hi="पायलट चरण">Pilot Phase</span>
                 </div>
                 <div class="srv-card-body">
@@ -1147,7 +1166,7 @@
             <!-- 4. AVAILO Salon -->
             <div class="srv-card">
                 <div class="srv-card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&auto=format&fit=crop&q=80" alt="Salon Services" data-alt-te="సెలూన్ సర్వీసెస్" data-alt-en="Salon Services" data-alt-hi="सैलून सर्विसेज़">
+                    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&auto=format&fit=crop&q=80" alt="Salon Services" data-alt-te="సెలూన్ సర్వీసెస్" data-alt-en="Salon Services" data-alt-hi="सैलून सर्विसेज़" loading="lazy" decoding="async">
                     <span class="srv-status-badge coming-soon" data-te="త్వరలో రాబోతోంది" data-en="Coming Soon" data-hi="जल्द आ रहा है">Coming Soon</span>
                 </div>
                 <div class="srv-card-body">
@@ -1155,14 +1174,14 @@
                     <p class="font-te-body" data-te="సెలూన్ల సమాచారం, సర్వీస్ స్లాట్ వివరాలు మరియు సులభమైన బుకింగ్ పరస్పర చర్యల కోసం సిద్ధమవుతున్న కాన్సెప్ట్." data-en="A planned service concept for salon discovery, service information, and easier customer interaction." data-hi="सैलून की जानकारी, सर्विस स्लॉट विवरण और आसान बुकिंग के लिए तैयार हो रहा कॉन्सेप्ट।">
                         A planned service concept for salon discovery, service information, and easier customer interaction.
                     </p>
-                    <button class="srv-action-btn disabled font-te-title" data-te="త్వరలో రాబోతోంది" data-en="Coming Soon" data-hi="जल्द आ रहा है">Coming Soon</button>
+                    <button class="srv-action-btn font-te-title" onclick="salonNotify(this)" data-te="🔔 లాంచ్ అయినప్పుడు తెలియజేయండి" data-en="🔔 Notify me at launch" data-hi="🔔 लॉन्च होने पर बताएँ">🔔 లాంచ్ అయినప్పుడు తెలియజేయండి</button>
                 </div>
             </div>
 
             <!-- 5. AVAILO Smart Cube (Fixed Image) -->
             <div class="srv-card">
                 <div class="srv-card-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=600&auto=format&fit=crop&q=80" alt="Smart Cube QR Table Ordering" data-alt-te="స్మార్ట్ క్యూబ్ QR టేబుల్ ఆర్డరింగ్" data-alt-en="Smart Cube QR Table Ordering" data-alt-hi="स्मार्ट क्यूब QR टेबल ऑर्डरिंग">
+                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=600&auto=format&fit=crop&q=80" alt="Smart Cube QR Table Ordering" data-alt-te="స్మార్ట్ క్యూబ్ QR టేబుల్ ఆర్డరింగ్" data-alt-en="Smart Cube QR Table Ordering" data-alt-hi="स्मार्ट क्यूब QR टेबल ऑर्डरिंग" loading="lazy" decoding="async">
                     <span class="srv-status-badge" data-te="పైలట్ మోడల్" data-en="Pilot Model" data-hi="पायलट मॉडल">Pilot Model</span>
                 </div>
                 <div class="srv-card-body">
@@ -1170,11 +1189,21 @@
                     <p class="font-te-body" data-te="టేబుల్స్‌పై అమర్చే స్మార్ట్ QR క్యూబ్. కస్టమర్ల ఆర్డర్లు, సర్వీస్ రిక్వెస్ట్‌లను నేరుగా మీ బిజినెస్ WhatsApp కే అనుసంధానిస్తుంది." data-en="A QR-based business interaction concept for table ordering and service requests. Payments go directly to the business." data-hi="टेबल पर रखी जाने वाली स्मार्ट QR क्यूब। ग्राहकों के ऑर्डर और सर्विस रिक्वेस्ट सीधे आपके बिज़नेस WhatsApp से जुड़ जाते हैं।">
                         A QR-based business interaction concept for table ordering and service requests. Payments go directly to the business.
                     </p>
-                    <a onclick="waLink('AVAILO స్మార్ట్ క్యూబ్ పైలట్ గురించి ఆసక్తి ఉంది', 'Interested in AVAILO Smart Cube Pilot', 'AVAILO स्मार्ट क्यूब पायलट में रुचि है')" style="cursor: pointer;" class="srv-action-btn font-te-title" data-te="స్మార్ట్ క్యూబ్ వివరాలు →" data-en="Discover Smart Cube →" data-hi="स्मार्ट क्यूब के बारे में जानें →">Discover Smart Cube →</a>
+                    <a href="cube.html" class="srv-action-btn font-te-title" data-te="స్మార్ట్ క్యూబ్ వివరాలు →" data-en="Discover Smart Cube →" data-hi="स्मार्ट क्यूब के बारे में जानें →">Discover Smart Cube →</a>
                 </div>
             </div>
 
         </div>
+
+        <!-- Rate Card — Home Services starting prices (data: rates.js) -->
+        <section id="rate-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px; margin-bottom: 18px;">
+            <h2 style="font-size: 16px; font-weight: 800; color: var(--brand-navy); margin-bottom: 6px;" data-te="💰 హోమ్ సర్వీస్ రేట్లు" data-en="💰 Home Service Rates" data-hi="💰 होम सर्विस रेट">💰 హోమ్ సర్వీస్ రేట్లు</h2>
+            <p style="font-size: 12.5px; color: #64748b; margin-bottom: 12px; line-height: 1.6;" data-te="ప్రారంభ ధరలు — పని పరిధిని బట్టి తుది ధర మారవచ్చు. సర్వీస్‌కు ముందు ధర WhatsAppలో నిర్ధారించి చెప్తాం." data-en="Starting prices — the final price may vary by the scope of work. We confirm the price on WhatsApp before the service." data-hi="शुरुआती कीमतें — काम के दायरे के हिसाब से अंतिम कीमत बदल सकती है। सेवा से पहले कीमत WhatsApp पर पक्की करके बताएँगे।">ప్రారంభ ధరలు — పని పరిధిని బట్టి తుది ధర మారవచ్చు. సర్వీస్‌కు ముందు ధర WhatsAppలో నిర్ధారించి చెప్తాం.</p>
+            <div id="rateCardBody"></div>
+            <div style="margin-top: 12px; text-align: center;">
+                <a onclick="waLink('హలో AVAILO, సర్వీస్ ధర తెలుసుకోవాలి', 'Hi AVAILO, I want to know the service price', 'नमस्ते AVAILO, मुझे सर्विस की कीमत जाननी है')" style="cursor: pointer; display: inline-block; background: var(--call-green); color: #ffffff; padding: 11px 18px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none;" data-te="💬 WhatsAppలో ధర అడగండి" data-en="💬 Ask Price on WhatsApp" data-hi="💬 WhatsApp पर कीमत पूछें">💬 WhatsAppలో ధర అడగండి</a>
+            </div>
+        </section>
 
         <!-- 04 — NRI Parents Care Section -->
         <section class="nri-banner" id="nri-section">
@@ -1237,7 +1266,7 @@
                     <strong data-te="సొసైటీ గేట్" data-en="Society Gate" data-hi="सोसाइटी गेट">Society Gate</strong>
                     <small data-te="అపార్ట్‌మెంట్ డిజిటల్ పాస్" data-en="Apartment Gate Pass" data-hi="अपार्टमेंट डिजिटल पास">Apartment Gate Pass</small>
                 </div>
-                <div class="b2b-item" onclick="openModal('trialApplyModal')">
+                <div class="b2b-item" onclick="openModal('technicianApplyModal')">
                     <span>🤝</span>
                     <strong data-te="పార్ట్‌నర్ హబ్" data-en="Partner Hub" data-hi="पार्टनर हब">Partner Hub</strong>
                     <small data-te="సర్వీస్ ప్రొవైడర్ నెట్‌వర్క్" data-en="Verified Technician Net" data-hi="वेरिफ़ाइड टेक्नीशियन नेटवर्क">Verified Technician Net</small>
@@ -1310,7 +1339,7 @@
                     <div class="circle-round-bubble">❓</div>
                     <span class="font-te-title" data-te="తరచుగా అడిగే ప్రశ్నలు" data-en="FAQ" data-hi="अक्सर पूछे जाने वाले प्रश्न">FAQ ప్రశ్నలు</span>
                 </div>
-                <div class="circle-icon-btn" onclick="openModal('trialApplyModal')">
+                <div class="circle-icon-btn" onclick="openModal('technicianApplyModal')">
                     <div class="circle-round-bubble" style="background: #fef3c7; color: #d97706;">🤝</div>
                     <span class="font-te-title" data-te="పార్ట్‌నర్ జాయిన్" data-en="Join Partner" data-hi="पार्टनर बनें">పార్ట్‌నర్ జాయిన్</span>
                 </div>
@@ -1368,6 +1397,7 @@
                 <span style="background: #eff6ff; border: 1px solid #93c5fd; color: var(--brand-navy); padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;" data-te="📍 విజయవాడ — అన్ని ప్రాంతాలు + చుట్టుపక్కల" data-en="📍 Vijayawada — All areas + surroundings" data-hi="📍 विजयवाड़ा — सभी क्षेत्र + आसपास">📍 విజయవాడ — అన్ని ప్రాంతాలు + చుట్టుపక్కల</span>
                 <span style="background: #eff6ff; border: 1px solid #93c5fd; color: var(--brand-navy); padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;" data-te="📍 గుంటూరు — అన్ని ప్రాంతాలు + చుట్టుపక్కల" data-en="📍 Guntur — All areas + surroundings" data-hi="📍 गुंटूर — सभी क्षेत्र + आसपास">📍 గుంటూరు — అన్ని ప్రాంతాలు + చుట్టుపక్కల</span>
             </div>
+            <p style="font-size: 12.5px; color: #64748b; margin-top: 10px; line-height: 1.6;" data-te="ఉదాహరణకు: బెంజ్ సర్కిల్, పోరంకి, పటమట, గుణదల, మంగళగిరి, బ్రాడీపేట, అరుంధతీపేట తదితర ప్రధాన ప్రాంతాలు — ఇంకా చుట్టుపక్కల అన్ని ప్రాంతాలు." data-en="For example: Benz Circle, Poranki, Patamata, Gunadala, Mangalagiri, Brodipet, Arundelpet and other major localities — plus all surrounding areas." data-hi="जैसे: बेंज़ सर्किल, पोरंकी, पटमटा, गुणदला, मंगलगिरि, ब्रॉडीपेट, अरुंधतीपेट और अन्य प्रमुख इलाके — और आसपास के सभी क्षेत्र।">ఉదాహరణకు: బెంజ్ సర్కిల్, పోరంకి, పటమట, గుణదల, మంగళగిరి, బ్రాడీపేట, అరుంధతీపేట తదితర ప్రధాన ప్రాంతాలు — ఇంకా చుట్టుపక్కల అన్ని ప్రాంతాలు.</p>
         </section>
 
         <!-- Footer -->
@@ -1426,6 +1456,8 @@
                     </select>
                 </div>
 
+                <p style="font-size: 12px; color: #64748b; margin: -4px 0 10px;" data-te="నెలవారీ / వార్షిక ప్లాన్ల ధరల కోసం WhatsApp చేయండి." data-en="For Monthly / Annual plan prices, message us on WhatsApp." data-hi="मासिक / वार्षिक प्लान की कीमतों के लिए WhatsApp करें।">నెలవారీ / వార్షిక ప్లాన్ల ధరల కోసం WhatsApp చేయండి.</p>
+
                 <div style="margin-bottom: 10px;">
                     <label style="font-size: 12px; font-weight: 600;" data-te="సంస్థ / అపార్ట్‌మెంట్ పేరు" data-en="Apartment / Business Name" data-hi="अपार्टमेंट / बिज़नेस का नाम">సంస్థ / అపార్ట్‌మెంట్ పేరు</label>
                     <input type="text" id="trialBusinessName" data-ph-te="ఉదా: రాయల్ రెసిడెన్సీ" data-ph-en="e.g. Royal Residency" data-ph-hi="उदा: रॉयल रेज़िडेंसी" placeholder="e.g. Royal Residency" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
@@ -1449,7 +1481,72 @@
                 <button onclick="submitTrialApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో అప్లికేషన్ సమర్పించండి" data-en="💬 Submit Application on WhatsApp" data-hi="💬 WhatsApp पर आवेदन जमा करें">
                     💬 WhatsApp లో అప్లికేషన్ సమర్పించండి
                 </button>
+                <div id="trialWarnLine" style="display: none; background: #fef2f2; border: 1.5px solid #dc2626; color: #b91c1c; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
                 <div id="trialConfirmLine" style="display: none; background: #f0fdf4; border: 1.5px solid #16a34a; color: #166534; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1B. Technician / Provider Join Form Modal (separate from business trial) -->
+    <div class="modal-overlay" id="technicianApplyModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="font-te-title" data-te="🔧 టెక్నీషియన్‌గా జాయిన్ అవ్వండి" data-en="🔧 Join as a Technician" data-hi="🔧 टेक्नीशियन के रूप में जुड़ें">🔧 టెక్నీషియన్‌గా జాయిన్ అవ్వండి</h3>
+                <button class="modal-close-btn" onclick="closeModal('technicianApplyModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;" data-te="మీ వివరాలు ఇవ్వండి — వెరిఫికేషన్ తర్వాతే పని కేటాయించబడుతుంది. వివరాలు WhatsApp ద్వారా మా డెస్క్‌కు చేరతాయి." data-en="Share your details — work is assigned only after verification. Details reach our desk on WhatsApp." data-hi="अपना विवरण दें — वेरिफ़िकेशन के बाद ही काम दिया जाएगा। विवरण WhatsApp से हमारे डेस्क तक पहुँचेंगे।">
+                    మీ వివరాలు ఇవ్వండి — వెరిఫికేషన్ తర్వాతే పని కేటాయించబడుతుంది. వివరాలు WhatsApp ద్వారా మా డెస్క్‌కు చేరతాయి.
+                </p>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="మీ పేరు *" data-en="Your Name *" data-hi="आपका नाम *">మీ పేరు *</label>
+                    <input type="text" id="techName" data-ph-te="ఉదా: రాము" data-ph-en="e.g. Ramu" data-ph-hi="उदा: रामू" placeholder="e.g. Ramu" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="WhatsApp మొబైల్ నంబర్ *" data-en="WhatsApp Mobile Number *" data-hi="WhatsApp मोबाइल नंबर *">WhatsApp మొబైల్ నంబర్ *</label>
+                    <input type="tel" id="techPhone" data-ph-te="10 అంకెల మొబైల్ నంబర్" data-ph-en="10-digit mobile number" data-ph-hi="10 अंकों का मोबाइल नंबर" placeholder="10-digit mobile number" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 700; color: #1e293b;" data-te="నైపుణ్యం / వృత్తి *" data-en="Skill / Trade *" data-hi="कौशल / पेशा *">నైపుణ్యం / వృత్తి *</label>
+                    <select id="techSkill" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600;">
+                        <option value="Electrician" data-te="ఎలక్ట్రీషియన్" data-en="Electrician" data-hi="इलेक्ट्रीशियन">Electrician</option>
+                        <option value="Plumber" data-te="ప్లంబర్" data-en="Plumber" data-hi="प्लंबर">Plumber</option>
+                        <option value="AC Technician" data-te="ఏసీ టెక్నీషియన్" data-en="AC Technician" data-hi="एसी टेक्नीशियन">AC Technician</option>
+                        <option value="Carpenter" data-te="వడ్రంగి" data-en="Carpenter" data-hi="बढ़ई">Carpenter</option>
+                        <option value="Painter" data-te="పెయింటర్" data-en="Painter" data-hi="पेंटर">Painter</option>
+                        <option value="House Cleaning" data-te="ఇంటి శుభ్రత" data-en="House Cleaning" data-hi="घर की सफ़ाई">House Cleaning</option>
+                        <option value="Other" data-te="ఇతరము" data-en="Other" data-hi="अन्य">Other</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="అనుభవం *" data-en="Experience *" data-hi="अनुभव *">అనుభవం *</label>
+                    <select id="techExperience" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600;">
+                        <option value="Less than 1 year" data-te="1 సంవత్సరం కన్నా తక్కువ" data-en="Less than 1 year" data-hi="1 साल से कम">Less than 1 year</option>
+                        <option value="1-3 years" data-te="1–3 సంవత్సరాలు" data-en="1–3 years" data-hi="1–3 साल">1–3 years</option>
+                        <option value="3-5 years" data-te="3–5 సంవత్సరాలు" data-en="3–5 years" data-hi="3–5 साल">3–5 years</option>
+                        <option value="5+ years" data-te="5+ సంవత్సరాలు" data-en="5+ years" data-hi="5+ साल">5+ years</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="సేవ చేసే ప్రాంతం *" data-en="Service Area *" data-hi="सेवा क्षेत्र *">సేవ చేసే ప్రాంతం *</label>
+                    <input type="text" id="techArea" data-ph-te="ఉదా: బెంజ్ సర్కిల్, విజయవాడ" data-ph-en="e.g. Benz Circle, Vijayawada" data-ph-hi="उदा: बेंज़ सर्किल, विजयवाड़ा" placeholder="e.g. Benz Circle, Vijayawada" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                </div>
+
+                <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #334155; margin-bottom: 14px; cursor: pointer;">
+                    <input type="checkbox" id="techIdProof" style="margin-top: 2px; width: 16px; height: 16px;">
+                    <span data-te="వెరిఫికేషన్ సమయంలో నా ID ప్రూఫ్ (Aadhaar / PAN) చూపిస్తాను *" data-en="I will show my ID proof (Aadhaar / PAN) at verification *" data-hi="वेरिफ़िकेशन के समय मैं अपना ID प्रूफ़ (Aadhaar / PAN) दिखाऊँगा *">వెరిఫికేషన్ సమయంలో నా ID ప్రూఫ్ (Aadhaar / PAN) చూపిస్తాను *</span>
+                </label>
+
+                <button onclick="submitTechnicianApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో జాయిన్ అప్లికేషన్ పంపండి" data-en="💬 Send Join Application on WhatsApp" data-hi="💬 WhatsApp पर जॉइन आवेदन भेजें">
+                    💬 WhatsApp లో జాయిన్ అప్లికేషన్ పంపండి
+                </button>
+                <div id="techWarnLine" style="display: none; background: #fef2f2; border: 1.5px solid #dc2626; color: #b91c1c; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
+                <div id="techConfirmLine" style="display: none; background: #f0fdf4; border: 1.5px solid #16a34a; color: #166534; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
             </div>
         </div>
     </div>
@@ -1487,7 +1584,7 @@
                 </div>
 
                 <div class="nri-tier-card" style="border: 1.5px solid var(--purple-vip); background: #faf5ff;">
-                    <strong style="color: #7c3aed;" data-te="💜 AVAILO ఎలైట్ (👑 VIP ప్రత్యేకం)" data-en="💜 AVAILO ELITE (👑 VIP Dedicated)" data-hi="💜 AVAILO एलीट (👑 VIP समर्पित)">💜 AVAILO ELITE (👑 VIP Dedicated)</strong>
+                    <strong style="color: #7c3aed;" data-te="💜 AVAILO ఎలైట్" data-en="💜 AVAILO ELITE" data-hi="💜 AVAILO एलीट">💜 AVAILO ELITE</strong>
                     <div class="nri-price-txt" style="color: #7c3aed;">₹9,999 / <span data-te="నెల" data-en="Month" data-hi="महीना">నెల</span></div>
                     <ul class="font-te-body">
                         <li data-te="🏠 హోమ్ చెక్-ఇన్: నెలకు 4 సార్లు (వారానికి 1 సారి)" data-en="🏠 Home Check-in: 4 per month (1 per week)" data-hi="🏠 होम चेक-इन: महीने में 4 बार (हफ़्ते में 1 बार)">🏠 Home Check-in: 4 per month (1 per week)</li>
@@ -1495,7 +1592,7 @@
                         <li data-te="🛵 డెలివరీ పనులు: నెలకు 8 పనులు" data-en="🛵 Delivery Tasks: 8 per month" data-hi="🛵 डिलीवरी काम: महीने में 8 काम">🛵 Delivery Tasks: 8 per month</li>
                         <li data-te="🚨 ప్రాధాన్య స్పందన: 15–20 నిమిషాలు (అత్యధిక ప్రాధాన్యత)" data-en="🚨 Priority Response: 15–20 minutes (top priority)" data-hi="🚨 प्राथमिकता से जवाब: 15–20 मिनट (सर्वोच्च प्राथमिकता)">🚨 Priority Response: 15–20 minutes (top priority)</li>
                     </ul>
-                    <button class="choose-plan-btn font-te-title" style="background: var(--purple-vip); color: white;" onclick="selectNRIPlan('AVAILO Elite VIP (₹9,999/month)')" data-te="👑 ఈ VIP ప్లాన్ ఎంచుకోండి" data-en="👑 Choose VIP Plan" data-hi="👑 यह VIP प्लान चुनें">👑 ఈ VIP ప్లాన్ ఎంచుకోండి</button>
+                    <button class="choose-plan-btn font-te-title" style="background: var(--purple-vip); color: white;" onclick="selectNRIPlan('AVAILO Elite (₹9,999/month)')" data-te="👑 ఈ ప్లాన్ ఎంచుకోండి" data-en="👑 Choose this Plan" data-hi="👑 यह प्लान चुनें">👑 ఈ ప్లాన్ ఎంచుకోండి</button>
                 </div>
             </div>
         </div>
@@ -1515,7 +1612,7 @@
                     <select id="nriPlanSelected" style="width: 100%; padding: 8px; border: 1.5px solid #93c5fd; border-radius: 6px; font-weight: 700; color: var(--brand-navy); background: #eff6ff;">
                         <option value="AVAILO Plus (₹4,999/month)" data-te="AVAILO ప్లస్ (₹4,999/నెల) — సిఫార్సు చేయబడింది" data-en="AVAILO Plus (₹4,999/Month) - Recommended" data-hi="AVAILO प्लस (₹4,999/माह) — अनुशंसित">AVAILO Plus (₹4,999/Month) - Recommended</option>
                         <option value="AVAILO Care (₹2,499/month)" data-te="AVAILO కేర్ (₹2,499/నెల)" data-en="AVAILO Care (₹2,499/Month)" data-hi="AVAILO केयर (₹2,499/माह)">AVAILO Care (₹2,499/Month)</option>
-                        <option value="AVAILO Elite VIP (₹9,999/month)" data-te="AVAILO ఎలైట్ VIP (₹9,999/నెల)" data-en="AVAILO Elite VIP (₹9,999/Month)" data-hi="AVAILO एलीट VIP (₹9,999/माह)">AVAILO Elite VIP (₹9,999/Month)</option>
+                        <option value="AVAILO Elite (₹9,999/month)" data-te="AVAILO ఎలైట్ (₹9,999/నెల)" data-en="AVAILO Elite (₹9,999/Month)" data-hi="AVAILO एलीट (₹9,999/माह)">AVAILO Elite (₹9,999/Month)</option>
                     </select>
                 </div>
                 <div style="margin-bottom: 10px;">
@@ -1539,6 +1636,7 @@
                     <input type="text" id="nriNeeds" data-ph-te="నెలవారీ మందులు, ఆరోగ్య పరీక్షలు" data-ph-en="Monthly Medicines, Health Checkups" data-ph-hi="मासिक दवाइयाँ, स्वास्थ्य जाँच" placeholder="Monthly Medicines, Health Checkups" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
                 </div>
                 <button onclick="submitNRIApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో అప్లికేషన్ పంపండి" data-en="💬 Submit on WhatsApp" data-hi="💬 WhatsApp पर आवेदन भेजें">💬 WhatsApp లో అప్లికేషన్ పంపండి</button>
+                <div id="nriWarnLine" style="display: none; background: #fef2f2; border: 1.5px solid #dc2626; color: #b91c1c; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
                 <div id="nriConfirmLine" style="display: none; background: #f0fdf4; border: 1.5px solid #16a34a; color: #166534; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
             </div>
         </div>
@@ -1606,15 +1704,15 @@
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
                 <p><strong data-te="ప్ర: AVAILO ఎలా పని చేస్తుంది?" data-en="Q: How does AVAILO work?" data-hi="प्र: AVAILO कैसे काम करता है?">Q: AVAILO ఎలా పని చేస్తుంది?</strong><br><span data-te="జ: 3 దశలు — 1) QR కోడ్ స్కాన్ చేయండి, 2) WhatsAppలో వాయిస్ నోట్ పంపండి, 3) వెరిఫైడ్ ప్రొఫెషనల్ మీ డోర్‌స్టెప్ వద్దకు వస్తారు. యాప్ డౌన్‌లోడ్ అవసరం లేదు." data-en="A: 3 steps — 1) Scan the QR code, 2) Send a voice note on WhatsApp, 3) A verified professional comes to your doorstep. No app download needed." data-hi="उ: 3 चरण — 1) QR कोड स्कैन करें, 2) WhatsApp पर वॉइस नोट भेजें, 3) वेरिफ़ाइड प्रोफ़ेशनल आपके दरवाज़े तक आएँगे। ऐप डाउनलोड की ज़रूरत नहीं।">A: 3 దశలు — 1) QR కోడ్ స్కాన్ చేయండి, 2) WhatsAppలో వాయిస్ నోట్ పంపండి, 3) వెరిఫైడ్ ప్రొఫెషనల్ మీ డోర్‌స్టెప్ వద్దకు వస్తారు. యాప్ డౌన్‌లోడ్ అవసరం లేదు.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
-                <p><strong data-te="ప్ర: ఏయే ప్రాంతాల్లో సర్వీస్ ఉంది?" data-en="Q: Which areas do you serve?" data-hi="प्र: आप किन क्षेत्रों में सेवा देते हैं?">Q: ఏయే ప్రాంతాల్లో సర్వీస్ ఉంది?</strong><br><span data-te="జ: విజయవాడలోని అన్ని ప్రాంతాలు మరియు చుట్టుపక్కల ప్రాంతాల్లో, గుంటూరులోని అన్ని ప్రాంతాలు మరియు చుట్టుపక్కల ప్రాంతాల్లో సర్వీస్ అందుబాటులో ఉంది." data-en="A: Service is available in all areas of Vijayawada and surrounding areas, and in all areas of Guntur and surrounding areas." data-hi="उ: विजयवाड़ा के सभी क्षेत्रों और आसपास के क्षेत्रों में, और गुंटूर के सभी क्षेत्रों और आसपास के क्षेत्रों में सेवा उपलब्ध है।">జ: విజయవాడలోని అన్ని ప్రాంతాలు మరియు చుట్టుపక్కల ప్రాంతాల్లో, గుంటూరులోని అన్ని ప్రాంతాలు మరియు చుట్టుపక్కల ప్రాంతాల్లో సర్వీస్ అందుబాటులో ఉంది.</span></p>
+                <p><strong data-te="ప్ర: ఏయే ప్రాంతాల్లో సర్వీస్ ఉంది?" data-en="Q: Which areas do you serve?" data-hi="प्र: आप किन क्षेत्रों में सेवा देते हैं?">Q: ఏయే ప్రాంతాల్లో సర్వీస్ ఉంది?</strong><br><span data-te="జ: విజయవాడలోని అన్ని ప్రాంతాలు మరియు చుట్టుపక్కల ప్రాంతాల్లో, గుంటూరులోని అన్ని ప్రాంతాలు మరియు చుట్టుపక్కల ప్రాంతాల్లో సర్వీస్ అందుబాటులో ఉంది. ఉదాహరణకు: బెంజ్ సర్కిల్, పోరంకి, పటమట, గుణదల, మంగళగిరి, బ్రాడీపేట, అరుంధతీపేట తదితర ప్రధాన ప్రాంతాలు." data-en="A: Service is available in all areas of Vijayawada and surrounding areas, and in all areas of Guntur and surrounding areas — for example Benz Circle, Poranki, Patamata, Gunadala, Mangalagiri, Brodipet, Arundelpet and other major localities." data-hi="उ: विजयवाड़ा के सभी क्षेत्रों और आसपास के क्षेत्रों में, और गुंटूर के सभी क्षेत्रों और आसपास के क्षेत्रों में सेवा उपलब्ध है — जैसे बेंज़ सर्किल, पोरंकी, पटमटा, गुणदला, मंगलगिरि, ब्रॉडीपेट, अरुंधतीपेट और अन्य प्रमुख इलाके।">జ: విజయవాడలోని అన్ని ప్రాంతాలు మరియు చుట్టుపక్కల ప్రాంతాల్లో, గుంటూరులోని అన్ని ప్రాంతాలు మరియు చుట్టుపక్కల ప్రాంతాల్లో సర్వీస్ అందుబాటులో ఉంది. ఉదాహరణకు: బెంజ్ సర్కిల్, పోరంకి, పటమట, గుణదల, మంగళగిరి, బ్రాడీపేట, అరుంధతీపేట తదితర ప్రధాన ప్రాంతాలు.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
                 <p><strong data-te="ప్ర: సర్వీస్ సమయాలు ఏమిటి?" data-en="Q: What are the service hours?" data-hi="प्र: सर्विस का समय क्या है?">Q: సర్వీస్ సమయాలు ఏమిటి?</strong><br><span data-te="జ: రోజూ ఉదయం 7:00 – రాత్రి 9:00. ఎమర్జెన్సీ రెస్పాన్స్ 24/7 అందుబాటులో ఉంటుంది." data-en="A: Daily 7:00 AM – 9:00 PM. Emergency response is available 24/7." data-hi="उ: रोज़ सुबह 7:00 – रात 9:00। इमरजेंसी रिस्पॉन्स 24/7 उपलब्ध है।">A: రోజూ ఉదయం 7:00 – రాత్రి 9:00. ఎమర్జెన్సీ రెస్పాన్స్ 24/7 అందుబాటులో ఉంటుంది.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
-                <p><strong data-te="ప్ర: సర్వీస్ ధరలు ఎలా తెలుస్తాయి? ఎలా చెల్లించాలి?" data-en="Q: How do I know the service charges? How do I pay?" data-hi="प्र: सर्विस का शुल्क कैसे पता चलेगा? भुगतान कैसे करें?">Q: సర్వీస్ ధరలు ఎలా తెలుస్తాయి? ఎలా చెల్లించాలి?</strong><br><span data-te="జ: సర్వీస్ ధర సర్వీస్‌కు ముందు WhatsAppలో నిర్ధారించబడుతుంది. మూడవ పక్షం బిల్లింగ్ నేరుగా చెల్లించదగినది మరియు పారదర్శకమైనది. వివరాల కోసం WhatsAppలో అడగండి." data-en="A: The service charge is confirmed on WhatsApp before the service. Third-party billing is directly payable and transparent. Ask on WhatsApp for details." data-hi="उ: सर्विस का शुल्क सर्विस से पहले WhatsApp पर पक्का किया जाता है। तीसरे पक्ष की बिलिंग सीधे देय और पारदर्शी है। विवरण के लिए WhatsApp पर पूछें।">A: సర్వీస్ ధర సర్వీస్‌కు ముందు WhatsAppలో నిర్ధారించబడుతుంది. మూడవ పక్షం బిల్లింగ్ నేరుగా చెల్లించదగినది మరియు పారదర్శకమైనది. వివరాల కోసం WhatsAppలో అడగండి.</span></p>
+                <p><strong data-te="ప్ర: సర్వీస్ ధరలు ఎలా తెలుస్తాయి? ఎలా చెల్లించాలి?" data-en="Q: How do I know the service charges? How do I pay?" data-hi="प्र: सर्विस का शुल्क कैसे पता चलेगा? भुगतान कैसे करें?">Q: సర్వీస్ ధరలు ఎలా తెలుస్తాయి? ఎలా చెల్లించాలి?</strong><br><span data-te="జ: హోమ్ సర్వీస్ ప్రారంభ ధరలు మా రేట్ కార్డులో ఉంటాయి — హోమ్ పేజీలో 'హోమ్ సర్వీస్ రేట్లు' చూడండి. ధర ఇంకా రాని సర్వీసుకు WhatsAppలో అడగండి — సర్వీస్‌కు ముందు ధర నిర్ధారించి చెప్తాం. మూడవ పక్షం బిల్లింగ్ నేరుగా చెల్లించదగినది మరియు పారదర్శకమైనది." data-en="A: Home service starting prices are in our rate card — see 'Home Service Rates' on the home page. For a service whose price is not listed yet, ask on WhatsApp — we confirm the price before the service. Third-party billing is directly payable and transparent." data-hi="उ: होम सर्विस की शुरुआती कीमतें हमारे रेट कार्ड में हैं — होम पेज पर 'होम सर्विस रेट' देखें। जिस सेवा की कीमत अभी नहीं आई है, उसके लिए WhatsApp पर पूछें — सेवा से पहले कीमत पक्की करके बताएँगे। तीसरे पक्ष की बिलिंग सीधे देय और पारदर्शी है।">A: హోమ్ సర్వీస్ ప్రారంభ ధరలు మా రేట్ కార్డులో ఉంటాయి — హోమ్ పేజీలో 'హోమ్ సర్వీస్ రేట్లు' చూడండి. ధర ఇంకా రాని సర్వీసుకు WhatsAppలో అడగండి — సర్వీస్‌కు ముందు ధర నిర్ధారించి చెప్తాం. మూడవ పక్షం బిల్లింగ్ నేరుగా చెల్లించదగినది మరియు పారదర్శకమైనది.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
-                <p><strong data-te="ప్ర: NRI తల్లిదండ్రుల సంరక్షణ ప్లాన్ల ధరలు ఏమిటి? విదేశం నుంచి ఎలా చెల్లించాలి?" data-en="Q: What are the NRI Parents Care plan prices? How do I pay from abroad?" data-hi="प्र: NRI माता-पिता की देखभाल प्लान की कीमतें क्या हैं? विदेश से भुगतान कैसे करें?">Q: NRI తల్లిదండ్రుల సంరక్షణ ప్లాన్ల ధరలు ఏమిటి? విదేశం నుంచి ఎలా చెల్లించాలి?</strong><br><span data-te="జ: ప్లాన్లు — కేర్ ₹2,499/నెల, ప్లస్ ₹4,999/నెల, ఎలైట్ VIP ₹9,999/నెల. విదేశం నుంచి చెల్లింపు విధానం కోసం వివరాల కోసం WhatsAppలో అడగండి." data-en="A: Plans — Care ₹2,499/month, Plus ₹4,999/month, Elite VIP ₹9,999/month. For the payment method from abroad, ask on WhatsApp for details." data-hi="उ: प्लान — केयर ₹2,499/माह, प्लस ₹4,999/माह, एलीट VIP ₹9,999/माह। विदेश से भुगतान के तरीके के लिए WhatsApp पर पूछें।">A: ప్లాన్లు — కేర్ ₹2,499/నెల, ప్లస్ ₹4,999/నెల, ఎలైట్ VIP ₹9,999/నెల. విదేశం నుంచి చెల్లింపు విధానం కోసం వివరాల కోసం WhatsAppలో అడగండి.</span></p>
+                <p><strong data-te="ప్ర: NRI తల్లిదండ్రుల సంరక్షణ ప్లాన్ల ధరలు ఏమిటి? విదేశం నుంచి ఎలా చెల్లించాలి?" data-en="Q: What are the NRI Parents Care plan prices? How do I pay from abroad?" data-hi="प्र: NRI माता-पिता की देखभाल प्लान की कीमतें क्या हैं? विदेश से भुगतान कैसे करें?">Q: NRI తల్లిదండ్రుల సంరక్షణ ప్లాన్ల ధరలు ఏమిటి? విదేశం నుంచి ఎలా చెల్లించాలి?</strong><br><span data-te="జ: ప్లాన్లు — కేర్ ₹2,499/నెల, ప్లస్ ₹4,999/నెల, ఎలైట్ ₹9,999/నెల. విదేశం నుంచి చెల్లింపు విధానం కోసం వివరాల కోసం WhatsAppలో అడగండి." data-en="A: Plans — Care ₹2,499/month, Plus ₹4,999/month, Elite ₹9,999/month. For the payment method from abroad, ask on WhatsApp for details." data-hi="उ: प्लान — केयर ₹2,499/माह, प्लस ₹4,999/माह, एलीट ₹9,999/माह। विदेश से भुगतान के तरीके के लिए WhatsApp पर पूछें।">A: ప్లాన్లు — కేర్ ₹2,499/నెల, ప్లస్ ₹4,999/నెల, ఎలైట్ ₹9,999/నెల. విదేశం నుంచి చెల్లింపు విధానం కోసం వివరాల కోసం WhatsAppలో అడగండి.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
-                <p><strong data-te="ప్ర: గేట్ పాస్ ఎలా పని చేస్తుంది?" data-en="Q: How does the Gate Pass work?" data-hi="प्र: गेट पास कैसे काम करता है?">Q: గేట్ పాస్ ఎలా పని చేస్తుంది?</strong><br><span data-te="జ: అపార్ట్‌మెంట్ పేరు, ఫ్లాట్, విజిటర్ రకం, పేరు/బండి నంబర్ నింపి బటన్ నొక్కండి — WhatsApp తెరుచుకుంటుంది. WhatsApp కెమెరాతో సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి పంపితే పాస్ వెరిఫై అవుతుంది. మీకు రిఫరెన్స్ నంబర్ మరియు వెరిఫైడ్ స్టాంప్ కూడా వస్తాయి." data-en="A: Fill the apartment name, flat, visitor type and name / vehicle number, then tap the button — WhatsApp opens. Send a selfie or parcel photo with the WhatsApp camera to verify the pass. You also get a reference number and a verified stamp." data-hi="उ: अपार्टमेंट का नाम, फ़्लैट, विज़िटर का प्रकार और नाम/गाड़ी नंबर भरकर बटन दबाएँ — WhatsApp खुल जाएगा। WhatsApp कैमरे से सेल्फी या पार्सल की फ़ोटो भेजने पर पास वेरिफ़ाई होगा। आपको रेफ़रेंस नंबर और वेरिफ़ाइड स्टैम्प भी मिलेंगे।">A: అపార్ట్‌మెంట్ పేరు, ఫ్లాట్, విజిటర్ రకం, పేరు/బండి నంబర్ నింపి బటన్ నొక్కండి — WhatsApp తెరుచుకుంటుంది. WhatsApp కెమెరాతో సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి పంపితే పాస్ వెరిఫై అవుతుంది. మీకు రిఫరెన్స్ నంబర్ మరియు వెరిఫైడ్ స్టాంప్ కూడా వస్తాయి.</span></p>
+                <p><strong data-te="ప్ర: గేట్ పాస్ ఎలా పని చేస్తుంది?" data-en="Q: How does the Gate Pass work?" data-hi="प्र: गेट पास कैसे काम करता है?">Q: గేట్ పాస్ ఎలా పని చేస్తుంది?</strong><br><span data-te="జ: QR స్కాన్ చేయండి, ఫ్లాట్ నంబర్ రాసి డెలివరీ పార్టనర్ ఎంచుకోండి, ఫోటో తీయండి — ఫోటో జతచేస్తేనే వెరిఫైడ్ స్టాంప్ వస్తుంది. ఆ తర్వాత బటన్ నొక్కితే WhatsAppలో పాస్ పంపబడుతుంది. మీకు రిఫరెన్స్ నంబర్ కూడా వస్తుంది." data-en="A: Scan the QR, type the flat number and pick the delivery partner, then take the photo — the verified stamp is issued only after the photo is attached. Then tap the button to send the pass on WhatsApp. You also get a reference number." data-hi="उ: QR स्कैन करें, फ़्लैट नंबर लिखकर डिलीवरी पार्टनर चुनें, फ़ोटो लें — फ़ोटो जोड़ने पर ही वेरिफ़ाइड स्टैम्प मिलेगा। उसके बाद बटन दबाएँ, पास WhatsApp पर भेजा जाएगा। आपको रेफ़रेंस नंबर भी मिलेगा।">A: QR స్కాన్ చేయండి, ఫ్లాట్ నంబర్ రాసి డెలివరీ పార్టనర్ ఎంచుకోండి, ఫోటో తీయండి — ఫోటో జతచేస్తేనే వెరిఫైడ్ స్టాంప్ వస్తుంది. ఆ తర్వాత బటన్ నొక్కితే WhatsAppలో పాస్ పంపబడుతుంది. మీకు రిఫరెన్స్ నంబర్ కూడా వస్తుంది.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
                 <p><strong data-te="ప్ర: ఉచిత ట్రయల్ (1 వారం పైలట్)లో ఏ సర్వీసులు ఉంటాయి?" data-en="Q: Which services are included in the free trial (1-week pilot)?" data-hi="प्र: मुफ़्त ट्रायल (1 हफ़्ते का पायलट) में कौन-सी सेवाएँ शामिल हैं?">Q: ఉచిత ట్రయల్ (1 వారం పైలట్)లో ఏ సర్వీసులు ఉంటాయి?</strong><br><span data-te="జ: ట్రయల్ 1 వారం పైలట్. ఏ సర్వీసులు ఉంటాయో వివరాల కోసం WhatsAppలో అడగండి — మా టీమ్ తక్షణమే వివరిస్తుంది." data-en="A: The trial is a 1-week pilot. For which services are included, ask on WhatsApp for details — our team will explain right away." data-hi="उ: ट्रायल 1 हफ़्ते का पायलट है। कौन-सी सेवाएँ शामिल हैं, इसके लिए WhatsApp पर पूछें — हमारी टीम तुरंत बताएगी।">A: ట్రయల్ 1 వారం పైలట్. ఏ సర్వీసులు ఉంటాయో వివరాల కోసం WhatsAppలో అడగండి — మా టీమ్ తక్షణమే వివరిస్తుంది.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
@@ -1669,6 +1767,39 @@
         </div>
     </div>
 
+    <!-- Mayura Assistant Panel — opens from the peacock button / Talk to Mayura -->
+    <div class="modal-overlay" id="mayuraPanel">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="font-te-title" data-te="🦚 మయూర — AVAILO అసిస్టెంట్" data-en="🦚 Mayura — AVAILO Assistant" data-hi="🦚 मयूरा — AVAILO असिस्टेंट">🦚 మయూర — AVAILO అసిస్టెంట్</h3>
+                <button class="modal-close-btn" onclick="closeMayuraPanel()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="mayuraPanelText" style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px; font-size: 13.5px; line-height: 1.7; color: #1e3a5f; margin-bottom: 12px;" data-te="నమస్కారం! నేను మీ అవైలో మయూరను. స్కాన్ చేసి మీ డోర్‌స్టెప్ వద్దకే సర్వీస్ పొందండి. సైడ్ మెనూ టచ్ చేసి అన్ని సర్వీసులను చూడండి." data-en="Welcome to AVAILO Digital Services! One platform, multiple possibilities. Touch the side menu to explore all verified services." data-hi="नमस्ते! मैं आपकी अवैलो मयूरा हूँ। स्कैन करें और अपने डोरस्टेप पर ही सर्विस पाएँ। साइड मेनू को टच करके सभी सेवाएँ देखें।">నమస్కారం! నేను మీ అవైలో మయూరను. స్కాన్ చేసి మీ డోర్‌స్టెప్ వద్దకే సర్వీస్ పొందండి. సైడ్ మెనూ టచ్ చేసి అన్ని సర్వీసులను చూడండి.</div>
+                <div id="mayuraListenLine" style="display: none; background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 10px 12px; font-size: 13px; line-height: 1.6; color: #166534; margin-bottom: 12px;"></div>
+                <div id="mayuraErrorLine" style="display: none; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; padding: 10px 12px; font-size: 13px; line-height: 1.6; color: #b91c1c; margin-bottom: 12px;"></div>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+                    <button onclick="mayuraQuickAction('service')" style="flex: 1; min-width: 120px; background: #16a34a; color: #fff; border: none; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer;" data-te="🔧 సర్వీస్ బుక్ చేయండి" data-en="🔧 Book a Service" data-hi="🔧 सर्विस बुक करें">🔧 సర్వీస్ బుక్ చేయండి</button>
+                    <button onclick="mayuraQuickAction('rates')" style="flex: 1; min-width: 120px; background: #eff6ff; color: #0f2a5c; border: 1px solid #93c5fd; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer;" data-te="💰 రేట్లు చూడండి" data-en="💰 See Rates" data-hi="💰 रेट देखें">💰 రేట్లు చూడండి</button>
+                    <button onclick="mayuraQuickAction('human')" style="flex: 1; min-width: 120px; background: #f8fafc; color: #0f2a5c; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer;" data-te="👤 మనిషితో మాట్లాడండి" data-en="👤 Talk to a Human" data-hi="👤 इंसान से बात करें">👤 మనిషితో మాట్లాడండి</button>
+                </div>
+
+                <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                    <button onclick="mayuraListen()" style="background: #7c3aed; color: #fff; border: none; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; cursor: pointer;" data-te="🎙️ మాట్లాడండి" data-en="🎙️ Speak" data-hi="🎙️ बोलें">🎙️ మాట్లాడండి</button>
+                    <input type="text" id="mayuraTextInput" data-ph-te="ఇక్కడ టైప్ చేయండి…" data-ph-en="Type here…" data-ph-hi="यहाँ लिखें…" placeholder="ఇక్కడ టైప్ చేయండి…" style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px;">
+                    <button onclick="mayuraSendText()" style="background: var(--brand-navy); color: #fff; border: none; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; cursor: pointer;" data-te="పంపండి" data-en="Send" data-hi="भेजें">పంపండి</button>
+                </div>
+                <p style="font-size: 11.5px; color: #64748b; line-height: 1.6;" data-te="వాయిస్ Chrome / Androidలో పనిచేస్తుంది. వాయిస్ కుదరకపోతే టైప్ చేసి పంపండి — WhatsAppలో మా టీమ్ స్పందిస్తుంది." data-en="Voice works on Chrome / Android. If voice does not work, type and send — our team replies on WhatsApp." data-hi="वॉइस Chrome / Android पर काम करती है। वॉइस न चले तो टाइप करके भेजें — हमारी टीम WhatsApp पर जवाब देगी।">వాయిస్ Chrome / Androidలో పనిచేస్తుంది. వాయిస్ కుదరకపోతే టైప్ చేసి పంపండి — WhatsAppలో మా టీమ్ స్పందిస్తుంది.</p>
+                <div style="margin-top: 12px; text-align: center;">
+                    <button onclick="mayuraReplayGreeting()" style="background: none; border: none; color: var(--brand-navy); font-size: 13px; font-weight: 700; cursor: pointer;" data-te="🔊 పరిచయం మళ్ళీ వినండి" data-en="🔊 Hear greeting again" data-hi="🔊 परिचय फिर से सुनें">🔊 పరిచయం మళ్ళీ వినండి</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service rates data (single source: rates.js) -->
+    <script src="rates.js"></script>
     <!-- Scripts -->
     <script>
         function hidePageLoader() {
@@ -1719,7 +1850,7 @@
             document.body.classList.toggle('lang-en', currentLang === 'en');
             document.body.classList.toggle('lang-hi', currentLang === 'hi');
             document.documentElement.lang = currentLang;
-            document.getElementById('langBtn').innerText = currentLang === 'te' ? 'English' : currentLang === 'en' ? 'हिन्दी' : 'తెలుగు';
+            document.getElementById('langBtn').innerText = currentLang === 'te' ? 'తెలుగు' : currentLang === 'en' ? 'English' : 'हिन्दी';
 
             document.querySelectorAll('[data-te]').forEach(el => {
                 const text = el.getAttribute(`data-${currentLang}`);
@@ -1738,6 +1869,10 @@
                 if (text) el.setAttribute('alt', text);
             });
             updateLiveClock();
+            if (typeof renderRateCard === 'function') renderRateCard('rateCardBody', currentLang);
+            // Keep the Mayura panel greeting in the current language.
+            const mp = document.getElementById('mayuraPanelText');
+            if (mp) { const t = mp.getAttribute('data-' + currentLang); if (t) mp.innerHTML = t; }
         }
 
         function toggleLanguage() {
@@ -1774,46 +1909,138 @@
             }
         }
 
+        // Mayura greeting text per language (also shown as text in the panel,
+        // so a tap NEVER produces silence with nothing visible).
+        function mayuraGreeting() {
+            if (currentLang === 'hi') return { text: "नमस्ते! मैं आपकी अवैलो मयूरा हूँ। स्कैन करें और अपने डोरस्टेप पर ही सर्विस पाएँ। साइड मेनू को टच करके सभी सेवाएँ देखें।", lang: 'hi-IN' };
+            if (currentLang === 'en') return { text: "Welcome to AVAILO Digital Services! One platform, multiple possibilities. Touch the side menu to explore all verified services.", lang: 'en-IN' };
+            return { text: "నమస్కారం! నేను మీ అవైలో మయూరను. స్కాన్ చేసి మీ డోర్‌స్టెప్ వద్దకే సర్వీస్ పొందండి. సైడ్ మెనూ టచ్ చేసి అన్ని సర్వీసులను చూడండి.", lang: 'te-IN' };
+        }
+        // Wait for the browser's TTS voices (they load async; speaking before
+        // they arrive is the classic silent-failure on desktop Chrome).
+        function waitMayuraVoices() {
+            return new Promise(resolve => {
+                loadMayuraVoices();
+                if (mayuraVoices.length) return resolve();
+                let done = false;
+                const finish = () => { if (!done) { done = true; loadMayuraVoices(); resolve(); } };
+                const prev = window.speechSynthesis.onvoiceschanged;
+                window.speechSynthesis.onvoiceschanged = () => { loadMayuraVoices(); if (prev) prev(); finish(); };
+                setTimeout(finish, 900);
+            });
+        }
+        let mayuraAudio = null;
+        let mayuraSpeakToken = 0;
+        function stopMayuraAudio() {
+            try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch (e) {}
+            if (mayuraAudio) { try { mayuraAudio.pause(); } catch (e) {} mayuraAudio = null; }
+            setMayuraSpeaking(false);
+        }
+        // Pre-recorded greeting fallback (audio/mayura-greeting-{te,en,hi}.mp3):
+        // used only when the browser has no usable TTS voice.
+        function playMayuraMp3() {
+            return new Promise(resolve => {
+                try {
+                    const a = new Audio('audio/mayura-greeting-' + currentLang + '.mp3');
+                    mayuraAudio = a;
+                    a.onended = () => { mayuraAudio = null; setMayuraSpeaking(false); resolve(true); };
+                    a.onerror = () => { mayuraAudio = null; setMayuraSpeaking(false); resolve(false); };
+                    const p = a.play();
+                    if (p && p.catch) p.catch(() => { mayuraAudio = null; setMayuraSpeaking(false); resolve(false); });
+                } catch (e) { setMayuraSpeaking(false); resolve(false); }
+            });
+        }
+        async function speakMayuraGreeting() {
+            const myToken = ++mayuraSpeakToken;
+            const g = mayuraGreeting();
+            stopMayuraAudio();
+            if (myToken !== mayuraSpeakToken) return;
+            setMayuraSpeaking(true);
+            const panelText = document.getElementById('mayuraPanelText');
+            if (panelText) panelText.innerHTML = g.text;
+            if (!('speechSynthesis' in window)) { await playMayuraMp3(); return; }
+            await waitMayuraVoices();
+            if (myToken !== mayuraSpeakToken) return;
+            if (!mayuraVoices.length) { await playMayuraMp3(); return; }
+            const utterance = new SpeechSynthesisUtterance(g.text);
+            utterance.lang = g.lang;
+            utterance.rate = 0.95;
+            const v = mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(g.lang.slice(0, 2)))
+                   || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith('en'));
+            if (v) utterance.voice = v;
+            utterance.onend = () => setMayuraSpeaking(false);
+            utterance.onerror = async () => { setMayuraSpeaking(false); await playMayuraMp3(); };
+            // cancel() then speak() in the same task cancels the new utterance
+            // on desktop Chrome — speak on the next tick instead.
+            setTimeout(() => { if (myToken === mayuraSpeakToken) window.speechSynthesis.speak(utterance); }, 150);
+        }
+        // Peacock button / Talk to Mayura: ALWAYS opens the assistant panel
+        // AND plays the greeting — a tap must visibly do something.
         function speakMayura() {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                setMayuraSpeaking(false);
-                let speechText = "";
-                let voiceLang = "te-IN";
-
-                if (currentLang === 'te') {
-                    speechText = "నమస్కారం! నేను మీ అవైలో మయూరను. స్కాన్ చేసి మీ డోర్‌స్టెప్ వద్దకే సర్వీస్ పొందండి. సైడ్ మెనూ టచ్ చేసి అన్ని సర్వీసులను చూడండి.";
-                    voiceLang = 'te-IN';
-                } else if (currentLang === 'hi') {
-                    speechText = "नमस्ते! मैं आपकी अवैलो मयूरा हूँ। स्कैन करें और अपने डोरस्टेप पर ही सर्विस पाएँ। साइड मेनू को टच करके सभी सेवाएँ देखें।";
-                    voiceLang = 'hi-IN';
-                } else {
-                    speechText = "Welcome to AVAILO Digital Services! One platform, multiple possibilities. Touch the side menu to explore all verified services.";
-                    voiceLang = 'en-IN';
-                }
-
-                const utterance = new SpeechSynthesisUtterance(speechText);
-                utterance.lang = voiceLang;
-                utterance.rate = 0.95;
-                // Pick a real voice matching the language, English as fallback.
-                const v = mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(voiceLang.slice(0, 2)))
-                       || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith('en'));
-                if (v) utterance.voice = v;
-                // A tap must never produce silence: show the greeting as text
-                // if speech fails, and always clear the speaking state.
-                utterance.onend = () => setMayuraSpeaking(false);
-                utterance.onerror = () => { setMayuraSpeaking(false); const p = document.getElementById('promptTxt'); if (p) p.innerHTML = speechText; };
-                setMayuraSpeaking(true);
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert(currentLang === 'te' ? "నమస్కారం! AVAILO కేర్ కి స్వాగతం." : currentLang === 'hi' ? "नमस्ते! AVAILO केयर में आपका स्वागत है!" : "Welcome to AVAILO Care!");
+            openModal('mayuraPanel');
+            speakMayuraGreeting();
+        }
+        function closeMayuraPanel() { stopMayuraAudio(); closeModal('mayuraPanel'); }
+        function mayuraReplayGreeting() { speakMayuraGreeting(); }
+        function mayuraQuickAction(kind) {
+            closeMayuraPanel();
+            if (kind === 'service') waLink('నమస్తే AVAILO, నాకు సర్వీస్ కావాలి', 'Hello AVAILO, I need a service', 'नमस्ते AVAILO, मुझे सर्विस चाहिए');
+            else if (kind === 'rates') { const el = document.getElementById('rate-card'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            else waLink('హలో AVAILO', 'Hello AVAILO', 'नमस्ते AVAILO');
+        }
+        function mayuraShowError(msg) {
+            const el = document.getElementById('mayuraErrorLine');
+            if (el) { el.textContent = msg; el.style.display = 'block'; }
+            const ok = document.getElementById('mayuraListenLine');
+            if (ok) ok.style.display = 'none';
+        }
+        function mayuraListen() {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const errEl = document.getElementById('mayuraErrorLine');
+            if (errEl) errEl.style.display = 'none';
+            if (!SpeechRec) {
+                mayuraShowError(currentLang === 'te' ? 'ఈ బ్రౌజర్‌లో వాయిస్ పనిచేయదు — Chrome / Androidలో ప్రయత్నించండి, లేదా కింద టైప్ చేసి పంపండి.' : currentLang === 'hi' ? 'इस ब्राउज़र में वॉइस नहीं चलती — Chrome / Android पर कोशिश करें, या नीचे टाइप करके भेजें।' : 'Voice does not work in this browser — try Chrome / Android, or type below and send.');
+                return;
             }
+            const rec = new SpeechRec();
+            rec.lang = mayuraGreeting().lang;
+            rec.interimResults = false;
+            rec.maxAlternatives = 1;
+            const listenEl = document.getElementById('mayuraListenLine');
+            if (listenEl) { listenEl.textContent = currentLang === 'te' ? '🎙️ వింటున్నాను… మాట్లాడండి' : currentLang === 'hi' ? '🎙️ सुन रही हूँ… बोलिए' : '🎙️ Listening… please speak'; listenEl.style.display = 'block'; }
+            rec.onresult = (e) => {
+                const spoken = e.results[0][0].transcript;
+                if (listenEl) listenEl.textContent = (currentLang === 'te' ? 'మీరు చెప్పింది: ' : currentLang === 'hi' ? 'आपने कहा: ' : 'You said: ') + '“' + spoken + '”';
+                window._mayuraSpoken = spoken;
+            };
+            rec.onerror = (ev) => {
+                const why = ev && ev.error;
+                mayuraShowError(why === 'not-allowed'
+                    ? (currentLang === 'te' ? 'మైక్ అనుమతి ఇవ్వలేదు — బ్రౌజర్ సెట్టింగ్స్‌లో మైక్ అనుమతించండి, లేదా టైప్ చేసి పంపండి.' : currentLang === 'hi' ? 'माइक की अनुमति नहीं मिली — ब्राउज़र सेटिंग्स में माइक की अनुमति दें, या टाइप करके भेजें।' : 'Microphone permission was not given — allow the mic in browser settings, or type and send instead.')
+                    : (currentLang === 'te' ? 'వాయిస్ వినలేకపోయాను — మళ్ళీ ప్రయత్నించండి లేదా టైప్ చేసి పంపండి.' : currentLang === 'hi' ? 'वॉइस सुन नहीं पाई — फिर से कोशिश करें या टाइप करके भेजें।' : 'Could not hear the voice — try again, or type and send.'));
+            };
+            rec.onend = () => { if (listenEl && !window._mayuraSpoken) listenEl.style.display = 'none'; };
+            try { rec.start(); } catch (e) { mayuraShowError(currentLang === 'te' ? 'వాయిస్ మొదలుకాలేదు — టైప్ చేసి పంపండి.' : currentLang === 'hi' ? 'वॉइस शुरू नहीं हुई — टाइप करके भेजें।' : 'Voice did not start — please type and send.'); }
+        }
+        function mayuraSendText() {
+            const input = document.getElementById('mayuraTextInput');
+            const typed = (input && input.value.trim()) || window._mayuraSpoken || '';
+            if (!typed) {
+                mayuraShowError(currentLang === 'te' ? 'ముందుగా ఏదైనా టైప్ చేయండి లేదా 🎙️ నొక్కి మాట్లాడండి.' : currentLang === 'hi' ? 'पहले कुछ टाइप करें या 🎙️ दबाकर बोलें।' : 'Type something first, or tap 🎙️ and speak.');
+                return;
+            }
+            const listenEl = document.getElementById('mayuraListenLine');
+            if (listenEl) { listenEl.textContent = currentLang === 'te' ? '✓ WhatsAppలో పంపబడింది — మా టీమ్ స్పందిస్తుంది.' : currentLang === 'hi' ? '✓ WhatsApp पर भेजा गया — हमारी टीम जवाब देगी।' : '✓ Sent on WhatsApp — our team will reply.'; listenEl.style.display = 'block'; }
+            if (input) input.value = '';
+            window._mayuraSpoken = '';
+            waLink('నమస్తే AVAILO, ' + typed, 'Hello AVAILO, ' + typed, 'नमस्ते AVAILO, ' + typed);
         }
 
         // Open WhatsApp with a message in the selected site language.
+        // Always a NEW tab, immediately — never a delayed same-tab jump.
         function waLink(te, en, hi) {
             const t = currentLang === 'hi' ? hi : currentLang === 'en' ? en : te;
-            window.location.href = 'https://wa.me/919966157369?text=' + encodeURIComponent(t);
+            window.open('https://wa.me/919966157369?text=' + encodeURIComponent(t), '_blank', 'noopener');
         }
 
         // Reference numbers: AV-YYYYMMDD-XXXX (4 random digits).
@@ -1836,7 +2063,7 @@
             const M = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
             return String(d.getDate()).padStart(2, '0') + '-' + M[d.getMonth()] + '-' + d.getFullYear();
         }
-        function drawGateStamp(canvas, apartmentName) {
+        function drawGateStamp(canvas, apartmentName, partnerName, flatNo) {
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const W = canvas.width, H = canvas.height;
@@ -1846,12 +2073,15 @@
             ctx.lineWidth = 4; ctx.strokeRect(38, 38, W - 76, 426);
             ctx.lineWidth = 3; ctx.setLineDash([16, 11]); ctx.strokeRect(60, 60, W - 120, 382); ctx.setLineDash([]);
             ctx.fillStyle = STAMP_GREEN;
-            ctx.font = 'bold 46px Arial, sans-serif';
-            ctx.fillText('★ VERIFIED & SAVED ★', W / 2, 140);
-            ctx.font = 'bold 66px Arial, sans-serif';
-            ctx.fillText(String(apartmentName || '').toUpperCase(), W / 2, 245);
             ctx.font = 'bold 44px Arial, sans-serif';
-            ctx.fillText(stampDateStr(new Date()) + '  \u2022  GRANTED', W / 2, 350);
+            ctx.fillText('★ VERIFIED & SAVED ★', W / 2, 112);
+            ctx.font = 'bold 58px Arial, sans-serif';
+            ctx.fillText(String(apartmentName || '').toUpperCase().slice(0, 26), W / 2, 192);
+            ctx.font = 'bold 40px Arial, sans-serif';
+            ctx.fillText(String(partnerName || '').slice(0, 34), W / 2, 262);
+            ctx.fillText('FLAT ' + String(flatNo || '').toUpperCase().slice(0, 20), W / 2, 322);
+            ctx.font = 'bold 40px Arial, sans-serif';
+            ctx.fillText(stampDateStr(new Date()) + '  \u2022  GRANTED', W / 2, 392);
             ctx.font = 'bold 30px Arial, sans-serif';
             ctx.fillText('Powered by AVAILO', W / 2, 560);
         }
@@ -1864,82 +2094,164 @@
             a.click();
         }
 
-        // Gate form: visitor quick-select chips built from the select options.
-        function buildGateVisitorChips() {
-            const sel = document.getElementById('gateVisitorType');
-            const wrap = document.getElementById('gateVisitorChips');
-            if (!sel || !wrap) return;
+        // Gate form: delivery-partner quick-select chips (Step 2).
+        // Partner names are brand names — same in all three languages.
+        const GATE_PARTNERS = ['Swiggy', 'Zomato', 'Amazon', 'Flipkart', 'Dunzo'];
+        let gatePartner = '';
+        function styleGatePartnerChip(b, active) {
+            b.style.minHeight = '44px'; b.style.padding = '10px 14px'; b.style.borderRadius = '999px';
+            b.style.border = '1.5px solid ' + (active ? '#4f46e5' : '#cbd5e1');
+            b.style.background = active ? '#4f46e5' : '#ffffff';
+            b.style.color = active ? '#ffffff' : '#334155';
+            b.style.fontSize = '12px'; b.style.fontWeight = '700'; b.style.cursor = 'pointer';
+        }
+        function buildGatePartnerChips() {
+            const wrap = document.getElementById('gatePartnerChips');
+            if (!wrap) return;
             wrap.innerHTML = '';
-            Array.from(sel.options).forEach(opt => {
-                if (!opt.value) return;
+            GATE_PARTNERS.concat(['Other']).forEach(name => {
                 const b = document.createElement('button');
                 b.type = 'button';
-                b.className = 'visitor-chip';
-                b.setAttribute('data-value', opt.value);
-                const te = opt.getAttribute('data-te') || opt.textContent;
-                const en = opt.getAttribute('data-en') || opt.textContent;
-                const hi = opt.getAttribute('data-hi') || opt.textContent;
-                b.setAttribute('data-te', te); b.setAttribute('data-en', en); b.setAttribute('data-hi', hi);
-                b.textContent = currentLang === 'hi' ? hi : currentLang === 'en' ? en : te;
-                b.onclick = () => { sel.value = opt.value; syncGateVisitorChips(); };
+                b.setAttribute('data-value', name);
+                b.textContent = name === 'Other' ? (currentLang === 'te' ? 'ఇతరము' : currentLang === 'hi' ? 'अन्य' : 'Other') : name;
+                styleGatePartnerChip(b, false);
+                b.onclick = () => {
+                    gatePartner = name;
+                    const other = document.getElementById('gatePartnerOther');
+                    if (other) other.style.display = name === 'Other' ? 'block' : 'none';
+                    wrap.querySelectorAll('button').forEach(c => styleGatePartnerChip(c, c.getAttribute('data-value') === name));
+                };
                 wrap.appendChild(b);
             });
-            syncGateVisitorChips();
-            sel.addEventListener('change', syncGateVisitorChips);
         }
-        function syncGateVisitorChips() {
-            const sel = document.getElementById('gateVisitorType');
-            if (!sel) return;
-            document.querySelectorAll('#gateVisitorChips .visitor-chip').forEach(c => {
-                c.classList.toggle('active', c.getAttribute('data-value') === sel.value);
-            });
+        // Gate photo (REQUIRED before the stamp) + remember-me (opt-in only).
+        let gatePhotoAttached = false;
+        let gatePhotoObjectUrl = null;
+        function onGatePhotoSelected(ev) {
+            const file = ev && ev.target && ev.target.files && ev.target.files[0];
+            const warn = document.getElementById('gateWarning');
+            if (!file) return;
+            if (!file.type || file.type.indexOf('image/') !== 0) {
+                if (warn) { warn.textContent = currentLang === 'te' ? 'దయచేసి ఫోటో (ఇమేజ్) మాత్రమే ఎంచుకోండి.' : currentLang === 'hi' ? 'कृपया सिर्फ़ फ़ोटो (इमेज) चुनें।' : 'Please choose a photo (image) only.'; warn.style.display = 'block'; }
+                ev.target.value = '';
+                return;
+            }
+            gatePhotoAttached = true;
+            if (gatePhotoObjectUrl) URL.revokeObjectURL(gatePhotoObjectUrl);
+            gatePhotoObjectUrl = URL.createObjectURL(file);
+            const thumb = document.getElementById('gatePhotoThumb');
+            if (thumb) thumb.src = gatePhotoObjectUrl;
+            const prev = document.getElementById('gatePhotoPreview');
+            if (prev) prev.style.display = 'flex';
+            if (warn) warn.style.display = 'none';
+            ev.target.value = '';
         }
-        // Remember the apartment name + last flat/name the user entered.
+        function clearGatePhoto() {
+            gatePhotoAttached = false;
+            if (gatePhotoObjectUrl) { URL.revokeObjectURL(gatePhotoObjectUrl); gatePhotoObjectUrl = null; }
+            const prev = document.getElementById('gatePhotoPreview');
+            if (prev) prev.style.display = 'none';
+        }
+        function clearGateMemory() {
+            try { localStorage.removeItem('availo_apartment'); localStorage.removeItem('availo_gate_last'); localStorage.removeItem('availo_gate_remember'); } catch (e) {}
+            const apt = document.getElementById('gateApartment'); if (apt) apt.value = '';
+            const flat = document.getElementById('gateFlatNo'); if (flat) flat.value = '';
+            const cb = document.getElementById('gateRemember'); if (cb) cb.checked = false;
+            const known = document.getElementById('gateAptKnown'); if (known) known.style.display = 'none';
+            const unknown = document.getElementById('gateAptUnknown'); if (unknown) unknown.style.display = 'block';
+            gateApartmentName = '';
+        }
+        // Step 1 — apartment comes from the QR scan (?apt=) or from opt-in
+        // memory. Stale saves from before the opt-in rule are wiped on load
+        // so they never surface on a shared phone.
+        let gateApartmentName = '';
         function initGateFormMemory() {
             try {
-                const apt = localStorage.getItem('availo_apartment');
-                if (apt) document.getElementById('gateApartment').value = apt;
-                const last = JSON.parse(localStorage.getItem('availo_gate_last') || 'null');
-                if (last) {
-                    if (last.flat) document.getElementById('gateFlatNo').value = last.flat;
-                    if (last.name) document.getElementById('gateDeliveryDetails').value = last.name;
+                const params = new URLSearchParams(window.location.search);
+                const aptParam = (params.get('apt') || params.get('apartment') || '').trim();
+                if (localStorage.getItem('availo_gate_remember') !== '1') {
+                    localStorage.removeItem('availo_apartment');
+                    localStorage.removeItem('availo_gate_last');
                 }
+                let apt = aptParam;
+                if (!apt && localStorage.getItem('availo_gate_remember') === '1') {
+                    apt = localStorage.getItem('availo_apartment') || '';
+                }
+                const last = JSON.parse(localStorage.getItem('availo_gate_last') || 'null');
+                if (last && last.flat && localStorage.getItem('availo_gate_remember') === '1') {
+                    document.getElementById('gateFlatNo').value = last.flat;
+                }
+                if (apt) {
+                    gateApartmentName = apt;
+                    const chip = document.getElementById('gateAptChipName');
+                    if (chip) chip.textContent = apt;
+                    const known = document.getElementById('gateAptKnown'); if (known) known.style.display = 'block';
+                    const unknown = document.getElementById('gateAptUnknown'); if (unknown) unknown.style.display = 'none';
+                }
+                const cb = document.getElementById('gateRemember');
+                if (cb && localStorage.getItem('availo_gate_remember') === '1') cb.checked = true;
             } catch (e) {}
         }
 
-        // Send Gate Pass via WhatsApp
+        // Send Gate Pass via WhatsApp — exactly 3 steps: Scan (apartment from
+        // QR), Flat + delivery partner, Photo → stamp. No visitor-name or
+        // vehicle-number field: the delivery partner IS the identifier.
         function sendGateSecurityPass() {
-            const apt = document.getElementById('gateApartment').value.trim();
-            const flat = document.getElementById('gateFlatNo').value;
-            const visitor = document.getElementById('gateVisitorType').value;
-            const details = document.getElementById('gateDeliveryDetails').value.trim();
+            const aptInput = document.getElementById('gateApartment');
+            const apt = (gateApartmentName || (aptInput ? aptInput.value.trim() : ''));
+            const flat = document.getElementById('gateFlatNo').value.trim();
+            const otherInput = document.getElementById('gatePartnerOther');
+            const partner = gatePartner === 'Other' ? (otherInput ? otherInput.value.trim() : '') : gatePartner;
             const warn = document.getElementById('gateWarning');
 
-            if (!apt || !flat || !visitor || !details) {
-                const msg = currentLang === 'te' ? '⚠️ దయచేసి అపార్ట్‌మెంట్ పేరు, ఫ్లాట్, విజిటర్ రకం మరియు పేరు/బండి నంబర్ నింపండి.' : currentLang === 'hi' ? '⚠️ कृपया अपार्टमेंट का नाम, फ़्लैट, विज़िटर का प्रकार और नाम/गाड़ी नंबर भरें।' : '⚠️ Please fill the apartment name, flat, visitor type and name / vehicle number.';
+            if (!apt || !flat || !partner) {
+                const msg = currentLang === 'te' ? '⚠️ దయచేసి అపార్ట్‌మెంట్ పేరు, ఫ్లాట్ నంబర్ రాసి, డెలివరీ పార్టనర్ ఎంచుకోండి.' : currentLang === 'hi' ? '⚠️ कृपया अपार्टमेंट का नाम, फ़्लैट नंबर लिखें और डिलीवरी पार्टनर चुनें।' : '⚠️ Please fill the apartment name, flat number and pick the delivery partner.';
                 if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
                 alert(msg);
                 return;
             }
+            if (!gatePhotoAttached) {
+                const msg = currentLang === 'te' ? '📷 ముందుగా డెలివరీ ఫోటో తీయండి — ఫోటో లేకుండా వెరిఫైడ్ స్టాంప్ రాదు.' : currentLang === 'hi' ? '📷 पहले डिलीवरी फ़ोटो लें — बिना फ़ोटो वेरिफ़ाइड स्टैम्प नहीं मिलेगा।' : '📷 Take the delivery photo first — no verified stamp without a photo.';
+                if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
+                alert(msg);
+                const cam = document.getElementById('gatePhotoInput');
+                if (cam) cam.click();
+                return;
+            }
             if (warn) warn.style.display = 'none';
+            // Save apartment + flat ONLY if the user opted in on this phone.
+            const remember = document.getElementById('gateRemember');
             try {
-                localStorage.setItem('availo_apartment', apt);
-                localStorage.setItem('availo_gate_last', JSON.stringify({ flat: flat, name: details }));
+                if (remember && remember.checked) {
+                    localStorage.setItem('availo_gate_remember', '1');
+                    localStorage.setItem('availo_apartment', apt);
+                    localStorage.setItem('availo_gate_last', JSON.stringify({ flat: flat }));
+                } else {
+                    localStorage.removeItem('availo_gate_remember');
+                    localStorage.removeItem('availo_apartment');
+                    localStorage.removeItem('availo_gate_last');
+                }
             } catch (e) {}
 
             const ref = availoRef();
             const refLine = document.getElementById('gateRefLine');
             if (refLine) refLine.textContent = availoRefLine(ref);
-            drawGateStamp(document.getElementById('gateStampCanvas'), apt);
+            drawGateStamp(document.getElementById('gateStampCanvas'), apt, partner, flat);
             const panel = document.getElementById('gateConfirmPanel');
             if (panel) panel.style.display = 'block';
 
-            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*अपार्टमेंट:* ${apt}%0A*फ़्लैट नंबर:* ${flat}%0A*विज़िटर का प्रकार:* ${visitor}%0A*विवरण / वाहन:* ${details}%0A------------------------------%0A📸 कृपया WhatsApp कैमरे से सेल्फ़ी या पार्सल की फ़ोटो लेकर भेजें — तभी गेट पास वेरिफ़ाई होगा।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Reference No:* ${ref}%0A*Apartment:* ${apt}%0A*Flat No:* ${flat}%0A*Visitor Type:* ${visitor}%0A*Details / Vehicle:* ${details}%0A------------------------------%0A📸 Please take a selfie or parcel photo with the WhatsApp camera and send it — only then is the gate pass verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*అపార్ట్‌మెంట్:* ${apt}%0A*ఫ్లాట్ నంబర్:* ${flat}%0A*విజిటర్ రకం:* ${visitor}%0A*వివరాలు / బండి:* ${details}%0A------------------------------%0A📸 దయచేసి WhatsApp కెమెరాతో సెల్ఫీ లేదా పార్సెల్ ఫోటో తీసి సెండ్ చేయండి — అప్పుడే గేట్ పాస్ వెరిఫై అవుతుంది.`;
-            // Brief delay so the reference + stamp are visible before WhatsApp opens.
-            setTimeout(() => { window.location.href = `https://wa.me/919966157369?text=${msg}`; }, 1800);
+            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*अपार्टमेंट:* ${apt}%0A*फ़्लैट नंबर:* ${flat}%0A*डिलीवरी पार्टनर:* ${partner}%0A------------------------------%0A📸 फ़ोटो: साइट पर ली गई ✅ वेरिफ़ाई हो गया।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Reference No:* ${ref}%0A*Apartment:* ${apt}%0A*Flat No:* ${flat}%0A*Delivery Partner:* ${partner}%0A------------------------------%0A📸 Photo: taken on site ✅ Verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*అపార్ట్‌మెంట్:* ${apt}%0A*ఫ్లాట్ నంబర్:* ${flat}%0A*డెలివరీ పార్టనర్:* ${partner}%0A------------------------------%0A📸 ఫోటో: సైట్‌లో తీయబడింది ✅ వెరిఫై చేయబడింది.`;
+            window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
         }
 
-        // Submit Trial / Subscription Application
+        // Submit Trial / Subscription Application — inline validation + visible
+        // confirmation (no silent alert-only flow).
+        function showFormWarn(id, msg) {
+            const w = document.getElementById(id);
+            if (w) { w.textContent = msg; w.style.display = 'block'; }
+            return false;
+        }
+        function hideFormWarn(id) { const w = document.getElementById(id); if (w) w.style.display = 'none'; }
         function submitTrialApplication() {
             const category = document.getElementById('trialCategory').value;
             const planType = document.getElementById('trialPlanType').value;
@@ -1949,16 +2261,58 @@
             const location = document.getElementById('trialLocation').value.trim() || 'Vijayawada/Guntur';
 
             if (!businessName || !contactName || !phone) {
-                alert(currentLang === 'te' ? "దయచేసి మీ పేరు, సంస్థ పేరు మరియు వాట్సాప్ నంబర్ తప్పకుండా నింపండి." : currentLang === 'hi' ? "कृपया बिज़नेस का नाम, संपर्क व्यक्ति का नाम और WhatsApp नंबर ज़रूर भरें।" : "Please fill Business Name, Contact Name, and Phone Number.");
-                return;
+                return showFormWarn('trialWarnLine', currentLang === 'te' ? '⚠️ దయచేసి సంస్థ పేరు, మీ పేరు మరియు వాట్సాప్ నంబర్ తప్పకుండా నింపండి.' : currentLang === 'hi' ? '⚠️ कृपया बिज़नेस का नाम, संपर्क व्यक्ति का नाम और WhatsApp नंबर ज़रूर भरें।' : '⚠️ Please fill Business Name, Contact Name, and Phone Number.');
             }
+            if (phone.replace(/\D/g, '').length < 10) {
+                return showFormWarn('trialWarnLine', currentLang === 'te' ? '⚠️ సరైన 10 అంకెల మొబైల్ నంబర్ ఇవ్వండి.' : currentLang === 'hi' ? '⚠️ कृपया सही 10 अंकों का मोबाइल नंबर दें।' : '⚠️ Please enter a valid 10-digit mobile number.');
+            }
+            hideFormWarn('trialWarnLine');
 
             const ref = availoRef();
             const cl = document.getElementById('trialConfirmLine');
             if (cl) { cl.textContent = availoRefLine(ref); cl.style.display = 'block'; }
 
             const msg = currentLang === 'hi' ? `*AVAILO ट्रायल / सब्सक्रिप्शन आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*कैटेगरी:* ${category}%0A*प्लान का प्रकार:* ${planType}%0A*बिज़नेस/अपार्टमेंट:* ${businessName}%0A*संपर्क व्यक्ति:* ${contactName}%0A*WhatsApp:* ${phone}%0A*क्षेत्र:* ${location}%0A------------------------------%0Aऑनबोर्डिंग / ट्रायल विवरण में रुचि है।` : currentLang === 'en' ? `*AVAILO Trial / Subscription Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Category:* ${category}%0A*Plan Type:* ${planType}%0A*Business/Apartment:* ${businessName}%0A*Contact Person:* ${contactName}%0A*WhatsApp:* ${phone}%0A*Location:* ${location}%0A------------------------------%0AInterested in onboarding / trial details.` : `*AVAILO ట్రయల్ / సబ్‌స్క్రిప్షన్ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*కేటగిరీ:* ${category}%0A*ప్లాన్ రకం:* ${planType}%0A*సంస్థ/అపార్ట్‌మెంట్:* ${businessName}%0A*సంప్రదింపు వ్యక్తి:* ${contactName}%0A*WhatsApp:* ${phone}%0A*ప్రాంతం:* ${location}%0A------------------------------%0Aఆన్‌బోర్డింగ్ / ట్రయల్ వివరాలపై ఆసక్తి ఉంది.`;
-            setTimeout(() => { window.location.href = `https://wa.me/919966157369?text=${msg}`; }, 1800);
+            window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
+        }
+
+        // Submit Technician / Provider Join Application (separate form).
+        function submitTechnicianApplication() {
+            const name = document.getElementById('techName').value.trim();
+            const phone = document.getElementById('techPhone').value.trim();
+            const skill = document.getElementById('techSkill').value;
+            const exp = document.getElementById('techExperience').value;
+            const area = document.getElementById('techArea').value.trim();
+            const idOk = document.getElementById('techIdProof').checked;
+
+            if (!name || !phone || !area) {
+                return showFormWarn('techWarnLine', currentLang === 'te' ? '⚠️ దయచేసి మీ పేరు, వాట్సాప్ నంబర్ మరియు సేవ చేసే ప్రాంతం తప్పకుండా నింపండి.' : currentLang === 'hi' ? '⚠️ कृपया अपना नाम, WhatsApp नंबर और सेवा क्षेत्र ज़रूर भरें।' : '⚠️ Please fill your name, WhatsApp number and service area.');
+            }
+            if (phone.replace(/\D/g, '').length < 10) {
+                return showFormWarn('techWarnLine', currentLang === 'te' ? '⚠️ సరైన 10 అంకెల మొబైల్ నంబర్ ఇవ్వండి.' : currentLang === 'hi' ? '⚠️ कृपया सही 10 अंकों का मोबाइल नंबर दें।' : '⚠️ Please enter a valid 10-digit mobile number.');
+            }
+            if (!idOk) {
+                return showFormWarn('techWarnLine', currentLang === 'te' ? '⚠️ వెరిఫికేషన్ కోసం ID ప్రూఫ్ చూపిస్తానని టిక్ చేయండి.' : currentLang === 'hi' ? '⚠️ वेरिफ़िकेशन के लिए ID प्रूफ़ दिखाने पर टिक करें।' : '⚠️ Please tick that you will show ID proof at verification.');
+            }
+            hideFormWarn('techWarnLine');
+
+            const ref = availoRef();
+            const cl = document.getElementById('techConfirmLine');
+            if (cl) { cl.textContent = availoRefLine(ref); cl.style.display = 'block'; }
+
+            const msg = currentLang === 'hi' ? `*AVAILO टेक्नीशियन जॉइन आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*नाम:* ${name}%0A*WhatsApp:* ${phone}%0A*कौशल:* ${skill}%0A*अनुभव:* ${exp}%0A*सेवा क्षेत्र:* ${area}%0A*ID प्रूफ़:* वेरिफ़िकेशन के समय दिखाएँगे%0A------------------------------%0Aटेक्नीशियन के रूप में जुड़ना है।` : currentLang === 'en' ? `*AVAILO Technician Join Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Name:* ${name}%0A*WhatsApp:* ${phone}%0A*Skill:* ${skill}%0A*Experience:* ${exp}%0A*Service Area:* ${area}%0A*ID Proof:* Will show at verification%0A------------------------------%0AWants to join as a technician.` : `*AVAILO టెక్నీషియన్ జాయిన్ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*పేరు:* ${name}%0A*WhatsApp:* ${phone}%0A*నైపుణ్యం:* ${skill}%0A*అనుభవం:* ${exp}%0A*సేవ చేసే ప్రాంతం:* ${area}%0A*ID ప్రూఫ్:* వెరిఫికేషన్ సమయంలో చూపిస్తారు%0A------------------------------%0Aటెక్నీషియన్‌గా జాయిన్ అవ్వాలని ఉంది.`;
+            window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
+        }
+
+        // Salon: no dead button — WhatsApp "notify me at launch" + confirmation.
+        function salonNotify(btn) {
+            const msg = currentLang === 'hi' ? 'नमस्ते AVAILO, सैलून लॉन्च होने पर मुझे बताइए।' : currentLang === 'en' ? 'Hello AVAILO, please let me know when the Salon launches.' : 'నమస్తే AVAILO, సెలూన్ లాంచ్ అయినప్పుడు నాకు తెలియజేయండి.';
+            window.open('https://wa.me/919966157369?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+            if (btn) {
+                btn.textContent = currentLang === 'te' ? '✓ తెలియజేస్తాం!' : currentLang === 'hi' ? '✓ बता देंगे!' : '✓ We will let you know!';
+                btn.disabled = true;
+                btn.style.opacity = '0.75';
+            }
         }
 
         // Select NRI Plan & Open Form
@@ -1968,7 +2322,7 @@
             openModal('nriApplyModal');
         }
 
-        // Submit NRI Application
+        // Submit NRI Application — inline validation + visible confirmation.
         function submitNRIApplication() {
             const plan = document.getElementById('nriPlanSelected').value;
             const clientName = document.getElementById('nriClientName').value.trim();
@@ -1978,19 +2332,22 @@
             const needs = document.getElementById('nriNeeds').value.trim() || (currentLang === 'hi' ? 'सामान्य देखभाल' : currentLang === 'en' ? 'General Care' : 'సాధారణ సంరక్షణ');
 
             if (!clientName || !clientPhone || !parentsName || !address) {
-                alert(currentLang === 'te' ? "దయచేసి అన్ని వివరాలను తప్పకుండా నింపండి." : currentLang === 'hi' ? "कृपया सभी ज़रूरी विवरण भरें।" : "Please fill all required fields.");
-                return;
+                return showFormWarn('nriWarnLine', currentLang === 'te' ? '⚠️ దయచేసి అన్ని వివరాలను తప్పకుండా నింపండి.' : currentLang === 'hi' ? '⚠️ कृपया सभी ज़रूरी विवरण भरें।' : '⚠️ Please fill all required fields.');
             }
+            if (clientPhone.replace(/\D/g, '').length < 10) {
+                return showFormWarn('nriWarnLine', currentLang === 'te' ? '⚠️ సరైన మొబైల్ నంబర్ ఇవ్వండి (కనీసం 10 అంకెలు).' : currentLang === 'hi' ? '⚠️ कृपया सही मोबाइल नंबर दें (कम से कम 10 अंक)।' : '⚠️ Please enter a valid mobile number (at least 10 digits).');
+            }
+            hideFormWarn('nriWarnLine');
 
             const ref = availoRef();
             const cl = document.getElementById('nriConfirmLine');
             if (cl) { cl.textContent = availoRefLine(ref); cl.style.display = 'block'; }
 
             const msg = currentLang === 'hi' ? `*AVAILO NRI माता-पिता की देखभाल आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*प्लान:* ${plan}%0A*प्रायोजक:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*माता-पिता का नाम:* ${parentsName}%0A*पता:* ${address}%0A*ज़रूरतें:* ${needs}%0A------------------------------%0Aएक्टिवेशन के लिए कनेक्ट हो रहा है।` : currentLang === 'en' ? `*AVAILO NRI Parents Care Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Plan:* ${plan}%0A*Sponsor:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*Parents Name:* ${parentsName}%0A*Address:* ${address}%0A*Needs:* ${needs}%0A------------------------------%0AConnecting for Activation.` : `*AVAILO NRI తల్లిదండ్రుల సంరక్షణ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*ప్లాన్:* ${plan}%0A*స్పాన్సర్:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*తల్లిదండ్రుల పేరు:* ${parentsName}%0A*చిరునామా:* ${address}%0A*అవసరాలు:* ${needs}%0A------------------------------%0Aయాక్టివేషన్ కోసం కనెక్ట్ అవుతోంది.`;
-            setTimeout(() => { window.location.href = `https://wa.me/919966157369?text=${msg}`; }, 1800);
+            window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
         }
         initGateFormMemory();
-        buildGateVisitorChips();
+        buildGatePartnerChips();
         applyLanguage();
     </script>
 </body>
