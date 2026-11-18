@@ -441,6 +441,7 @@
         <div id="regionLbl">AVAILO Digital Services · విజయవాడ &amp; గుంటూరు</div>
     </footer>
 
+    <script src="availo-db.js"></script>
     <script>
         const params = new URLSearchParams(window.location.search);
         const hotelName = params.get('hotel') || "AVAILO DINE";
@@ -753,6 +754,8 @@
 
             closeModal();
             speakHost(UI_TEXT[currentLang].orderSent);
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('Orders', { source: 'AI Waiter (Host)', hotel: hotelName, table: tableNo, items: lines, total: grandTotal });
             window.open(`https://wa.me/${kitchenWa}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
         }
 

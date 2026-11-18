@@ -554,6 +554,7 @@
         <div data-te="AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు" data-en="AVAILO Digital Services · Vijayawada &amp; Guntur" data-hi="AVAILO डिजिटल सर्विसेज़ · विजयवाड़ा और गुंटूर">AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు</div>
     </footer>
 
+    <script src="availo-db.js"></script>
     <script>
         const params = new URLSearchParams(window.location.search);
         const hotelParam = params.get('hotel');
@@ -829,6 +830,8 @@
                 const msg = `*AVAILO SMART DINE - LIVE ORDER*\n-----------------------------\n*హోటల్:* ${hotelName}\n*టేబుల్:* ${tableNumber}\n*కస్టమర్ వాయిస్ ఆర్డర్:* ${spokenText}\n-----------------------------\n_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు ఆర్డర్ రెడీ అని రిప్లై పంపండి)_`;
                 // Voice result fires async (no user gesture), so a popup
                 // blocker may refuse window.open — fall back to same-tab.
+                // Log to Google Sheets (never blocks WhatsApp).
+                sendToSheet('Orders', { source: 'Smart Dine Voice', hotel: hotelName, table: tableNumber, items: spokenText, total: '' });
                 const waWin = window.open(`https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
                 if (!waWin) window.location.href = `https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`;
             };
@@ -857,6 +860,8 @@
 
             displayOrderPreparingScreen(grandTotal);
 
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('Orders', { source: 'Smart Dine', hotel: hotelName, table: tableNumber, items: itemsStr, total: grandTotal });
             window.open(`https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
         }
 

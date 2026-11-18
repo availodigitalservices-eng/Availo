@@ -602,6 +602,7 @@
         </div>
     </div>
 
+    <script src="availo-db.js"></script>
     <script>
         const DEFAULT_SARVAM_KEY = "YOUR_SARVAM_API_KEY_HERE";
 
@@ -1087,6 +1088,8 @@
             const msg = `*AVAILO VOICE AI - KITCHEN ORDER*\n-----------------------------\n*Restaurant:* ${LANG_DATA.en.hotel}\n*Table No:* ${tableParam}\n*Language:* ${currentLang.toUpperCase()}\n-----------------------------\n${itemsStr}\n-----------------------------\n*Total Bill:* ₹${total}\n*Time:* ${new Date().toLocaleTimeString()}`;
 
             speakResponse(LANG_DATA[currentLang].confirming(total), false);
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('Orders', { source: 'AI Waiter', hotel: LANG_DATA.en.hotel, table: tableParam, items: itemsStr, total: total });
             window.open(`https://wa.me/${kitchenWa}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
         }
 

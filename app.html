@@ -364,6 +364,7 @@
         </div>
     </div>
 
+    <script src="availo-db.js"></script>
     <script>
         let currentLang = localStorage.getItem('availo_lang');
         if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
@@ -372,6 +373,8 @@
         // Open WhatsApp with a message in the selected site language.
         function waLink(te, en, hi) {
             const t = currentLang === 'hi' ? hi : currentLang === 'en' ? en : te;
+            // Log every WhatsApp enquiry to Google Sheets (never blocks WhatsApp).
+            sendToSheet('Contact', { message: t, lang: currentLang });
             window.open('https://wa.me/919966157369?text=' + encodeURIComponent(t), '_blank', 'noopener');
         }
 
