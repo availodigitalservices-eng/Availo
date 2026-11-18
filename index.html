@@ -1167,14 +1167,14 @@
             <div class="srv-card">
                 <div class="srv-card-img-wrap">
                     <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&auto=format&fit=crop&q=80" alt="Salon Services" data-alt-te="సెలూన్ సర్వీసెస్" data-alt-en="Salon Services" data-alt-hi="सैलून सर्विसेज़" loading="lazy" decoding="async">
-                    <span class="srv-status-badge coming-soon" data-te="త్వరలో రాబోతోంది" data-en="Coming Soon" data-hi="जल्द आ रहा है">Coming Soon</span>
+                    <span class="srv-status-badge" data-te="బుకింగ్ ఓపెన్" data-en="Booking Open" data-hi="बुकिंग खुली है">Booking Open</span>
                 </div>
                 <div class="srv-card-body">
                     <h3 class="font-te-title" data-te="AVAILO సెలూన్" data-en="AVAILO Salon" data-hi="AVAILO सैलून">AVAILO Salon</h3>
-                    <p class="font-te-body" data-te="సెలూన్ల సమాచారం, సర్వీస్ స్లాట్ వివరాలు మరియు సులభమైన బుకింగ్ పరస్పర చర్యల కోసం సిద్ధమవుతున్న కాన్సెప్ట్." data-en="A planned service concept for salon discovery, service information, and easier customer interaction." data-hi="सैलून की जानकारी, सर्विस स्लॉट विवरण और आसान बुकिंग के लिए तैयार हो रहा कॉन्सेप्ट।">
-                        A planned service concept for salon discovery, service information, and easier customer interaction.
+                    <p class="font-te-body" data-te="సెలూన్ సర్వీసులు & స్లాట్ బుకింగ్ — హెయిర్ కట్, షేవింగ్, ఫేషియల్, హెయిర్ కలర్. ఇప్పుడే మీ స్లాట్ బుక్ చేసుకోండి." data-en="Salon services & slot booking — hair cut, shaving, facial, hair colour. Book your slot now." data-hi="सैलून सर्विसेज़ और स्लॉट बुकिंग — हेयर कट, शेविंग, फेशियल, हेयर कलर। अभी अपना स्लॉट बुक करें।">
+                        Salon services & slot booking — hair cut, shaving, facial, hair colour. Book your slot now.
                     </p>
-                    <button class="srv-action-btn font-te-title" onclick="salonNotify(this)" data-te="🔔 లాంచ్ అయినప్పుడు తెలియజేయండి" data-en="🔔 Notify me at launch" data-hi="🔔 लॉन्च होने पर बताएँ">🔔 లాంచ్ అయినప్పుడు తెలియజేయండి</button>
+                    <a href="salon.html" class="srv-action-btn font-te-title" data-te="బుకింగ్ చేయండి →" data-en="Book Now →" data-hi="अभी बुक करें →">Book Now →</a>
                 </div>
             </div>
 
@@ -1800,6 +1800,7 @@
 
     <!-- Service rates data (single source: rates.js) -->
     <script src="rates.js"></script>
+    <script src="availo-db.js"></script>
     <!-- Scripts -->
     <script>
         function hidePageLoader() {
@@ -2040,6 +2041,9 @@
         // Always a NEW tab, immediately — never a delayed same-tab jump.
         function waLink(te, en, hi) {
             const t = currentLang === 'hi' ? hi : currentLang === 'en' ? en : te;
+            // Log every WhatsApp enquiry to Google Sheets (never blocks WhatsApp).
+            // This covers Mayura questions + all preset service-enquiry buttons.
+            sendToSheet('Contact', { message: t, lang: currentLang });
             window.open('https://wa.me/919966157369?text=' + encodeURIComponent(t), '_blank', 'noopener');
         }
 
@@ -2241,6 +2245,8 @@
             if (panel) panel.style.display = 'block';
 
             const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*अपार्टमेंट:* ${apt}%0A*फ़्लैट नंबर:* ${flat}%0A*डिलीवरी पार्टनर:* ${partner}%0A------------------------------%0A📸 फ़ोटो: साइट पर ली गई ✅ वेरिफ़ाई हो गया।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Reference No:* ${ref}%0A*Apartment:* ${apt}%0A*Flat No:* ${flat}%0A*Delivery Partner:* ${partner}%0A------------------------------%0A📸 Photo: taken on site ✅ Verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*అపార్ట్‌మెంట్:* ${apt}%0A*ఫ్లాట్ నంబర్:* ${flat}%0A*డెలివరీ పార్టనర్:* ${partner}%0A------------------------------%0A📸 ఫోటో: సైట్‌లో తీయబడింది ✅ వెరిఫై చేయబడింది.`;
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('GatePass', { apartment: apt, flat: flat, partner: partner, photo: 'captured', ref: ref });
             window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
         }
 
@@ -2273,6 +2279,8 @@
             if (cl) { cl.textContent = availoRefLine(ref); cl.style.display = 'block'; }
 
             const msg = currentLang === 'hi' ? `*AVAILO ट्रायल / सब्सक्रिप्शन आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*कैटेगरी:* ${category}%0A*प्लान का प्रकार:* ${planType}%0A*बिज़नेस/अपार्टमेंट:* ${businessName}%0A*संपर्क व्यक्ति:* ${contactName}%0A*WhatsApp:* ${phone}%0A*क्षेत्र:* ${location}%0A------------------------------%0Aऑनबोर्डिंग / ट्रायल विवरण में रुचि है।` : currentLang === 'en' ? `*AVAILO Trial / Subscription Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Category:* ${category}%0A*Plan Type:* ${planType}%0A*Business/Apartment:* ${businessName}%0A*Contact Person:* ${contactName}%0A*WhatsApp:* ${phone}%0A*Location:* ${location}%0A------------------------------%0AInterested in onboarding / trial details.` : `*AVAILO ట్రయల్ / సబ్‌స్క్రిప్షన్ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*కేటగిరీ:* ${category}%0A*ప్లాన్ రకం:* ${planType}%0A*సంస్థ/అపార్ట్‌మెంట్:* ${businessName}%0A*సంప్రదింపు వ్యక్తి:* ${contactName}%0A*WhatsApp:* ${phone}%0A*ప్రాంతం:* ${location}%0A------------------------------%0Aఆన్‌బోర్డింగ్ / ట్రయల్ వివరాలపై ఆసక్తి ఉంది.`;
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('Business', { category: category, planType: planType, businessName: businessName, contactName: contactName, phone: phone, location: location, ref: ref });
             window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
         }
 
@@ -2301,19 +2309,13 @@
             if (cl) { cl.textContent = availoRefLine(ref); cl.style.display = 'block'; }
 
             const msg = currentLang === 'hi' ? `*AVAILO टेक्नीशियन जॉइन आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*नाम:* ${name}%0A*WhatsApp:* ${phone}%0A*कौशल:* ${skill}%0A*अनुभव:* ${exp}%0A*सेवा क्षेत्र:* ${area}%0A*ID प्रूफ़:* वेरिफ़िकेशन के समय दिखाएँगे%0A------------------------------%0Aटेक्नीशियन के रूप में जुड़ना है।` : currentLang === 'en' ? `*AVAILO Technician Join Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Name:* ${name}%0A*WhatsApp:* ${phone}%0A*Skill:* ${skill}%0A*Experience:* ${exp}%0A*Service Area:* ${area}%0A*ID Proof:* Will show at verification%0A------------------------------%0AWants to join as a technician.` : `*AVAILO టెక్నీషియన్ జాయిన్ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*పేరు:* ${name}%0A*WhatsApp:* ${phone}%0A*నైపుణ్యం:* ${skill}%0A*అనుభవం:* ${exp}%0A*సేవ చేసే ప్రాంతం:* ${area}%0A*ID ప్రూఫ్:* వెరిఫికేషన్ సమయంలో చూపిస్తారు%0A------------------------------%0Aటెక్నీషియన్‌గా జాయిన్ అవ్వాలని ఉంది.`;
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('Technicians', { name: name, phone: phone, skill: skill, experience: exp, area: area, idProof: 'will show at verification', ref: ref });
             window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
         }
 
-        // Salon: no dead button — WhatsApp "notify me at launch" + confirmation.
-        function salonNotify(btn) {
-            const msg = currentLang === 'hi' ? 'नमस्ते AVAILO, सैलून लॉन्च होने पर मुझे बताइए।' : currentLang === 'en' ? 'Hello AVAILO, please let me know when the Salon launches.' : 'నమస్తే AVAILO, సెలూన్ లాంచ్ అయినప్పుడు నాకు తెలియజేయండి.';
-            window.open('https://wa.me/919966157369?text=' + encodeURIComponent(msg), '_blank', 'noopener');
-            if (btn) {
-                btn.textContent = currentLang === 'te' ? '✓ తెలియజేస్తాం!' : currentLang === 'hi' ? '✓ बता देंगे!' : '✓ We will let you know!';
-                btn.disabled = true;
-                btn.style.opacity = '0.75';
-            }
-        }
+        // Salon now has its own page (salon.html) with a booking form —
+        // the old "notify me at launch" button is retired.
 
         // Select NRI Plan & Open Form
         function selectNRIPlan(planName) {
@@ -2344,6 +2346,8 @@
             if (cl) { cl.textContent = availoRefLine(ref); cl.style.display = 'block'; }
 
             const msg = currentLang === 'hi' ? `*AVAILO NRI माता-पिता की देखभाल आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*प्लान:* ${plan}%0A*प्रायोजक:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*माता-पिता का नाम:* ${parentsName}%0A*पता:* ${address}%0A*ज़रूरतें:* ${needs}%0A------------------------------%0Aएक्टिवेशन के लिए कनेक्ट हो रहा है।` : currentLang === 'en' ? `*AVAILO NRI Parents Care Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Plan:* ${plan}%0A*Sponsor:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*Parents Name:* ${parentsName}%0A*Address:* ${address}%0A*Needs:* ${needs}%0A------------------------------%0AConnecting for Activation.` : `*AVAILO NRI తల్లిదండ్రుల సంరక్షణ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*ప్లాన్:* ${plan}%0A*స్పాన్సర్:* ${clientName}%0A*WhatsApp:* ${clientPhone}%0A*తల్లిదండ్రుల పేరు:* ${parentsName}%0A*చిరునామా:* ${address}%0A*అవసరాలు:* ${needs}%0A------------------------------%0Aయాక్టివేషన్ కోసం కనెక్ట్ అవుతోంది.`;
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('NRI', { plan: plan, sponsor: clientName, phone: clientPhone, parentsName: parentsName, address: address, needs: needs, ref: ref });
             window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
         }
         initGateFormMemory();

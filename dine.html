@@ -770,6 +770,7 @@
         </div>
     </div>
 
+    <script src="availo-db.js"></script>
     <script>
 
         // ---- Availo Kitchen (Firebase, free Spark) — fire-and-forget alerts ----
@@ -1233,6 +1234,8 @@
             closeOrderConfirm();
             displayLiveTrackerScreen(billLabel, 15, pendingOrderRef);
             pushKitchenEvent('orders', { table: tableNumber, hotel: hotelName, items: pendingOrderItems || billLabel, time: new Date().toLocaleTimeString(), ref: pendingOrderRef || '' });
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('Orders', { source: 'Dine', hotel: hotelName, table: tableNumber, items: pendingOrderItems || billLabel, total: pendingOrderBill, ref: pendingOrderRef || '' });
             window.open(`https://wa.me/${targetWhatsApp}?text=${msg}`, '_blank', 'noopener');
         }
 
@@ -1292,7 +1295,10 @@
                 const totalLabel = currentLang === 'hi' ? 'कुल बिल' : currentLang === 'en' ? 'Total Bill' : 'మొత్తం బిల్లు';
                 msg = `🔔🔔 TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}\n-----------------------------\n${itemsStr}\n-----------------------------\n*${totalLabel}:* ₹${total}`;
             }
-            pushKitchenEvent('refills', { table: tableNum, text: loudText, time: new Date().toLocaleTimeString(), ref: availoRef() });
+            const svcRef = availoRef();
+            pushKitchenEvent('refills', { table: tableNum, text: loudText, time: new Date().toLocaleTimeString(), ref: svcRef });
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('Orders', { source: 'Dine Refill', hotel: hotelName, table: tableNum, items: loudText, total: '', ref: svcRef });
             window.open(`https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
         }
 

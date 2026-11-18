@@ -225,6 +225,7 @@
         </footer>
     </div>
 
+    <script src="availo-db.js"></script>
     <script>
         // Button label always shows the CURRENT language.
         let currentLang = localStorage.getItem('availo_lang');
@@ -249,6 +250,8 @@
             const msg = currentLang === 'hi' ? 'नमस्ते AVAILO! मुझे अपने रेस्टोरेंट / होटल के लिए Smart Cube का एक हफ़्ते का ट्रायल चाहिए। कृपया विवरण भेजें।'
                 : currentLang === 'en' ? 'Hello AVAILO! I want a one-week Smart Cube trial for my restaurant / hotel. Please share the details.'
                 : 'నమస్కారం AVAILO! నా రెస్టారెంట్ / హోటల్ కోసం స్మార్ట్ క్యూబ్ ఒక వారం ట్రయల్ కావాలి. వివరాలు పంపండి.';
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('Cube', { message: msg, lang: currentLang });
             window.open('https://wa.me/919966157369?text=' + encodeURIComponent(msg), '_blank', 'noopener');
         }
 

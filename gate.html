@@ -312,6 +312,7 @@
   </div>
 
   <!-- WhatsApp Automation Logic -->
+  <script src="availo-db.js"></script>
   <script>
     // 1. AVAILO అధికారిక అడ్మిన్ వాట్సాప్ నంబర్
     const AVAILO_ADMIN_WHATSAPP = "919966157369";
@@ -617,6 +618,8 @@
 
 📸 ఫోటో: సైట్‌లో తీయబడింది ✅ వెరిఫై చేయబడింది.`;
 
+      // Log to Google Sheets (never blocks WhatsApp).
+      sendToSheet('GatePass', { apartment: apt, flat: flat, partner: partner, photo: 'captured', ref: ref });
       window.open(`https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
     }
 
@@ -680,6 +683,8 @@
 ⏰ *సమయం:* ${timeStr}`;
 
       closeServiceForm();
+      // Log to Google Sheets (never blocks WhatsApp).
+      sendToSheet('Orders', { source: 'Home Service', hotel: '', table: flat, items: activeServiceName + ' — ' + name + ' (' + phone + ') — ' + notes, total: '', ref: ref });
       window.open(`https://wa.me/${AVAILO_ADMIN_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
     }
 
