@@ -948,10 +948,10 @@
         <!-- 02 — Hero Mayura Stage Card -->
         <section class="mayura-stage-card" id="home">
             <div class="mayura-voice-pill font-te-title" onclick="speakMayura()">
-                <span>🦚</span> <span id="promptTxt" data-te="టచ్ చేయండి — మయూర అసిస్టెంట్" data-en="Touch — Mayura Assistant" data-hi="टच करें — मयूरा असिस्टेंट">టచ్ చేయండి — మయూర అసిస్టెంట్</span>
+                <span>🦚</span> <span id="promptTxt" data-te="టచ్ చేయండి — మయూర మాట్లాడుతుంది" data-en="Touch circle — Mayura speaks" data-hi="टच करें — मयूरा बोलेगी">టచ్ చేయండి — మయూర మాట్లాడుతుంది</span>
             </div>
 
-            <div class="radar-box-center" onclick="speakMayura()" title="Tap to open Mayura Assistant" data-tt-te="మయూర అసిస్టెంట్ తెరవడానికి టచ్ చేయండి" data-tt-en="Tap to open Mayura Assistant" data-tt-hi="मयूरा असिस्टेंट खोलने के लिए टच करें">
+            <div class="radar-box-center" onclick="speakMayura()" title="Tap to talk with Mayura" data-tt-te="మయూరతో మాట్లాడటానికి టచ్ చేయండి" data-tt-en="Tap to talk with Mayura" data-tt-hi="मयूरा से बात करने के लिए टच करें">
                 <div class="radar-spinning-ring"></div>
                 <div class="radar-mayura-core">🦚</div>
             </div>
@@ -1328,7 +1328,7 @@
                     <div class="jio-bar-icon">🦚</div>
                     <div class="jio-bar-text">
                         <h3 class="font-te-title" data-te="మయూరతో మాట్లాడండి" data-en="Speak to Mayura" data-hi="मयूरा से बात करें">Speak to Mayura</h3>
-                        <p class="font-te-body" data-te="మయూర అసిస్టెంట్" data-en="Mayura Assistant" data-hi="मयूरा असिस्टेंट">మయూర అసిస్టెంట్</p>
+                        <p class="font-te-body" data-te="మయూర పరిచయం వినండి" data-en="Hear Mayura's greeting" data-hi="मयूरा का परिचय सुनें">మయూర పరిచయం వినండి</p>
                     </div>
                 </div>
                 <div class="jio-bar-arrow">›</div>
@@ -1454,7 +1454,7 @@
     </div>
 
     <!-- Floating Mayura FAB -->
-    <button class="mayura-fab-btn" onclick="speakMayura()" title="Mayura Assistant" data-tt-te="మయూర అసిస్టెంట్" data-tt-en="Mayura Assistant" data-tt-hi="मयूरा असिस्टेंट">
+    <button class="mayura-fab-btn" onclick="speakMayura()" title="Speak to Mayura" data-tt-te="మయూరతో మాట్లాడండి" data-tt-en="Speak to Mayura" data-tt-hi="मयूरा से बात करें">
         🦚
     </button>
 
@@ -1876,9 +1876,14 @@
                 </div>
 
                 <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                    <button onclick="mayuraListen()" style="background: #7c3aed; color: #fff; border: none; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; cursor: pointer;" data-te="🎙️ మాట్లాడండి" data-en="🎙️ Speak" data-hi="🎙️ बोलें">🎙️ మాట్లాడండి</button>
                     <input type="text" id="mayuraTextInput" data-ph-te="ఇక్కడ టైప్ చేయండి…" data-ph-en="Type here…" data-ph-hi="यहाँ लिखें…" placeholder="ఇక్కడ టైప్ చేయండి…" style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px;">
                     <button onclick="mayuraSendText()" style="background: var(--brand-navy); color: #fff; border: none; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; cursor: pointer;" data-te="పంపండి" data-en="Send" data-hi="भेजें">పంపండి</button>
                 </div>
+                    <p style="font-size: 11.5px; color: #64748b; line-height: 1.6;" data-te="వాయిస్ Chrome / Androidలో పనిచేస్తుంది. వాయిస్ కుదరకపోతే టైప్ చేసి పంపండి — WhatsAppలో మా టీమ్ స్పందిస్తుంది." data-en="Voice works on Chrome / Android. If voice does not work, type and send — our team replies on WhatsApp." data-hi="वॉइस Chrome / Android पर काम करती है। वॉइस न चले तो टाइप करके भेजें — हमारी टीम WhatsApp पर जवाब देगी।">వాయిస్ Chrome / Androidలో పనిచేస్తుంది. వాయిస్ కుదరకపోతే టైప్ చేసి పంపండి — WhatsAppలో మా టీమ్ స్పందిస్తుంది.</p>
+                    <div style="margin-top: 12px; text-align: center;">
+                        <button onclick="mayuraReplayGreeting()" style="background: none; border: none; color: var(--brand-navy); font-size: 13px; font-weight: 700; cursor: pointer;" data-te="🔊 పరిచయం మళ్ళీ వినండి" data-en="🔊 Hear greeting again" data-hi="🔊 परिचय फिर से सुनें">🔊 పరిచయం మళ్ళీ వినండి</button>
+                    </div>
             </div>
         </div>
     </div>
@@ -2048,15 +2053,6 @@
             const b = document.getElementById('langBtn');
             if (m && m.style.display === 'block' && !m.contains(e.target) && e.target !== b) m.style.display = 'none';
         });
-
-        // NOTE (18 Nov 2026, owner order): ALL voice was removed from the
-        // Mayura panel — no greeting speech on open, no mic input, no replay.
-        // The voice code below (loadMayuraVoices, setMayuraSpeaking,
-        // mayuraGreeting, waitMayuraVoices, playMayuraMp3, speakMayuraGreeting,
-        // mayuraListen, mayuraReplayGreeting) is KEPT ONLY so voice can be
-        // restored later; nothing on the page calls it any more. The male-voice
-        // selection in speakMayuraGreeting() (commit a5f7fdf) stays in the
-        // file unused.
         // Mayura voice warm-up: load the browser's TTS voices once so a tap
         // never fires before any voice is available (desktop Chrome often has
         // no te-IN voice and would otherwise drop the greeting silently).
@@ -2169,13 +2165,11 @@
             // on desktop Chrome — speak on the next tick instead.
             setTimeout(() => { if (myToken === mayuraSpeakToken) window.speechSynthesis.speak(utterance); }, 150);
         }
-        // Peacock button / Talk to Mayura: opens the assistant panel silently.
-        // Voice was removed from the panel by owner order on 18 Nov 2026 —
-        // no greeting speech on open, no mic input, no replay. A tap must
-        // still visibly do something, so the panel opens with the greeting
-        // shown as text.
+        // Peacock button / Talk to Mayura: ALWAYS opens the assistant panel
+        // AND plays the greeting — a tap must visibly do something.
         function speakMayura() {
             openModal('mayuraPanel');
+            speakMayuraGreeting();
         }
         function closeMayuraPanel() { stopMayuraAudio(); closeModal('mayuraPanel'); }
         function mayuraReplayGreeting() { speakMayuraGreeting(); }
@@ -2221,14 +2215,15 @@
         }
         function mayuraSendText() {
             const input = document.getElementById('mayuraTextInput');
-            const typed = (input && input.value.trim()) || '';
+            const typed = (input && input.value.trim()) || window._mayuraSpoken || '';
             if (!typed) {
-                mayuraShowError(currentLang === 'te' ? 'ముందుగా ఏదైనా టైప్ చేయండి.' : currentLang === 'hi' ? 'पहले कुछ टाइप करें।' : 'Type something first.');
+                mayuraShowError(currentLang === 'te' ? 'ముందుగా ఏదైనా టైప్ చేయండి లేదా 🎙️ నొక్కి మాట్లాడండి.' : currentLang === 'hi' ? 'पहले कुछ टाइप करें या 🎙️ दबाकर बोलें।' : 'Type something first, or tap 🎙️ and speak.');
                 return;
             }
             const listenEl = document.getElementById('mayuraListenLine');
             if (listenEl) { listenEl.textContent = currentLang === 'te' ? '✓ WhatsAppలో పంపబడింది — మా టీమ్ స్పందిస్తుంది.' : currentLang === 'hi' ? '✓ WhatsApp पर भेजा गया — हमारी टीम जवाब देगी।' : '✓ Sent on WhatsApp — our team will reply.'; listenEl.style.display = 'block'; }
             if (input) input.value = '';
+            window._mayuraSpoken = '';
             waLink('నమస్తే AVAILO, ' + typed, 'Hello AVAILO, ' + typed, 'नमस्ते AVAILO, ' + typed);
         }
 
