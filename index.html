@@ -1076,6 +1076,17 @@
                         <input type="text" id="gatePartnerOther" maxlength="40" data-ph-te="పార్టనర్ పేరు రాయండి" data-ph-en="Type partner name" data-ph-hi="पार्टनर का नाम लिखें" placeholder="పార్టనర్ పేరు రాయండి" style="display: none; width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; margin-top: 8px;">
                     </div>
 
+                    <!-- Step 2 (cont.) — mobile number (required) + gender (required, drives privacy) -->
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="📱 మొబైల్ నంబర్ *" data-en="📱 Mobile Number *" data-hi="📱 मोबाइल नंबर *">📱 మొబైల్ నంబర్ *</label>
+                        <input type="tel" id="gateMobile" inputmode="tel" autocomplete="off" maxlength="12" data-ph-te="ఉదా: 99661 57369" data-ph-en="e.g. 99661 57369" data-ph-hi="उदा: 99661 57369" placeholder="ఉదా: 99661 57369" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-weight: 600; background: #fff;">
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 6px;" data-te="👤 లింగం *" data-en="👤 Gender *" data-hi="👤 लिंग *">👤 లింగం *</label>
+                        <div id="gateGenderChips" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+                        <p style="font-size: 11px; color: #64748b; margin-top: 6px; line-height: 1.5;" data-te="మహిళల మొబైల్ నంబర్ మరియు ఫోటో గోప్యంగా ఉంటాయి — నంబర్ మాస్క్ చేయబడుతుంది, ఫోటో బ్లర్ చేయబడుతుంది." data-en="Ladies' mobile number and photo stay confidential — the number is masked and the photo is blurred." data-hi="महिलाओं का मोबाइल नंबर और फ़ोटो गोपनीय रहते हैं — नंबर मास्क किया जाता है, फ़ोटो ब्लर की जाती है।">మహిళల మొబైల్ నంబర్ మరియు ఫోటో గోప్యంగా ఉంటాయి — నంబర్ మాస్క్ చేయబడుతుంది, ఫోటో బ్లర్ చేయబడుతుంది.</p>
+                    </div>
+
                     <!-- Visitor / parcel photo: REQUIRED before the VERIFIED stamp -->
                     <div style="margin-bottom: 12px;">
                         <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="📷 విజిటర్ / పార్సెల్ ఫోటో *" data-en="📷 Visitor / Parcel Photo *" data-hi="📷 विज़िटर / पार्सल फ़ोटो *">📷 విజిటర్ / పార్సెల్ ఫోటో *</label>
@@ -1090,7 +1101,7 @@
                             <span style="font-size: 12px; font-weight: 800; color: #166534;" data-te="✓ ఫోటో జతచేయబడింది" data-en="✓ Photo attached" data-hi="✓ फ़ोटो जुड़ गई">✓ ఫోటో జతచేయబడింది</span>
                             <button type="button" onclick="clearGatePhoto()" style="background: none; border: none; color: #dc2626; font-size: 12px; font-weight: 800; cursor: pointer;" data-te="✕ తీసివేయండి" data-en="✕ Remove" data-hi="✕ हटाएँ">✕ తీసివేయండి</button>
                         </div>
-                        <p style="font-size: 11px; color: #64748b; margin-top: 6px; line-height: 1.5;" data-te="ఫోటో జతచేస్తేనే VERIFIED స్టాంప్ వస్తుంది. ఫోటో లేకుండా పాస్ వెరిఫై కాదు. ఫోటో మీ ఫోన్‌లోనే ఉంటుంది — సైట్‌లో ఎక్కడా సేవ్ చేయబడదు." data-en="The VERIFIED stamp is issued only after a photo is attached. Without a photo the pass is not verified. The photo stays on your phone — it is never saved on the site." data-hi="फ़ोटो जोड़ने पर ही VERIFIED स्टैम्प मिलेगा। बिना फ़ोटो पास वेरिफ़ाई नहीं होगा। फ़ोटो आपके फ़ोन में ही रहती है — साइट पर कहीं सेव नहीं होती।">ఫోటో జతచేస్తేనే VERIFIED స్టాంప్ వస్తుంది. ఫోటో లేకుండా పాస్ వెరిఫై కాదు. ఫోటో మీ ఫోన్‌లోనే ఉంటుంది — సైట్‌లో ఎక్కడా సేవ్ చేయబడదు.</p>
+                        <p style="font-size: 11px; color: #64748b; margin-top: 6px; line-height: 1.5;" data-te="ఫోటో జతచేస్తేనే VERIFIED స్టాంప్ వస్తుంది. ఫోటో లేకుండా పాస్ వెరిఫై కాదు. ఫోటో వెరిఫికేషన్ కోసం మాత్రమే సురక్షితంగా సేవ్ చేయబడుతుంది. మహిళల ఫోటో బ్లర్ చేసి సేవ్ చేయబడుతుంది — గుర్తించలేరు." data-en="The VERIFIED stamp is issued only after a photo is attached. Without a photo the pass is not verified. The photo is saved securely for verification only. Women's photos are saved blurred — not identifiable." data-hi="फ़ोटो जोड़ने पर ही VERIFIED स्टैम्प मिलेगा। बिना फ़ोटो पास वेरिफ़ाई नहीं होगा। फ़ोटो सिर्फ़ वेरिफ़िकेशन के लिए सुरक्षित रूप से सेव की जाती है। महिलाओं की फ़ोटो ब्लर करके सेव की जाती है — पहचान नहीं होगी।">ఫోటో జతచేస్తేనే VERIFIED స్టాంప్ వస్తుంది. ఫోటో లేకుండా పాస్ వెరిఫై కాదు. ఫోటో వెరిఫికేషన్ కోసం మాత్రమే సురక్షితంగా సేవ్ చేయబడుతుంది. మహిళల ఫోటో బ్లర్ చేసి సేవ్ చేయబడుతుంది — గుర్తించలేరు.</p>
                     </div>
 
                     <!-- Remember on this phone: opt-in only (default OFF) -->
@@ -2326,9 +2337,106 @@
                 wrap.appendChild(b);
             });
         }
+        // Gate form: gender quick-select chips (Step 2) — ONE field, no
+        // default. Drives the privacy rule: Female => masked number +
+        // blurred photo (see maskMobileNumber / gatePhotoToDataUrl).
+        const GATE_GENDERS = ['Male', 'Female'];
+        let gateGender = '';
+        function gateGenderLabel(value) {
+            if (value === 'Female') return currentLang === 'te' ? '👩 స్త్రీ' : currentLang === 'hi' ? '👩 महिला' : '👩 Female';
+            return currentLang === 'te' ? '👨 పురుషుడు' : currentLang === 'hi' ? '👨 पुरुष' : '👨 Male';
+        }
+        function styleGateGenderChip(b, active) {
+            b.style.minHeight = '44px'; b.style.padding = '10px 14px'; b.style.borderRadius = '999px';
+            b.style.border = '1.5px solid ' + (active ? '#4f46e5' : '#cbd5e1');
+            b.style.background = active ? '#4f46e5' : '#ffffff';
+            b.style.color = active ? '#ffffff' : '#334155';
+            b.style.fontSize = '12px'; b.style.fontWeight = '700'; b.style.cursor = 'pointer';
+        }
+        function buildGateGenderChips() {
+            const wrap = document.getElementById('gateGenderChips');
+            if (!wrap) return;
+            wrap.innerHTML = '';
+            GATE_GENDERS.forEach(value => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.setAttribute('data-value', value);
+                b.textContent = gateGenderLabel(value);
+                styleGateGenderChip(b, false);
+                b.onclick = () => {
+                    gateGender = value;
+                    wrap.querySelectorAll('button').forEach(c => styleGateGenderChip(c, c.getAttribute('data-value') === value));
+                };
+                wrap.appendChild(b);
+            });
+        }
+
+        // --- Gate Pass privacy (owner spec, 18 Nov 2026) --------------------
+        // Ladies' mobile number and photo must stay confidential. The raw
+        // values never leave the phone when Gender is Female: the number is
+        // masked and the photo is strongly blurred BEFORE the Sheet and
+        // WhatsApp calls. Male entries are stored/sent in full, unchanged.
+        // Mobile mask: first 2 digits + ****** + last 2 digits (98******19).
+        function maskMobileNumber(phone) {
+            const d = (phone || '').replace(/\D/g, '');
+            if (d.length < 4) return d;
+            return d.slice(0, 2) + '******' + d.slice(-2);
+        }
+        // Date + Time as separate IST columns (DD/MM/YYYY, HH:MM:SS, 24h).
+        function gateDateTimeParts(now) {
+            const d = now || new Date();
+            const dateFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric' });
+            const timeFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            return { date: dateFmt.format(d), time: timeFmt.format(d) };
+        }
+        // Resize a loaded photo to max 800px (JPEG ~0.8) and return a data
+        // URL. Female => STRONG blur of the whole image first (canvas
+        // filter; pixelate-downscale fallback for browsers without it), so
+        // the saved photo is not identifiable. Returns '' on any failure —
+        // a photo-processing failure must never block the gate pass.
+        function gatePhotoToDataUrl(img, gender) {
+            try {
+                const w = img.naturalWidth || img.width;
+                const h = img.naturalHeight || img.height;
+                if (!w || !h) return '';
+                const MAX = 800;
+                const scale = Math.min(1, MAX / Math.max(w, h));
+                const dw = Math.max(1, Math.round(w * scale));
+                const dh = Math.max(1, Math.round(h * scale));
+                const canvas = document.createElement('canvas');
+                canvas.width = dw; canvas.height = dh;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return '';
+                if (gender === 'Female') {
+                    if (typeof ctx.filter !== 'undefined') {
+                        ctx.filter = 'blur(24px)';
+                        ctx.drawImage(img, 0, 0, dw, dh);
+                        ctx.filter = 'none';
+                    } else {
+                        // No canvas filter support: crush to a tiny image
+                        // then scale back up — unidentifiable, no filter needed.
+                        const tiny = document.createElement('canvas');
+                        tiny.width = 24;
+                        tiny.height = Math.max(1, Math.round(24 * dh / dw));
+                        const tctx = tiny.getContext('2d');
+                        if (!tctx) return '';
+                        tctx.drawImage(img, 0, 0, tiny.width, tiny.height);
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.drawImage(tiny, 0, 0, dw, dh);
+                    }
+                } else {
+                    ctx.drawImage(img, 0, 0, dw, dh);
+                }
+                return canvas.toDataURL('image/jpeg', 0.8);
+            } catch (e) {
+                return '';
+            }
+        }
+
         // Gate photo (REQUIRED before the stamp) + remember-me (opt-in only).
         let gatePhotoAttached = false;
         let gatePhotoObjectUrl = null;
+        let gatePhotoImg = null; // loaded image, for resize/blur at submit (sync, keeps window.open in the tap gesture)
         function onGatePhotoSelected(ev) {
             const file = ev && ev.target && ev.target.files && ev.target.files[0];
             const warn = document.getElementById('gateWarning');
@@ -2343,6 +2451,12 @@
             gatePhotoObjectUrl = URL.createObjectURL(file);
             const thumb = document.getElementById('gatePhotoThumb');
             if (thumb) thumb.src = gatePhotoObjectUrl;
+            // Pre-load the image now so the submit-time resize/blur runs
+            // synchronously (keeps the WhatsApp window.open in the tap).
+            gatePhotoImg = new Image();
+            gatePhotoImg.onload = function () {};
+            gatePhotoImg.onerror = function () { gatePhotoImg = null; };
+            gatePhotoImg.src = gatePhotoObjectUrl;
             const prev = document.getElementById('gatePhotoPreview');
             if (prev) prev.style.display = 'flex';
             if (warn) warn.style.display = 'none';
@@ -2350,6 +2464,7 @@
         }
         function clearGatePhoto() {
             gatePhotoAttached = false;
+            gatePhotoImg = null;
             if (gatePhotoObjectUrl) { URL.revokeObjectURL(gatePhotoObjectUrl); gatePhotoObjectUrl = null; }
             const prev = document.getElementById('gatePhotoPreview');
             if (prev) prev.style.display = 'none';
@@ -2358,6 +2473,10 @@
             try { localStorage.removeItem('availo_apartment'); localStorage.removeItem('availo_gate_last'); localStorage.removeItem('availo_gate_remember'); } catch (e) {}
             const apt = document.getElementById('gateApartment'); if (apt) apt.value = '';
             const flat = document.getElementById('gateFlatNo'); if (flat) flat.value = '';
+            // Mobile + gender are never remembered (privacy, shared phones).
+            const mob = document.getElementById('gateMobile'); if (mob) mob.value = '';
+            gateGender = '';
+            const gw = document.getElementById('gateGenderChips'); if (gw) gw.querySelectorAll('button').forEach(c => styleGateGenderChip(c, false));
             const cb = document.getElementById('gateRemember'); if (cb) cb.checked = false;
             const known = document.getElementById('gateAptKnown'); if (known) known.style.display = 'none';
             const unknown = document.getElementById('gateAptUnknown'); if (unknown) unknown.style.display = 'block';
@@ -2404,10 +2523,24 @@
             const flat = document.getElementById('gateFlatNo').value.trim();
             const otherInput = document.getElementById('gatePartnerOther');
             const partner = gatePartner === 'Other' ? (otherInput ? otherInput.value.trim() : '') : gatePartner;
+            const mobileEl = document.getElementById('gateMobile');
+            const mobile = normalizeIndianMobile(mobileEl ? mobileEl.value : '');
             const warn = document.getElementById('gateWarning');
 
             if (!apt || !flat || !partner) {
                 const msg = currentLang === 'te' ? '⚠️ దయచేసి అపార్ట్‌మెంట్ పేరు, ఫ్లాట్ నంబర్ రాసి, డెలివరీ పార్టనర్ ఎంచుకోండి.' : currentLang === 'hi' ? '⚠️ कृपया अपार्टमेंट का नाम, फ़्लैट नंबर लिखें और डिलीवरी पार्टनर चुनें।' : '⚠️ Please fill the apartment name, flat number and pick the delivery partner.';
+                if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
+                alert(msg);
+                return;
+            }
+            if (!validIndianMobile(mobile)) {
+                const msg = invalidPhoneMsg();
+                if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
+                alert(msg);
+                return;
+            }
+            if (!gateGender) {
+                const msg = currentLang === 'te' ? '⚠️ దయచేసి లింగం ఎంచుకోండి (పురుషుడు / స్త్రీ).' : currentLang === 'hi' ? '⚠️ कृपया लिंग चुनें (पुरुष / महिला)।' : '⚠️ Please pick the gender (Male / Female).';
                 if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
                 alert(msg);
                 return;
@@ -2442,9 +2575,24 @@
             const panel = document.getElementById('gateConfirmPanel');
             if (panel) panel.style.display = 'block';
 
-            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${encodeURIComponent(ref)}%0A*अपार्टमेंट:* ${encodeURIComponent(apt)}%0A*फ़्लैट नंबर:* ${encodeURIComponent(flat)}%0A*डिलीवरी पार्टनर:* ${encodeURIComponent(partner)}%0A------------------------------%0A📸 फ़ोटो: साइट पर ली गई ✅ वेरिफ़ाई हो गया।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Reference No:* ${encodeURIComponent(ref)}%0A*Apartment:* ${encodeURIComponent(apt)}%0A*Flat No:* ${encodeURIComponent(flat)}%0A*Delivery Partner:* ${encodeURIComponent(partner)}%0A------------------------------%0A📸 Photo: taken on site ✅ Verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${encodeURIComponent(ref)}%0A*అపార్ట్‌మెంట్:* ${encodeURIComponent(apt)}%0A*ఫ్లాట్ నంబర్:* ${encodeURIComponent(flat)}%0A*డెలివరీ పార్టనర్:* ${encodeURIComponent(partner)}%0A------------------------------%0A📸 ఫోటో: సైట్‌లో తీయబడింది ✅ వెరిఫై చేయబడింది.`;
-            // Log to Google Sheets (never blocks WhatsApp).
-            sendToSheet('GatePass', { apartment: apt, flat: flat, partner: partner, photo: 'captured', ref: ref });
+            // Privacy FIRST: ladies' number is masked and their photo is
+            // blurred before anything leaves this phone. The stamp is
+            // unchanged (partner + flat + apartment + date).
+            const isFemale = (gateGender === 'Female');
+            const mobileOut = isFemale ? maskMobileNumber(mobile) : mobile;
+            const dt = gateDateTimeParts(new Date());
+            let photoData = '';
+            try {
+                if (gatePhotoImg && gatePhotoImg.complete && gatePhotoImg.naturalWidth) {
+                    photoData = gatePhotoToDataUrl(gatePhotoImg, gateGender);
+                }
+            } catch (e) { photoData = ''; }
+
+            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${encodeURIComponent(ref)}%0A*अपार्टमेंट:* ${encodeURIComponent(apt)}%0A*फ़्लैट नंबर:* ${encodeURIComponent(flat)}%0A*डिलीवरी पार्टनर:* ${encodeURIComponent(partner)}%0A*मोबाइल नंबर:* ${encodeURIComponent(mobileOut)}%0A*लिंग:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*तारीख:* ${encodeURIComponent(dt.date)}%0A*समय:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 फ़ोटो: साइट पर ली गई ✅ वेरिफ़ाई हो गया।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Reference No:* ${encodeURIComponent(ref)}%0A*Apartment:* ${encodeURIComponent(apt)}%0A*Flat No:* ${encodeURIComponent(flat)}%0A*Delivery Partner:* ${encodeURIComponent(partner)}%0A*Mobile Number:* ${encodeURIComponent(mobileOut)}%0A*Gender:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*Date:* ${encodeURIComponent(dt.date)}%0A*Time:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 Photo: taken on site ✅ Verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${encodeURIComponent(ref)}%0A*అపార్ట్‌మెంట్:* ${encodeURIComponent(apt)}%0A*ఫ్లాట్ నంబర్:* ${encodeURIComponent(flat)}%0A*డెలివరీ పార్టనర్:* ${encodeURIComponent(partner)}%0A*మొబైల్ నంబర్:* ${encodeURIComponent(mobileOut)}%0A*లింగం:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*తేదీ:* ${encodeURIComponent(dt.date)}%0A*సమయం:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 ఫోటో: సైట్‌లో తీయబడింది ✅ వెరిఫై చేయబడింది.`;
+            // Log to Google Sheets (never blocks WhatsApp). Mobile is
+            // already masked for female entries; photoData is the resized
+            // data URL (blurred for female) — Code.gs saves it to Drive.
+            sendToSheet('GatePass', { apartment: apt, flat: flat, partner: partner, photo: 'captured', ref: ref, mobile: mobileOut, gender: gateGender, date: dt.date, time: dt.time, photoData: photoData });
             window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
         }
 
@@ -2720,6 +2868,8 @@
         }
         initGateFormMemory();
         buildGatePartnerChips();
+        buildGateGenderChips();
+        bindPhoneField('gateMobile');
         bindPhoneField('trialPhone');
         bindPhoneField('techPhone');
         applyLanguage();

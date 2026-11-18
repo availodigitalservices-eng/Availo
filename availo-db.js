@@ -38,10 +38,14 @@ function sendToSheet(formType, data) {
         }
         if (!payload.ref) payload.ref = availoSheetRef();
         if (typeof fetch !== 'function') return;
+        // keepalive caps the body at ~64 KB — a Gate Pass photo is bigger,
+        // so it is dropped whenever a photo is attached (the page stays
+        // open while WhatsApp opens in a new tab, so the POST still lands).
+        var hasPhoto = !!(payload.photoData && payload.photoData.length > 40000);
         fetch(AVAILO_SHEETS_URL, {
             method: 'POST',
             mode: 'no-cors',
-            keepalive: true,
+            keepalive: !hasPhoto,
             headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify(payload)
         }).catch(function (err) { console.warn('[AVAILO Sheets] log failed:', err); });
