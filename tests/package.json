@@ -4,7 +4,7 @@
   "description": "jsdom DOM tests for the Availo site (Mayura panel: voice removed 18 Nov 2026; male-voice selection retained for restoration)",
   "main": "index.js",
   "scripts": {
-    "test": "node mayura-voice.test.js && node mayura-no-voice.test.js && node whatsapp-encode.test.js"
+    "test": "node mayura-voice.test.js && node mayura-no-voice.test.js && node whatsapp-encode.test.js && node gatepass-privacy.test.js"
   },
   "keywords": [],
   "author": "",
