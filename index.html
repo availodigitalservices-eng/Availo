@@ -2138,9 +2138,28 @@
             const utterance = new SpeechSynthesisUtterance(g.text);
             utterance.lang = g.lang;
             utterance.rate = 0.95;
-            const v = mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(g.lang.slice(0, 2)))
+            // Male voice first (same pattern as dine.html speakGentVoice /
+            // smart.html speakGentSupervisor): on Android/Chrome the FIRST
+            // te-IN voice varies by device, so picking the first match made
+            // the greeting sound male on some phones and female on others.
+            // Order: same-language male-named voice, then first same-language
+            // voice, then English male, then first English voice.
+            // NOTE: the repo pattern in dine.html/smart.html uses
+            // .includes('male') — that also matches "Female" (Fe+male), so
+            // a female-named voice listed first would be picked as "male".
+            // Here 'male' is matched as a whole word, so "Female" does not
+            // count. (dine.html / smart.html still carry the loose check;
+            // left untouched — index.html only for this fix.)
+            const langPrefix = g.lang.slice(0, 2);
+            const isMaleVoice = x => x.name && /\bmale\b|\bravi\b|\bpradeep\b/i.test(x.name);
+            const v = mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(langPrefix) && isMaleVoice(x))
+                   || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(langPrefix))
+                   || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith('en') && isMaleVoice(x))
                    || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith('en'));
             if (v) utterance.voice = v;
+            // Same lowered pitch as the male "gent" voice in dine.html /
+            // smart.html (0.76) so the greeting reads in a male register.
+            utterance.pitch = 0.76;
             utterance.onend = () => setMayuraSpeaking(false);
             utterance.onerror = async () => { setMayuraSpeaking(false); await playMayuraMp3(); };
             // cancel() then speak() in the same task cancels the new utterance
