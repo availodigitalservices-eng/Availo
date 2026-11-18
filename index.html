@@ -1880,10 +1880,10 @@
                     <input type="text" id="mayuraTextInput" data-ph-te="ఇక్కడ టైప్ చేయండి…" data-ph-en="Type here…" data-ph-hi="यहाँ लिखें…" placeholder="ఇక్కడ టైప్ చేయండి…" style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px;">
                     <button onclick="mayuraSendText()" style="background: var(--brand-navy); color: #fff; border: none; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; cursor: pointer;" data-te="పంపండి" data-en="Send" data-hi="भेजें">పంపండి</button>
                 </div>
-                    <p style="font-size: 11.5px; color: #64748b; line-height: 1.6;" data-te="వాయిస్ Chrome / Androidలో పనిచేస్తుంది. వాయిస్ కుదరకపోతే టైప్ చేసి పంపండి — WhatsAppలో మా టీమ్ స్పందిస్తుంది." data-en="Voice works on Chrome / Android. If voice does not work, type and send — our team replies on WhatsApp." data-hi="वॉइस Chrome / Android पर काम करती है। वॉइस न चले तो टाइप करके भेजें — हमारी टीम WhatsApp पर जवाब देगी।">వాయిస్ Chrome / Androidలో పనిచేస్తుంది. వాయిస్ కుదరకపోతే టైప్ చేసి పంపండి — WhatsAppలో మా టీమ్ స్పందిస్తుంది.</p>
-                    <div style="margin-top: 12px; text-align: center;">
-                        <button onclick="mayuraReplayGreeting()" style="background: none; border: none; color: var(--brand-navy); font-size: 13px; font-weight: 700; cursor: pointer;" data-te="🔊 పరిచయం మళ్ళీ వినండి" data-en="🔊 Hear greeting again" data-hi="🔊 परिचय फिर से सुनें">🔊 పరిచయం మళ్ళీ వినండి</button>
-                    </div>
+                <p style="font-size: 11.5px; color: #64748b; line-height: 1.6;" data-te="వాయిస్ Chrome / Androidలో పనిచేస్తుంది. వాయిస్ కుదరకపోతే టైప్ చేసి పంపండి — WhatsAppలో మా టీమ్ స్పందిస్తుంది." data-en="Voice works on Chrome / Android. If voice does not work, type and send — our team replies on WhatsApp." data-hi="वॉइस Chrome / Android पर काम करती है। वॉइस न चले तो टाइप करके भेजें — हमारी टीम WhatsApp पर जवाब देगी।">వాయిస్ Chrome / Androidలో పనిచేస్తుంది. వాయిస్ కుదరకపోతే టైప్ చేసి పంపండి — WhatsAppలో మా టీమ్ స్పందిస్తుంది.</p>
+                <div style="margin-top: 12px; text-align: center;">
+                    <button onclick="mayuraReplayGreeting()" style="background: none; border: none; color: var(--brand-navy); font-size: 13px; font-weight: 700; cursor: pointer;" data-te="🔊 పరిచయం మళ్ళీ వినండి" data-en="🔊 Hear greeting again" data-hi="🔊 परिचय फिर से सुनें">🔊 పరిచయం మళ్ళీ వినండి</button>
+                </div>
             </div>
         </div>
     </div>
@@ -2053,6 +2053,7 @@
             const b = document.getElementById('langBtn');
             if (m && m.style.display === 'block' && !m.contains(e.target) && e.target !== b) m.style.display = 'none';
         });
+
         // Mayura voice warm-up: load the browser's TTS voices once so a tap
         // never fires before any voice is available (desktop Chrome often has
         // no te-IN voice and would otherwise drop the greeting silently).
