@@ -545,7 +545,12 @@
             border-radius: 16px;
             padding: 18px 16px;
             margin-bottom: 24px;
+            /* Deep link (#business) must not hide the heading under the sticky header. */
+            scroll-margin-top: 72px;
         }
+
+        /* Gate Pass hero form is also a scroll target (Society Gate tile). */
+        #gate-section { scroll-margin-top: 72px; }
 
         .b2b-grid {
             display: grid;
@@ -564,8 +569,23 @@
         }
 
         .b2b-item span { font-size: 22px; display: block; margin-bottom: 4px; }
+        /* Tile icon in a solid tinted circle so every icon (incl. the pale 🍽️) is equally visible. */
+        .b2b-item span.tile-icon { width: 46px; height: 46px; margin: 0 auto 6px; border-radius: 50%; background: #dbeafe; display: flex; align-items: center; justify-content: center; font-size: 23px; }
         .b2b-item strong { font-size: 12px; color: var(--brand-navy); display: block; }
         .b2b-item small { font-size: 10px; color: var(--text-muted); }
+
+        /* Language menu (one tap to any language — no cycling through Hindi). */
+        .lang-menu { position: absolute; right: 0; top: calc(100% + 6px); background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.18); min-width: 140px; z-index: 1200; overflow: hidden; }
+        .lang-menu button { display: block; width: 100%; text-align: left; background: none; border: none; padding: 10px 14px; font-size: 13px; font-weight: 700; color: var(--brand-navy); cursor: pointer; }
+        .lang-menu button:hover { background: #eff6ff; }
+        /* Per-field form errors (only the fields actually missing/invalid). */
+        .field-err { display: none; color: #b91c1c; font-size: 12px; font-weight: 700; margin-top: 4px; }
+        .field-invalid { border-color: #dc2626 !important; }
+        /* Business plan prices — real ₹ figures go in .biz-plan-price only when the user provides them. */
+        .biz-plans { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+        .biz-plan { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; }
+        .biz-plan strong { color: var(--brand-navy); }
+        .biz-plan-price { color: #64748b; font-weight: 700; text-align: right; }
 
         /* Action Bars */
         .jio-action-bars-wrap {
@@ -882,7 +902,14 @@
         <div class="header-actions">
             <!-- Real-Time Live Clock Display -->
             <div class="live-time-badge" id="liveTimeClock">11:43:00 PM</div>
-            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
+            <div style="position: relative;">
+                <button class="lang-btn" onclick="toggleLangMenu(event)" id="langBtn" aria-haspopup="true">తెలుగు</button>
+                <div id="langMenu" class="lang-menu" style="display: none;">
+                    <button type="button" data-lang="te" onclick="setLanguage('te')">తెలుగు</button>
+                    <button type="button" data-lang="en" onclick="setLanguage('en')">English</button>
+                    <button type="button" data-lang="hi" onclick="setLanguage('hi')">हिन्दी</button>
+                </div>
+            </div>
             <button class="menu-btn" onclick="toggleDrawer()">☰</button>
         </div>
     </header>
@@ -896,7 +923,7 @@
         </div>
         <div class="drawer-links">
             <a href="#services" onclick="toggleDrawer();"><span data-te="సేవల విభాగాలు" data-en="Explore Services" data-hi="सेवाएँ देखें">Explore Services</span> <span>›</span></a>
-            <button onclick="toggleDrawer(); openModal('trialApplyModal');"><span data-te="ట్రయల్ / సబ్స్క్రిప్షన్ అప్లికేషన్" data-en="Trial / Subscription Form" data-hi="ट्रायल / सब्सक्रिप्शन आवेदन">Trial / Subscription Form</span> <span>›</span></button>
+            <button onclick="toggleDrawer(); openTrialModal('');"><span data-te="ట్రయల్ / సబ్స్క్రిప్షన్ అప్లికేషన్" data-en="Trial / Subscription Form" data-hi="ट्रायल / सब्सक्रिप्शन आवेदन">Trial / Subscription Form</span> <span>›</span></button>
             <a href="#nri-section" onclick="toggleDrawer();"><span data-te="NRI తల్లిదండ్రుల సంరక్షణ" data-en="NRI Parents Care" data-hi="NRI माता-पिता की देखभाल">NRI Parents Care</span> <span>›</span></a>
             <button onclick="toggleDrawer(); openModal('nriApplyModal');"><span data-te="NRI కేర్ అప్లికేషన్" data-en="NRI Care Application" data-hi="NRI केयर आवेदन">NRI Care Application</span> <span>›</span></button>
             <a href="#gate-section" onclick="toggleDrawer();"><span data-te="సొసైటీ గేట్ పాస్" data-en="Society Gate Pass" data-hi="सोसाइटी गेट पास">Society Gate Pass</span> <span>›</span></a>
@@ -947,7 +974,7 @@
                     <span class="font-te-title" data-te="సర్వీస్ కావాలి" data-en="Need Service" data-hi="सर्विस चाहिए">సర్వీస్ కావాలి</span>
                     <small style="font-size: 9.5px; opacity: 0.9;" data-te="(WhatsApp ఆర్డర్)" data-en="(Order on WhatsApp)" data-hi="(WhatsApp ऑर्डर)">(WhatsApp ఆర్డర్)</small>
                 </a>
-                <button class="stage-btn btn-join-partner" onclick="openModal('trialApplyModal')">
+                <button class="stage-btn btn-join-partner" onclick="openTrialModal('')">
                     <span style="font-size: 18px;">🤝</span>
                     <span class="font-te-title" data-te="ట్రయల్ / పార్ట్నర్" data-en="Trial / Partner" data-hi="ट्रायल / पार्टनर">ట్రయల్ / పార్ట్‌నర్</span>
                     <small style="font-size: 9.5px; opacity: 0.9;" data-te="(పైలట్ ప్రోగ్రామ్)" data-en="(Pilot Program)" data-hi="(पायलट प्रोग्राम)">(పైలట్ ప్రోగ్రామ్)</small>
@@ -1032,18 +1059,18 @@
                     <div id="gateAptKnown" style="display: none; background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; font-size: 13px; font-weight: 800; color: #166534;">🏢 <span id="gateAptChipName"></span> <span style="font-weight: 600; color: #64748b;" data-te="· QR స్కాన్ ద్వారా" data-en="· via QR scan" data-hi="· QR स्कैन से">· QR స్కాన్ ద్వారా</span></div>
                     <div id="gateAptUnknown" style="margin-bottom: 12px;">
                         <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🏢 అపార్ట్‌మెంట్ పేరు * (QR స్కాన్‌లో రాకపోతే ఒక్కసారి రాయండి)" data-en="🏢 Apartment Name * (type once if the QR scan did not fill it)" data-hi="🏢 अपार्टमेंट का नाम * (QR स्कैन से न भरे तो एक बार लिखें)">🏢 అపార్ట్‌మెంట్ పేరు * (QR స్కాన్‌లో రాకపోతే ఒక్కసారి రాయండి)</label>
-                        <input type="text" id="gateApartment" data-ph-te="ఉదా: శ్రీ సాయి హైట్స్" data-ph-en="e.g. Sri Sai Heights" data-ph-hi="उदा: श्री साई हाइट्स" placeholder="ఉదా: శ్రీ సాయి హైట్స్" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px;">
+                        <input type="text" id="gateApartment" maxlength="60" data-ph-te="ఉదా: శ్రీ సాయి హైట్స్" data-ph-en="e.g. Sri Sai Heights" data-ph-hi="उदा: श्री साई हाइट्स" placeholder="ఉదా: శ్రీ సాయి హైట్స్" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px;">
                     </div>
 
                     <!-- Step 2 — flat + delivery partner (chips; free text only for Other) -->
                     <div style="margin-bottom: 12px;">
                         <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="🏠 ఫ్లాట్ నంబర్ టైప్ చేయండి *" data-en="🏠 Type Flat Number *" data-hi="🏠 फ़्लैट नंबर लिखें *">🏠 ఫ్లాట్ నంబర్ టైప్ చేయండి *</label>
-                        <input type="text" id="gateFlatNo" data-ph-te="ఉదా: ఫ్లాట్ 302" data-ph-en="e.g.: Flat 302" data-ph-hi="उदा.: फ़्लैट 302" placeholder="ఉదా: ఫ్లాట్ 302" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-weight: 600; background: #fff;">
+                        <input type="text" id="gateFlatNo" maxlength="20" data-ph-te="ఉదా: ఫ్లాట్ 302" data-ph-en="e.g.: Flat 302" data-ph-hi="उदा.: फ़्लैट 302" placeholder="ఉదా: ఫ్లాట్ 302" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-weight: 600; background: #fff;">
                     </div>
                     <div style="margin-bottom: 12px;">
                         <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 6px;" data-te="🛵 డెలివరీ పార్టనర్ ఏమిటి? *" data-en="🛵 Which delivery partner? *" data-hi="🛵 डिलीवरी पार्टनर कौन है? *">🛵 డెలివరీ పార్టనర్ ఏమిటి? *</label>
                         <div id="gatePartnerChips" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
-                        <input type="text" id="gatePartnerOther" data-ph-te="పార్టనర్ పేరు రాయండి" data-ph-en="Type partner name" data-ph-hi="पार्टनर का नाम लिखें" placeholder="పార్టనర్ పేరు రాయండి" style="display: none; width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; margin-top: 8px;">
+                        <input type="text" id="gatePartnerOther" maxlength="40" data-ph-te="పార్టనర్ పేరు రాయండి" data-ph-en="Type partner name" data-ph-hi="पार्टनर का नाम लिखें" placeholder="పార్టనర్ పేరు రాయండి" style="display: none; width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; margin-top: 8px;">
                     </div>
 
                     <!-- Visitor / parcel photo: REQUIRED before the VERIFIED stamp -->
@@ -1086,7 +1113,7 @@
 
                 <!-- Gate pass confirmation: reference number + dynamic stamp -->
                 <div id="gateConfirmPanel" class="gate-confirm">
-                    <div id="gateRefLine" style="font-size: 13px; font-weight: 800; color: #166534; margin-bottom: 10px;"></div>
+                    <div id="gateRefLine" style="font-size: 13px; font-weight: 800; color: #166534; margin-bottom: 10px;">✅ <span data-te="రిఫరెన్స్ నంబర్:" data-en="Reference No:" data-hi="रेफ़रेंस नंबर:">Reference No:</span> <span id="gateRefVal"></span></div>
                     <canvas id="gateStampCanvas" width="900" height="620" style="width: 100%; max-width: 420px; height: auto; border-radius: 8px; background: #ffffff;"></canvas>
                     <div style="margin-top: 10px;">
                         <button onclick="downloadGateStamp()" style="background: #16a34a; color: #ffffff; border: none; border-radius: 8px; padding: 12px 18px; font-size: 14px; font-weight: 800; cursor: pointer;" data-te="⬇️ స్టాంప్ డౌన్‌లోడ్ చేయండి" data-en="⬇️ Download Stamp" data-hi="⬇️ स्टैम्प डाउनलोड करें">⬇️ స్టాంప్ డౌన్‌లోడ్ చేయండి</button>
@@ -1094,7 +1121,7 @@
                     <p style="font-size: 12px; color: #475569; margin-top: 8px;" data-te="దీన్ని WhatsAppలో కస్టమర్‌కి పంపండి" data-en="Send this to the customer on WhatsApp" data-hi="इसे WhatsApp पर कस्टमर को भेजें">దీన్ని WhatsAppలో కస్టమర్‌కి పంపండి</p>
                 </div>
 
-                <div style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; cursor: pointer;" onclick="openModal('trialApplyModal')">
+                <div style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; cursor: pointer;" onclick="openTrialModal('Apartments (Smart Gate &amp; Care)')">
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <span style="background: #ede9fe; color: #7c3aed; width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;">2</span>
                         <div>
@@ -1251,30 +1278,44 @@
             </div>
 
             <div class="b2b-grid">
-                <div class="b2b-item" onclick="openTrialModal('Restaurants')">
-                    <span>🍽️</span>
+                <div class="b2b-item" onclick="location.href='dine.html'">
+                    <span class="tile-icon">🍽️</span>
                     <strong data-te="AVAILO డైన్" data-en="AVAILO Dine" data-hi="AVAILO डाइन">AVAILO Dine</strong>
                     <small data-te="డిజిటల్ టేబుల్ ఆర్డరింగ్" data-en="Digital Table Ordering" data-hi="डिजिटल टेबल ऑर्डरिंग">Digital Table Ordering</small>
                 </div>
                 <div class="b2b-item" onclick="openTrialModal('Hotels &amp; Dining')">
-                    <span>🏨</span>
+                    <span class="tile-icon">🏨</span>
                     <strong data-te="AVAILO స్టే" data-en="AVAILO Stay" data-hi="AVAILO स्टे">AVAILO Stay</strong>
                     <small data-te="రూమ్ సర్వీస్ ఆటోమేషన్" data-en="Room Service Requests" data-hi="रूम सर्विस ऑटोमेशन">Room Service Requests</small>
                 </div>
-                <div class="b2b-item" onclick="openTrialModal('Apartments (Smart Gate &amp; Care)')">
-                    <span>🏢</span>
+                <div class="b2b-item" onclick="scrollToGatePass()">
+                    <span class="tile-icon">🏢</span>
                     <strong data-te="సొసైటీ గేట్" data-en="Society Gate" data-hi="सोसाइटी गेट">Society Gate</strong>
                     <small data-te="అపార్ట్‌మెంట్ డిజిటల్ పాస్" data-en="Apartment Gate Pass" data-hi="अपार्टमेंट डिजिटल पास">Apartment Gate Pass</small>
                 </div>
                 <div class="b2b-item" onclick="openModal('technicianApplyModal')">
-                    <span>🤝</span>
+                    <span class="tile-icon">🤝</span>
                     <strong data-te="పార్ట్‌నర్ హబ్" data-en="Partner Hub" data-hi="पार्टनर हब">Partner Hub</strong>
                     <small data-te="సర్వీస్ ప్రొవైడర్ నెట్‌వర్క్" data-en="Verified Technician Net" data-hi="वेरिफ़ाइड टेक्नीशियन नेटवर्क">Verified Technician Net</small>
                 </div>
             </div>
 
+            <!-- Business plans — prices NOT fixed yet: no ₹ figure is shown anywhere.
+                 When the user provides real Monthly / Annual prices, replace the
+                 .biz-plan-price text in both plans (section + trial form) with them. -->
+            <div class="biz-plans">
+                <div class="biz-plan" data-plan="monthly">
+                    <strong data-te="నెలవారీ సబ్‌స్క్రిప్షన్" data-en="Monthly Subscription" data-hi="मासिक सब्सक्रिप्शन">Monthly Subscription</strong>
+                    <span class="biz-plan-price" data-te="ధర: త్వరలో — WhatsApp లో అడగండి" data-en="Price: coming soon — ask on WhatsApp" data-hi="कीमत: जल्द आ रहा है — WhatsApp पर पूछें">Price: coming soon — ask on WhatsApp</span>
+                </div>
+                <div class="biz-plan" data-plan="annual">
+                    <strong data-te="వార్షిక వ్యాపార ప్లాన్" data-en="Annual Business Plan" data-hi="वार्षिक बिज़नेस प्लान">Annual Business Plan</strong>
+                    <span class="biz-plan-price" data-te="ధర: త్వరలో — WhatsApp లో అడగండి" data-en="Price: coming soon — ask on WhatsApp" data-hi="कीमत: जल्द आ रहा है — WhatsApp पर पूछें">Price: coming soon — ask on WhatsApp</span>
+                </div>
+            </div>
+
             <div style="margin-top: 14px; text-align: center;">
-                <button onclick="openModal('trialApplyModal')" style="background: none; border: none; color: var(--brand-navy); font-size: 13px; font-weight: 700; cursor: pointer;" data-te="మీ వ్యాపారాన్ని AVAILO తో కనెక్ట్ చేయండి →" data-en="Connect Your Business with AVAILO →" data-hi="अपने बिज़नेस को AVAILO से जोड़ें →">
+                <button onclick="openTrialModal('')" style="background: none; border: none; color: var(--brand-navy); font-size: 13px; font-weight: 700; cursor: pointer;" data-te="మీ వ్యాపారాన్ని AVAILO తో కనెక్ట్ చేయండి →" data-en="Connect Your Business with AVAILO →" data-hi="अपने बिज़नेस को AVAILO से जोड़ें →">
                     Connect Your Business with AVAILO →
                 </button>
             </div>
@@ -1304,7 +1345,7 @@
                 <div class="jio-bar-arrow">›</div>
             </a>
 
-            <div class="jio-bar-item" onclick="openModal('contactModal')">
+            <a href="tel:9966157369" class="jio-bar-item">
                 <div class="jio-bar-left">
                     <div class="jio-bar-icon">📞</div>
                     <div class="jio-bar-text">
@@ -1313,7 +1354,7 @@
                     </div>
                 </div>
                 <div class="jio-bar-arrow">›</div>
-            </div>
+            </a>
         </div>
 
         <!-- Quick Support Hub -->
@@ -1437,18 +1478,25 @@
                     మీ కేటగిరీ ఎంచుకుని వివరాలు సమర్పించండి. మా టీమ్ తక్షణమే మీతో కనెక్ట్ అవుతుంది.
                 </p>
 
+                <div id="trialFormView">
+                <!-- Selected-category banner: shows which tile sent the customer here. -->
+                <div id="trialCatBanner" style="background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; font-size: 12.5px; color: var(--brand-navy);"><span data-te="ఎంచుకున్న కేటగిరీ:" data-en="Selected category:" data-hi="चुनी गई कैटेगरी:">Selected category:</span> <b id="trialCatName">—</b></div>
+
                 <div style="margin-bottom: 10px;">
-                    <label style="font-size: 12px; font-weight: 700; color: #1e293b;" data-te="కేటగిరీ ఎంపిక" data-en="Select Category" data-hi="कैटेगरी चुनें">కేటగిరీ ఎంపిక</label>
-                    <select id="trialCategory" style="width: 100%; padding: 8px; border: 1.5px solid #93c5fd; border-radius: 6px; font-weight: 700; color: var(--brand-navy); background: #eff6ff;">
+                    <label style="font-size: 12px; font-weight: 700; color: #1e293b;" data-te="కేటగిరీ ఎంపిక *" data-en="Select Category *" data-hi="कैटेगरी चुनें *">కేటగిరీ ఎంపిక *</label>
+                    <select id="trialCategory" onchange="updateTrialCatBanner()" style="width: 100%; padding: 8px; border: 1.5px solid #93c5fd; border-radius: 6px; font-weight: 700; color: var(--brand-navy); background: #eff6ff;">
+                        <option value="" data-te="— కేటగిరీ ఎంచుకోండి —" data-en="— Select a category —" data-hi="— कैटेगरी चुनें —">— Select a category —</option>
                         <option value="Apartments (Smart Gate & Care)" data-te="అపార్ట్‌మెంట్స్ (స్మార్ట్ గేట్ & కేర్)" data-en="Apartments (Smart Gate & Care)" data-hi="अपार्टमेंट्स (स्मार्ट गेट और केयर)">Apartments (Smart Gate & Care)</option>
                         <option value="Salons & Spa" data-te="సెలూన్స్ & స్పా" data-en="Salons & Spa" data-hi="सैलून और स्पा">Salons & Spa</option>
                         <option value="Restaurants" data-te="రెస్టారెంట్స్" data-en="Restaurants" data-hi="रेस्टोरेंट्स">Restaurants</option>
                         <option value="Hotels & Dining" data-te="హోటల్స్ & డైనింగ్" data-en="Hotels & Dining" data-hi="होटल और डाइनिंग">Hotels & Dining</option>
+                        <option value="Other" data-te="ఇతరము" data-en="Other" data-hi="अन्य">Other</option>
                     </select>
+                    <div class="field-err" id="trialCategoryErr"></div>
                 </div>
 
                 <div style="margin-bottom: 10px;">
-                    <label style="font-size: 12px; font-weight: 700; color: #1e293b;" data-te="ప్లాన్ రకం" data-en="Plan Type" data-hi="प्लान का प्रकार">ప్లాన్ రకం</label>
+                    <label style="font-size: 12px; font-weight: 700; color: #1e293b;" data-te="ప్లాన్ రకం *" data-en="Plan Type *" data-hi="प्लान का प्रकार *">ప్లాన్ రకం *</label>
                     <select id="trialPlanType" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600;">
                         <option value="Free Trial (1-Week Pilot)" data-te="ఉచిత ట్రయల్ (1 వారం పైలట్)" data-en="Free Trial (1-Week Pilot)" data-hi="मुफ़्त ट्रायल (1 हफ़्ते का पायलट)">Free Trial (1-Week Pilot)</option>
                         <option value="Monthly Subscription" data-te="నెలవారీ సబ్‌స్క్రిప్షన్" data-en="Monthly Subscription" data-hi="मासिक सब्सक्रिप्शन">Monthly Subscription</option>
@@ -1456,33 +1504,56 @@
                     </select>
                 </div>
 
-                <p style="font-size: 12px; color: #64748b; margin: -4px 0 10px;" data-te="నెలవారీ / వార్షిక ప్లాన్ల ధరల కోసం WhatsApp చేయండి." data-en="For Monthly / Annual plan prices, message us on WhatsApp." data-hi="मासिक / वार्षिक प्लान की कीमतों के लिए WhatsApp करें।">నెలవారీ / వార్షిక ప్లాన్ల ధరల కోసం WhatsApp చేయండి.</p>
-
-                <div style="margin-bottom: 10px;">
-                    <label style="font-size: 12px; font-weight: 600;" data-te="సంస్థ / అపార్ట్‌మెంట్ పేరు" data-en="Apartment / Business Name" data-hi="अपार्टमेंट / बिज़नेस का नाम">సంస్థ / అపార్ట్‌మెంట్ పేరు</label>
-                    <input type="text" id="trialBusinessName" data-ph-te="ఉదా: రాయల్ రెసిడెన్సీ" data-ph-en="e.g. Royal Residency" data-ph-hi="उदा: रॉयल रेज़िडेंसी" placeholder="e.g. Royal Residency" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                <!-- Plan prices — NOT fixed yet: no ₹ figure anywhere. Real prices go in .biz-plan-price when the user provides them. -->
+                <div class="biz-plans" style="margin: -4px 0 10px;">
+                    <div class="biz-plan" data-plan="monthly">
+                        <strong data-te="నెలవారీ సబ్‌స్క్రిప్షన్" data-en="Monthly Subscription" data-hi="मासिक सब्सक्रिप्शन">Monthly Subscription</strong>
+                        <span class="biz-plan-price" data-te="ధర: త్వరలో — WhatsApp లో అడగండి" data-en="Price: coming soon — ask on WhatsApp" data-hi="कीमत: जल्द आ रहा है — WhatsApp पर पूछें">Price: coming soon — ask on WhatsApp</span>
+                    </div>
+                    <div class="biz-plan" data-plan="annual">
+                        <strong data-te="వార్షిక వ్యాపార ప్లాన్" data-en="Annual Business Plan" data-hi="वार्षिक बिज़नेस प्लान">Annual Business Plan</strong>
+                        <span class="biz-plan-price" data-te="ధర: త్వరలో — WhatsApp లో అడగండి" data-en="Price: coming soon — ask on WhatsApp" data-hi="कीमत: जल्द आ रहा है — WhatsApp पर पूछें">Price: coming soon — ask on WhatsApp</span>
+                    </div>
                 </div>
 
                 <div style="margin-bottom: 10px;">
-                    <label style="font-size: 12px; font-weight: 600;" data-te="మీ పేరు (సంప్రదింపు వ్యక్తి)" data-en="Contact Person Name" data-hi="आपका नाम (संपर्क व्यक्ति)">మీ పేరు (Contact Person)</label>
-                    <input type="text" id="trialContactName" data-ph-te="ఉదా: సురేష్" data-ph-en="e.g. Suresh" data-ph-hi="उदा: सुरेश" placeholder="e.g. Suresh" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="సంస్థ / అపార్ట్‌మెంట్ పేరు *" data-en="Apartment / Business Name *" data-hi="अपार्टमेंट / बिज़नेस का नाम *">సంస్థ / అపార్ట్‌మెంట్ పేరు *</label>
+                    <input type="text" id="trialBusinessName" maxlength="60" data-ph-te="ఉదా: రాయల్ రెసిడెన్సీ" data-ph-en="e.g. Royal Residency" data-ph-hi="उदा: रॉयल रेज़िडेंसी" placeholder="e.g. Royal Residency" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <div class="field-err" id="trialBusinessNameErr"></div>
                 </div>
 
                 <div style="margin-bottom: 10px;">
-                    <label style="font-size: 12px; font-weight: 600;" data-te="WhatsApp మొబైల్ నంబర్" data-en="WhatsApp Mobile Number" data-hi="WhatsApp मोबाइल नंबर">WhatsApp మొబైల్ నంబర్</label>
-                    <input type="tel" id="trialPhone" data-ph-te="10 అంకెల మొబైల్ నంబర్" data-ph-en="10-digit mobile number" data-ph-hi="10 अंकों का मोबाइल नंबर" placeholder="10-digit mobile number" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="మీ పేరు (సంప్రదింపు వ్యక్తి) *" data-en="Contact Person Name *" data-hi="आपका नाम (संपर्क व्यक्ति) *">మీ పేరు (Contact Person) *</label>
+                    <input type="text" id="trialContactName" maxlength="50" data-ph-te="ఉదా: సురేష్" data-ph-en="e.g. Suresh" data-ph-hi="उदा: सुरेश" placeholder="e.g. Suresh" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <div class="field-err" id="trialContactNameErr"></div>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="WhatsApp మొబైల్ నంబర్ *" data-en="WhatsApp Mobile Number *" data-hi="WhatsApp मोबाइल नंबर *">WhatsApp మొబైల్ నంబర్ *</label>
+                    <input type="tel" id="trialPhone" maxlength="12" inputmode="numeric" autocomplete="tel-national" data-ph-te="10 అంకెల మొబైల్ నంబర్" data-ph-en="10-digit mobile number" data-ph-hi="10 अंकों का मोबाइल नंबर" placeholder="10-digit mobile number" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <div class="field-err" id="trialPhoneErr"></div>
                 </div>
 
                 <div style="margin-bottom: 14px;">
-                    <label style="font-size: 12px; font-weight: 600;" data-te="ప్రాంతం (విజయవాడ / గుంటూరు)" data-en="Location (Vijayawada / Guntur)" data-hi="क्षेत्र (विजयवाड़ा / गुंटूर)">ప్రాంతం (విజయవాడ / గుంటూరు)</label>
-                    <input type="text" id="trialLocation" data-ph-te="ఉదా: విజయవాడ" data-ph-en="e.g. Vijayawada" data-ph-hi="उदा: विजयवाड़ा" placeholder="e.g. Vijayawada" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <label style="font-size: 12px; font-weight: 600;" data-te="ప్రాంతం (ఐచ్ఛికం)" data-en="Location (optional)" data-hi="क्षेत्र (वैकल्पिक)">ప్రాంతం (ఐచ్ఛికం)</label>
+                    <input type="text" id="trialLocation" maxlength="60" data-ph-te="ఉదా: విజయవాడ" data-ph-en="e.g. Vijayawada" data-ph-hi="उदा: विजयवाड़ा" placeholder="e.g. Vijayawada" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
                 </div>
 
-                <button onclick="submitTrialApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో అప్లికేషన్ సమర్పించండి" data-en="💬 Submit Application on WhatsApp" data-hi="💬 WhatsApp पर आवेदन जमा करें">
+                <button id="trialSubmitBtn" onclick="submitTrialApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో అప్లికేషన్ సమర్పించండి" data-en="💬 Submit Application on WhatsApp" data-hi="💬 WhatsApp पर आवेदन जमा करें">
                     💬 WhatsApp లో అప్లికేషన్ సమర్పించండి
                 </button>
                 <div id="trialWarnLine" style="display: none; background: #fef2f2; border: 1.5px solid #dc2626; color: #b91c1c; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
-                <div id="trialConfirmLine" style="display: none; background: #f0fdf4; border: 1.5px solid #16a34a; color: #166534; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
+                </div><!-- /trialFormView -->
+
+                <!-- Confirmation: ref + the WhatsApp-Send step (the application is NOT done until Send is pressed). -->
+                <div id="trialDoneView" style="display: none; text-align: center;">
+                    <div style="font-size: 36px;">✅</div>
+                    <h4 class="font-te-title" style="font-size: 16px; color: var(--brand-navy); margin: 6px 0;" data-te="అప్లికేషన్ సిద్ధంగా ఉంది!" data-en="Application ready!" data-hi="आवेदन तैयार है!">Application ready!</h4>
+                    <p style="font-size: 14px; font-weight: 800; color: #166534; margin-bottom: 10px;"><span data-te="రిఫరెన్స్ నంబర్:" data-en="Reference No:" data-hi="रेफ़रेंस नंबर:">Reference No:</span> <span id="trialDoneRefVal"></span></p>
+                    <p style="font-size: 13px; color: #b91c1c; font-weight: 700; line-height: 1.6; margin-bottom: 12px;" data-te="⚠️ ఇంకా పూర్తి కాలేదు — WhatsApp లో Send నొక్కితేనే మీ అప్లికేషన్ AVAILO కు చేరుతుంది. WhatsApp ట్యాబ్ మూసేస్తే అప్లికేషన్ రాదు." data-en="⚠️ Not done yet — your application reaches AVAILO only when you press Send in WhatsApp. If you close the WhatsApp tab, the application never arrives." data-hi="⚠️ अभी पूरा नहीं हुआ — आपका आवेदन AVAILO तक तभी पहुँचेगा जब आप WhatsApp में Send दबाएँगे। WhatsApp टैब बंद कर दिया तो आवेदन नहीं पहुँचेगा।">⚠️ Not done yet — your application reaches AVAILO only when you press Send in WhatsApp. If you close the WhatsApp tab, the application never arrives.</p>
+                    <a id="trialDoneWaBtn" href="#" target="_blank" rel="noopener" style="display: block; background: var(--call-green); color: #fff; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; text-decoration: none; margin-bottom: 8px;" data-te="💬 WhatsApp లో Send చేయండి" data-en="💬 Send on WhatsApp" data-hi="💬 WhatsApp पर Send करें">💬 Send on WhatsApp</a>
+                    <button onclick="closeModal('trialApplyModal')" style="background: none; border: none; color: var(--brand-navy); font-size: 13px; font-weight: 700; cursor: pointer;" data-te="మూసివేయండి" data-en="Close" data-hi="बंद करें">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1499,19 +1570,23 @@
                     మీ వివరాలు ఇవ్వండి — వెరిఫికేషన్ తర్వాతే పని కేటాయించబడుతుంది. వివరాలు WhatsApp ద్వారా మా డెస్క్‌కు చేరతాయి.
                 </p>
 
+                <div id="techFormView">
                 <div style="margin-bottom: 10px;">
                     <label style="font-size: 12px; font-weight: 600;" data-te="మీ పేరు *" data-en="Your Name *" data-hi="आपका नाम *">మీ పేరు *</label>
-                    <input type="text" id="techName" data-ph-te="ఉదా: రాము" data-ph-en="e.g. Ramu" data-ph-hi="उदा: रामू" placeholder="e.g. Ramu" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <input type="text" id="techName" maxlength="50" data-ph-te="ఉదా: రాము" data-ph-en="e.g. Ramu" data-ph-hi="उदा: रामू" placeholder="e.g. Ramu" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <div class="field-err" id="techNameErr"></div>
                 </div>
 
                 <div style="margin-bottom: 10px;">
                     <label style="font-size: 12px; font-weight: 600;" data-te="WhatsApp మొబైల్ నంబర్ *" data-en="WhatsApp Mobile Number *" data-hi="WhatsApp मोबाइल नंबर *">WhatsApp మొబైల్ నంబర్ *</label>
-                    <input type="tel" id="techPhone" data-ph-te="10 అంకెల మొబైల్ నంబర్" data-ph-en="10-digit mobile number" data-ph-hi="10 अंकों का मोबाइल नंबर" placeholder="10-digit mobile number" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <input type="tel" id="techPhone" maxlength="12" inputmode="numeric" autocomplete="tel-national" data-ph-te="10 అంకెల మొబైల్ నంబర్" data-ph-en="10-digit mobile number" data-ph-hi="10 अंकों का मोबाइल नंबर" placeholder="10-digit mobile number" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <div class="field-err" id="techPhoneErr"></div>
                 </div>
 
                 <div style="margin-bottom: 10px;">
                     <label style="font-size: 12px; font-weight: 700; color: #1e293b;" data-te="నైపుణ్యం / వృత్తి *" data-en="Skill / Trade *" data-hi="कौशल / पेशा *">నైపుణ్యం / వృత్తి *</label>
                     <select id="techSkill" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600;">
+                        <option value="" data-te="— నైపుణ్యం ఎంచుకోండి —" data-en="— Select your skill —" data-hi="— अपना कौशल चुनें —">— Select your skill —</option>
                         <option value="Electrician" data-te="ఎలక్ట్రీషియన్" data-en="Electrician" data-hi="इलेक्ट्रीशियन">Electrician</option>
                         <option value="Plumber" data-te="ప్లంబర్" data-en="Plumber" data-hi="प्लंबर">Plumber</option>
                         <option value="AC Technician" data-te="ఏసీ టెక్నీషియన్" data-en="AC Technician" data-hi="एसी टेक्नीशियन">AC Technician</option>
@@ -1520,33 +1595,48 @@
                         <option value="House Cleaning" data-te="ఇంటి శుభ్రత" data-en="House Cleaning" data-hi="घर की सफ़ाई">House Cleaning</option>
                         <option value="Other" data-te="ఇతరము" data-en="Other" data-hi="अन्य">Other</option>
                     </select>
+                    <div class="field-err" id="techSkillErr"></div>
                 </div>
 
                 <div style="margin-bottom: 10px;">
                     <label style="font-size: 12px; font-weight: 600;" data-te="అనుభవం *" data-en="Experience *" data-hi="अनुभव *">అనుభవం *</label>
                     <select id="techExperience" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600;">
+                        <option value="" data-te="— అనుభవం ఎంచుకోండి —" data-en="— Select your experience —" data-hi="— अपना अनुभव चुनें —">— Select your experience —</option>
                         <option value="Less than 1 year" data-te="1 సంవత్సరం కన్నా తక్కువ" data-en="Less than 1 year" data-hi="1 साल से कम">Less than 1 year</option>
                         <option value="1-3 years" data-te="1–3 సంవత్సరాలు" data-en="1–3 years" data-hi="1–3 साल">1–3 years</option>
                         <option value="3-5 years" data-te="3–5 సంవత్సరాలు" data-en="3–5 years" data-hi="3–5 साल">3–5 years</option>
                         <option value="5+ years" data-te="5+ సంవత్సరాలు" data-en="5+ years" data-hi="5+ साल">5+ years</option>
                     </select>
+                    <div class="field-err" id="techExperienceErr"></div>
                 </div>
 
                 <div style="margin-bottom: 10px;">
                     <label style="font-size: 12px; font-weight: 600;" data-te="సేవ చేసే ప్రాంతం *" data-en="Service Area *" data-hi="सेवा क्षेत्र *">సేవ చేసే ప్రాంతం *</label>
-                    <input type="text" id="techArea" data-ph-te="ఉదా: బెంజ్ సర్కిల్, విజయవాడ" data-ph-en="e.g. Benz Circle, Vijayawada" data-ph-hi="उदा: बेंज़ सर्किल, विजयवाड़ा" placeholder="e.g. Benz Circle, Vijayawada" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <input type="text" id="techArea" maxlength="60" data-ph-te="ఉదా: బెంజ్ సర్కిల్, విజయవాడ" data-ph-en="e.g. Benz Circle, Vijayawada" data-ph-hi="उदा: बेंज़ सर्किल, विजयवाड़ा" placeholder="e.g. Benz Circle, Vijayawada" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    <div class="field-err" id="techAreaErr"></div>
                 </div>
 
                 <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #334155; margin-bottom: 14px; cursor: pointer;">
                     <input type="checkbox" id="techIdProof" style="margin-top: 2px; width: 16px; height: 16px;">
                     <span data-te="వెరిఫికేషన్ సమయంలో నా ID ప్రూఫ్ (Aadhaar / PAN) చూపిస్తాను *" data-en="I will show my ID proof (Aadhaar / PAN) at verification *" data-hi="वेरिफ़िकेशन के समय मैं अपना ID प्रूफ़ (Aadhaar / PAN) दिखाऊँगा *">వెరిఫికేషన్ సమయంలో నా ID ప్రూఫ్ (Aadhaar / PAN) చూపిస్తాను *</span>
                 </label>
+                <div class="field-err" id="techIdProofErr" style="margin: -8px 0 10px;"></div>
 
-                <button onclick="submitTechnicianApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో జాయిన్ అప్లికేషన్ పంపండి" data-en="💬 Send Join Application on WhatsApp" data-hi="💬 WhatsApp पर जॉइन आवेदन भेजें">
+                <button id="techSubmitBtn" onclick="submitTechnicianApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో జాయిన్ అప్లికేషన్ పంపండి" data-en="💬 Send Join Application on WhatsApp" data-hi="💬 WhatsApp पर जॉइन आवेदन भेजें">
                     💬 WhatsApp లో జాయిన్ అప్లికేషన్ పంపండి
                 </button>
                 <div id="techWarnLine" style="display: none; background: #fef2f2; border: 1.5px solid #dc2626; color: #b91c1c; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
-                <div id="techConfirmLine" style="display: none; background: #f0fdf4; border: 1.5px solid #16a34a; color: #166534; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
+                </div><!-- /techFormView -->
+
+                <!-- Confirmation: ref + the WhatsApp-Send step (the application is NOT done until Send is pressed). -->
+                <div id="techDoneView" style="display: none; text-align: center;">
+                    <div style="font-size: 36px;">✅</div>
+                    <h4 class="font-te-title" style="font-size: 16px; color: var(--brand-navy); margin: 6px 0;" data-te="అప్లికేషన్ సిద్ధంగా ఉంది!" data-en="Application ready!" data-hi="आवेदन तैयार है!">Application ready!</h4>
+                    <p style="font-size: 14px; font-weight: 800; color: #166534; margin-bottom: 10px;"><span data-te="రిఫరెన్స్ నంబర్:" data-en="Reference No:" data-hi="रेफ़रेंस नंबर:">Reference No:</span> <span id="techDoneRefVal"></span></p>
+                    <p style="font-size: 13px; color: #b91c1c; font-weight: 700; line-height: 1.6; margin-bottom: 12px;" data-te="⚠️ ఇంకా పూర్తి కాలేదు — WhatsApp లో Send నొక్కితేనే మీ అప్లికేషన్ AVAILO కు చేరుతుంది. WhatsApp ట్యాబ్ మూసేస్తే అప్లికేషన్ రాదు." data-en="⚠️ Not done yet — your application reaches AVAILO only when you press Send in WhatsApp. If you close the WhatsApp tab, the application never arrives." data-hi="⚠️ अभी पूरा नहीं हुआ — आपका आवेदन AVAILO तक तभी पहुँचेगा जब आप WhatsApp में Send दबाएँगे। WhatsApp टैब बंद कर दिया तो आवेदन नहीं पहुँचेगा।">⚠️ Not done yet — your application reaches AVAILO only when you press Send in WhatsApp. If you close the WhatsApp tab, the application never arrives.</p>
+                    <a id="techDoneWaBtn" href="#" target="_blank" rel="noopener" style="display: block; background: var(--call-green); color: #fff; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; text-decoration: none; margin-bottom: 8px;" data-te="💬 WhatsApp లో Send చేయండి" data-en="💬 Send on WhatsApp" data-hi="💬 WhatsApp पर Send करें">💬 Send on WhatsApp</a>
+                    <button onclick="closeModal('technicianApplyModal')" style="background: none; border: none; color: var(--brand-navy); font-size: 13px; font-weight: 700; cursor: pointer;" data-te="మూసివేయండి" data-en="Close" data-hi="बंद करें">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1843,9 +1933,69 @@
             document.getElementById('drawerOverlay').classList.toggle('open');
         }
 
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function openTrialModal(category) { var sel = document.getElementById('trialCategory'); if (sel && category) sel.value = category; openModal('trialApplyModal'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        // One history entry per modal-open session: the phone Back button
+        // closes the popup instead of leaving the site. Closing via × /
+        // Escape / backdrop pops that entry back.
+        let availoModalPushed = false;
+        let availoModalSwap = false;
+        function openModal(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (id === 'trialApplyModal') resetTrialForm();
+            if (id === 'technicianApplyModal') resetTechnicianForm();
+            const wasActive = document.querySelectorAll('.modal-overlay.active').length;
+            el.classList.add('active');
+            if (!availoModalPushed && wasActive === 0) {
+                try { history.pushState({ availoModal: true }, ''); availoModalPushed = true; } catch (e) {}
+            }
+        }
+        function openTrialModal(category) {
+            openModal('trialApplyModal'); // resets the form first (bug 2/7)
+            const sel = document.getElementById('trialCategory');
+            if (sel && category) sel.value = category;
+            updateTrialCatBanner();
+        }
+        // Society Gate tile: the Gate Pass form lives in the hero (#gate-section).
+        function scrollToGatePass() {
+            const el = document.getElementById('gate-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        function closeModal(id) {
+            if (id === 'trialApplyModal') resetTrialForm();
+            if (id === 'technicianApplyModal') resetTechnicianForm();
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('active');
+            if (!document.querySelector('.modal-overlay.active')) {
+                if (availoModalPushed && !availoModalSwap) {
+                    availoModalPushed = false;
+                    try { history.back(); } catch (e) {}
+                }
+                if (!availoModalSwap) availoModalPushed = false;
+            }
+        }
+        // Back button closes an open popup; Escape closes it too.
+        window.addEventListener('popstate', function () {
+            const actives = document.querySelectorAll('.modal-overlay.active');
+            if (!actives.length) return;
+            availoModalPushed = false;
+            actives.forEach(function (m) {
+                if (m.id === 'mayuraPanel') closeMayuraPanel(); else closeModal(m.id);
+            });
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key !== 'Escape') return;
+            const actives = document.querySelectorAll('.modal-overlay.active');
+            if (!actives.length) return;
+            const top = actives[actives.length - 1];
+            if (top.id === 'mayuraPanel') closeMayuraPanel(); else closeModal(top.id);
+        });
+        // Clicking the backdrop (outside the popup window) closes the popup.
+        document.querySelectorAll('.modal-overlay').forEach(function (ov) {
+            ov.addEventListener('click', function (e) {
+                if (e.target !== ov) return;
+                if (ov.id === 'mayuraPanel') closeMayuraPanel(); else closeModal(ov.id);
+            });
+        });
 
         function applyLanguage() {
             document.body.classList.toggle('lang-en', currentLang === 'en');
@@ -1874,13 +2024,35 @@
             // Keep the Mayura panel greeting in the current language.
             const mp = document.getElementById('mayuraPanelText');
             if (mp) { const t = mp.getAttribute('data-' + currentLang); if (t) mp.innerHTML = t; }
+            updateTrialCatBanner();
+            // Mark the active language in the language menu.
+            document.querySelectorAll('#langMenu button').forEach(function (b) {
+                const l = b.getAttribute('data-lang');
+                b.textContent = (l === 'te' ? 'తెలుగు' : l === 'en' ? 'English' : 'हिन्दी') + (l === currentLang ? ' ✓' : '');
+            });
         }
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'te' ? 'en' : currentLang === 'en' ? 'hi' : 'te';
+        // Language menu: one tap to any language (no cycling through Hindi).
+        // The button shows the CURRENT language; the menu lists all three.
+        function toggleLangMenu(ev) {
+            if (ev) ev.stopPropagation();
+            const m = document.getElementById('langMenu');
+            if (m) m.style.display = (m.style.display === 'block') ? 'none' : 'block';
+        }
+        function setLanguage(lang) {
+            if (lang !== 'te' && lang !== 'en' && lang !== 'hi') return;
+            currentLang = lang;
             localStorage.setItem('availo_lang', currentLang);
+            const m = document.getElementById('langMenu');
+            if (m) m.style.display = 'none';
             applyLanguage();
         }
+        function toggleLanguage() { toggleLangMenu(); } // backwards-compat alias
+        document.addEventListener('click', function (e) {
+            const m = document.getElementById('langMenu');
+            const b = document.getElementById('langBtn');
+            if (m && m.style.display === 'block' && !m.contains(e.target) && e.target !== b) m.style.display = 'none';
+        });
 
         // Mayura voice warm-up: load the browser's TTS voices once so a tap
         // never fires before any voice is available (desktop Chrome often has
@@ -2238,8 +2410,8 @@
             } catch (e) {}
 
             const ref = availoRef();
-            const refLine = document.getElementById('gateRefLine');
-            if (refLine) refLine.textContent = availoRefLine(ref);
+            const refVal = document.getElementById('gateRefVal');
+            if (refVal) refVal.textContent = ref;
             drawGateStamp(document.getElementById('gateStampCanvas'), apt, partner, flat);
             const panel = document.getElementById('gateConfirmPanel');
             if (panel) panel.style.display = 'block';
@@ -2258,60 +2430,228 @@
             return false;
         }
         function hideFormWarn(id) { const w = document.getElementById(id); if (w) w.style.display = 'none'; }
+        // ---- Business forms: shared helpers (bugs 2, 3, 4, 5, 9, 14, 15, 16) ----
+        // Indian mobile: digits only; a leading 0 or 91 is stripped, then it
+        // must be exactly 10 digits starting with 6-9.
+        function normalizeIndianMobile(phone) {
+            let d = (phone || '').replace(/\D/g, '');
+            if (d.length === 12 && d.indexOf('91') === 0) d = d.slice(2);
+            if (d.length === 11 && d.charAt(0) === '0') d = d.slice(1);
+            return d;
+        }
+        function validIndianMobile(phone) {
+            const d = normalizeIndianMobile(phone);
+            return d.length === 10 && /^[6-9]/.test(d);
+        }
+        // Typing/paste in a phone field keeps digits only (letters and spaces
+        // are dropped as they are typed, so "99999 99999" becomes 9999999999).
+        function bindPhoneField(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('input', function () {
+                const d = normalizeIndianMobile(el.value);
+                if (el.value !== d) el.value = d;
+            });
+            el.addEventListener('paste', function (e) {
+                e.preventDefault();
+                const cd = e.clipboardData || window.clipboardData;
+                const text = (cd && cd.getData) ? cd.getData('text') : '';
+                el.value = normalizeIndianMobile((el.value || '') + (text || '')).slice(0, 10);
+            });
+        }
+        // Per-field inline error: only the fields actually missing/invalid.
+        function setFieldErr(fieldId, errId, msg) {
+            const f = document.getElementById(fieldId);
+            const e = document.getElementById(errId);
+            if (f) f.classList.add('field-invalid');
+            if (e) { e.textContent = msg; e.style.display = 'block'; }
+        }
+        function clearFieldErr(fieldId, errId) {
+            const f = document.getElementById(fieldId);
+            const e = document.getElementById(errId);
+            if (f) f.classList.remove('field-invalid');
+            if (e) { e.textContent = ''; e.style.display = 'none'; }
+        }
+        function fieldLabel(key) {
+            const L = {
+                category: { te: 'కేటగిరీ', en: 'Category', hi: 'कैटेगरी' },
+                businessName: { te: 'సంస్థ పేరు', en: 'Business Name', hi: 'बिज़नेस का नाम' },
+                contactName: { te: 'మీ పేరు', en: 'Contact Name', hi: 'संपर्क व्यक्ति का नाम' },
+                phone: { te: 'మొబైల్ నంబర్', en: 'Mobile Number', hi: 'मोबाइल नंबर' },
+                name: { te: 'మీ పేరు', en: 'Your Name', hi: 'आपका नाम' },
+                skill: { te: 'నైపుణ్యం', en: 'Skill', hi: 'कौशल' },
+                experience: { te: 'అనుభవం', en: 'Experience', hi: 'अनुभव' },
+                area: { te: 'సేవ చేసే ప్రాంతం', en: 'Service Area', hi: 'सेवा क्षेत्र' },
+                idProof: { te: 'ID ప్రూఫ్', en: 'ID proof', hi: 'ID प्रूफ़' }
+            };
+            return (L[key] || {})[currentLang] || key;
+        }
+        function missingMsg() {
+            return currentLang === 'te' ? '⚠️ దయచేసి * గుర్తున్న వివరాలు సరిగా నింపండి.' : currentLang === 'hi' ? '⚠️ कृपया * वाले विवरण सही से भरें।' : '⚠️ Please fill the marked (*) details correctly.';
+        }
+        function invalidPhoneMsg() {
+            return currentLang === 'te' ? '⚠️ సరైన 10 అంకెల మొబైల్ నంబర్ ఇవ్వండి (6–9 తో మొదలయ్యేది).' : currentLang === 'hi' ? '⚠️ कृपया सही 10 अंकों का मोबाइल नंबर दें (6–9 से शुरू होने वाला)।' : '⚠️ Please enter a valid 10-digit mobile number (starting with 6–9).';
+        }
+        function fillRequiredMsg() {
+            return currentLang === 'te' ? '⚠️ దయచేసి ఈ వివరం నింపండి.' : currentLang === 'hi' ? '⚠️ कृपया यह विवरण भरें।' : '⚠️ Please fill this in.';
+        }
+        function selectRequiredMsg() {
+            return currentLang === 'te' ? '⚠️ దయచేసి ఒకటి ఎంచుకోండి.' : currentLang === 'hi' ? '⚠️ कृपया एक चुनें।' : '⚠️ Please choose one.';
+        }
+        function idProofMsg() {
+            return currentLang === 'te' ? '⚠️ వెరిఫికేషన్ కోసం ID ప్రూఫ్ చూపిస్తానని టిక్ చేయండి.' : currentLang === 'hi' ? '⚠️ वेरिफ़िकेशन के लिए ID प्रूफ़ दिखाने पर टिक करें।' : '⚠️ Please tick that you will show ID proof at verification.';
+        }
+
+        // Selected-category banner on the trial form (which tile sent the customer).
+        function updateTrialCatBanner() {
+            const sel = document.getElementById('trialCategory');
+            const nameEl = document.getElementById('trialCatName');
+            if (!sel || !nameEl) return;
+            const opt = sel.options[sel.selectedIndex];
+            nameEl.textContent = (opt && sel.value) ? (opt.getAttribute('data-' + currentLang) || opt.textContent) : '—';
+        }
+
+        // Reset a business form completely on close AND on open, so a shared
+        // phone never shows the previous person's name, phone or reference.
+        // No trial/technician data is ever stored in localStorage.
+        let trialSubmitted = false;
+        let trialWaUrl = '';
+        function resetTrialForm() {
+            trialSubmitted = false;
+            trialWaUrl = '';
+            const btn = document.getElementById('trialSubmitBtn');
+            if (btn) { btn.disabled = false; btn.style.opacity = ''; }
+            ['trialCategory', 'trialPlanType'].forEach(function (id) { const el = document.getElementById(id); if (el) el.selectedIndex = 0; });
+            ['trialBusinessName', 'trialContactName', 'trialPhone', 'trialLocation'].forEach(function (id) { const el = document.getElementById(id); if (el) el.value = ''; });
+            clearFieldErr('trialCategory', 'trialCategoryErr');
+            clearFieldErr('trialBusinessName', 'trialBusinessNameErr');
+            clearFieldErr('trialContactName', 'trialContactNameErr');
+            clearFieldErr('trialPhone', 'trialPhoneErr');
+            hideFormWarn('trialWarnLine');
+            const fv = document.getElementById('trialFormView'); if (fv) fv.style.display = 'block';
+            const dv = document.getElementById('trialDoneView'); if (dv) dv.style.display = 'none';
+            const rv = document.getElementById('trialDoneRefVal'); if (rv) rv.textContent = '';
+            const wb = document.getElementById('trialDoneWaBtn'); if (wb) wb.removeAttribute('href');
+            updateTrialCatBanner();
+        }
+        let techSubmitted = false;
+        let techWaUrl = '';
+        function resetTechnicianForm() {
+            techSubmitted = false;
+            techWaUrl = '';
+            const btn = document.getElementById('techSubmitBtn');
+            if (btn) { btn.disabled = false; btn.style.opacity = ''; }
+            ['techSkill', 'techExperience'].forEach(function (id) { const el = document.getElementById(id); if (el) el.selectedIndex = 0; });
+            ['techName', 'techPhone', 'techArea'].forEach(function (id) { const el = document.getElementById(id); if (el) el.value = ''; });
+            const cb = document.getElementById('techIdProof'); if (cb) cb.checked = false;
+            clearFieldErr('techName', 'techNameErr');
+            clearFieldErr('techPhone', 'techPhoneErr');
+            clearFieldErr('techSkill', 'techSkillErr');
+            clearFieldErr('techExperience', 'techExperienceErr');
+            clearFieldErr('techArea', 'techAreaErr');
+            clearFieldErr('techIdProof', 'techIdProofErr');
+            hideFormWarn('techWarnLine');
+            const fv = document.getElementById('techFormView'); if (fv) fv.style.display = 'block';
+            const dv = document.getElementById('techDoneView'); if (dv) dv.style.display = 'none';
+            const rv = document.getElementById('techDoneRefVal'); if (rv) rv.textContent = '';
+            const wb = document.getElementById('techDoneWaBtn'); if (wb) wb.removeAttribute('href');
+        }
+
+        // Submit Trial / Subscription Application — per-field validation,
+        // one submit only, then a confirmation screen that says plainly the
+        // application reaches AVAILO only after Send is pressed in WhatsApp.
         function submitTrialApplication() {
+            if (trialSubmitted) return false;
             const category = document.getElementById('trialCategory').value;
             const planType = document.getElementById('trialPlanType').value;
             const businessName = document.getElementById('trialBusinessName').value.trim();
             const contactName = document.getElementById('trialContactName').value.trim();
-            const phone = document.getElementById('trialPhone').value.trim();
-            const location = document.getElementById('trialLocation').value.trim() || 'Vijayawada/Guntur';
+            const phoneRaw = document.getElementById('trialPhone').value.trim();
+            const phone = normalizeIndianMobile(phoneRaw);
+            // Location is optional: never inject a default city. Empty stays empty.
+            const location = document.getElementById('trialLocation').value.trim();
 
-            if (!businessName || !contactName || !phone) {
-                return showFormWarn('trialWarnLine', currentLang === 'te' ? '⚠️ దయచేసి సంస్థ పేరు, మీ పేరు మరియు వాట్సాప్ నంబర్ తప్పకుండా నింపండి.' : currentLang === 'hi' ? '⚠️ कृपया बिज़नेस का नाम, संपर्क व्यक्ति का नाम और WhatsApp नंबर ज़रूर भरें।' : '⚠️ Please fill Business Name, Contact Name, and Phone Number.');
-            }
-            if (phone.replace(/\D/g, '').length < 10) {
-                return showFormWarn('trialWarnLine', currentLang === 'te' ? '⚠️ సరైన 10 అంకెల మొబైల్ నంబర్ ఇవ్వండి.' : currentLang === 'hi' ? '⚠️ कृपया सही 10 अंकों का मोबाइल नंबर दें।' : '⚠️ Please enter a valid 10-digit mobile number.');
+            const missing = [];
+            clearFieldErr('trialCategory', 'trialCategoryErr');
+            clearFieldErr('trialBusinessName', 'trialBusinessNameErr');
+            clearFieldErr('trialContactName', 'trialContactNameErr');
+            clearFieldErr('trialPhone', 'trialPhoneErr');
+            if (!category) { setFieldErr('trialCategory', 'trialCategoryErr', selectRequiredMsg()); missing.push('category'); }
+            if (!businessName) { setFieldErr('trialBusinessName', 'trialBusinessNameErr', fillRequiredMsg()); missing.push('businessName'); }
+            if (!contactName) { setFieldErr('trialContactName', 'trialContactNameErr', fillRequiredMsg()); missing.push('contactName'); }
+            if (!phoneRaw) { setFieldErr('trialPhone', 'trialPhoneErr', fillRequiredMsg()); missing.push('phone'); }
+            else if (!validIndianMobile(phoneRaw)) { setFieldErr('trialPhone', 'trialPhoneErr', invalidPhoneMsg()); missing.push('phone'); }
+            if (missing.length) {
+                const names = missing.map(fieldLabel).join(', ');
+                return showFormWarn('trialWarnLine', missingMsg() + ' (' + names + ')');
             }
             hideFormWarn('trialWarnLine');
+            trialSubmitted = true;
+            const btn = document.getElementById('trialSubmitBtn');
+            if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
 
             const ref = availoRef();
-            const cl = document.getElementById('trialConfirmLine');
-            if (cl) { cl.textContent = availoRefLine(ref); cl.style.display = 'block'; }
-
-            const msg = currentLang === 'hi' ? `*AVAILO ट्रायल / सब्सक्रिप्शन आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*कैटेगरी:* ${category}%0A*प्लान का प्रकार:* ${planType}%0A*बिज़नेस/अपार्टमेंट:* ${businessName}%0A*संपर्क व्यक्ति:* ${contactName}%0A*WhatsApp:* ${phone}%0A*क्षेत्र:* ${location}%0A------------------------------%0Aऑनबोर्डिंग / ट्रायल विवरण में रुचि है।` : currentLang === 'en' ? `*AVAILO Trial / Subscription Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Category:* ${category}%0A*Plan Type:* ${planType}%0A*Business/Apartment:* ${businessName}%0A*Contact Person:* ${contactName}%0A*WhatsApp:* ${phone}%0A*Location:* ${location}%0A------------------------------%0AInterested in onboarding / trial details.` : `*AVAILO ట్రయల్ / సబ్‌స్క్రిప్షన్ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*కేటగిరీ:* ${category}%0A*ప్లాన్ రకం:* ${planType}%0A*సంస్థ/అపార్ట్‌మెంట్:* ${businessName}%0A*సంప్రదింపు వ్యక్తి:* ${contactName}%0A*WhatsApp:* ${phone}%0A*ప్రాంతం:* ${location}%0A------------------------------%0Aఆన్‌బోర్డింగ్ / ట్రయల్ వివరాలపై ఆసక్తి ఉంది.`;
+            // Location line appears ONLY if the customer actually typed one.
+            const locLine = location ? { te: '%0A*ప్రాంతం:* ' + location, en: '%0A*Location:* ' + location, hi: '%0A*क्षेत्र:* ' + location } : { te: '', en: '', hi: '' };
+            const msg = currentLang === 'hi' ? `*AVAILO ट्रायल / सब्सक्रिप्शन आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*कैटेगरी:* ${category}%0A*प्लान का प्रकार:* ${planType}%0A*बिज़नेस/अपार्टमेंट:* ${businessName}%0A*संपर्क व्यक्ति:* ${contactName}%0A*WhatsApp:* ${phone}${locLine.hi}%0A------------------------------%0Aऑनबोर्डिंग / ट्रायल विवरण में रुचि है।` : currentLang === 'en' ? `*AVAILO Trial / Subscription Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Category:* ${category}%0A*Plan Type:* ${planType}%0A*Business/Apartment:* ${businessName}%0A*Contact Person:* ${contactName}%0A*WhatsApp:* ${phone}${locLine.en}%0A------------------------------%0AInterested in onboarding / trial details.` : `*AVAILO ట్రయల్ / సబ్‌స్క్రిప్షన్ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*కేటగిరీ:* ${category}%0A*ప్లాన్ రకం:* ${planType}%0A*సంస్థ/అపార్ట్‌మెంట్:* ${businessName}%0A*సంప్రదింపు వ్యక్తి:* ${contactName}%0A*WhatsApp:* ${phone}${locLine.te}%0A------------------------------%0Aఆన్‌బోర్డింగ్ / ట్రయల్ వివరాలపై ఆసక్తి ఉంది.`;
             // Log to Google Sheets (never blocks WhatsApp).
             sendToSheet('Business', { category: category, planType: planType, businessName: businessName, contactName: contactName, phone: phone, location: location, ref: ref });
-            window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
+            trialWaUrl = 'https://wa.me/919966157369?text=' + msg;
+            const refVal = document.getElementById('trialDoneRefVal');
+            if (refVal) refVal.textContent = ref;
+            const waBtn = document.getElementById('trialDoneWaBtn');
+            if (waBtn) waBtn.href = trialWaUrl;
+            const fv = document.getElementById('trialFormView'); if (fv) fv.style.display = 'none';
+            const dv = document.getElementById('trialDoneView'); if (dv) dv.style.display = 'block';
+            window.open(trialWaUrl, '_blank', 'noopener');
         }
 
         // Submit Technician / Provider Join Application (separate form).
         function submitTechnicianApplication() {
+            if (techSubmitted) return false;
             const name = document.getElementById('techName').value.trim();
-            const phone = document.getElementById('techPhone').value.trim();
+            const phoneRaw = document.getElementById('techPhone').value.trim();
+            const phone = normalizeIndianMobile(phoneRaw);
             const skill = document.getElementById('techSkill').value;
             const exp = document.getElementById('techExperience').value;
             const area = document.getElementById('techArea').value.trim();
             const idOk = document.getElementById('techIdProof').checked;
 
-            if (!name || !phone || !area) {
-                return showFormWarn('techWarnLine', currentLang === 'te' ? '⚠️ దయచేసి మీ పేరు, వాట్సాప్ నంబర్ మరియు సేవ చేసే ప్రాంతం తప్పకుండా నింపండి.' : currentLang === 'hi' ? '⚠️ कृपया अपना नाम, WhatsApp नंबर और सेवा क्षेत्र ज़रूर भरें।' : '⚠️ Please fill your name, WhatsApp number and service area.');
-            }
-            if (phone.replace(/\D/g, '').length < 10) {
-                return showFormWarn('techWarnLine', currentLang === 'te' ? '⚠️ సరైన 10 అంకెల మొబైల్ నంబర్ ఇవ్వండి.' : currentLang === 'hi' ? '⚠️ कृपया सही 10 अंकों का मोबाइल नंबर दें।' : '⚠️ Please enter a valid 10-digit mobile number.');
-            }
-            if (!idOk) {
-                return showFormWarn('techWarnLine', currentLang === 'te' ? '⚠️ వెరిఫికేషన్ కోసం ID ప్రూఫ్ చూపిస్తానని టిక్ చేయండి.' : currentLang === 'hi' ? '⚠️ वेरिफ़िकेशन के लिए ID प्रूफ़ दिखाने पर टिक करें।' : '⚠️ Please tick that you will show ID proof at verification.');
+            const missing = [];
+            clearFieldErr('techName', 'techNameErr');
+            clearFieldErr('techPhone', 'techPhoneErr');
+            clearFieldErr('techSkill', 'techSkillErr');
+            clearFieldErr('techExperience', 'techExperienceErr');
+            clearFieldErr('techArea', 'techAreaErr');
+            clearFieldErr('techIdProof', 'techIdProofErr');
+            if (!name) { setFieldErr('techName', 'techNameErr', fillRequiredMsg()); missing.push('name'); }
+            if (!phoneRaw) { setFieldErr('techPhone', 'techPhoneErr', fillRequiredMsg()); missing.push('phone'); }
+            else if (!validIndianMobile(phoneRaw)) { setFieldErr('techPhone', 'techPhoneErr', invalidPhoneMsg()); missing.push('phone'); }
+            if (!skill) { setFieldErr('techSkill', 'techSkillErr', selectRequiredMsg()); missing.push('skill'); }
+            if (!exp) { setFieldErr('techExperience', 'techExperienceErr', selectRequiredMsg()); missing.push('experience'); }
+            if (!area) { setFieldErr('techArea', 'techAreaErr', fillRequiredMsg()); missing.push('area'); }
+            if (!idOk) { setFieldErr('techIdProof', 'techIdProofErr', idProofMsg()); missing.push('idProof'); }
+            if (missing.length) {
+                const names = missing.map(fieldLabel).join(', ');
+                return showFormWarn('techWarnLine', missingMsg() + ' (' + names + ')');
             }
             hideFormWarn('techWarnLine');
+            techSubmitted = true;
+            const btn = document.getElementById('techSubmitBtn');
+            if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
 
             const ref = availoRef();
-            const cl = document.getElementById('techConfirmLine');
-            if (cl) { cl.textContent = availoRefLine(ref); cl.style.display = 'block'; }
-
             const msg = currentLang === 'hi' ? `*AVAILO टेक्नीशियन जॉइन आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*नाम:* ${name}%0A*WhatsApp:* ${phone}%0A*कौशल:* ${skill}%0A*अनुभव:* ${exp}%0A*सेवा क्षेत्र:* ${area}%0A*ID प्रूफ़:* वेरिफ़िकेशन के समय दिखाएँगे%0A------------------------------%0Aटेक्नीशियन के रूप में जुड़ना है।` : currentLang === 'en' ? `*AVAILO Technician Join Application*%0A------------------------------%0A*Reference No:* ${ref}%0A*Name:* ${name}%0A*WhatsApp:* ${phone}%0A*Skill:* ${skill}%0A*Experience:* ${exp}%0A*Service Area:* ${area}%0A*ID Proof:* Will show at verification%0A------------------------------%0AWants to join as a technician.` : `*AVAILO టెక్నీషియన్ జాయిన్ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*పేరు:* ${name}%0A*WhatsApp:* ${phone}%0A*నైపుణ్యం:* ${skill}%0A*అనుభవం:* ${exp}%0A*సేవ చేసే ప్రాంతం:* ${area}%0A*ID ప్రూఫ్:* వెరిఫికేషన్ సమయంలో చూపిస్తారు%0A------------------------------%0Aటెక్నీషియన్‌గా జాయిన్ అవ్వాలని ఉంది.`;
             // Log to Google Sheets (never blocks WhatsApp).
             sendToSheet('Technicians', { name: name, phone: phone, skill: skill, experience: exp, area: area, idProof: 'will show at verification', ref: ref });
-            window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
+            techWaUrl = 'https://wa.me/919966157369?text=' + msg;
+            const refVal = document.getElementById('techDoneRefVal');
+            if (refVal) refVal.textContent = ref;
+            const waBtn = document.getElementById('techDoneWaBtn');
+            if (waBtn) waBtn.href = techWaUrl;
+            const fv = document.getElementById('techFormView'); if (fv) fv.style.display = 'none';
+            const dv = document.getElementById('techDoneView'); if (dv) dv.style.display = 'block';
+            window.open(techWaUrl, '_blank', 'noopener');
         }
 
         // Salon now has its own page (salon.html) with a booking form —
@@ -2319,9 +2659,11 @@
 
         // Select NRI Plan & Open Form
         function selectNRIPlan(planName) {
+            availoModalSwap = true; // one modal replaces the other: keep a single history entry
             closeModal('nriModal');
             document.getElementById('nriPlanSelected').value = planName;
             openModal('nriApplyModal');
+            availoModalSwap = false;
         }
 
         // Submit NRI Application — inline validation + visible confirmation.
@@ -2352,6 +2694,8 @@
         }
         initGateFormMemory();
         buildGatePartnerChips();
+        bindPhoneField('trialPhone');
+        bindPhoneField('techPhone');
         applyLanguage();
     </script>
 </body>
