@@ -1,10 +1,10 @@
 {
   "name": "tests",
   "version": "1.0.0",
-  "description": "jsdom DOM tests for the Availo site (Mayura male-voice fix)",
+  "description": "jsdom DOM tests for the Availo site (Mayura panel: voice removed 18 Nov 2026; male-voice selection retained for restoration)",
   "main": "index.js",
   "scripts": {
-    "test": "node mayura-voice.test.js"
+    "test": "node mayura-voice.test.js && node mayura-no-voice.test.js"
   },
   "keywords": [],
   "author": "",

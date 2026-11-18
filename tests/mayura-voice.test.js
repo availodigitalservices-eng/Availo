@@ -1,6 +1,13 @@
 // Mayura male-voice tests — jsdom DOM tests for index.html.
 // Loads the REAL inline script from index.html with mocked speechSynthesis
-// and asserts the greeting always uses a male TTS voice when one exists.
+// and asserts the RETAINED greeting function still uses a male TTS voice
+// when one exists.
+//
+// NOTE (18 Nov 2026): panel voice was REMOVED by owner order — tapping
+// Mayura only opens the panel silently now. The voice functions below
+// (speakMayuraGreeting etc.) are kept for a possible restore, so these
+// tests call speakMayuraGreeting() DIRECTLY instead of via speakMayura().
+// The no-voice panel behaviour is covered in mayura-no-voice.test.js.
 //
 // Run:  node mayura-voice.test.js        (from this directory)
 //        npm test                         (same thing, via package.json)
@@ -76,7 +83,7 @@ test('te: male voice (Ravi) chosen even when listed after a female voice', async
         { name: 'Google US English', lang: 'en-US' },
     ]);
     try {
-        window.speakMayura();
+        window.speakMayuraGreeting();
         await sleep(400);
         assert.equal(spoken.length, 1, 'greeting should be spoken once');
         assert.equal(spoken[0].voice.name, 'Microsoft Ravi - Telugu (India)');
@@ -91,7 +98,7 @@ test('en: male voice chosen even when listed after a female voice', async () => 
     ]);
     try {
         window.setLanguage('en');
-        window.speakMayura();
+        window.speakMayuraGreeting();
         await sleep(400);
         assert.equal(spoken.length, 1);
         assert.equal(spoken[0].voice.name, 'English (India) Male');
@@ -106,7 +113,7 @@ test('hi: male voice chosen even when listed after a female voice', async () => 
     ]);
     try {
         window.setLanguage('hi');
-        window.speakMayura();
+        window.speakMayuraGreeting();
         await sleep(400);
         assert.equal(spoken.length, 1);
         assert.equal(spoken[0].voice.name, 'हिन्दी (भारत) Male');
@@ -120,7 +127,7 @@ test('te: voice named Pradeep also counts as male', async () => {
         { name: 'Microsoft Pradeep - Telugu (India)', lang: 'te-IN' },
     ]);
     try {
-        window.speakMayura();
+        window.speakMayuraGreeting();
         await sleep(400);
         assert.equal(spoken.length, 1);
         assert.equal(spoken[0].voice.name, 'Microsoft Pradeep - Telugu (India)');
@@ -136,7 +143,7 @@ test('fallback: no male voice -> first same-language voice is used', async () =>
         { name: 'English (India) Male', lang: 'en-IN' },
     ]);
     try {
-        window.speakMayura();
+        window.speakMayuraGreeting();
         await sleep(400);
         assert.equal(spoken.length, 1);
         assert.equal(spoken[0].voice.name, 'Google తెలుగు');
@@ -149,7 +156,7 @@ test('fallback: no same-language voice -> English male voice is used', async () 
         { name: 'English (India) Male', lang: 'en-IN' },
     ]);
     try {
-        window.speakMayura(); // currentLang is te, no te voice at all
+        window.speakMayuraGreeting(); // currentLang is te, no te voice at all
         await sleep(400);
         assert.equal(spoken.length, 1);
         assert.equal(spoken[0].voice.name, 'English (India) Male');
@@ -162,7 +169,7 @@ test('fallback: no male voice anywhere -> first English voice is used', async ()
         { name: 'Google UK English Female', lang: 'en-GB' },
     ]);
     try {
-        window.speakMayura(); // te, no te voice, no male voice
+        window.speakMayuraGreeting(); // te, no te voice, no male voice
         await sleep(400);
         assert.equal(spoken.length, 1);
         assert.equal(spoken[0].voice.name, 'Google US English');
@@ -174,7 +181,7 @@ test('fallback: no male voice anywhere -> first English voice is used', async ()
 test('no TTS voices at all -> pre-recorded MP3 plays, nothing is spoken', async () => {
     const { window, spoken, audioPlayed } = loadPage([]);
     try {
-        window.speakMayura();
+        window.speakMayuraGreeting();
         await sleep(1300); // waitMayuraVoices waits up to 900ms
         assert.equal(spoken.length, 0, 'nothing should go through speechSynthesis');
         assert.equal(audioPlayed.length, 1, 'MP3 fallback should play once');
@@ -186,7 +193,7 @@ test('no TTS voices, language en -> English MP3 plays', async () => {
     const { window, spoken, audioPlayed } = loadPage([]);
     try {
         window.setLanguage('en');
-        window.speakMayura();
+        window.speakMayuraGreeting();
         await sleep(1300);
         assert.equal(spoken.length, 0);
         assert.equal(audioPlayed.length, 1);
@@ -197,7 +204,7 @@ test('no TTS voices, language en -> English MP3 plays', async () => {
 test('no speechSynthesis in browser -> MP3 fallback plays', async () => {
     const { window, spoken, audioPlayed } = loadPage(null);
     try {
-        window.speakMayura();
+        window.speakMayuraGreeting();
         await sleep(400);
         assert.equal(spoken.length, 0);
         assert.equal(audioPlayed.length, 1);
@@ -207,8 +214,8 @@ test('no speechSynthesis in browser -> MP3 fallback plays', async () => {
 
 // --- Tap behaviour, wording and pitch are unchanged -------------------------
 
-test('tap opens the Mayura panel and shows the greeting text (te)', async () => {
-    const { window, document, spoken } = loadPage([
+test('tap opens the Mayura panel SILENTLY and shows the greeting text (te)', async () => {
+    const { window, document, spoken, audioPlayed } = loadPage([
         { name: 'Microsoft Ravi - Telugu (India)', lang: 'te-IN' },
     ]);
     try {
@@ -216,12 +223,13 @@ test('tap opens the Mayura panel and shows the greeting text (te)', async () => 
         window.speakMayura();
         assert.ok(document.getElementById('mayuraPanel').classList.contains('active'), 'panel opens on tap');
         assert.equal(document.getElementById('mayuraPanelText').textContent, GREETING_TEXT.te);
-        await sleep(400);
-        assert.equal(spoken.length, 1);
+        await sleep(1500); // cover waitMayuraVoices (900ms) + speak delay in case anything still fires
+        assert.equal(spoken.length, 0, 'tap must NOT speak — panel voice removed 18 Nov 2026');
+        assert.equal(audioPlayed.length, 0, 'no MP3 fallback on tap either');
     } finally { window.close(); }
 });
 
-test('replay button also speaks with the male voice', async () => {
+test('retained mayuraReplayGreeting() still speaks with the male voice when called directly', async () => {
     const { window, spoken } = loadPage([
         { name: 'Google తెలుగు', lang: 'te-IN' },
         { name: 'Microsoft Ravi - Telugu (India)', lang: 'te-IN' },
@@ -239,7 +247,7 @@ test('utterance pitch is lowered to 0.76 and rate stays 0.95', async () => {
         { name: 'Microsoft Ravi - Telugu (India)', lang: 'te-IN' },
     ]);
     try {
-        window.speakMayura();
+        window.speakMayuraGreeting();
         await sleep(400);
         assert.equal(spoken.length, 1);
         assert.equal(spoken[0].pitch, 0.76);
