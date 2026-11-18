@@ -1246,7 +1246,7 @@
             HOTEL_MENU.forEach(item => {
                 if (item.count > 0) {
                     const cost = item.count * item.price;
-                    orderLines.push(`• ${item.name} x ${item.count} = ₹${cost}`);
+                    orderLines.push(`• ${encodeURIComponent(item.name)} x ${item.count} = ₹${cost}`);
                     grandTotal += cost;
                 }
             });
@@ -1257,10 +1257,10 @@
             }
 
             const chefNote = document.getElementById('chefNoteInput').value.trim();
-            const noteStr = chefNote ? `%0A*చెఫ్ సూచన:* ${chefNote}` : "";
+            const noteStr = chefNote ? `%0A*చెఫ్ సూచన:* ${encodeURIComponent(chefNote)}` : "";
 
             const itemsStr = orderLines.join('%0A');
-            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${new Date().toLocaleTimeString()}%0A-----------------------------%0A🔔 *కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
+            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${encodeURIComponent(hotelName)}%0A*టేబుల్:* ${encodeURIComponent(tableNumber)}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${encodeURIComponent(new Date().toLocaleTimeString())}%0A-----------------------------%0A🔔 *కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
 
             const displayLines = [];
             HOTEL_MENU.forEach(item => {
