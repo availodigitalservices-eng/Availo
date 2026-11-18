@@ -289,6 +289,29 @@
         }
 
         td { color: #e2e8f0; }
+
+        /* Gate Pass privacy: masked number + blurred photo (Female rows) */
+        .reveal-btn {
+            display: inline-block;
+            margin-left: 6px;
+            background: transparent;
+            border: 1px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .gate-photo-thumb {
+            display: block;
+            max-width: 120px;
+            border-radius: 6px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+        }
+        .gate-photo-blurred { filter: blur(10px); }
+
         tr:last-child td { border-bottom: none; }
     </style>
 </head>
@@ -577,6 +600,37 @@
             renderTable();
         }
 
+        // --- Gate Pass privacy: mask at DISPLAY only (owner spec, CORRECTED
+        // 18 Nov 2026) ------------------------------------------------------
+        // The Sheet + Drive hold the FULL number and the CLEAR photo, so the
+        // admin can see the real data. In this panel only, Female GatePass
+        // rows show the number masked and the photo thumbnail blurred, with
+        // a per-row reveal. Male rows are shown as-is (clear thumbnail,
+        // full number). Masking keys off the Gender column; with no Gender
+        // column there is no masking.
+        // Mobile mask: first 2 digits + ****** + last 2 digits (98******19).
+        function maskMobileNumber(phone) {
+            const d = (phone || '').replace(/\D/g, '');
+            if (d.length < 4) return d;
+            return d.slice(0, 2) + '******' + d.slice(-2);
+        }
+        // Drive file URL (file.getUrl()) -> file ID, e.g.
+        // https://drive.google.com/file/d/<ID>/view?... -> <ID>
+        function driveFileId(url) {
+            const m = String(url || '').match(/\/file\/d\/([A-Za-z0-9_-]+)/);
+            return m ? m[1] : null;
+        }
+        // Drive file URL -> thumbnail URL, or null when no ID can be found.
+        function driveThumbnailUrl(url) {
+            const id = driveFileId(url);
+            return id ? 'https://drive.google.com/thumbnail?id=' + id + '&sz=w400' : null;
+        }
+        function revealLabel(show) {
+            return show
+                ? (currentLang === 'hi' ? '🙈 छिपाएँ' : currentLang === 'en' ? '🙈 Hide' : '🙈 దాచు')
+                : (currentLang === 'hi' ? '👁 दिखाएँ' : currentLang === 'en' ? '👁 Show' : '👁 చూపించు');
+        }
+
         function renderTable() {
             const head = document.getElementById('tableHead');
             const body = document.getElementById('tableBody');
@@ -599,15 +653,92 @@
             });
             const q = (document.getElementById('searchInput').value || '').toLowerCase();
             let shown = 0;
+            // GatePass display masking: Female rows show the mobile masked
+            // and the photo as a blurred thumbnail, each with a per-row
+            // reveal. Keyed off the Gender column; no Gender column means
+            // no masking. Other tabs are rendered exactly as before.
+            const isGatePass = (activeForm === 'GatePass');
+            const genderIdx = d.headers.indexOf('Gender');
+            const mobileIdx = d.headers.indexOf('Mobile');
+            const photoIdx = d.headers.indexOf('Photo');
             d.rows.forEach(function (row) {
                 if (q) {
                     const hay = row.map(function (c) { return String(c == null ? '' : c); }).join(' ').toLowerCase();
                     if (hay.indexOf(q) === -1) return;
                 }
+                const isFemale = isGatePass && genderIdx >= 0 && String(row[genderIdx] || '') === 'Female';
                 const tr = document.createElement('tr');
-                row.forEach(function (cell) {
+                row.forEach(function (cell, ci) {
                     const td = document.createElement('td');
-                    td.textContent = cell == null ? '' : String(cell);
+                    const val = cell == null ? '' : String(cell);
+                    if (isFemale && ci === mobileIdx && val) {
+                        // Masked number + per-row reveal (admin only).
+                        const span = document.createElement('span');
+                        span.textContent = maskMobileNumber(val);
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'reveal-btn';
+                        btn.textContent = revealLabel(false);
+                        let revealed = false;
+                        btn.onclick = function () {
+                            revealed = !revealed;
+                            span.textContent = revealed ? val : maskMobileNumber(val);
+                            btn.textContent = revealLabel(revealed);
+                        };
+                        td.appendChild(span);
+                        td.appendChild(btn);
+                    } else if (isFemale && ci === photoIdx && val) {
+                        // Blurred thumbnail + per-row reveal; the thumbnail
+                        // links to the full Drive file. An unparseable URL
+                        // falls back to a plain-text link.
+                        const thumb = driveThumbnailUrl(val);
+                        if (thumb) {
+                            const link = document.createElement('a');
+                            link.href = val;
+                            link.target = '_blank';
+                            link.rel = 'noopener';
+                            const img = document.createElement('img');
+                            img.src = thumb;
+                            img.alt = '';
+                            img.className = 'gate-photo-thumb gate-photo-blurred';
+                            link.appendChild(img);
+                            const btn = document.createElement('button');
+                            btn.type = 'button';
+                            btn.className = 'reveal-btn';
+                            btn.textContent = revealLabel(false);
+                            let revealed = false;
+                            btn.onclick = function () {
+                                revealed = !revealed;
+                                if (revealed) img.classList.remove('gate-photo-blurred');
+                                else img.classList.add('gate-photo-blurred');
+                                btn.textContent = revealLabel(revealed);
+                            };
+                            td.appendChild(link);
+                            td.appendChild(btn);
+                        } else {
+                            const link = document.createElement('a');
+                            link.href = val;
+                            link.target = '_blank';
+                            link.rel = 'noopener';
+                            link.textContent = val;
+                            td.appendChild(link);
+                        }
+                    } else if (ci === photoIdx && val && driveThumbnailUrl(val)) {
+                        // Male GatePass row with a Drive photo: clear
+                        // thumbnail (as-is, unblurred) linking to the file.
+                        const link = document.createElement('a');
+                        link.href = val;
+                        link.target = '_blank';
+                        link.rel = 'noopener';
+                        const img = document.createElement('img');
+                        img.src = driveThumbnailUrl(val);
+                        img.alt = '';
+                        img.className = 'gate-photo-thumb';
+                        link.appendChild(img);
+                        td.appendChild(link);
+                    } else {
+                        td.textContent = val;
+                    }
                     tr.appendChild(td);
                 });
                 body.appendChild(tr);
