@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<!--
+  AVAILO Admin Panel — UNLISTED page.
+  NOT linked from index.html, any service tile, or the site navigation.
+  Open it directly: https://availoservices.in/admin.html
+
+  PRIVACY / SECURITY NOTE: this panel is protected by a simple passcode
+  check in the browser only — it is NOT a bank-grade login. Anyone who
+  knows this page's URL and the passcode can see customer names, phones
+  and orders. Do NOT share the admin link or the passcode, and change
+  ADMIN_PASSCODE in the script below to your own code.
+  The passcode itself is visible in this file's source — that is the
+  trade-off of a free static site with no server. For stronger control,
+  keep the Google Sheet itself private (it already is) and change the
+  passcode regularly.
+
+  DATA: reads the "AVAILO Database" Google Sheet through the same Apps
+  Script web app as the site (availo-db.js -> AVAILO_SHEETS_URL).
+  The web app must be deployed (v3, with the ?form= list endpoint).
+  Until AVAILO_SHEETS_URL is filled in, this page shows "setup pending"
+  instead of tables.
+-->
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Panel - AVAILO</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@600;700&family=Ramabhadra&family=Suranna&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #030b1e;
+            --panel-bg: #071530;
+            --cyan-glow: #00e5ff;
+            --text-sub: #94a3b8;
+            --border-glow: 1px solid rgba(0, 229, 255, 0.35);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Inter', 'Ramabhadra', 'Noto Sans Devanagari', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        .te-heading { font-family: 'Ramabhadra', sans-serif; }
+        .te-body { font-family: 'Suranna', serif; }
+
+        header {
+            background: var(--panel-bg);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: var(--border-glow);
+        }
+
+        .back-link {
+            color: var(--cyan-glow);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+
+        .container {
+            padding: 22px 18px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Desktop: wide centred layout (mobile layout unchanged) */
+        @media (min-width: 1024px) {
+            .container { max-width: 1100px; }
+        }
+
+        h1 {
+            font-size: 22px;
+            color: var(--cyan-glow);
+            margin-bottom: 4px;
+        }
+
+        .sub-meta {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+        }
+
+        .block-card {
+            background: var(--panel-bg);
+            border: var(--border-glow);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .block-card h3 {
+            font-size: 15px;
+            color: var(--cyan-glow);
+            margin-bottom: 8px;
+        }
+
+        .block-card p {
+            font-size: 13.5px;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+
+        .cta-btn {
+            display: block;
+            width: 100%;
+            background: #25d366;
+            color: #ffffff;
+            border: none;
+            font-size: 15px;
+            font-weight: 800;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .ghost-btn {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        input[type="password"], input[type="text"] {
+            width: 100%;
+            background: #0b1e3f;
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            color: #ffffff;
+            font-size: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        input:focus { outline: 2px solid var(--cyan-glow); }
+
+        .err-msg {
+            color: #f87171;
+            font-size: 13.5px;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+
+        .warn-box {
+            background: #3f1d05;
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            color: #fcd34d;
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: 13.5px;
+            margin-bottom: 16px;
+        }
+
+        /* Count cards */
+        .count-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 1024px) {
+            .count-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .count-card {
+            background: #0b1e3f;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        .count-card.active {
+            border-color: var(--cyan-glow);
+            box-shadow: 0 0 0 1px var(--cyan-glow);
+        }
+
+        .count-card b {
+            display: block;
+            color: var(--cyan-glow);
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        .count-card span {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        /* Tabs */
+        .tab-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .tab-btn {
+            background: #0b1e3f;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 7px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: var(--cyan-glow);
+            border-color: var(--cyan-glow);
+            color: #030b1e;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .toolbar input[type="text"] {
+            flex: 1 1 200px;
+            margin-bottom: 0;
+        }
+
+        .status-line {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 10px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: var(--border-glow);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 560px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 9px 10px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+            vertical-align: top;
+            word-break: break-word;
+        }
+
+        th {
+            background: #0b1e3f;
+            color: var(--cyan-glow);
+            font-size: 12px;
+            position: sticky;
+            top: 0;
+        }
+
+        td { color: #e2e8f0; }
+        tr:last-child td { border-bottom: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="te-heading" style="color: #fff; font-size: 16px;" data-te="AVAILO అడ్మిన్" data-en="AVAILO ADMIN" data-hi="AVAILO एडमिन">AVAILO అడ్మిన్</div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <a class="back-link" href="index.html" data-te="← హోమ్" data-en="← Home" data-hi="← होम">← హోమ్</a>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="te-heading" data-te="అడ్మిన్ ప్యానెల్" data-en="Admin Panel" data-hi="एडमिन पैनल">అడ్మిన్ ప్యానెల్</h1>
+        <p class="sub-meta" data-te="కస్టమర్లు &amp; ఆర్డర్లు — అన్ని సెక్షన్లు ఒకే చోట" data-en="Customers &amp; orders — every section in one place" data-hi="ग्राहक और ऑर्डर — सभी सेक्शन एक ही जगह">కస్టమర్లు &amp; ఆర్డర్లు — అన్ని సెక్షన్లు ఒకే చోట</p>
+
+        <!-- ============ PASSCODE GATE ============ -->
+        <div id="gateBox" class="block-card">
+            <h3 class="te-heading" data-te="పాస్‌కోడ్ నమోదు చేయండి" data-en="Enter passcode" data-hi="पासकोड डालें">పాస్‌కోడ్ నమోదు చేయండి</h3>
+            <p data-te="ఈ పేజీ యజమాని మాత్రమే చూడాలి. పాస్‌కోడ్ ఎవరితోనూ పంచుకోవద్దు." data-en="Only the owner should open this page. Do not share the passcode with anyone." data-hi="यह पेज सिर्फ मालिक के लिए है। पासकोड किसी से साझा न करें।">ఈ పేజీ యజమాని మాత్రమే చూడాలి. పాస్‌కోడ్ ఎవరితోనూ పంచుకోవద్దు.</p>
+            <input type="password" id="passInput" placeholder="••••••••" autocomplete="off">
+            <button class="cta-btn" id="unlockBtn" onclick="checkPasscode()" data-te="అన్‌లాక్" data-en="Unlock" data-hi="अनलॉक">అన్‌లాక్</button>
+            <div class="err-msg" id="gateErr"></div>
+        </div>
+
+        <!-- ============ DASHBOARD (hidden until unlocked) ============ -->
+        <div id="dashBox" style="display: none;">
+
+            <!-- Shown when the Sheets connection is not live yet -->
+            <div id="setupPending" class="warn-box" style="display: none;">
+                <b data-te="సెటప్ ఇంకా పూర్తి కాలేదు" data-en="Setup not complete yet" data-hi="सेटअप अभी पूरा नहीं हुआ">సెటప్ ఇంకా పూర్తి కాలేదు</b><br>
+                <span data-te="Sheet కనెక్షన్ ఇంకా live లో లేదు — డేటా చూడాలంటే ముందు Apps Script deploy పూర్తి చేసి, site లో URL పెట్టాలి. వివరాలు SHEETS-SETUP.md లో ఉన్నాయి." data-en="The Sheet connection is not live yet — finish the Apps Script deployment and put its URL in the site first. Steps are in SHEETS-SETUP.md." data-hi="Sheet कनेक्शन अभी लाइव नहीं है — पहले Apps Script डिप्लॉय पूरा करें और साइट में URL डालें। चरण SHEETS-SETUP.md में हैं।">Sheet కనెక్షన్ ఇంకా live లో లేదు — డేటా చూడాలంటే ముందు Apps Script deploy పూర్తి చేసి, site లో URL పెట్టాలి. వివరాలు SHEETS-SETUP.md లో ఉన్నాయి.</span>
+            </div>
+
+            <div id="dashContent" style="display: none;">
+                <div style="margin-bottom: 14px;">
+                    <a class="ghost-btn" id="sheetLink" href="https://docs.google.com/spreadsheets/d/1QPWpoi9flbaetpTckqAAaeJsAwBhovzetCEabAIWkIk/edit" target="_blank" rel="noopener" data-te="📊 Google Sheet తెరవండి" data-en="📊 Open Google Sheet" data-hi="📊 Google Sheet खोलें">📊 Google Sheet తెరవండి</a>
+                    &nbsp;
+                    <button class="ghost-btn" onclick="refreshAll()" data-te="↻ అన్నీ రిఫ్రెష్" data-en="↻ Refresh all" data-hi="↻ सभी रिफ़्रेश करें">↻ అన్నీ రిఫ్రెష్</button>
+                </div>
+
+                <div class="count-grid" id="countGrid"></div>
+
+                <div class="tab-bar" id="tabBar"></div>
+
+                <div class="toolbar">
+                    <input type="text" id="searchInput" data-te-ph="వెతకండి..." data-en-ph="Search..." data-hi-ph="खोजें..." placeholder="వెతకండి..." oninput="renderTable()">
+                    <button class="ghost-btn" onclick="refreshTab()" data-te="↻ రిఫ్రెష్" data-en="↻ Refresh" data-hi="↻ रिफ़्रेश">↻ రిఫ్రెష్</button>
+                </div>
+
+                <div class="status-line" id="statusLine"></div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr id="tableHead"></tr></thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="availo-db.js"></script>
+    <script>
+        // Button label always shows the CURRENT language.
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
+        const LANG_ORDER = ['te', 'en', 'hi'];
+        const LANG_BTN_LABEL = { te: 'తెలుగు', en: 'English', hi: 'हिन्दी' };
+
+        function toggleLanguage(forceLang) {
+            const next = forceLang || LANG_ORDER[(LANG_ORDER.indexOf(currentLang) + 1) % LANG_ORDER.length];
+            currentLang = next;
+            localStorage.setItem('availo_lang', currentLang);
+            document.documentElement.lang = currentLang;
+            document.getElementById('langBtn').innerText = LANG_BTN_LABEL[currentLang];
+
+            document.querySelectorAll('[data-te]').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang);
+                if (text) el.innerHTML = text;
+            });
+            // Search-box placeholder is an attribute, not innerHTML.
+            const si = document.getElementById('searchInput');
+            if (si) {
+                const ph = si.getAttribute('data-' + currentLang + '-ph');
+                if (ph) si.placeholder = ph;
+            }
+            // Re-render dynamic labels in the new language.
+            if (unlocked) { renderCounts(); renderTabs(); renderTable(); }
+        }
+
+        // ================= PASSCODE GATE =================
+        // PLACEHOLDER passcode — the owner must change this to their own code
+        // (search for ADMIN_PASSCODE below). Simple browser-side gate only;
+        // it is NOT a bank-grade login — see the comment at the top of file.
+        const ADMIN_PASSCODE = 'availo123';
+        const MAX_TRIES = 3;
+        const LOCK_SECONDS = 60;
+        const LOCK_KEY = 'availo_admin_lock_until';
+        const UNLOCK_KEY = 'availo_admin_unlocked';
+
+        let unlocked = false;
+        let wrongTries = 0;
+        let lockTimer = null;
+
+        function lockRemainingSec() {
+            const until = parseInt(localStorage.getItem(LOCK_KEY) || '0', 10);
+            return Math.max(0, Math.ceil((until - Date.now()) / 1000));
+        }
+
+        function showLockMsg() {
+            const sec = lockRemainingSec();
+            const el = document.getElementById('gateErr');
+            if (sec > 0) {
+                el.textContent = (currentLang === 'hi' ? 'बहुत बार गलत पासकोड डाला गया — कृपया ' + sec + ' सेकंड बाद फिर कोशिश करें।'
+                    : currentLang === 'en' ? 'Too many wrong tries — please try again in ' + sec + ' seconds.'
+                    : 'చాలా సార్లు తప్పు పాస్‌కోడ్ వేశారు — ' + sec + ' సెకన్ల తర్వాత మళ్ళీ ప్రయత్నించండి.');
+                document.getElementById('passInput').disabled = true;
+                document.getElementById('unlockBtn').disabled = true;
+                lockTimer = setTimeout(function () {
+                    document.getElementById('passInput').disabled = false;
+                    document.getElementById('unlockBtn').disabled = false;
+                    document.getElementById('gateErr').textContent = '';
+                    wrongTries = 0;
+                }, sec * 1000);
+            }
+        }
+
+        function checkPasscode() {
+            if (lockRemainingSec() > 0) { showLockMsg(); return; }
+            const val = document.getElementById('passInput').value || '';
+            if (val === ADMIN_PASSCODE) {
+                unlocked = true;
+                sessionStorage.setItem(UNLOCK_KEY, '1');
+                document.getElementById('gateBox').style.display = 'none';
+                document.getElementById('dashBox').style.display = 'block';
+                loadDashboard();
+            } else {
+                wrongTries++;
+                document.getElementById('passInput').value = '';
+                if (wrongTries >= MAX_TRIES) {
+                    localStorage.setItem(LOCK_KEY, String(Date.now() + LOCK_SECONDS * 1000));
+                    showLockMsg();
+                } else {
+                    document.getElementById('gateErr').textContent =
+                        (currentLang === 'hi' ? 'गलत पासकोड — फिर कोशिश करें (' + (MAX_TRIES - wrongTries) + ' मौके बचे हैं)।'
+                        : currentLang === 'en' ? 'Wrong passcode — try again (' + (MAX_TRIES - wrongTries) + ' tries left).'
+                        : 'తప్పు పాస్‌కోడ్ — మళ్ళీ ప్రయత్నించండి (' + (MAX_TRIES - wrongTries) + ' అవకాశాలు మిగిలాయి).');
+                }
+            }
+        }
+
+        document.getElementById('passInput').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') checkPasscode();
+        });
+
+        // ================= DASHBOARD =================
+        // One entry per Sheet tab. Labels are trilingual; `form` is the exact
+        // tab name used by the Apps Script web app (?form=<name>).
+        const FORMS = [
+            { form: 'GatePass',    te: 'గేట్ పాస్',     en: 'Gate Pass',  hi: 'गेट पास' },
+            { form: 'Orders',      te: 'ఆర్డర్లు',      en: 'Orders',     hi: 'ऑर्डर' },
+            { form: 'Technicians', te: 'టెక్నీషియన్లు', en: 'Technicians', hi: 'तकनीशियन' },
+            { form: 'Business',    te: 'బిజినెస్',      en: 'Business',   hi: 'बिज़नेस' },
+            { form: 'NRI',         te: 'NRI',           en: 'NRI',        hi: 'NRI' },
+            { form: 'Salon',       te: 'సెలూన్',        en: 'Salon',      hi: 'सैलून' },
+            { form: 'Cube',        te: 'క్యూబ్',         en: 'Cube',       hi: 'क्यूब' },
+            { form: 'Contact',     te: 'సంప్రదింపులు',   en: 'Contact',    hi: 'संपर्क' }
+        ];
+
+        const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1QPWpoi9flbaetpTckqAAaeJsAwBhovzetCEabAIWkIk/edit';
+        const ADMIN_DATA = {};   // form -> { headers: [], rows: [[]] }
+        let activeForm = 'GatePass';
+        let lastUpdated = null;
+
+        function sheetsBaseUrl() {
+            return (typeof AVAILO_SHEETS_URL !== 'undefined' && AVAILO_SHEETS_URL) ? AVAILO_SHEETS_URL : '';
+        }
+
+        function loadDashboard() {
+            const url = sheetsBaseUrl();
+            if (!url) {
+                // Setup pending — show the notice instead of broken tables.
+                document.getElementById('setupPending').style.display = 'block';
+                document.getElementById('dashContent').style.display = 'none';
+                return;
+            }
+            document.getElementById('setupPending').style.display = 'none';
+            document.getElementById('dashContent').style.display = 'block';
+            renderTabs();
+            refreshAll();
+        }
+
+        function fetchForm(form) {
+            const url = sheetsBaseUrl() + '?form=' + encodeURIComponent(form);
+            return fetch(url).then(function (res) { return res.json(); }).then(function (data) {
+                if (!data || !data.ok) throw new Error((data && data.error) || 'bad response');
+                ADMIN_DATA[form] = { headers: data.headers || [], rows: data.rows || [] };
+                return ADMIN_DATA[form];
+            });
+        }
+
+        function refreshAll() {
+            setStatus(currentLang === 'hi' ? 'लोड हो रहा है...' : currentLang === 'en' ? 'Loading...' : 'లోడ్ అవుతోంది...');
+            const jobs = FORMS.map(function (f) {
+                return fetchForm(f.form).catch(function (err) {
+                    console.warn('[AVAILO Admin] load failed for ' + f.form + ':', err);
+                    ADMIN_DATA[f.form] = ADMIN_DATA[f.form] || { headers: [], rows: [] };
+                    return null;
+                });
+            });
+            Promise.all(jobs).then(function () {
+                lastUpdated = new Date();
+                renderCounts();
+                renderTable();
+                setStatus(statusText());
+            });
+        }
+
+        function refreshTab() {
+            setStatus(currentLang === 'hi' ? 'लोड हो रहा है...' : currentLang === 'en' ? 'Loading...' : 'లోడ్ అవుతోంది...');
+            fetchForm(activeForm).then(function () {
+                lastUpdated = new Date();
+                renderCounts();
+                renderTable();
+                setStatus(statusText());
+            }).catch(function (err) {
+                console.warn('[AVAILO Admin] refresh failed:', err);
+                setStatus(currentLang === 'hi' ? 'डेटा लोड नहीं हुआ — नेटवर्क देखें या Google Sheet सीधे खोलें।' : currentLang === 'en' ? 'Could not load data — check network, or open the Google Sheet directly.' : 'డేటా లోడ్ కాలేదు — నెట్‌వర్క్ చూడండి, లేదా Google Sheet నేరుగా తెరవండి.');
+            });
+        }
+
+        function statusText() {
+            const total = FORMS.reduce(function (n, f) {
+                const d = ADMIN_DATA[f.form];
+                return n + (d ? d.rows.length : 0);
+            }, 0);
+            const when = lastUpdated ? lastUpdated.toLocaleString() : '';
+            return (currentLang === 'hi' ? 'कुल ' + total + ' रिकॉर्ड' : currentLang === 'en' ? 'Total ' + total + ' records' : 'మొత్తం ' + total + ' రికార్డులు')
+                + (when ? ' · ' + (currentLang === 'hi' ? 'आख़िरी अपडेट: ' : currentLang === 'en' ? 'Last updated: ' : 'చివరిగా అప్‌డేట్: ') + when : '');
+        }
+
+        function setStatus(text) {
+            document.getElementById('statusLine').textContent = text;
+        }
+
+        function labelOf(f) {
+            return currentLang === 'hi' ? f.hi : currentLang === 'en' ? f.en : f.te;
+        }
+
+        function renderCounts() {
+            const grid = document.getElementById('countGrid');
+            grid.innerHTML = '';
+            FORMS.forEach(function (f) {
+                const d = ADMIN_DATA[f.form];
+                const card = document.createElement('div');
+                card.className = 'count-card' + (f.form === activeForm ? ' active' : '');
+                card.onclick = function () { switchTab(f.form); };
+                const b = document.createElement('b');
+                b.textContent = d ? d.rows.length : '—';
+                const s = document.createElement('span');
+                s.textContent = labelOf(f);
+                card.appendChild(b);
+                card.appendChild(s);
+                grid.appendChild(card);
+            });
+        }
+
+        function renderTabs() {
+            const bar = document.getElementById('tabBar');
+            bar.innerHTML = '';
+            FORMS.forEach(function (f) {
+                const btn = document.createElement('button');
+                btn.className = 'tab-btn' + (f.form === activeForm ? ' active' : '');
+                btn.textContent = labelOf(f);
+                btn.onclick = function () { switchTab(f.form); };
+                bar.appendChild(btn);
+            });
+        }
+
+        function switchTab(form) {
+            activeForm = form;
+            renderCounts();
+            renderTabs();
+            renderTable();
+        }
+
+        function renderTable() {
+            const head = document.getElementById('tableHead');
+            const body = document.getElementById('tableBody');
+            head.innerHTML = '';
+            body.innerHTML = '';
+            const d = ADMIN_DATA[activeForm];
+            if (!d || !d.headers.length) {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.colSpan = 1;
+                td.textContent = currentLang === 'hi' ? 'कोई रिकॉर्ड नहीं है।' : currentLang === 'en' ? 'No records yet.' : 'ఇంకా రికార్డులు లేవు.';
+                tr.appendChild(td);
+                body.appendChild(tr);
+                return;
+            }
+            d.headers.forEach(function (h) {
+                const th = document.createElement('th');
+                th.textContent = h;
+                head.appendChild(th);
+            });
+            const q = (document.getElementById('searchInput').value || '').toLowerCase();
+            let shown = 0;
+            d.rows.forEach(function (row) {
+                if (q) {
+                    const hay = row.map(function (c) { return String(c == null ? '' : c); }).join(' ').toLowerCase();
+                    if (hay.indexOf(q) === -1) return;
+                }
+                const tr = document.createElement('tr');
+                row.forEach(function (cell) {
+                    const td = document.createElement('td');
+                    td.textContent = cell == null ? '' : String(cell);
+                    tr.appendChild(td);
+                });
+                body.appendChild(tr);
+                shown++;
+            });
+            if (shown === 0) {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.colSpan = d.headers.length;
+                td.textContent = q
+                    ? (currentLang === 'hi' ? 'खोज से कुछ नहीं मिला।' : currentLang === 'en' ? 'No matches for this search.' : 'ఈ వెతుకులాటకు ఏమీ దొరకలేదు.')
+                    : (currentLang === 'hi' ? 'कोई रिकॉर्ड नहीं है।' : currentLang === 'en' ? 'No records yet.' : 'ఇంకా రికార్డులు లేవు.');
+                tr.appendChild(td);
+                body.appendChild(tr);
+            }
+        }
+
+        // Apply the saved language on load (no cycling) and show the CURRENT
+        // language on the button. Restore an in-session unlock and any
+        // lockout left from a previous try.
+        toggleLanguage(currentLang);
+        if (sessionStorage.getItem(UNLOCK_KEY) === '1') {
+            unlocked = true;
+            document.getElementById('gateBox').style.display = 'none';
+            document.getElementById('dashBox').style.display = 'block';
+            loadDashboard();
+        } else if (lockRemainingSec() > 0) {
+            showLockMsg();
+        }
+    </script>
+
+</body>
+</html>

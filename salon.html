@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVAILO Salon — సెలూన్ బుకింగ్</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@600;700&family=Ramabhadra&family=Suranna&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #030b1e;
+            --panel-bg: #071530;
+            --cyan-glow: #00e5ff;
+            --text-sub: #94a3b8;
+            --border-glow: 1px solid rgba(0, 229, 255, 0.35);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Inter', 'Ramabhadra', 'Noto Sans Devanagari', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        .te-heading { font-family: 'Ramabhadra', sans-serif; }
+        .te-body { font-family: 'Suranna', serif; }
+
+        header {
+            background: var(--panel-bg);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: var(--border-glow);
+        }
+
+        .back-link {
+            color: var(--cyan-glow);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+
+        .container {
+            padding: 22px 18px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Desktop: wide centred layout (mobile layout unchanged) */
+        @media (min-width: 1024px) {
+            .container { max-width: 900px; }
+        }
+
+        h1 {
+            font-size: 22px;
+            color: var(--cyan-glow);
+            margin-bottom: 4px;
+        }
+
+        .sub-meta {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+        }
+
+        .block-card {
+            background: var(--panel-bg);
+            border: var(--border-glow);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .block-card h3 {
+            font-size: 15px;
+            color: var(--cyan-glow);
+            margin-bottom: 8px;
+        }
+
+        .block-card p, .block-card li {
+            font-size: 13.5px;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+
+        ol, ul { padding-left: 18px; }
+
+        .open-badge {
+            display: inline-block;
+            background: #25d366;
+            color: #052e16;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        .banner-img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .spec-cell {
+            background: #0b1e3f;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .spec-cell b {
+            display: block;
+            color: #ffffff;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .spec-cell span {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #cbd5e1;
+            margin: 10px 0 4px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            background: #0b1e3f;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 10px 12px;
+            font-family: inherit;
+        }
+
+        .form-input::placeholder { color: #64748b; }
+        .form-select option { background: #0b1e3f; color: #ffffff; }
+
+        .warn-line {
+            display: none;
+            color: #fca5a5;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .confirm-line {
+            display: none;
+            color: #86efac;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .cta-btn {
+            display: block;
+            width: 100%;
+            background: #25d366;
+            color: #ffffff;
+            border: none;
+            font-size: 15px;
+            font-weight: 800;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="te-heading" style="color: #fff; font-size: 16px;" data-te="AVAILO సెలూన్" data-en="AVAILO SALON" data-hi="AVAILO सैलून">AVAILO సెలూన్</div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <a class="back-link" href="index.html" data-te="← హోమ్" data-en="← Home" data-hi="← होम">← హోమ్</a>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <span class="open-badge" data-te="✂️ బుకింగ్ ఓపెన్" data-en="✂️ Booking Open" data-hi="✂️ बुकिंग खुली है">✂️ బుకింగ్ ఓపెన్</span>
+        <h1 class="te-heading" data-te="AVAILO సెలూన్" data-en="AVAILO Salon" data-hi="AVAILO सैलून">AVAILO సెలూన్</h1>
+        <p class="sub-meta" data-te="సెలూన్ సర్వీసులు & స్లాట్ బుకింగ్ — విజయవాడ & గుంటూరు" data-en="Salon services & slot booking — Vijayawada & Guntur" data-hi="सैलून सर्विसेज़ और स्लॉट बुकिंग — विजयवाड़ा और गुंटूर">సెలూన్ సర్వీసులు & స్లాట్ బుకింగ్ — విజయవాడ & గుంటూరు</p>
+
+        <img class="banner-img" src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=900&auto=format&fit=crop&q=80" alt="Salon Services" data-alt-te="సెలూన్ సర్వీసెస్" data-alt-en="Salon Services" data-alt-hi="सैलून सर्विसेज़" loading="lazy" decoding="async">
+
+        <div class="block-card">
+            <h3 class="te-heading" data-te="సర్వీసులు" data-en="Services" data-hi="सेवाएँ">సర్వీసులు</h3>
+            <div class="spec-grid">
+                <div class="spec-cell"><b data-te="✂️ హెయిర్ కట్" data-en="✂️ Hair Cut" data-hi="✂️ हेयर कट">✂️ హెయిర్ కట్</b><span data-te="ధర: త్వరలో" data-en="Price: coming soon" data-hi="कीमत: जल्द आ रही है">ధర: త్వరలో</span></div>
+                <div class="spec-cell"><b data-te="🪒 షేవింగ్" data-en="🪒 Shaving" data-hi="🪒 शेविंग">🪒 షేవింగ్</b><span data-te="ధర: త్వరలో" data-en="Price: coming soon" data-hi="कीमत: जल्द आ रही है">ధర: త్వరలో</span></div>
+                <div class="spec-cell"><b data-te="🧔 గడ్డం ట్రిమ్" data-en="🧔 Beard Trim" data-hi="🧔 दाढ़ी ट्रिम">🧔 గడ్డం ట్రిమ్</b><span data-te="ధర: త్వరలో" data-en="Price: coming soon" data-hi="कीमत: जल्द आ रही है">ధర: త్వరలో</span></div>
+                <div class="spec-cell"><b data-te="💆 ఫేషియల్" data-en="💆 Facial" data-hi="💆 फेशियल">💆 ఫేషియల్</b><span data-te="ధర: త్వరలో" data-en="Price: coming soon" data-hi="कीमत: जल्द आ रही है">ధర: త్వరలో</span></div>
+                <div class="spec-cell"><b data-te="🎨 హెయిర్ కలర్" data-en="🎨 Hair Colour" data-hi="🎨 हेयर कलर">🎨 హెయిర్ కలర్</b><span data-te="ధర: త్వరలో" data-en="Price: coming soon" data-hi="कीमत: जल्द आ रही है">ధర: త్వరలో</span></div>
+                <div class="spec-cell"><b data-te="💆‍♂️ హెయిర్ స్పా" data-en="💆‍♂️ Hair Spa" data-hi="💆‍♂️ हेयर स्पा">💆‍♂️ హెయిర్ స్పా</b><span data-te="ధర: త్వరలో" data-en="Price: coming soon" data-hi="कीमत: जल्द आ रही है">ధర: త్వరలో</span></div>
+                <div class="spec-cell"><b data-te="💆 తల మసాజ్" data-en="💆 Head Massage" data-hi="💆 सिर की मालिश">💆 తల మసాజ్</b><span data-te="ధర: త్వరలో" data-en="Price: coming soon" data-hi="कीमत: जल्द आ रही है">ధర: త్వరలో</span></div>
+                <div class="spec-cell"><b data-te="👦 పిల్లల హెయిర్ కట్" data-en="👦 Kids Haircut" data-hi="👦 बच्चों का हेयरकट">👦 పిల్లల హెయిర్ కట్</b><span data-te="ధర: త్వరలో" data-en="Price: coming soon" data-hi="कीमत: जल्द आ रही है">ధర: త్వరలో</span></div>
+            </div>
+            <p class="te-body" style="margin-top: 10px;" data-te="సర్వీస్ ధరలు త్వరలో ప్రకటిస్తాం — బుకింగ్ చేస్తే ధర WhatsApp లో తెలియజేస్తాం." data-en="Service prices will be announced soon — book now and we will share the price on WhatsApp." data-hi="सर्विस की कीमतें जल्द घोषित की जाएँगी — बुक करें, कीमत WhatsApp पर बताई जाएगी।">సర్వీస్ ధరలు త్వరలో ప్రకటిస్తాం — బుకింగ్ చేస్తే ధర WhatsApp లో తెలియజేస్తాం.</p>
+        </div>
+
+        <div class="block-card">
+            <h3 class="te-heading" data-te="ఎలా బుక్ చేసుకోవాలి" data-en="How to Book" data-hi="बुक कैसे करें">ఎలా బుక్ చేసుకోవాలి</h3>
+            <ol class="te-body">
+                <li data-te="కింద ఫార్మ్‌లో సర్వీస్ ఎంచుకుని వివరాలు నింపండి." data-en="Pick a service below and fill in your details." data-hi="नीचे फ़ॉर्म में सर्विस चुनें और विवरण भरें।">కింద ఫార్మ్‌లో సర్వీస్ ఎంచుకుని వివరాలు నింపండి.</li>
+                <li data-te="బుకింగ్ WhatsApp లో పంపబడుతుంది — మా టీమ్ స్లాట్ నిర్ధారిస్తుంది." data-en="The booking goes to WhatsApp — our team confirms your slot." data-hi="बुकिंग WhatsApp पर भेजी जाती है — हमारी टीम आपका स्लॉट कन्फ़र्म करती है।">బుకింగ్ WhatsApp లో పంపబడుతుంది — మా టీమ్ స్లాట్ నిర్ధారిస్తుంది.</li>
+                <li data-te="స్లాట్ సమయానికి సెలూన్‌కు రండి." data-en="Come to the salon at your slot time." data-hi="स्लॉट के समय सैलून पर आएँ।">స్లాట్ సమయానికి సెలూన్‌కు రండి.</li>
+            </ol>
+        </div>
+
+        <div class="block-card">
+            <h3 class="te-heading" data-te="స్లాట్ బుక్ చేసుకోండి" data-en="Book Your Slot" data-hi="अपना स्लॉट बुक करें">స్లాట్ బుక్ చేసుకోండి</h3>
+
+            <label class="form-label" for="salonName" data-te="మీ పేరు *" data-en="Your Name *" data-hi="आपका नाम *">మీ పేరు *</label>
+            <input class="form-input" type="text" id="salonName" data-ph-te="పేరు రాయండి" data-ph-en="Enter your name" data-ph-hi="नाम लिखें" placeholder="పేరు రాయండి">
+
+            <label class="form-label" for="salonPhone" data-te="మొబైల్ నంబర్ (WhatsApp) *" data-en="Mobile Number (WhatsApp) *" data-hi="मोबाइल नंबर (WhatsApp) *">మొబైల్ నంబర్ (WhatsApp) *</label>
+            <input class="form-input" type="tel" id="salonPhone" maxlength="10" inputmode="numeric" data-ph-te="10 అంకెల మొబైల్ నంబర్" data-ph-en="10-digit mobile number" data-ph-hi="10 अंकों का मोबाइल नंबर" placeholder="10 అంకెల మొబైల్ నంబర్">
+
+            <label class="form-label" for="salonService" data-te="సర్వీస్ ఎంచుకోండి *" data-en="Choose a Service *" data-hi="सर्विस चुनें *">సర్వీస్ ఎంచుకోండి *</label>
+            <select class="form-select" id="salonService">
+                <option value="" data-te="— సర్వీస్ ఎంచుకోండి —" data-en="— Choose a service —" data-hi="— सर्विस चुनें —">— సర్వీస్ ఎంచుకోండి —</option>
+                <option value="Hair Cut" data-te="హెయిర్ కట్" data-en="Hair Cut" data-hi="हेयर कट">హెయిర్ కట్</option>
+                <option value="Shaving" data-te="షేవింగ్" data-en="Shaving" data-hi="शेविंग">షేవింగ్</option>
+                <option value="Beard Trim" data-te="గడ్డం ట్రిమ్" data-en="Beard Trim" data-hi="दाढ़ी ट्रिम">గడ్డం ట్రిమ్</option>
+                <option value="Facial" data-te="ఫేషియల్" data-en="Facial" data-hi="फेशियल">ఫేషియల్</option>
+                <option value="Hair Colour" data-te="హెయిర్ కలర్" data-en="Hair Colour" data-hi="हेयर कलर">హెయిర్ కలర్</option>
+                <option value="Hair Spa" data-te="హెయిర్ స్పా" data-en="Hair Spa" data-hi="हेयर स्पा">హెయిర్ స్పా</option>
+                <option value="Head Massage" data-te="తల మసాజ్" data-en="Head Massage" data-hi="सिर की मालिश">తల మసాజ్</option>
+                <option value="Kids Haircut" data-te="పిల్లల హెయిర్ కట్" data-en="Kids Haircut" data-hi="बच्चों का हेयरकट">పిల్లల హెయిర్ కట్</option>
+                <option value="Other" data-te="ఇతర" data-en="Other" data-hi="अन्य">ఇతర</option>
+            </select>
+
+            <label class="form-label" for="salonDate" data-te="తేదీ" data-en="Date" data-hi="तारीख़">తేదీ</label>
+            <input class="form-input" type="date" id="salonDate">
+
+            <label class="form-label" for="salonTime" data-te="సమయం" data-en="Time" data-hi="समय">సమయం</label>
+            <select class="form-select" id="salonTime">
+                <option value="" data-te="— సమయం ఎంచుకోండి —" data-en="— Choose a time —" data-hi="— समय चुनें —">— సమయం ఎంచుకోండి —</option>
+                <option value="Morning 9-12" data-te="ఉదయం 9–12" data-en="Morning 9–12" data-hi="सुबह 9–12">ఉదయం 9–12</option>
+                <option value="Afternoon 12-4" data-te="మధ్యాహ్నం 12–4" data-en="Afternoon 12–4" data-hi="दोपहर 12–4">మధ్యాహ్నం 12–4</option>
+                <option value="Evening 4-8" data-te="సాయంత్రం 4–8" data-en="Evening 4–8" data-hi="शाम 4–8">సాయంత్రం 4–8</option>
+            </select>
+
+            <label class="form-label" for="salonArea" data-te="ప్రాంతం / చిరునామా" data-en="Area / Address" data-hi="इलाका / पता">ప్రాంతం / చిరునామా</label>
+            <input class="form-input" type="text" id="salonArea" data-ph-te="ఉదా: బెంజ్ సర్కిల్, విజయవాడ" data-ph-en="e.g. Benz Circle, Vijayawada" data-ph-hi="जैसे: बेंज़ सर्कल, विजयवाड़ा" placeholder="ఉదా: బెంజ్ సర్కిల్, విజయవాడ">
+
+            <div class="warn-line" id="salonWarnLine"></div>
+            <div class="confirm-line" id="salonConfirmLine"></div>
+
+            <button class="cta-btn" onclick="submitSalonBooking()" data-te="💬 WhatsApp లో బుక్ చేసుకోండి" data-en="💬 Book on WhatsApp" data-hi="💬 WhatsApp पर बुक करें">💬 WhatsApp లో బుక్ చేసుకోండి</button>
+        </div>
+
+        <div class="block-card">
+            <h3 class="te-heading" data-te="మమ్మల్ని సంప్రదించండి" data-en="Contact Us" data-hi="हमसे संपर्क करें">మమ్మల్ని సంప్రదించండి</h3>
+            <p class="te-body" data-te="వాట్సాప్ 1: <strong>9966157369</strong>" data-en="WhatsApp 1: <strong>9966157369</strong>" data-hi="WhatsApp 1: <strong>9966157369</strong>">వాట్సాప్ 1: <strong>9966157369</strong></p>
+            <p class="te-body" data-te="వాట్సాప్ 2 (బ్యాకప్): <strong>8686761098</strong>" data-en="WhatsApp 2 (backup): <strong>8686761098</strong>" data-hi="WhatsApp 2 (बैकअप): <strong>8686761098</strong>">వాట్సాప్ 2 (బ్యాకప్): <strong>8686761098</strong></p>
+            <p class="te-body" data-te="ఇమెయిల్: <strong>availodigitalservices@gmail.com</strong>" data-en="Email: <strong>availodigitalservices@gmail.com</strong>" data-hi="ईमेल: <strong>availodigitalservices@gmail.com</strong>">ఇమెయిల్: <strong>availodigitalservices@gmail.com</strong></p>
+            <p class="te-body" data-te="చిరునామా: 1-492, శ్రీనగర్ కాలనీ, నవత ట్రాన్స్‌పోర్ట్ రోడ్, కనూరు, విజయవాడ, ఆంధ్రప్రదేశ్ — 520007" data-en="Address: 1-492, Srinagar Colony, Navata Transport Road, Kanuru, Vijayawada, Andhra Pradesh — 520007" data-hi="पता: 1-492, श्रीनगर कॉलोनी, नवता ट्रांसपोर्ट रोड, कनूरु, विजयवाड़ा, आंध्र प्रदेश — 520007">చిరునామా: 1-492, శ్రీనగర్ కాలనీ, నవత ట్రాన్స్‌పోర్ట్ రోడ్, కనూరు, విజయవాడ, ఆంధ్రప్రదేశ్ — 520007</p>
+            <p class="te-body" data-te="MSME: UDYAM-AP-20-0109827 (AVAILO Digital Services)" data-en="MSME: UDYAM-AP-20-0109827 (AVAILO Digital Services)" data-hi="MSME: UDYAM-AP-20-0109827 (AVAILO Digital Services)">MSME: UDYAM-AP-20-0109827 (AVAILO Digital Services)</p>
+        </div>
+
+        <footer style="text-align: center; font-size: 12px; color: #94a3b8; line-height: 2; margin-top: 8px; padding-top: 14px; border-top: 1px solid rgba(0,229,255,0.35);">
+            <a href="index.html" style="color: var(--cyan-glow); font-weight: 700; text-decoration: none;" data-te="హోమ్" data-en="Home" data-hi="होम">హోమ్</a> &nbsp;·&nbsp; <a href="privacy.html" style="color: var(--cyan-glow); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--cyan-glow); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a>
+        </footer>
+    </div>
+
+    <script src="availo-db.js"></script>
+    <script>
+        // Button label always shows the CURRENT language.
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
+        const LANG_ORDER = ['te', 'en', 'hi'];
+        const LANG_BTN_LABEL = { te: 'తెలుగు', en: 'English', hi: 'हिन्दी' };
+
+        function toggleLanguage(forceLang) {
+            const next = forceLang || LANG_ORDER[(LANG_ORDER.indexOf(currentLang) + 1) % LANG_ORDER.length];
+            currentLang = next;
+            localStorage.setItem('availo_lang', currentLang);
+            document.documentElement.lang = currentLang;
+            document.getElementById('langBtn').innerText = LANG_BTN_LABEL[currentLang];
+
+            document.querySelectorAll('[data-te]').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang);
+                if (text) el.innerHTML = text;
+            });
+            document.querySelectorAll('[data-ph-te]').forEach(el => {
+                const text = el.getAttribute('data-ph-' + currentLang);
+                if (text) el.placeholder = text;
+            });
+        }
+
+        // Reference numbers: AV-YYYYMMDD-XXXX (4 random digits).
+        function availoRef() {
+            const d = new Date();
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return 'AV-' + y + m + day + '-' + String(Math.floor(1000 + Math.random() * 9000));
+        }
+
+        function showSalonWarn(text) {
+            const el = document.getElementById('salonWarnLine');
+            if (el) { el.textContent = text; el.style.display = 'block'; }
+            const cl = document.getElementById('salonConfirmLine');
+            if (cl) cl.style.display = 'none';
+        }
+
+        function submitSalonBooking() {
+            const name = document.getElementById('salonName').value.trim();
+            const phone = document.getElementById('salonPhone').value.trim();
+            const serviceSel = document.getElementById('salonService');
+            const service = serviceSel.value;
+            const serviceLabel = service ? (serviceSel.options[serviceSel.selectedIndex].getAttribute('data-' + currentLang) || serviceSel.options[serviceSel.selectedIndex].text) : '';
+            const date = document.getElementById('salonDate').value;
+            const timeSel = document.getElementById('salonTime');
+            const timeVal = timeSel.value;
+            const timeLabel = timeVal ? (timeSel.options[timeSel.selectedIndex].getAttribute('data-' + currentLang) || timeSel.options[timeSel.selectedIndex].text) : '';
+            const area = document.getElementById('salonArea').value.trim();
+
+            if (!name) {
+                return showSalonWarn(currentLang === 'te' ? '⚠️ దయచేసి మీ పేరు రాయండి.' : currentLang === 'hi' ? '⚠️ कृपया अपना नाम लिखें।' : '⚠️ Please enter your name.');
+            }
+            if (phone.replace(/\D/g, '').length < 10) {
+                return showSalonWarn(currentLang === 'te' ? '⚠️ సరైన 10 అంకెల మొబైల్ నంబర్ ఇవ్వండి.' : currentLang === 'hi' ? '⚠️ कृपया सही 10 अंकों का मोबाइल नंबर दें।' : '⚠️ Please enter a valid 10-digit mobile number.');
+            }
+            if (!service) {
+                return showSalonWarn(currentLang === 'te' ? '⚠️ దయచేసి సర్వీస్ ఎంచుకోండి.' : currentLang === 'hi' ? '⚠️ कृपया सर्विस चुनें।' : '⚠️ Please choose a service.');
+            }
+            const wl = document.getElementById('salonWarnLine');
+            if (wl) wl.style.display = 'none';
+
+            const ref = availoRef();
+            const cl = document.getElementById('salonConfirmLine');
+            if (cl) {
+                cl.textContent = currentLang === 'te' ? '✅ రిఫరెన్స్ నంబర్: ' + ref : currentLang === 'hi' ? '✅ रेफ़रेंस नंबर: ' + ref : '✅ Reference No: ' + ref;
+                cl.style.display = 'block';
+            }
+
+            const dateTime = [date, timeVal].filter(Boolean).join(' ');
+            const msg = currentLang === 'hi' ? `*AVAILO सैलून बुकिंग*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${ref}%0A*नाम:* ${name}%0A*मोबाइल:* ${phone}%0A*सर्विस:* ${serviceLabel}%0A*तारीख़:* ${date || '—'}%0A*समय:* ${timeLabel || '—'}%0A*इलाका:* ${area || '—'}%0A------------------------------%0Aसैलून स्लॉट बुक करना है।` : currentLang === 'en' ? `*AVAILO Salon Booking*%0A------------------------------%0A*Reference No:* ${ref}%0A*Name:* ${name}%0A*Mobile:* ${phone}%0A*Service:* ${serviceLabel}%0A*Date:* ${date || '—'}%0A*Time:* ${timeLabel || '—'}%0A*Area:* ${area || '—'}%0A------------------------------%0AI want to book a salon slot.` : `*AVAILO సెలూన్ బుకింగ్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${ref}%0A*పేరు:* ${name}%0A*మొబైల్:* ${phone}%0A*సర్వీస్:* ${serviceLabel}%0A*తేదీ:* ${date || '—'}%0A*సమయం:* ${timeLabel || '—'}%0A*ప్రాంతం:* ${area || '—'}%0A------------------------------%0Aసెలూన్ స్లాట్ బుక్ చేయాలి.`;
+            // Log to Google Sheets (never blocks WhatsApp).
+            sendToSheet('Salon', { ref: ref, name: name, phone: phone, service: service, datetime: dateTime, area: area, lang: currentLang });
+            window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
+        }
+
+        // Apply the saved language on load (no cycling) and show the CURRENT
+        // language on the button.
+        toggleLanguage(currentLang);
+    </script>
+
+</body>
+</html>
