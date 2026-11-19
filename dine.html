@@ -840,7 +840,7 @@
     <div id="welcomeOverlay" class="welcome-overlay">
         <div class="welcome-card">
             <div class="welcome-brand">AVAILO</div>
-            <div class="welcome-hotel" id="welcomeHotel">అమరావతి గ్రాండ్</div>
+            <div class="welcome-hotel" id="welcomeHotel">Khaleel Bhai Family Restaurant</div>
             <div class="welcome-table" id="welcomeTable">టేబుల్ 01</div>
             <div class="welcome-sub" data-te="స్కాన్ చేసినందుకు ధన్యవాదాలు! మెనూ చూసి ఆర్డర్ చేయండి." data-en="Thanks for scanning! Browse the menu and order." data-hi="स्कैन करने के लिए धन्यवाद! मेनू देखकर ऑर्डर कीजिए।">స్కాన్ చేసినందుకు ధన్యవాదాలు! మెనూ చూసి ఆర్డర్ చేయండి.</div>
             <button class="welcome-enter" id="welcomeEnterBtn" onclick="enterMenu()" data-te="📖 మెనూ చూడండి" data-en="📖 View Menu" data-hi="📖 मेनू देखिए">📖 మెనూ చూడండి</button>
@@ -851,7 +851,7 @@
     <!-- 1. AI Voice Concierge Stage -->
     <div id="voiceStage" class="stage-box">
         <div class="top-meta-bar">
-            <div class="venue-pill" id="badgeText">అమరావతి గ్రాండ్ · టేబుల్ 01</div>
+            <div class="venue-pill" id="badgeText">Khaleel Bhai Family Restaurant · Table 01</div>
             <div class="live-clock-pill" id="liveClock">--:--</div>
             <span class="table-pill" id="tablePill">టేబుల్ 01</span>
             <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
@@ -875,13 +875,7 @@
     <div class="content-wrap" id="mainContainer">
         
         <!-- Main Categories -->
-        <div class="cat-scroll" id="categoryTabs">
-            <button class="cat-chip active" data-cat="ALL" onclick="selectCategory('ALL', this)" data-te="🍽️ అన్నీ" data-en="🍽️ All" data-hi="🍽️ सभी">🍽️ అన్నీ</button>
-            <button class="cat-chip" data-cat="STARTERS" onclick="selectCategory('STARTERS', this)" data-te="🍢 స్టార్టర్స్" data-en="🍢 Starters" data-hi="🍢 स्टार्टर्स">🍢 స్టార్టర్స్</button>
-            <button class="cat-chip" data-cat="BIRYANIS" onclick="selectCategory('BIRYANIS', this)" data-te="🍲 బిర్యానీలు" data-en="🍲 Biryanis" data-hi="🍲 बिरयानी">🍲 బిర్యానీలు</button>
-            <button class="cat-chip" data-cat="CURRIES_ROTIS" onclick="selectCategory('CURRIES_ROTIS', this)" data-te="🍛 కర్రీస్ &amp; రోటీ" data-en="🍛 Curries &amp; Rotis" data-hi="🍛 करी और रोटी">🍛 కర్రీస్ & రోటీ</button>
-            <button class="cat-chip" data-cat="DRINKS" onclick="selectCategory('DRINKS', this)" data-te="🥤 డ్రింక్స్" data-en="🥤 Drinks" data-hi="🥤 ड्रिंक्स">🥤 డ్రింక్స్</button>
-        </div>
+        <div class="cat-scroll" id="categoryTabs"><!-- Category chips are built by buildCategoryChips() from the menu data. --></div>
 
         <!-- Live search (filters by item name in the current language) -->
         <div class="search-row">
@@ -962,7 +956,6 @@
         <div data-te="AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు" data-en="AVAILO Digital Services · Vijayawada &amp; Guntur" data-hi="AVAILO डिजिटल सर्विसेज़ · विजयवाड़ा और गुंटूर">AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు</div>
         <div style="margin-top: 6px; font-size: 11px;"><a href="privacy.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a></div>
         <div style="margin-top: 6px; font-size: 11px;"><a href="ai-waiter.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="🤖 AI వాయిస్ కన్సియర్జ్" data-en="🤖 AI Voice Concierge" data-hi="🤖 AI वॉइस कंसीयर्ज">🤖 AI వాయిస్ కన్సియర్జ్</a> &nbsp;·&nbsp; <a href="smart.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="🖥️ సూపర్‌వైజర్ డాష్‌బోర్డ్" data-en="🖥️ Supervisor Dashboard" data-hi="🖥️ सुपरवाइज़र डैशबोर्ड">🖥️ సూపర్‌వైజర్ డాష్‌బోర్డ్</a></div>
-        <div style="margin-top: 6px; font-size: 11px;" data-te="📷 ఫోటోలు: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata" data-en="📷 Photos: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata" data-hi="📷 फ़ोटो: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata">📷 Photos: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata</div>
     </footer>
 
     <!-- Order confirmation overlay -->
@@ -1002,6 +995,27 @@
             const ymd = d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
             return 'AV-' + ymd + '-' + String(Math.floor(1000 + Math.random() * 9000));
         }
+
+        // ---- Item availability (sold-out hide + live auto-update) ----
+        // Firebase path: availo-kitchen-v1/dineAvailability/khaleel/{itemId}
+        //   false = sold out (hidden) · true / absent = available (shown).
+        // Fail-open: no record, or Firebase unreachable, means AVAILABLE —
+        // the menu never hides everything by accident. The owner page
+        // (dine-owner.html, unlisted) writes this same path.
+        const AVAILABILITY_PATH = 'availo-kitchen-v1/dineAvailability/khaleel';
+        let availabilityMap = {};
+        function isAvailable(item) { return availabilityMap[item.id] !== false; }
+        function initAvailability() {
+            try {
+                if (!kitchenDb) return; // offline / SDK missing: fail-open, show all
+                kitchenDb.ref(AVAILABILITY_PATH).on('value', function (snap) {
+                    availabilityMap = snap.val() || {};
+                    renderCategoryCounts();
+                    renderMenu();
+                }, function () { /* read failed: fail-open, keep showing all */ });
+            } catch (e) { /* fail-open */ }
+        }
+
         function pushKitchenEvent(node, payload) {
             try {
                 if (!kitchenDb) return;
@@ -1014,7 +1028,7 @@
         const tableParam = params.get('table');
         // Kitchen-facing (WhatsApp) names stay Telugu by design; these two are
         // only for the on-screen text below.
-        const hotelName = hotelParam || "అమరావతి గ్రాండ్";
+        const hotelName = hotelParam || "Khaleel Bhai Family Restaurant";
         // WhatsApp messages print their own "టేబుల్:" label, so the value
         // must be just the number ("01") — never "Table 01" (19 Nov 2026:
         // the KOT used to read "టేబుల్: Table 01"). A ?table= value that
@@ -1025,7 +1039,7 @@
 
         // On-screen venue names follow the selected language (defaults only;
         // a ?hotel= / ?table= value passed in is a proper noun and is kept as-is).
-        const HOTEL_DISPLAY = { te: "అమరావతి గ్రాండ్", en: "Amaravati Grand", hi: "अमरावती ग्रैंड" };
+        const HOTEL_DISPLAY = { te: "Khaleel Bhai Family Restaurant", en: "Khaleel Bhai Family Restaurant", hi: "Khaleel Bhai Family Restaurant" };
         const TABLE_DISPLAY = { te: "టేబుల్ 01", en: "Table 01", hi: "टेबल 01" };
         function hotelDisplay() { return hotelParam || HOTEL_DISPLAY[currentLang]; }
         function tableDisplay() { return tableParam ? tableParam.toUpperCase() : TABLE_DISPLAY[currentLang]; }
@@ -1063,51 +1077,305 @@
         setInterval(updateLiveClock, 1000);
         updateLiveClock();
 
-        // 🌟 EASY TO EDIT RESTAURANT MENU (Categories & Sub-categories)
+        // 🌟 KHALEEL BHAI FAMILY RESTAURANT — full menu, exactly as on the
+        // restaurant's own menu (14 categories, 284 items, exact names
+        // including spelling quirks, exact prices with paise). Source:
+        // khaleel-menu-2026-11-19.txt (PetPooja dine-in page, 19 Nov 2026).
+        // Names are English as-is for te/en/hi — never invent translations.
+        // No photos: the restaurant's menu has no food photos.
         const HOTEL_MENU = [
-            // STARTERS
-            { id: 'paneerTikka', photo: 'images/dine/paneer-tikka.jpg', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', veg: 'veg', name: 'పన్నీర్ టిక్కా (6 ముక్కలు)', nameEn: 'Paneer Tikka (6 Pcs)', nameHi: 'पनीर टिक्का (6 पीस)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', descEn: 'Charcoal-grilled paneer', descHi: 'कोयले पर सेंका हुआ पनीर', price: 190, count: 0 },
-            { id: 'crispyCorn', photo: 'images/dine/crispy-chilli-corn.jpg', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', veg: 'veg', name: 'క్రిస్పీ చిల్లీ కార్న్', nameEn: 'Crispy Chilli Corn', nameHi: 'क्रिस्पी चिल्ली कॉर्न', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', descEn: 'Spicy sweet corn fry', descHi: 'मसालेदार स्वीट कॉर्न फ्राई', price: 150, count: 0 },
-            { id: 'chicken65', photo: 'images/dine/chicken-65.jpg', cat: 'STARTERS', subcat: 'NONVEG_STARTERS', diet: 'NONVEG', veg: 'nonveg', name: 'చికెన్ 65 (బోన్‌లెస్)', nameEn: 'Chicken 65 (Boneless)', nameHi: 'चिकन 65 (बोनलेस)', desc: 'కరివేపాకు మసాలా ఫ్రై', descEn: 'Curry-leaf masala fry', descHi: 'करी पत्ता मसाला फ्राई', price: 220, count: 0 },
-
-            // BIRYANIS
-            { id: 'vegDumBiryani', photo: 'images/dine/veg-biryani.jpg', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', veg: 'veg', name: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', nameEn: 'Special Veg Dum Biryani', nameHi: 'स्पेशल वेज दम बिरयानी', desc: 'మిర్చి కా సాలన్ & రైతా', descEn: 'Mirchi ka salan & raita', descHi: 'मिर्ची का सालन और रायता', price: 220, count: 0 },
-            { id: 'kajuBiryani', photo: 'images/dine/kaju-biryani.jpg', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', veg: 'veg', name: 'జీడిపప్పు బిర్యానీ', nameEn: 'Cashew (Kaju) Biryani', nameHi: 'काजू बिरयानी', desc: 'నెయ్యిలో వేయించిన జీడిపప్పుతో', descEn: 'With cashews roasted in ghee', descHi: 'घी में भुने हुए काजू के साथ', price: 260, count: 0 },
-            { id: 'chickenDumBiryani', photo: 'images/dine/chicken-biryani.jpg', cat: 'BIRYANIS', subcat: 'NONVEG_BIRYANI', diet: 'NONVEG', veg: 'nonveg', name: 'చికెన్ దమ్ బిర్యానీ', nameEn: 'Chicken Dum Biryani', nameHi: 'चिकन दम बिरयानी', desc: 'అసలైన దమ్ మసాలా రుచి', descEn: 'Authentic dum masala flavour', descHi: 'असली दम मसाले का स्वाद', price: 280, count: 0 },
-
-            // CURRIES & ROTIS
-            { id: 'paneerButter', photo: 'images/dine/paneer-butter-masala.jpg', cat: 'CURRIES_ROTIS', subcat: 'VEG_CURRIES', diet: 'VEG', veg: 'veg', name: 'పన్నీర్ బట్టర్ మసాలా', nameEn: 'Paneer Butter Masala', nameHi: 'पनीर बटर मसाला', desc: 'క్రీమీ టొమాటో & జీడిపప్పు గ్రేవీ', descEn: 'Creamy tomato & cashew gravy', descHi: 'क्रीमी टमाटर और काजू की ग्रेवी', price: 180, count: 0 },
-            { id: 'butterNaan', photo: 'images/dine/butter-naan.jpg', cat: 'CURRIES_ROTIS', subcat: 'BREADS', diet: 'VEG', veg: 'veg', name: 'బట్టర్ నాన్ (2 ముక్కలు)', nameEn: 'Butter Naan (2 Pcs)', nameHi: 'बटर नान (2 पीस)', desc: 'వేడి వేడి తందూరీ నాన్', descEn: 'Hot tandoori naan', descHi: 'गरमागरम तंदूरी नान', price: 60, count: 0 },
-
-            // DRINKS
-            { id: 'sweetLassi', photo: 'images/dine/sweet-lassi.jpg', cat: 'DRINKS', subcat: 'COOLERS', diet: 'VEG', veg: 'veg', name: 'స్పెషల్ స్వీట్ లస్సీ', nameEn: 'Special Sweet Lassi', nameHi: 'स्पेशल स्वीट लस्सी', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', descEn: 'Thick curd with almond flakes', descHi: 'गाढ़ा दही और बादाम के टुकड़े', price: 70, count: 0 },
-            { id: 'waterBottle', photo: 'images/dine/mineral-water-bottle.jpg', cat: 'DRINKS', subcat: 'WATER', diet: 'VEG', veg: 'veg', name: 'మినరల్ వాటర్ (1 లీటర్)', nameEn: 'Mineral Water (1L)', nameHi: 'मिनरल वॉटर (1 लीटर)', desc: 'కూల్డ్ వాటర్ బాటిల్', descEn: 'Chilled water bottle', descHi: 'ठंडी पानी की बोतल', price: 25, count: 0 }
+            { id: 'VEG_BEVERAGES-butter-milk', cat: 'VEG_BEVERAGES', veg: 'veg', name: "Butter Milk", nameEn: "Butter Milk", nameHi: "Butter Milk", price: 56.19, count: 0 },
+            { id: 'VEG_BEVERAGES-curd', cat: 'VEG_BEVERAGES', veg: 'veg', name: "Curd", nameEn: "Curd", nameHi: "Curd", price: 37.14, count: 0 },
+            { id: 'VEG_BEVERAGES-kheer', cat: 'VEG_BEVERAGES', veg: 'veg', name: "Kheer", nameEn: "Kheer", nameHi: "Kheer", price: 103.81, count: 0 },
+            { id: 'VEG_BEVERAGES-kheer-1-2', cat: 'VEG_BEVERAGES', veg: 'veg', name: "Kheer 1/2", nameEn: "Kheer 1/2", nameHi: "Kheer 1/2", price: 132.05, count: 0 },
+            { id: 'VEG_BEVERAGES-lassi', cat: 'VEG_BEVERAGES', veg: 'veg', name: "Lassi", nameEn: "Lassi", nameHi: "Lassi", price: 94.29, count: 0 },
+            { id: 'VEG_BEVERAGES-lassi-1-2', cat: 'VEG_BEVERAGES', veg: 'veg', name: "Lassi 1/2", nameEn: "Lassi 1/2", nameHi: "Lassi 1/2", price: 141.55, count: 0 },
+            { id: 'VEG_SOUPS-veg-corn-soup', cat: 'VEG_SOUPS', veg: 'veg', name: "Veg Corn Soup", nameEn: "Veg Corn Soup", nameHi: "Veg Corn Soup", price: 160.95, count: 0 },
+            { id: 'VEG_SOUPS-veg-hot-sour-soup', cat: 'VEG_SOUPS', veg: 'veg', name: "Veg Hot&sour Soup", nameEn: "Veg Hot&sour Soup", nameHi: "Veg Hot&sour Soup", price: 160.95, count: 0 },
+            { id: 'VEG_SOUPS-tomato-soup', cat: 'VEG_SOUPS', veg: 'veg', name: "Tomato Soup", nameEn: "Tomato Soup", nameHi: "Tomato Soup", price: 160.95, count: 0 },
+            { id: 'VEG_SOUPS-veg-manchow-soup', cat: 'VEG_SOUPS', veg: 'veg', name: "Veg Manchow Soup", nameEn: "Veg Manchow Soup", nameHi: "Veg Manchow Soup", price: 160.95, count: 0 },
+            { id: 'VEG_SOUPS-mushroom-soup', cat: 'VEG_SOUPS', veg: 'veg', name: "Mushroom Soup", nameEn: "Mushroom Soup", nameHi: "Mushroom Soup", price: 160.95, count: 0 },
+            { id: 'VEG_SOUPS-baby-corn-soup', cat: 'VEG_SOUPS', veg: 'veg', name: "Baby Corn Soup", nameEn: "Baby Corn Soup", nameHi: "Baby Corn Soup", price: 160.95, count: 0 },
+            { id: 'VEG_SOUPS-veg-hot-sour-soup-1-2', cat: 'VEG_SOUPS', veg: 'veg', name: "Veg Hot&sour Soup 1/2", nameEn: "Veg Hot&sour Soup 1/2", nameHi: "Veg Hot&sour Soup 1/2", price: 256.19, count: 0 },
+            { id: 'VEG_SOUPS-veg-corn-soup-1-2', cat: 'VEG_SOUPS', veg: 'veg', name: "Veg Corn Soup 1/2", nameEn: "Veg Corn Soup 1/2", nameHi: "Veg Corn Soup 1/2", price: 256.19, count: 0 },
+            { id: 'VEG_SOUPS-tomato-soup1-2', cat: 'VEG_SOUPS', veg: 'veg', name: "Tomato Soup1/2", nameEn: "Tomato Soup1/2", nameHi: "Tomato Soup1/2", price: 256.19, count: 0 },
+            { id: 'VEG_SOUPS-veg-manchow-soup-1-2', cat: 'VEG_SOUPS', veg: 'veg', name: "Veg Manchow Soup 1/2", nameEn: "Veg Manchow Soup 1/2", nameHi: "Veg Manchow Soup 1/2", price: 256.19, count: 0 },
+            { id: 'VEG_SOUPS-baby-corn-soup-1-2', cat: 'VEG_SOUPS', veg: 'veg', name: "Baby Corn Soup 1/2", nameEn: "Baby Corn Soup 1/2", nameHi: "Baby Corn Soup 1/2", price: 256.19, count: 0 },
+            { id: 'VEG_SOUPS-mushroom-soup-1-2', cat: 'VEG_SOUPS', veg: 'veg', name: "Mushroom Soup 1/2", nameEn: "Mushroom Soup 1/2", nameHi: "Mushroom Soup 1/2", price: 256.19, count: 0 },
+            { id: 'VEG_SOUPS-veg-corn-soup-2-3', cat: 'VEG_SOUPS', veg: 'veg', name: "Veg Corn Soup 2/3", nameEn: "Veg Corn Soup 2/3", nameHi: "Veg Corn Soup 2/3", price: 351.43, count: 0 },
+            { id: 'VEG_SOUPS-veg-hot-sour-2-3', cat: 'VEG_SOUPS', veg: 'veg', name: "Veg Hot&sour 2/3", nameEn: "Veg Hot&sour 2/3", nameHi: "Veg Hot&sour 2/3", price: 351.43, count: 0 },
+            { id: 'VEG_SOUPS-veg-manchow-soup-2-3', cat: 'VEG_SOUPS', veg: 'veg', name: "Veg Manchow Soup 2/3", nameEn: "Veg Manchow Soup 2/3", nameHi: "Veg Manchow Soup 2/3", price: 351.43, count: 0 },
+            { id: 'VEG_SOUPS-tomato-soup-2-3', cat: 'VEG_SOUPS', veg: 'veg', name: "Tomato Soup 2/3", nameEn: "Tomato Soup 2/3", nameHi: "Tomato Soup 2/3", price: 351.43, count: 0 },
+            { id: 'VEG_SOUPS-baby-corn-soup-2-3', cat: 'VEG_SOUPS', veg: 'veg', name: "Baby Corn Soup 2/3", nameEn: "Baby Corn Soup 2/3", nameHi: "Baby Corn Soup 2/3", price: 351.43, count: 0 },
+            { id: 'VEG_SOUPS-mushrrom-soup-2-3', cat: 'VEG_SOUPS', veg: 'veg', name: "Mushrrom Soup 2/3", nameEn: "Mushrrom Soup 2/3", nameHi: "Mushrrom Soup 2/3", price: 351.43, count: 0 },
+            { id: 'NONVEG_SOUPS-chicken-corn-soup', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Chicken Corn Soup", nameEn: "Chicken Corn Soup", nameHi: "Chicken Corn Soup", price: 160.95, count: 0 },
+            { id: 'NONVEG_SOUPS-chicken-manchow-soup', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Chicken Manchow Soup", nameEn: "Chicken Manchow Soup", nameHi: "Chicken Manchow Soup", price: 160.95, count: 0 },
+            { id: 'NONVEG_SOUPS-chicken-hot-sour-soup', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Chicken Hot&sour Soup", nameEn: "Chicken Hot&sour Soup", nameHi: "Chicken Hot&sour Soup", price: 160.95, count: 0 },
+            { id: 'NONVEG_SOUPS-chicken-hot-sour-soups-1-2', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Chicken Hot Sour Soups 1/2", nameEn: "Chicken Hot Sour Soups 1/2", nameHi: "Chicken Hot Sour Soups 1/2", price: 256.19, count: 0 },
+            { id: 'NONVEG_SOUPS-chicken-corn-soup-1-2', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Chicken Corn Soup 1/2", nameEn: "Chicken Corn Soup 1/2", nameHi: "Chicken Corn Soup 1/2", price: 256.19, count: 0 },
+            { id: 'NONVEG_SOUPS-chicken-manchow-soup-1-2', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Chicken Manchow Soup 1/2", nameEn: "Chicken Manchow Soup 1/2", nameHi: "Chicken Manchow Soup 1/2", price: 256.19, count: 0 },
+            { id: 'NONVEG_SOUPS-mutton-soup', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Mutton Soup", nameEn: "Mutton Soup", nameHi: "Mutton Soup", price: 237.14, count: 0 },
+            { id: 'NONVEG_SOUPS-mutton-soup-1-2', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Mutton Soup 1/2", nameEn: "Mutton Soup 1/2", nameHi: "Mutton Soup 1/2", price: 380.00, count: 0 },
+            { id: 'NONVEG_SOUPS-mutton-soup-2-3', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Mutton Soup 2/3", nameEn: "Mutton Soup 2/3", nameHi: "Mutton Soup 2/3", price: 475.24, count: 0 },
+            { id: 'NONVEG_SOUPS-chicken', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Chicken", nameEn: "Chicken", nameHi: "Chicken", price: 351.43, count: 0 },
+            { id: 'NONVEG_SOUPS-chicken-hot-sour-2-3', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Chicken Hot&sour 2/3", nameEn: "Chicken Hot&sour 2/3", nameHi: "Chicken Hot&sour 2/3", price: 351.43, count: 0 },
+            { id: 'NONVEG_SOUPS-chicken-corn-soup-2-3', cat: 'NONVEG_SOUPS', veg: 'nonveg', name: "Chicken Corn Soup 2/3", nameEn: "Chicken Corn Soup 2/3", nameHi: "Chicken Corn Soup 2/3", price: 351.43, count: 0 },
+            { id: 'VEG_STARTERS-crispy-veg', cat: 'VEG_STARTERS', veg: 'veg', name: "Crispy Veg", nameEn: "Crispy Veg", nameHi: "Crispy Veg", price: 380.00, count: 0 },
+            { id: 'VEG_STARTERS-veg-manchuria', cat: 'VEG_STARTERS', veg: 'veg', name: "Veg Manchuria", nameEn: "Veg Manchuria", nameHi: "Veg Manchuria", price: 332.38, count: 0 },
+            { id: 'VEG_STARTERS-chilly-baby-corn', cat: 'VEG_STARTERS', veg: 'veg', name: "Chilly Baby Corn", nameEn: "Chilly Baby Corn", nameHi: "Chilly Baby Corn", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-baby-corn-manchuria', cat: 'VEG_STARTERS', veg: 'veg', name: "Baby Corn Manchuria", nameEn: "Baby Corn Manchuria", nameHi: "Baby Corn Manchuria", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-crispy-baby-corn', cat: 'VEG_STARTERS', veg: 'veg', name: "Crispy Baby Corn", nameEn: "Crispy Baby Corn", nameHi: "Crispy Baby Corn", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-chilly-panner', cat: 'VEG_STARTERS', veg: 'veg', name: "Chilly Panner", nameEn: "Chilly Panner", nameHi: "Chilly Panner", price: 418.10, count: 0 },
+            { id: 'VEG_STARTERS-panner-65', cat: 'VEG_STARTERS', veg: 'veg', name: "Panner 65", nameEn: "Panner 65", nameHi: "Panner 65", price: 418.10, count: 0 },
+            { id: 'VEG_STARTERS-chilly-murshroom', cat: 'VEG_STARTERS', veg: 'veg', name: "Chilly Murshroom", nameEn: "Chilly Murshroom", nameHi: "Chilly Murshroom", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-mushroom-dry', cat: 'VEG_STARTERS', veg: 'veg', name: "Mushroom Dry", nameEn: "Mushroom Dry", nameHi: "Mushroom Dry", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-mushroom-manchuria', cat: 'VEG_STARTERS', veg: 'veg', name: "Mushroom Manchuria", nameEn: "Mushroom Manchuria", nameHi: "Mushroom Manchuria", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-gobi-manchuria', cat: 'VEG_STARTERS', veg: 'veg', name: "Gobi Manchuria", nameEn: "Gobi Manchuria", nameHi: "Gobi Manchuria", price: 322.86, count: 0 },
+            { id: 'VEG_STARTERS-veg-shangrilla', cat: 'VEG_STARTERS', veg: 'veg', name: "Veg Shangrilla", nameEn: "Veg Shangrilla", nameHi: "Veg Shangrilla", price: 380.00, count: 0 },
+            { id: 'VEG_STARTERS-mushroom-65', cat: 'VEG_STARTERS', veg: 'veg', name: "Mushroom 65", nameEn: "Mushroom 65", nameHi: "Mushroom 65", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-panner-manchuria', cat: 'VEG_STARTERS', veg: 'veg', name: "Panner Manchuria", nameEn: "Panner Manchuria", nameHi: "Panner Manchuria", price: 418.10, count: 0 },
+            { id: 'VEG_STARTERS-panner-555', cat: 'VEG_STARTERS', veg: 'veg', name: "Panner 555", nameEn: "Panner 555", nameHi: "Panner 555", price: 418.10, count: 0 },
+            { id: 'VEG_STARTERS-baby-corn-65', cat: 'VEG_STARTERS', veg: 'veg', name: "Baby Corn 65", nameEn: "Baby Corn 65", nameHi: "Baby Corn 65", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-veg-chakra', cat: 'VEG_STARTERS', veg: 'veg', name: "Veg Chakra", nameEn: "Veg Chakra", nameHi: "Veg Chakra", price: 427.62, count: 0 },
+            { id: 'VEG_STARTERS-chilly-egg', cat: 'VEG_STARTERS', veg: 'egg', name: "Chilly Egg", nameEn: "Chilly Egg", nameHi: "Chilly Egg", price: 313.33, count: 0 },
+            { id: 'VEG_STARTERS-egg-65', cat: 'VEG_STARTERS', veg: 'egg', name: "Egg 65", nameEn: "Egg 65", nameHi: "Egg 65", price: 313.33, count: 0 },
+            { id: 'VEG_STARTERS-egg-manchuria', cat: 'VEG_STARTERS', veg: 'egg', name: "Egg Manchuria", nameEn: "Egg Manchuria", nameHi: "Egg Manchuria", price: 313.33, count: 0 },
+            { id: 'VEG_STARTERS-boield-egg-3', cat: 'VEG_STARTERS', veg: 'egg', name: "Boield Egg (3)", nameEn: "Boield Egg (3)", nameHi: "Boield Egg (3)", price: 65.50, count: 0 },
+            { id: 'VEG_STARTERS-green-salad', cat: 'VEG_STARTERS', veg: 'veg', name: "Green Salad", nameEn: "Green Salad", nameHi: "Green Salad", price: 189.52, count: 0 },
+            { id: 'VEG_STARTERS-kaju-pakoda', cat: 'VEG_STARTERS', veg: 'veg', name: "Kaju Pakoda", nameEn: "Kaju Pakoda", nameHi: "Kaju Pakoda", price: 427.62, count: 0 },
+            { id: 'VEG_STARTERS-baby-corn-mejistic', cat: 'VEG_STARTERS', veg: 'veg', name: "Baby Corn Mejistic", nameEn: "Baby Corn Mejistic", nameHi: "Baby Corn Mejistic", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-boild-egg-1', cat: 'VEG_STARTERS', veg: 'egg', name: "Boild Egg 1", nameEn: "Boild Egg 1", nameHi: "Boild Egg 1", price: 19.05, count: 0 },
+            { id: 'VEG_STARTERS-kaju-fry', cat: 'VEG_STARTERS', veg: 'veg', name: "Kaju Fry", nameEn: "Kaju Fry", nameHi: "Kaju Fry", price: 427.62, count: 0 },
+            { id: 'VEG_STARTERS-boiled-egg-2', cat: 'VEG_STARTERS', veg: 'egg', name: "Boiled Egg(2)", nameEn: "Boiled Egg(2)", nameHi: "Boiled Egg(2)", price: 49.90, count: 0 },
+            { id: 'VEG_STARTERS-pepper-mushroom', cat: 'VEG_STARTERS', veg: 'veg', name: "Pepper Mushroom", nameEn: "Pepper Mushroom", nameHi: "Pepper Mushroom", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-egg-fry', cat: 'VEG_STARTERS', veg: 'egg', name: "Egg Fry", nameEn: "Egg Fry", nameHi: "Egg Fry", price: 313.33, count: 0 },
+            { id: 'VEG_STARTERS-panner-magestic', cat: 'VEG_STARTERS', veg: 'veg', name: "Panner Magestic", nameEn: "Panner Magestic", nameHi: "Panner Magestic", price: 418.10, count: 0 },
+            { id: 'VEG_STARTERS-crispy-corn', cat: 'VEG_STARTERS', veg: 'veg', name: "Crispy Corn", nameEn: "Crispy Corn", nameHi: "Crispy Corn", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-pepper-baby-corn', cat: 'VEG_STARTERS', veg: 'veg', name: "Pepper Baby Corn", nameEn: "Pepper Baby Corn", nameHi: "Pepper Baby Corn", price: 399.05, count: 0 },
+            { id: 'VEG_STARTERS-pepper-gobi', cat: 'VEG_STARTERS', veg: 'veg', name: "Pepper Gobi", nameEn: "Pepper Gobi", nameHi: "Pepper Gobi", price: 322.86, count: 0 },
+            { id: 'VEG_STARTERS-egg-roast', cat: 'VEG_STARTERS', veg: 'egg', name: "Egg Roast", nameEn: "Egg Roast", nameHi: "Egg Roast", price: 313.33, count: 0 },
+            { id: 'VEG_STARTERS-butter-garlic-broccoli', cat: 'VEG_STARTERS', veg: 'veg', name: "Butter Garlic Broccoli", nameEn: "Butter Garlic Broccoli", nameHi: "Butter Garlic Broccoli", price: 399.04, count: 0 },
+            { id: 'VEG_STARTERS-broccoli-65', cat: 'VEG_STARTERS', veg: 'veg', name: "Broccoli 65", nameEn: "Broccoli 65", nameHi: "Broccoli 65", price: 380.00, count: 0 },
+            { id: 'VEG_STARTERS-chilli-broccoli', cat: 'VEG_STARTERS', veg: 'veg', name: "Chilli Broccoli", nameEn: "Chilli Broccoli", nameHi: "Chilli Broccoli", price: 380.00, count: 0 },
+            { id: 'VEG_STARTERS-chilli-gobi', cat: 'VEG_STARTERS', veg: 'veg', name: "Chilli Gobi", nameEn: "Chilli Gobi", nameHi: "Chilli Gobi", price: 322.86, count: 0 },
+            { id: 'VEG_STARTERS-gobi-65', cat: 'VEG_STARTERS', veg: 'veg', name: "Gobi 65", nameEn: "Gobi 65", nameHi: "Gobi 65", price: 322.86, count: 0 },
+            { id: 'NONVEG_STARTERS-brain-fry-half', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Brain Fry Half", nameEn: "Brain Fry Half", nameHi: "Brain Fry Half", price: 313.33, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-65', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken 65", nameEn: "Chicken 65", nameHi: "Chicken 65", price: 408.57, count: 0 },
+            { id: 'NONVEG_STARTERS-chilly-chicken', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chilly Chicken", nameEn: "Chilly Chicken", nameHi: "Chilly Chicken", price: 408.57, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-manchuria', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Manchuria", nameEn: "Chicken Manchuria", nameHi: "Chicken Manchuria", price: 427.61, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-lollypop', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Lollypop", nameEn: "Chicken Lollypop", nameHi: "Chicken Lollypop", price: 522.85, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-fried-wings-full', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Fried Wings-full", nameEn: "Chicken Fried Wings-full", nameHi: "Chicken Fried Wings-full", price: 522.85, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-555', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken 555", nameEn: "Chicken 555", nameHi: "Chicken 555", price: 446.67, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-magestic', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Magestic", nameEn: "Chicken Magestic", nameHi: "Chicken Magestic", price: 446.67, count: 0 },
+            { id: 'NONVEG_STARTERS-loose-prawns', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Loose Prawns", nameEn: "Loose Prawns", nameHi: "Loose Prawns", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-pepper-chicken-b-l', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Pepper Chicken B/l", nameEn: "Pepper Chicken B/l", nameHi: "Pepper Chicken B/l", price: 408.57, count: 0 },
+            { id: 'NONVEG_STARTERS-basket-chicken', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Basket Chicken", nameEn: "Basket Chicken", nameHi: "Basket Chicken", price: 427.62, count: 0 },
+            { id: 'NONVEG_STARTERS-fish-fry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Fish Fry", nameEn: "Fish Fry", nameHi: "Fish Fry", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-fry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Fry", nameEn: "Chicken Fry", nameHi: "Chicken Fry", price: 380.00, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-fried-wings-half', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Fried Wings-half", nameEn: "Chicken Fried Wings-half", nameHi: "Chicken Fried Wings-half", price: 265.71, count: 0 },
+            { id: 'NONVEG_STARTERS-kaju-chicken-dry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Kaju Chicken Dry", nameEn: "Kaju Chicken Dry", nameHi: "Kaju Chicken Dry", price: 427.61, count: 0 },
+            { id: 'NONVEG_STARTERS-ks-boneless-dry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Ks.boneless Dry", nameEn: "Ks.boneless Dry", nameHi: "Ks.boneless Dry", price: 408.57, count: 0 },
+            { id: 'NONVEG_STARTERS-ks-bone-dry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Ks.bone Dry", nameEn: "Ks.bone Dry", nameHi: "Ks.bone Dry", price: 399.05, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-chakra', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Chakra", nameEn: "Chicken Chakra", nameHi: "Chicken Chakra", price: 475.24, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-85-bone', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken 85 Bone", nameEn: "Chicken 85 Bone", nameHi: "Chicken 85 Bone", price: 408.57, count: 0 },
+            { id: 'NONVEG_STARTERS-mutton-liver-fry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Mutton Liver Fry", nameEn: "Mutton Liver Fry", nameHi: "Mutton Liver Fry", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-ks-mutton-dry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Ks.mutton Dry", nameEn: "Ks.mutton Dry", nameHi: "Ks.mutton Dry", price: 713.33, count: 0 },
+            { id: 'NONVEG_STARTERS-prawns-fry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Prawns Fry", nameEn: "Prawns Fry", nameHi: "Prawns Fry", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-fried-prawns', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Fried Prawns", nameEn: "Fried Prawns", nameHi: "Fried Prawns", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-ks-prawns-dry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Ks.prawns Dry", nameEn: "Ks.prawns Dry", nameHi: "Ks.prawns Dry", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-ks-natukodi-dry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Ks. Natukodi Dry", nameEn: "Ks. Natukodi Dry", nameHi: "Ks. Natukodi Dry", price: 665.71, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-pakkoda', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Pakkoda", nameEn: "Chicken Pakkoda", nameHi: "Chicken Pakkoda", price: 408.57, count: 0 },
+            { id: 'NONVEG_STARTERS-rr-chicken', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Rr Chicken", nameEn: "Rr Chicken", nameHi: "Rr Chicken", price: 465.71, count: 0 },
+            { id: 'NONVEG_STARTERS-pepper-prawns', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Pepper Prawns", nameEn: "Pepper Prawns", nameHi: "Pepper Prawns", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-head-fry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Head Fry", nameEn: "Head Fry", nameHi: "Head Fry", price: 618.10, count: 0 },
+            { id: 'NONVEG_STARTERS-brain-fry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Brain Fry", nameEn: "Brain Fry", nameHi: "Brain Fry", price: 618.10, count: 0 },
+            { id: 'NONVEG_STARTERS-fish-roast-b-l', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Fish Roast B/l", nameEn: "Fish Roast B/l", nameHi: "Fish Roast B/l", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-mutton-fry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Mutton Fry", nameEn: "Mutton Fry", nameHi: "Mutton Fry", price: 665.71, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-roast', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Roast", nameEn: "Chicken Roast", nameHi: "Chicken Roast", price: 408.57, count: 0 },
+            { id: 'NONVEG_STARTERS-nk-fry', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Nk.fry", nameEn: "Nk.fry", nameHi: "Nk.fry", price: 665.71, count: 0 },
+            { id: 'NONVEG_STARTERS-apolo-fish', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Apolo Fish", nameEn: "Apolo Fish", nameHi: "Apolo Fish", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-chilly-fish', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chilly Fish", nameEn: "Chilly Fish", nameHi: "Chilly Fish", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-fry-b-l', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Fry B/l", nameEn: "Chicken Fry B/l", nameHi: "Chicken Fry B/l", price: 408.57, count: 0 },
+            { id: 'NONVEG_STARTERS-basket-fish', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Basket Fish", nameEn: "Basket Fish", nameHi: "Basket Fish", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-dum-joint', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Dum Joint", nameEn: "Dum Joint", nameHi: "Dum Joint", price: 208.57, count: 0 },
+            { id: 'NONVEG_STARTERS-guntur-chicken-bone-snack', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Guntur Chicken Bone Snack", nameEn: "Guntur Chicken Bone Snack", nameHi: "Guntur Chicken Bone Snack", price: 418.10, count: 0 },
+            { id: 'NONVEG_STARTERS-dragon-chicken', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Dragon Chicken", nameEn: "Dragon Chicken", nameHi: "Dragon Chicken", price: 427.62, count: 0 },
+            { id: 'NONVEG_STARTERS-dragon-fish', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Dragon Fish", nameEn: "Dragon Fish", nameHi: "Dragon Fish", price: 570.48, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-85-b-l', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken 85 B/l", nameEn: "Chicken 85 B/l", nameHi: "Chicken 85 B/l", price: 427.62, count: 0 },
+            { id: 'NONVEG_STARTERS-chicken-lollipop-half', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chicken Lollipop - Half", nameEn: "Chicken Lollipop - Half", nameHi: "Chicken Lollipop - Half", price: 265.71, count: 0 },
+            { id: 'NONVEG_STARTERS-chilli-prawns', cat: 'NONVEG_STARTERS', veg: 'nonveg', name: "Chilli Prawns", nameEn: "Chilli Prawns", nameHi: "Chilli Prawns", price: 570.48, count: 0 },
+            { id: 'VEG_CURRYS-plain-palak', cat: 'VEG_CURRYS', veg: 'veg', name: "Plain Palak", nameEn: "Plain Palak", nameHi: "Plain Palak", price: 284.19, count: 0 },
+            { id: 'VEG_CURRYS-dal-fry', cat: 'VEG_CURRYS', veg: 'veg', name: "Dal Fry", nameEn: "Dal Fry", nameHi: "Dal Fry", price: 284.19, count: 0 },
+            { id: 'VEG_CURRYS-tomato-curry', cat: 'VEG_CURRYS', veg: 'veg', name: "Tomato Curry", nameEn: "Tomato Curry", nameHi: "Tomato Curry", price: 284.19, count: 0 },
+            { id: 'VEG_CURRYS-palak-panner', cat: 'VEG_CURRYS', veg: 'veg', name: "Palak Panner", nameEn: "Palak Panner", nameHi: "Palak Panner", price: 332.38, count: 0 },
+            { id: 'VEG_CURRYS-dal-palak', cat: 'VEG_CURRYS', veg: 'veg', name: "Dal Palak", nameEn: "Dal Palak", nameHi: "Dal Palak", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-dal-tomato', cat: 'VEG_CURRYS', veg: 'veg', name: "Dal Tomato", nameEn: "Dal Tomato", nameHi: "Dal Tomato", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-dal-tadka', cat: 'VEG_CURRYS', veg: 'veg', name: "Dal Tadka", nameEn: "Dal Tadka", nameHi: "Dal Tadka", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-egg-dal', cat: 'VEG_CURRYS', veg: 'egg', name: "Egg Dal", nameEn: "Egg Dal", nameHi: "Egg Dal", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-egg-palak', cat: 'VEG_CURRYS', veg: 'egg', name: "Egg Palak", nameEn: "Egg Palak", nameHi: "Egg Palak", price: 303.81, count: 0 },
+            { id: 'VEG_CURRYS-egg-tomato', cat: 'VEG_CURRYS', veg: 'egg', name: "Egg Tomato", nameEn: "Egg Tomato", nameHi: "Egg Tomato", price: 303.81, count: 0 },
+            { id: 'VEG_CURRYS-dal-palak-tomato-mix', cat: 'VEG_CURRYS', veg: 'veg', name: "Dal Palak Tomato Mix", nameEn: "Dal Palak Tomato Mix", nameHi: "Dal Palak Tomato Mix", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-kaju-tomato', cat: 'VEG_CURRYS', veg: 'veg', name: "Kaju Tomato", nameEn: "Kaju Tomato", nameHi: "Kaju Tomato", price: 427.61, count: 0 },
+            { id: 'VEG_CURRYS-kaju-panner', cat: 'VEG_CURRYS', veg: 'veg', name: "Kaju Panner", nameEn: "Kaju Panner", nameHi: "Kaju Panner", price: 427.61, count: 0 },
+            { id: 'VEG_CURRYS-kaju-capsicum', cat: 'VEG_CURRYS', veg: 'veg', name: "Kaju Capsicum", nameEn: "Kaju Capsicum", nameHi: "Kaju Capsicum", price: 380.00, count: 0 },
+            { id: 'VEG_CURRYS-kaju-murshroom', cat: 'VEG_CURRYS', veg: 'veg', name: "Kaju Murshroom", nameEn: "Kaju Murshroom", nameHi: "Kaju Murshroom", price: 427.62, count: 0 },
+            { id: 'VEG_CURRYS-kaju-baby-corn', cat: 'VEG_CURRYS', veg: 'veg', name: "Kaju Baby Corn", nameEn: "Kaju Baby Corn", nameHi: "Kaju Baby Corn", price: 427.62, count: 0 },
+            { id: 'VEG_CURRYS-mixed-veg-curry', cat: 'VEG_CURRYS', veg: 'veg', name: "Mixed Veg Curry", nameEn: "Mixed Veg Curry", nameHi: "Mixed Veg Curry", price: 332.38, count: 0 },
+            { id: 'VEG_CURRYS-veg-sahi-panneer', cat: 'VEG_CURRYS', veg: 'veg', name: "Veg Sahi Panneer", nameEn: "Veg Sahi Panneer", nameHi: "Veg Sahi Panneer", price: 427.61, count: 0 },
+            { id: 'VEG_CURRYS-veg-kola-puri', cat: 'VEG_CURRYS', veg: 'veg', name: "Veg Kola Puri", nameEn: "Veg Kola Puri", nameHi: "Veg Kola Puri", price: 399.04, count: 0 },
+            { id: 'VEG_CURRYS-veg-sham-shavera', cat: 'VEG_CURRYS', veg: 'veg', name: "Veg Sham Shavera", nameEn: "Veg Sham Shavera", nameHi: "Veg Sham Shavera", price: 405.71, count: 0 },
+            { id: 'VEG_CURRYS-veg-maharani', cat: 'VEG_CURRYS', veg: 'veg', name: "Veg Maharani", nameEn: "Veg Maharani", nameHi: "Veg Maharani", price: 408.57, count: 0 },
+            { id: 'VEG_CURRYS-kadai-veg', cat: 'VEG_CURRYS', veg: 'veg', name: "Kadai Veg", nameEn: "Kadai Veg", nameHi: "Kadai Veg", price: 322.82, count: 0 },
+            { id: 'VEG_CURRYS-kadai-panner', cat: 'VEG_CURRYS', veg: 'veg', name: "Kadai Panner", nameEn: "Kadai Panner", nameHi: "Kadai Panner", price: 408.57, count: 0 },
+            { id: 'VEG_CURRYS-baby-corn-curry', cat: 'VEG_CURRYS', veg: 'veg', name: "Baby Corn Curry", nameEn: "Baby Corn Curry", nameHi: "Baby Corn Curry", price: 360.95, count: 0 },
+            { id: 'VEG_CURRYS-baby-corn-masala', cat: 'VEG_CURRYS', veg: 'veg', name: "Baby Corn Masala", nameEn: "Baby Corn Masala", nameHi: "Baby Corn Masala", price: 351.42, count: 0 },
+            { id: 'VEG_CURRYS-mushroom-curry', cat: 'VEG_CURRYS', veg: 'veg', name: "Mushroom Curry", nameEn: "Mushroom Curry", nameHi: "Mushroom Curry", price: 408.57, count: 0 },
+            { id: 'VEG_CURRYS-murshroom-masala', cat: 'VEG_CURRYS', veg: 'veg', name: "Murshroom Masala", nameEn: "Murshroom Masala", nameHi: "Murshroom Masala", price: 399.05, count: 0 },
+            { id: 'VEG_CURRYS-baby-corn-murshroom-panner-mix', cat: 'VEG_CURRYS', veg: 'veg', name: "Baby Corn Murshroom Panner Mix", nameEn: "Baby Corn Murshroom Panner Mix", nameHi: "Baby Corn Murshroom Panner Mix", price: 408.57, count: 0 },
+            { id: 'VEG_CURRYS-murshroom-palak', cat: 'VEG_CURRYS', veg: 'veg', name: "Murshroom Palak", nameEn: "Murshroom Palak", nameHi: "Murshroom Palak", price: 399.05, count: 0 },
+            { id: 'VEG_CURRYS-panner-butter-masala', cat: 'VEG_CURRYS', veg: 'veg', name: "Panner Butter Masala", nameEn: "Panner Butter Masala", nameHi: "Panner Butter Masala", price: 427.62, count: 0 },
+            { id: 'VEG_CURRYS-methy-chaman', cat: 'VEG_CURRYS', veg: 'veg', name: "Methy Chaman", nameEn: "Methy Chaman", nameHi: "Methy Chaman", price: 427.61, count: 0 },
+            { id: 'VEG_CURRYS-malai-kofta', cat: 'VEG_CURRYS', veg: 'veg', name: "Malai Kofta", nameEn: "Malai Kofta", nameHi: "Malai Kofta", price: 427.61, count: 0 },
+            { id: 'VEG_CURRYS-kaju-methi-chaman', cat: 'VEG_CURRYS', veg: 'veg', name: "Kaju Methi Chaman", nameEn: "Kaju Methi Chaman", nameHi: "Kaju Methi Chaman", price: 427.61, count: 0 },
+            { id: 'VEG_CURRYS-kaju-palak', cat: 'VEG_CURRYS', veg: 'veg', name: "Kaju Palak", nameEn: "Kaju Palak", nameHi: "Kaju Palak", price: 380.00, count: 0 },
+            { id: 'VEG_CURRYS-capsicum-tomato-curry', cat: 'VEG_CURRYS', veg: 'veg', name: "Capsicum Tomato Curry", nameEn: "Capsicum Tomato Curry", nameHi: "Capsicum Tomato Curry", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-methi-panner', cat: 'VEG_CURRYS', veg: 'veg', name: "Methi Panner", nameEn: "Methi Panner", nameHi: "Methi Panner", price: 427.61, count: 0 },
+            { id: 'VEG_CURRYS-egg-curry', cat: 'VEG_CURRYS', veg: 'egg', name: "Egg Curry", nameEn: "Egg Curry", nameHi: "Egg Curry", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-egg-masala', cat: 'VEG_CURRYS', veg: 'egg', name: "Egg Masala", nameEn: "Egg Masala", nameHi: "Egg Masala", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-egg-kheema-curry', cat: 'VEG_CURRYS', veg: 'egg', name: "Egg Kheema Curry", nameEn: "Egg Kheema Curry", nameHi: "Egg Kheema Curry", price: 313.33, count: 0 },
+            { id: 'VEG_CURRYS-kaju-curry', cat: 'VEG_CURRYS', veg: 'veg', name: "Kaju Curry", nameEn: "Kaju Curry", nameHi: "Kaju Curry", price: 408.57, count: 0 },
+            { id: 'VEG_CURRYS-veg-shahi-kurma', cat: 'VEG_CURRYS', veg: 'veg', name: "Veg Shahi Kurma", nameEn: "Veg Shahi Kurma", nameHi: "Veg Shahi Kurma", price: 380.00, count: 0 },
+            { id: 'VEG_CURRYS-egg-burji', cat: 'VEG_CURRYS', veg: 'egg', name: "Egg Burji", nameEn: "Egg Burji", nameHi: "Egg Burji", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-kadai-mashroom', cat: 'VEG_CURRYS', veg: 'veg', name: "Kadai Mashroom", nameEn: "Kadai Mashroom", nameHi: "Kadai Mashroom", price: 399.04, count: 0 },
+            { id: 'VEG_CURRYS-baby-corn-murshroom-masala', cat: 'VEG_CURRYS', veg: 'veg', name: "Baby Corn Murshroom Masala", nameEn: "Baby Corn Murshroom Masala", nameHi: "Baby Corn Murshroom Masala", price: 399.04, count: 0 },
+            { id: 'VEG_CURRYS-gongora-mushroom', cat: 'VEG_CURRYS', veg: 'veg', name: "Gongora Mushroom", nameEn: "Gongora Mushroom", nameHi: "Gongora Mushroom", price: 380.00, count: 0 },
+            { id: 'VEG_CURRYS-veg-palak', cat: 'VEG_CURRYS', veg: 'veg', name: "Veg Palak", nameEn: "Veg Palak", nameHi: "Veg Palak", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-capsicum-curry', cat: 'VEG_CURRYS', veg: 'veg', name: "Capsicum Curry", nameEn: "Capsicum Curry", nameHi: "Capsicum Curry", price: 284.76, count: 0 },
+            { id: 'VEG_CURRYS-kaju-masala', cat: 'VEG_CURRYS', veg: 'veg', name: "Kaju Masala", nameEn: "Kaju Masala", nameHi: "Kaju Masala", price: 427.61, count: 0 },
+            { id: 'VEG_CURRYS-broccoli-curry', cat: 'VEG_CURRYS', veg: 'veg', name: "Broccoli Curry", nameEn: "Broccoli Curry", nameHi: "Broccoli Curry", price: 380.00, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Curry", nameEn: "Chicken Curry", nameHi: "Chicken Curry", price: 380.00, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-curry-b-l', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Curry B/l", nameEn: "Chicken Curry B/l", nameHi: "Chicken Curry B/l", price: 408.57, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-keema-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Keema Curry", nameEn: "Chicken Keema Curry", nameHi: "Chicken Keema Curry", price: 427.61, count: 0 },
+            { id: 'NONVEG_CURRYS-and-chicken-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "And.chicken Curry", nameEn: "And.chicken Curry", nameHi: "And.chicken Curry", price: 408.57, count: 0 },
+            { id: 'NONVEG_CURRYS-and-chicken-curry-b-l', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "And Chicken Curry B/l", nameEn: "And Chicken Curry B/l", nameHi: "And Chicken Curry B/l", price: 418.10, count: 0 },
+            { id: 'NONVEG_CURRYS-kadai-chicken', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Kadai Chicken", nameEn: "Kadai Chicken", nameHi: "Kadai Chicken", price: 399.05, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-kolapuri', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Kolapuri", nameEn: "Chicken Kolapuri", nameHi: "Chicken Kolapuri", price: 427.62, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-afghani', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Afghani", nameEn: "Chicken Afghani", nameHi: "Chicken Afghani", price: 427.61, count: 0 },
+            { id: 'NONVEG_CURRYS-kaju-chicken-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Kaju Chicken Curry", nameEn: "Kaju Chicken Curry", nameHi: "Kaju Chicken Curry", price: 446.67, count: 0 },
+            { id: 'NONVEG_CURRYS-punjab-chicken-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Punjab Chicken Curry", nameEn: "Punjab Chicken Curry", nameHi: "Punjab Chicken Curry", price: 399.05, count: 0 },
+            { id: 'NONVEG_CURRYS-punjab-chicken-curry-b-l', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Punjab Chicken Curry B/l", nameEn: "Punjab Chicken Curry B/l", nameHi: "Punjab Chicken Curry B/l", price: 408.57, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-kurma-b-l', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Kurma B/l", nameEn: "Chicken Kurma B/l", nameHi: "Chicken Kurma B/l", price: 380.00, count: 0 },
+            { id: 'NONVEG_CURRYS-gnt-chicken-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Gnt Chicken Curry", nameEn: "Gnt Chicken Curry", nameHi: "Gnt Chicken Curry", price: 408.57, count: 0 },
+            { id: 'NONVEG_CURRYS-gnt-chicken-curry-b-l', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Gnt Chicken Curry B/l", nameEn: "Gnt Chicken Curry B/l", nameHi: "Gnt Chicken Curry B/l", price: 427.61, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-moglai-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Moglai Curry", nameEn: "Chicken Moglai Curry", nameHi: "Chicken Moglai Curry", price: 418.10, count: 0 },
+            { id: 'NONVEG_CURRYS-butter-chicken', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Butter Chicken", nameEn: "Butter Chicken", nameHi: "Butter Chicken", price: 399.05, count: 0 },
+            { id: 'NONVEG_CURRYS-mutton-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Mutton Curry", nameEn: "Mutton Curry", nameHi: "Mutton Curry", price: 570.48, count: 0 },
+            { id: 'NONVEG_CURRYS-mutton-roghan-josh', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Mutton Roghan Josh", nameEn: "Mutton Roghan Josh", nameHi: "Mutton Roghan Josh", price: 618.10, count: 0 },
+            { id: 'NONVEG_CURRYS-prawns-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Prawns Curry", nameEn: "Prawns Curry", nameHi: "Prawns Curry", price: 570.48, count: 0 },
+            { id: 'NONVEG_CURRYS-prawns-masala', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Prawns Masala", nameEn: "Prawns Masala", nameHi: "Prawns Masala", price: 570.48, count: 0 },
+            { id: 'NONVEG_CURRYS-head-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Head Curry", nameEn: "Head Curry", nameHi: "Head Curry", price: 570.48, count: 0 },
+            { id: 'NONVEG_CURRYS-gongura-chicken', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Gongura Chicken", nameEn: "Gongura Chicken", nameHi: "Gongura Chicken", price: 399.05, count: 0 },
+            { id: 'NONVEG_CURRYS-methi-chicken-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Methi Chicken Curry", nameEn: "Methi Chicken Curry", nameHi: "Methi Chicken Curry", price: 427.62, count: 0 },
+            { id: 'NONVEG_CURRYS-kaju-chicken-masala', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Kaju Chicken Masala", nameEn: "Kaju Chicken Masala", nameHi: "Kaju Chicken Masala", price: 427.62, count: 0 },
+            { id: 'NONVEG_CURRYS-mutton-masala', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Mutton Masala", nameEn: "Mutton Masala", nameHi: "Mutton Masala", price: 627.62, count: 0 },
+            { id: 'NONVEG_CURRYS-gongura-mutton', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Gongura Mutton", nameEn: "Gongura Mutton", nameHi: "Gongura Mutton", price: 570.48, count: 0 },
+            { id: 'NONVEG_CURRYS-natukodi-masala', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Natukodi Masala", nameEn: "Natukodi Masala", nameHi: "Natukodi Masala", price: 618.10, count: 0 },
+            { id: 'NONVEG_CURRYS-gongura-prawns', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Gongura Prawns", nameEn: "Gongura Prawns", nameHi: "Gongura Prawns", price: 570.48, count: 0 },
+            { id: 'NONVEG_CURRYS-and-mutton-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "And Mutton Curry", nameEn: "And Mutton Curry", nameHi: "And Mutton Curry", price: 589.52, count: 0 },
+            { id: 'NONVEG_CURRYS-kadai-chicken-b-l', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Kadai Chicken B/l", nameEn: "Kadai Chicken B/l", nameHi: "Kadai Chicken B/l", price: 418.10, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-maharani', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Maharani", nameEn: "Chicken Maharani", nameHi: "Chicken Maharani", price: 427.61, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-tikka-masala', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Tikka Masala", nameEn: "Chicken Tikka Masala", nameHi: "Chicken Tikka Masala", price: 446.66, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-masala', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Masala", nameEn: "Chicken Masala", nameHi: "Chicken Masala", price: 427.62, count: 0 },
+            { id: 'NONVEG_CURRYS-mutton-keema-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Mutton Keema Curry", nameEn: "Mutton Keema Curry", nameHi: "Mutton Keema Curry", price: 665.71, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-masala-b-l', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Masala B/l", nameEn: "Chicken Masala B/l", nameHi: "Chicken Masala B/l", price: 427.62, count: 0 },
+            { id: 'NONVEG_CURRYS-fish-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Fish Curry", nameEn: "Fish Curry", nameHi: "Fish Curry", price: 570.48, count: 0 },
+            { id: 'NONVEG_CURRYS-fish-pulusu', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Fish Pulusu", nameEn: "Fish Pulusu", nameHi: "Fish Pulusu", price: 570.48, count: 0 },
+            { id: 'NONVEG_CURRYS-n-k-curry', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "N K Curry", nameEn: "N K Curry", nameHi: "N K Curry", price: 570.48, count: 0 },
+            { id: 'NONVEG_CURRYS-chicken-kolapuri-b-l', cat: 'NONVEG_CURRYS', veg: 'nonveg', name: "Chicken Kolapuri B/l.", nameEn: "Chicken Kolapuri B/l.", nameHi: "Chicken Kolapuri B/l.", price: 427.62, count: 0 },
+            { id: 'BIRYANI_VEG-veg-biryani', cat: 'BIRYANI_VEG', veg: 'veg', name: "Veg Biryani", nameEn: "Veg Biryani", nameHi: "Veg Biryani", price: 351.43, count: 0 },
+            { id: 'BIRYANI_VEG-egg-biryani', cat: 'BIRYANI_VEG', veg: 'egg', name: "Egg Biryani", nameEn: "Egg Biryani", nameHi: "Egg Biryani", price: 351.43, count: 0 },
+            { id: 'BIRYANI_VEG-mushroom-biryani', cat: 'BIRYANI_VEG', veg: 'veg', name: "Mushroom Biryani", nameEn: "Mushroom Biryani", nameHi: "Mushroom Biryani", price: 408.57, count: 0 },
+            { id: 'BIRYANI_VEG-kaju-biryani', cat: 'BIRYANI_VEG', veg: 'veg', name: "Kaju Biryani", nameEn: "Kaju Biryani", nameHi: "Kaju Biryani", price: 446.50, count: 0 },
+            { id: 'BIRYANI_VEG-panner-biryani', cat: 'BIRYANI_VEG', veg: 'veg', name: "Panner Biryani", nameEn: "Panner Biryani", nameHi: "Panner Biryani", price: 408.50, count: 0 },
+            { id: 'BIRYANI_VEG-ks-veg-biryani', cat: 'BIRYANI_VEG', veg: 'veg', name: "Ks.veg Biryani", nameEn: "Ks.veg Biryani", nameHi: "Ks.veg Biryani", price: 408.57, count: 0 },
+            { id: 'BIRYANI_VEG-biryani-rice-veg', cat: 'BIRYANI_VEG', veg: 'veg', name: "Biryani Rice Veg", nameEn: "Biryani Rice Veg", nameHi: "Biryani Rice Veg", price: 284.76, count: 0 },
+            { id: 'BIRYANI_NONVEG-biryani-rice', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Biryani Rice", nameEn: "Biryani Rice", nameHi: "Biryani Rice", price: 284.76, count: 0 },
+            { id: 'BIRYANI_NONVEG-sp-chicken-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Sp.chicken Biryani", nameEn: "Sp.chicken Biryani", nameHi: "Sp.chicken Biryani", price: 408.57, count: 0 },
+            { id: 'BIRYANI_NONVEG-chicken-fripiece-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Chicken Fripiece Biryani", nameEn: "Chicken Fripiece Biryani", nameHi: "Chicken Fripiece Biryani", price: 408.57, count: 0 },
+            { id: 'BIRYANI_NONVEG-chicken-wings-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Chicken Wings Biryani", nameEn: "Chicken Wings Biryani", nameHi: "Chicken Wings Biryani", price: 475.24, count: 0 },
+            { id: 'BIRYANI_NONVEG-chicken-lollypop-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Chicken Lollypop Biryani", nameEn: "Chicken Lollypop Biryani", nameHi: "Chicken Lollypop Biryani", price: 475.23, count: 0 },
+            { id: 'BIRYANI_NONVEG-chicken-keema-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Chicken Keema Biryani", nameEn: "Chicken Keema Biryani", nameHi: "Chicken Keema Biryani", price: 475.24, count: 0 },
+            { id: 'BIRYANI_NONVEG-chicken-tikka-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Chicken Tikka Biryani", nameEn: "Chicken Tikka Biryani", nameHi: "Chicken Tikka Biryani", price: 475.24, count: 0 },
+            { id: 'BIRYANI_NONVEG-chicken-moghalai-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Chicken Moghalai Biryani", nameEn: "Chicken Moghalai Biryani", nameHi: "Chicken Moghalai Biryani", price: 475.23, count: 0 },
+            { id: 'BIRYANI_NONVEG-chicken-roast-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Chicken Roast Biryani", nameEn: "Chicken Roast Biryani", nameHi: "Chicken Roast Biryani", price: 437.14, count: 0 },
+            { id: 'BIRYANI_NONVEG-fish-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Fish Biryani", nameEn: "Fish Biryani", nameHi: "Fish Biryani", price: 570.48, count: 0 },
+            { id: 'BIRYANI_NONVEG-ks-mutton-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Ks Mutton Biryani", nameEn: "Ks Mutton Biryani", nameHi: "Ks Mutton Biryani", price: 599.05, count: 0 },
+            { id: 'BIRYANI_NONVEG-non-veg-mixed-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Non-veg Mixed Biryani", nameEn: "Non-veg Mixed Biryani", nameHi: "Non-veg Mixed Biryani", price: 618.10, count: 0 },
+            { id: 'BIRYANI_NONVEG-mutton-liver-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Mutton Liver Biryani", nameEn: "Mutton Liver Biryani", nameHi: "Mutton Liver Biryani", price: 570.48, count: 0 },
+            { id: 'BIRYANI_NONVEG-ks-prawns-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Ks.prawns Biryani", nameEn: "Ks.prawns Biryani", nameHi: "Ks.prawns Biryani", price: 560.95, count: 0 },
+            { id: 'BIRYANI_NONVEG-ks-natukodi-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Ks.natukodi Biryani", nameEn: "Ks.natukodi Biryani", nameHi: "Ks.natukodi Biryani", price: 570.47, count: 0 },
+            { id: 'BIRYANI_NONVEG-mutton-keema-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Mutton Keema Biryani", nameEn: "Mutton Keema Biryani", nameHi: "Mutton Keema Biryani", price: 618.10, count: 0 },
+            { id: 'BIRYANI_NONVEG-chicken-dumbiryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Chicken Dumbiryani", nameEn: "Chicken Dumbiryani", nameHi: "Chicken Dumbiryani", price: 399.05, count: 0 },
+            { id: 'BIRYANI_NONVEG-sp-chicken-biryani-curry-type', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Sp Chicken Biryani Curry Type", nameEn: "Sp Chicken Biryani Curry Type", nameHi: "Sp Chicken Biryani Curry Type", price: 408.57, count: 0 },
+            { id: 'BIRYANI_NONVEG-mutton-dum-biryni', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Mutton Dum Biryni", nameEn: "Mutton Dum Biryni", nameHi: "Mutton Dum Biryni", price: 599.05, count: 0 },
+            { id: 'BIRYANI_NONVEG-tangdi-kabab-biryani', cat: 'BIRYANI_NONVEG', veg: 'nonveg', name: "Tangdi Kabab Biryani", nameEn: "Tangdi Kabab Biryani", nameHi: "Tangdi Kabab Biryani", price: 570.48, count: 0 },
+            { id: 'VEG_RICE-white-rice', cat: 'VEG_RICE', veg: 'veg', name: "White Rice", nameEn: "White Rice", nameHi: "White Rice", price: 75.24, count: 0 },
+            { id: 'VEG_RICE-veg-fride-rice', cat: 'VEG_RICE', veg: 'veg', name: "Veg Fride Rice", nameEn: "Veg Fride Rice", nameHi: "Veg Fride Rice", price: 332.38, count: 0 },
+            { id: 'VEG_RICE-ks-veg-fride-rice', cat: 'VEG_RICE', veg: 'veg', name: "Ks.veg Fride Rice", nameEn: "Ks.veg Fride Rice", nameHi: "Ks.veg Fride Rice", price: 399.04, count: 0 },
+            { id: 'VEG_RICE-egg-fride-rice', cat: 'VEG_RICE', veg: 'egg', name: "Egg Fride Rice", nameEn: "Egg Fride Rice", nameHi: "Egg Fride Rice", price: 332.38, count: 0 },
+            { id: 'VEG_RICE-zeera-rice', cat: 'VEG_RICE', veg: 'veg', name: "Zeera Rice", nameEn: "Zeera Rice", nameHi: "Zeera Rice", price: 332.38, count: 0 },
+            { id: 'VEG_RICE-panner-fried-rice', cat: 'VEG_RICE', veg: 'veg', name: "Panner Fried Rice", nameEn: "Panner Fried Rice", nameHi: "Panner Fried Rice", price: 399.04, count: 0 },
+            { id: 'VEG_RICE-kaju-fride-rice', cat: 'VEG_RICE', veg: 'veg', name: "Kaju Fride Rice", nameEn: "Kaju Fride Rice", nameHi: "Kaju Fride Rice", price: 427.61, count: 0 },
+            { id: 'VEG_RICE-mushroom-fride-rice', cat: 'VEG_RICE', veg: 'veg', name: "Mushroom Fride Rice", nameEn: "Mushroom Fride Rice", nameHi: "Mushroom Fride Rice", price: 399.05, count: 0 },
+            { id: 'VEG_RICE-baby-corn-fride-rice', cat: 'VEG_RICE', veg: 'veg', name: "Baby Corn Fride Rice", nameEn: "Baby Corn Fride Rice", nameHi: "Baby Corn Fride Rice", price: 399.05, count: 0 },
+            { id: 'VEG_RICE-veg-sezwan-fride-rice', cat: 'VEG_RICE', veg: 'veg', name: "Veg Sezwan Fride Rice", nameEn: "Veg Sezwan Fride Rice", nameHi: "Veg Sezwan Fride Rice", price: 360.95, count: 0 },
+            { id: 'VEG_RICE-ragi-sangati', cat: 'VEG_RICE', veg: 'veg', name: "Ragi Sangati", nameEn: "Ragi Sangati", nameHi: "Ragi Sangati", price: 141.28, count: 0 },
+            { id: 'VEG_RICE-curd-rice', cat: 'VEG_RICE', veg: 'veg', name: "Curd Rice", nameEn: "Curd Rice", nameHi: "Curd Rice", price: 122.86, count: 0 },
+            { id: 'VEG_RICE-sp-curd-rice', cat: 'VEG_RICE', veg: 'veg', name: "Sp.curd Rice", nameEn: "Sp.curd Rice", nameHi: "Sp.curd Rice", price: 151.43, count: 0 },
+            { id: 'VEG_RICE-kaju-zeera-fried-rice', cat: 'VEG_RICE', veg: 'veg', name: "Kaju Zeera Fried Rice", nameEn: "Kaju Zeera Fried Rice", nameHi: "Kaju Zeera Fried Rice", price: 427.61, count: 0 },
+            { id: 'VEG_RICE-veg-manchurian-fried-rice', cat: 'VEG_RICE', veg: 'veg', name: "Veg Manchurian Fried Rice", nameEn: "Veg Manchurian Fried Rice", nameHi: "Veg Manchurian Fried Rice", price: 380.00, count: 0 },
+            { id: 'VEG_RICE-ghee-rice', cat: 'VEG_RICE', veg: 'veg', name: "Ghee Rice", nameEn: "Ghee Rice", nameHi: "Ghee Rice", price: 329.99, count: 0 },
+            { id: 'VEG_RICE-egg-shewzan-fried-rice', cat: 'VEG_RICE', veg: 'egg', name: "Egg Shewzan Fried Rice", nameEn: "Egg Shewzan Fried Rice", nameHi: "Egg Shewzan Fried Rice", price: 380.00, count: 0 },
+            { id: 'NONVEG_RICE-spl-chicken-fride-rice', cat: 'NONVEG_RICE', veg: 'nonveg', name: "Spl.chicken Fride Rice", nameEn: "Spl.chicken Fride Rice", nameHi: "Spl.chicken Fride Rice", price: 408.57, count: 0 },
+            { id: 'NONVEG_RICE-chicken-fried-rice', cat: 'NONVEG_RICE', veg: 'nonveg', name: "Chicken Fried Rice", nameEn: "Chicken Fried Rice", nameHi: "Chicken Fried Rice", price: 408.57, count: 0 },
+            { id: 'NONVEG_RICE-nk-fride-rice', cat: 'NONVEG_RICE', veg: 'nonveg', name: "Nk.fride Rice", nameEn: "Nk.fride Rice", nameHi: "Nk.fride Rice", price: 551.42, count: 0 },
+            { id: 'NONVEG_RICE-fish-fride-rice', cat: 'NONVEG_RICE', veg: 'nonveg', name: "Fish Fride Rice", nameEn: "Fish Fride Rice", nameHi: "Fish Fride Rice", price: 557.43, count: 0 },
+            { id: 'NONVEG_RICE-ks-prawns-fride-rice', cat: 'NONVEG_RICE', veg: 'nonveg', name: "Ks.prawns Fride Rice", nameEn: "Ks.prawns Fride Rice", nameHi: "Ks.prawns Fride Rice", price: 551.43, count: 0 },
+            { id: 'NONVEG_RICE-ks-mutton-fride-rice', cat: 'NONVEG_RICE', veg: 'nonveg', name: "Ks.mutton Fride Rice", nameEn: "Ks.mutton Fride Rice", nameHi: "Ks.mutton Fride Rice", price: 599.05, count: 0 },
+            { id: 'NONVEG_RICE-chicken-sezwan-fride-rice', cat: 'NONVEG_RICE', veg: 'nonveg', name: "Chicken Sezwan Fride Rice", nameEn: "Chicken Sezwan Fride Rice", nameHi: "Chicken Sezwan Fride Rice", price: 437.14, count: 0 },
+            { id: 'NONVEG_RICE-non-veg-mixed-fride-rice', cat: 'NONVEG_RICE', veg: 'nonveg', name: "Non-veg Mixed Fride Rice", nameEn: "Non-veg Mixed Fride Rice", nameHi: "Non-veg Mixed Fride Rice", price: 618.10, count: 0 },
+            { id: 'NONVEG_RICE-kaju-chicken-fried-rice', cat: 'NONVEG_RICE', veg: 'nonveg', name: "Kaju Chicken Fried Rice", nameEn: "Kaju Chicken Fried Rice", nameHi: "Kaju Chicken Fried Rice", price: 437.14, count: 0 },
+            { id: 'ROTIS-lachha-parota', cat: 'ROTIS', veg: 'veg', name: "Lachha Parota", nameEn: "Lachha Parota", nameHi: "Lachha Parota", price: 141.90, count: 0 },
+            { id: 'ROTIS-butter-roti', cat: 'ROTIS', veg: 'veg', name: "Butter Roti", nameEn: "Butter Roti", nameHi: "Butter Roti", price: 103.81, count: 0 },
+            { id: 'ROTIS-butter-naan', cat: 'ROTIS', veg: 'veg', name: "Butter Naan", nameEn: "Butter Naan", nameHi: "Butter Naan", price: 113.33, count: 0 },
+            { id: 'ROTIS-plain-naan', cat: 'ROTIS', veg: 'veg', name: "Plain Naan", nameEn: "Plain Naan", nameHi: "Plain Naan", price: 94.29, count: 0 },
+            { id: 'ROTIS-plain-kulcha', cat: 'ROTIS', veg: 'veg', name: "Plain Kulcha", nameEn: "Plain Kulcha", nameHi: "Plain Kulcha", price: 122.86, count: 0 },
+            { id: 'ROTIS-masala-kulcha', cat: 'ROTIS', veg: 'veg', name: "Masala Kulcha", nameEn: "Masala Kulcha", nameHi: "Masala Kulcha", price: 141.90, count: 0 },
+            { id: 'ROTIS-pulka', cat: 'ROTIS', veg: 'veg', name: "Pulka", nameEn: "Pulka", nameHi: "Pulka", price: 23.80, count: 0 },
+            { id: 'ROTIS-tandoori-roti', cat: 'ROTIS', veg: 'veg', name: "Tandoori Roti", nameEn: "Tandoori Roti", nameHi: "Tandoori Roti", price: 65.71, count: 0 },
+            { id: 'ROTIS-kulcha', cat: 'ROTIS', veg: 'veg', name: "Kulcha", nameEn: "Kulcha", nameHi: "Kulcha", price: 75.24, count: 0 },
+            { id: 'ROTIS-garlic-naan', cat: 'ROTIS', veg: 'veg', name: "Garlic Naan", nameEn: "Garlic Naan", nameHi: "Garlic Naan", price: 132.38, count: 0 },
+            { id: 'TANDOORI_NONVEG-tandoori-chicken-full', cat: 'TANDOORI_NONVEG', veg: 'nonveg', name: "Tandoori Chicken Full", nameEn: "Tandoori Chicken Full", nameHi: "Tandoori Chicken Full", price: 808.57, count: 0 },
+            { id: 'TANDOORI_NONVEG-tandoori-chicken-half', cat: 'TANDOORI_NONVEG', veg: 'nonveg', name: "Tandoori Chicken Half", nameEn: "Tandoori Chicken Half", nameHi: "Tandoori Chicken Half", price: 408.57, count: 0 },
+            { id: 'TANDOORI_NONVEG-chicken-tikka', cat: 'TANDOORI_NONVEG', veg: 'nonveg', name: "Chicken Tikka", nameEn: "Chicken Tikka", nameHi: "Chicken Tikka", price: 475.24, count: 0 },
+            { id: 'TANDOORI_NONVEG-tangdi-kebab-full', cat: 'TANDOORI_NONVEG', veg: 'nonveg', name: "Tangdi Kebab Full", nameEn: "Tangdi Kebab Full", nameHi: "Tangdi Kebab Full", price: 475.24, count: 0 },
+            { id: 'TANDOORI_NONVEG-tangdi-kebab-half', cat: 'TANDOORI_NONVEG', veg: 'nonveg', name: "Tangdi Kebab Half", nameEn: "Tangdi Kebab Half", nameHi: "Tangdi Kebab Half", price: 237.14, count: 0 },
+            { id: 'TANDOORI_NONVEG-kalmi-kebab', cat: 'TANDOORI_NONVEG', veg: 'nonveg', name: "Kalmi Kebab", nameEn: "Kalmi Kebab", nameHi: "Kalmi Kebab", price: 475.24, count: 0 },
+            { id: 'TANDOORI_NONVEG-malai-kabab', cat: 'TANDOORI_NONVEG', veg: 'nonveg', name: "Malai Kabab", nameEn: "Malai Kabab", nameHi: "Malai Kabab", price: 389.52, count: 0 },
+            { id: 'TANDOORI_NONVEG-today-spl-kabab', cat: 'TANDOORI_NONVEG', veg: 'nonveg', name: "Today Spl Kabab", nameEn: "Today Spl Kabab", nameHi: "Today Spl Kabab", price: 360.95, count: 0 },
+            { id: 'TANDOORI_NONVEG-fish-tikka', cat: 'TANDOORI_NONVEG', veg: 'nonveg', name: "Fish Tikka", nameEn: "Fish Tikka", nameHi: "Fish Tikka", price: 570.47, count: 0 },
+            { id: 'TANDOORI_VEG-panner-tikka', cat: 'TANDOORI_VEG', veg: 'veg', name: "Panner Tikka", nameEn: "Panner Tikka", nameHi: "Panner Tikka", price: 475.24, count: 0 },
+            { id: 'TANDOORI_VEG-alu-parata', cat: 'TANDOORI_VEG', veg: 'veg', name: "Alu Parata", nameEn: "Alu Parata", nameHi: "Alu Parata", price: 151.42, count: 0 },
+            { id: 'TANDOORI_VEG-mushroom-tikka', cat: 'TANDOORI_VEG', veg: 'veg', name: "Mushroom Tikka", nameEn: "Mushroom Tikka", nameHi: "Mushroom Tikka", price: 360.95, count: 0 },
+            { id: 'TANDOORI_VEG-harabhara-kabab', cat: 'TANDOORI_VEG', veg: 'veg', name: "Harabhara Kabab", nameEn: "Harabhara Kabab", nameHi: "Harabhara Kabab", price: 351.42, count: 0 },
         ];
 
-        // Sub-categories: two-level menu. Each category has its own sub-categories;
-        // every dish belongs to exactly one sub-category (item.subcat).
-        const SUBCATS = {
-            STARTERS: [
-                { id: 'VEG_STARTERS', dot: 'veg', label: { te: 'వెజ్ స్టార్టర్స్', en: 'Veg Starters', hi: 'वेज स्टार्टर्स' } },
-                { id: 'NONVEG_STARTERS', dot: 'nonveg', label: { te: 'నాన్-వెజ్ స్టార్టర్స్', en: 'Non-Veg Starters', hi: 'नॉन-वेज स्टार्टर्स' } }
-            ],
-            BIRYANIS: [
-                { id: 'VEG_BIRYANI', dot: 'veg', label: { te: 'వెజ్ బిర్యానీ', en: 'Veg Biryani', hi: 'वेज बिरयानी' } },
-                { id: 'NONVEG_BIRYANI', dot: 'nonveg', label: { te: 'నాన్-వెజ్ బిర్యానీ', en: 'Non-Veg Biryani', hi: 'नॉन-वेज बिरयानी' } }
-            ],
-            CURRIES_ROTIS: [
-                { id: 'VEG_CURRIES', dot: 'veg', label: { te: 'వెజ్ కర్రీస్', en: 'Veg Curries', hi: 'वेज करी' } },
-                { id: 'BREADS', dot: 'veg', label: { te: 'బ్రెడ్స్', en: 'Breads', hi: 'ब्रेड' } }
-            ],
-            DRINKS: [
-                { id: 'COOLERS', dot: 'veg', label: { te: 'కూలర్స్', en: 'Coolers', hi: 'कूलर्स' } },
-                { id: 'WATER', dot: 'veg', label: { te: 'వాటర్', en: 'Water', hi: 'पानी' } }
-            ]
-        };
+        // The Khaleel Bhai menu is flat: 14 categories, no sub-categories.
+        // The diet filter (All / Pure Veg / Non-Veg / Egg) is the only
+        // second-level filter, shown in the sub-bar for every view.
 
         let currentCategory = 'ALL';
         let currentDiet = 'ALL';
-        let currentSub = 'ALL';
         let splitCount = 1;
         let currentGrandTotal = 0;
         let currentSearch = '';
@@ -1117,14 +1385,38 @@
 
         // Category names in all three languages (section headings).
         const CATS = {
-            ALL: { te: '🍽️ అన్నీ', en: '🍽️ All', hi: '🍽️ सभी' },
-            STARTERS: { te: '🍢 స్టార్టర్స్', en: '🍢 Starters', hi: '🍢 स्टार्टर्स' },
-            BIRYANIS: { te: '🍲 బిర్యానీలు', en: '🍲 Biryanis', hi: '🍲 बिरयानी' },
-            CURRIES_ROTIS: { te: '🍛 కర్రీస్ & రోటీ', en: '🍛 Curries & Rotis', hi: '🍛 करी और रोटी' },
-            DRINKS: { te: '🥤 డ్రింక్స్', en: '🥤 Drinks', hi: '🥤 ड्रिंक्स' }
+            VEG_BEVERAGES: { te: "Veg Beverages", en: "Veg Beverages", hi: "Veg Beverages" },
+            VEG_SOUPS: { te: "Veg Soups", en: "Veg Soups", hi: "Veg Soups" },
+            NONVEG_SOUPS: { te: "Non Veg Soups", en: "Non Veg Soups", hi: "Non Veg Soups" },
+            VEG_STARTERS: { te: "Veg Starters", en: "Veg Starters", hi: "Veg Starters" },
+            NONVEG_STARTERS: { te: "Non-Veg Starters", en: "Non-Veg Starters", hi: "Non-Veg Starters" },
+            VEG_CURRYS: { te: "Veg Currys", en: "Veg Currys", hi: "Veg Currys" },
+            NONVEG_CURRYS: { te: "Non-Veg Currys", en: "Non-Veg Currys", hi: "Non-Veg Currys" },
+            BIRYANI_VEG: { te: "Biryani-Veg", en: "Biryani-Veg", hi: "Biryani-Veg" },
+            BIRYANI_NONVEG: { te: "Biryani Non-Veg", en: "Biryani Non-Veg", hi: "Biryani Non-Veg" },
+            VEG_RICE: { te: "Veg Rice", en: "Veg Rice", hi: "Veg Rice" },
+            NONVEG_RICE: { te: "Non-Veg Rice", en: "Non-Veg Rice", hi: "Non-Veg Rice" },
+            ROTIS: { te: "Rotis", en: "Rotis", hi: "Rotis" },
+            TANDOORI_NONVEG: { te: "Tandoori-Non Veg", en: "Tandoori-Non Veg", hi: "Tandoori-Non Veg" },
+            TANDOORI_VEG: { te: "Tandoori-Veg", en: "Tandoori-Veg", hi: "Tandoori-Veg" },
         };
+        // Category order on the menu (as on the restaurant's own menu).
+        const CATS_ORDER = ['VEG_BEVERAGES', 'VEG_SOUPS', 'NONVEG_SOUPS', 'VEG_STARTERS', 'NONVEG_STARTERS', 'VEG_CURRYS', 'NONVEG_CURRYS', 'BIRYANI_VEG', 'BIRYANI_NONVEG', 'VEG_RICE', 'NONVEG_RICE', 'ROTIS', 'TANDOORI_NONVEG', 'TANDOORI_VEG'];
         function catLabel(cat) { const c = CATS[cat]; return c ? (c[currentLang] || c.te) : cat; }
-        function catCount(cat) { return cat === 'ALL' ? HOTEL_MENU.length : HOTEL_MENU.filter(i => i.cat === cat).length; }
+        // Category chips: built from the menu data (single source of truth),
+        // so the rail always matches the categories actually on the menu.
+        function buildCategoryChips() {
+            const tabs = document.getElementById('categoryTabs');
+            if (!tabs) return;
+            const allChip = '<button class="cat-chip active" data-cat="ALL" onclick="selectCategory(\'ALL\', this)" data-te="🍽️ అన్నీ" data-en="🍽️ All" data-hi="🍽️ सभी">🍽️ అన్నీ</button>';
+            const catChips = CATS_ORDER.map(cat => {
+                const label = catLabel(cat);
+                return '<button class="cat-chip" data-cat="' + cat + '" onclick="selectCategory(\'' + cat + '\', this)" data-te="' + label + '" data-en="' + label + '" data-hi="' + label + '">' + label + '</button>';
+            }).join('');
+            tabs.innerHTML = allChip + catChips;
+        }
+
+        function catCount(cat) { return cat === 'ALL' ? HOTEL_MENU.filter(isAvailable).length : HOTEL_MENU.filter(i => i.cat === cat && isAvailable(i)).length; }
         // Item counts next to each category chip (total items in that category).
         function renderCategoryCounts() {
             document.querySelectorAll('.cat-chip').forEach(chip => {
@@ -1151,6 +1443,10 @@
             if (v === 'egg') return '<span class="mark-egg" title="Egg"></span>';
             return '<span class="mark-nonveg" title="Non-Veg"></span>';
         }
+        // Prices carry paise (e.g. 56.19) — always show two decimals, and
+        // round totals the same way so the bill never shows float dust.
+        function fmtPrice(n) { return '₹' + (Math.round(Number(n) * 100) / 100).toFixed(2); }
+
         // Same marks for the diet / sub-category pills (dot: 'veg' | 'nonveg' | 'egg').
         function dietMarkHtml(dot) {
             if (dot === 'veg') return '<span class="veg-mark"></span> ';
@@ -1167,10 +1463,6 @@
 
         const STR = {
             pageTitle: { te: "AVAILO స్మార్ట్ డైన్ — టేబుల్ కన్సియర్జ్", en: "AVAILO SMART DINE - NEXT-GEN TABLE CONCIERGE", hi: "AVAILO स्मार्ट डाइन — टेबल कंसीयर्ज" },
-            greetMorning: { te: "శుభోదయం సర్!", en: "Good morning, sir!", hi: "शुभ प्रभात सर!" },
-            greetAfternoon: { te: "శుభ మధ్యాహ్నం సర్!", en: "Good afternoon, sir!", hi: "शुभ दोपहर सर!" },
-            greetEvening: { te: "శుభ సాయంత్రం సర్!", en: "Good evening, sir!", hi: "शुभ संध्या सर!" },
-            welcomeSpeech: { te: "{greet} {hotel} కు హృదయపూర్వక స్వాగతం. మీరు {table} లో ఉన్నారు. మెనూ నుండి మీకు నచ్చినవి ఎంచుకోండి సర్.", en: "{greet} Welcome to {hotel}. You are at {table}. Please pick your favourites from the menu, sir.", hi: "{greet} {hotel} में आपका हार्दिक स्वागत है। आप {table} पर हैं। कृपया मेनू से अपनी पसंद की चीज़ें चुनिए।" },
             hubGreeting: { te: "నమస్కారం సర్! నేను అవైలో స్మార్ట్ కన్సీర్జ్. కింద ఉన్న కేటగిరీల నుండి మీకు నచ్చిన వంటకాలు ఎంచుకోండి.", en: "Hello sir! I am the AVAILO Smart Concierge. Please pick your favourite dishes from the categories below.", hi: "नमस्ते सर! मैं अवैलो स्मार्ट कंसीयर्ज हूँ। नीचे दी गई कैटेगरी से अपनी पसंद के व्यंजन चुनिए।" },
             addedPrompt1: { te: "సరే సర్, {name} నోట్ చేసుకున్నాను. నెక్స్ట్ ఏం కావాలి సర్?", en: "Okay sir, noted {name}. What would you like next?", hi: "ठीक है सर, {name} नोट कर लिया। और क्या चाहिए सर?" },
             addedPrompt2: { te: "{name} యాడ్ చేశాను సర్.. ఇంకేమైనా కావాలా?", en: "Added {name}, sir. Would you like anything else?", hi: "{name} जोड़ दिया सर। और कुछ चाहिए?" },
@@ -1223,15 +1515,6 @@
             return str;
         }
         function itemName(item) { return currentLang === 'en' ? item.nameEn : currentLang === 'hi' ? item.nameHi : item.name; }
-        function itemDesc(item) { return currentLang === 'en' ? item.descEn : currentLang === 'hi' ? item.descHi : item.desc; }
-        function subcatLabel(id) {
-            for (const cat in SUBCATS) {
-                const found = SUBCATS[cat].find(s => s.id === id);
-                if (found) return found.label[currentLang] || found.label.te;
-            }
-            return '';
-        }
-        function itemSub(item) { return subcatLabel(item.subcat); }
 
         // Same pattern as index.html toggleLanguage(), extended to 3 languages.
         function toggleLanguage(forceLang) {
@@ -1259,19 +1542,18 @@
 
         function speakHubGreeting() { speakGentVoice(t('hubGreeting')); }
 
-        // One dish card (veg mark + sub-tag + name + desc + price + qty).
+        // One dish card (veg mark + name + price + qty). The Khaleel Bhai
+        // menu has no food photos and no descriptions — name + mark + price
+        // only, exactly as the restaurant's own menu shows.
         function dishRowHtml(item) {
             return `
                 <div class="dish-row">
-                    ${item.photo ? `<img class="dish-photo" src="${item.photo}" alt="" loading="lazy">` : ''}
                     <div class="dish-text">
                         <div class="dish-badge-row">
                             ${vegMark(item)}
-                            <span class="sub-tag">${itemSub(item)}</span>
                         </div>
-                        <div class="dish-title">${itemName(item)}</div>
-                        <div class="dish-desc">${itemDesc(item)}</div>
-                        <span class="dish-cost">₹${item.price}</span>
+                        <div class="dish-title">${escHtml(itemName(item))}</div>
+                        <span class="dish-cost">${fmtPrice(item.price)}</span>
                     </div>
                     <div class="qty-box">
                         <button class="qty-btn" onclick="modifyItem('${item.id}', -1)">-</button>
@@ -1291,13 +1573,10 @@
             const visible = item => {
                 const matchCat = (currentCategory === 'ALL' || item.cat === currentCategory);
                 const matchDiet = (currentDiet === 'ALL' || itemVeg(item) === DIET_TO_VEG[currentDiet]);
-                const matchSub = (currentSub === 'ALL' || item.subcat === currentSub);
                 const matchSearch = !q || itemName(item).toLowerCase().includes(q);
-                return matchCat && matchDiet && matchSub && matchSearch;
+                return matchCat && matchDiet && matchSearch && isAvailable(item);
             };
-            const cats = currentCategory === 'ALL'
-                ? ['STARTERS', 'BIRYANIS', 'CURRIES_ROTIS', 'DRINKS']
-                : [currentCategory];
+            const cats = currentCategory === 'ALL' ? CATS_ORDER : [currentCategory];
             let html = '';
             let anyItem = false;
             cats.forEach(cat => {
@@ -1333,7 +1612,6 @@
 
         function selectCategory(cat, btnEl) {
             currentCategory = cat;
-            currentSub = 'ALL';
             currentDiet = 'ALL';
             document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
             btnEl.classList.add('active');
@@ -1341,26 +1619,19 @@
             renderMenu();
         }
 
-        // Sub-category bar: built fresh for the selected category, in the selected language.
-        // 'ALL' category shows the diet filter (All / Pure Veg / Non-Veg) as its sub-row.
+        // Diet filter bar: All / Pure Veg / Non-Veg / Egg. The menu is
+        // flat (no sub-categories), so the same pills show in every view.
         function renderSubBar() {
             const bar = document.getElementById('subBar');
             if (!bar) return;
-            let chips;
-            if (currentCategory === 'ALL') {
-                chips = [
-                    { id: 'ALL', dot: null, label: { te: 'అన్నీ', en: 'All', hi: 'सभी' } },
-                    { id: 'VEG', dot: 'veg', label: { te: 'ప్యూర్ వెజ్', en: 'Pure Veg', hi: 'शुद्ध शाकाहारी' } },
-                    { id: 'NONVEG', dot: 'nonveg', label: { te: 'నాన్-వెజ్', en: 'Non-Veg', hi: 'मांसाहारी' } },
-                    { id: 'EGG', dot: 'egg', label: { te: 'ఎగ్', en: 'Egg', hi: 'अंडा' } }
-                ];
-            } else {
-                chips = [{ id: 'ALL', dot: null, label: { te: 'అన్నీ', en: 'All', hi: 'सभी' } }].concat(SUBCATS[currentCategory]);
-            }
+            const chips = [
+                { id: 'ALL', dot: null, label: { te: 'అన్నీ', en: 'All', hi: 'सभी' } },
+                { id: 'VEG', dot: 'veg', label: { te: 'ప్యూర్ వెజ్', en: 'Pure Veg', hi: 'शुद्ध शाकाहारी' } },
+                { id: 'NONVEG', dot: 'nonveg', label: { te: 'నాన్-వెజ్', en: 'Non-Veg', hi: 'मांसाहारी' } },
+                { id: 'EGG', dot: 'egg', label: { te: 'ఎగ్', en: 'Egg', hi: 'अंडा' } }
+            ];
             bar.innerHTML = chips.map(c => {
-                const active = currentCategory === 'ALL'
-                    ? (c.id === 'ALL' ? currentDiet === 'ALL' : currentDiet === c.id)
-                    : (currentSub === c.id);
+                const active = (c.id === 'ALL' ? currentDiet === 'ALL' : currentDiet === c.id);
                 const dotHtml = dietMarkHtml(c.dot);
                 const label = c.label[currentLang] || c.label.te;
                 return `<button class="diet-pill${active ? ' active' : ''}" onclick="selectSub('${c.id}')">${dotHtml}${label}</button>`;
@@ -1368,22 +1639,9 @@
         }
 
         function selectSub(id) {
-            if (currentCategory === 'ALL') {
-                currentDiet = id; // 'ALL', 'VEG' or 'NONVEG'
-                currentSub = 'ALL';
-            } else {
-                currentSub = id; // 'ALL' or a sub-category id
-                currentDiet = 'ALL';
-            }
+            currentDiet = id; // 'ALL', 'VEG', 'NONVEG' or 'EGG'
             renderSubBar();
             renderMenu();
-        }
-
-        function getTimeGreeting() {
-            const hr = new Date().getHours();
-            if (hr < 12) return t('greetMorning');
-            if (hr < 17) return t('greetAfternoon');
-            return t('greetEvening');
         }
 
         function speakGentVoice(text) {
@@ -1423,25 +1681,26 @@
         window.addEventListener('load', () => {
             renderSubBar();
             renderMenu();
-            const greet = getTimeGreeting();
-            speakGentVoice(tf('welcomeSpeech', { greet: greet, hotel: hotelDisplay(), table: tableDisplay() }));
+            // No auto-playing voice: the menu opens silently (owner order,
+            // 19 Nov 2026). Voice speaks only when the customer taps
+            // something (voice hub, + on a dish, order, refill, mic).
         });
 
         function modifyItem(id, delta) {
             const item = HOTEL_MENU.find(i => i.id === id);
-            if (item) {
-                item.count = Math.max(0, item.count + delta);
-                renderMenu();
-                renderOrderPad();
+            if (!item) return;
+            if (delta > 0 && !isAvailable(item)) return; // sold out: cannot add
+            item.count = Math.max(0, item.count + delta);
+            renderMenu();
+            renderOrderPad();
 
-                if (delta > 0) {
-                    const prompts = [
-                        tf('addedPrompt1', { name: itemName(item) }),
-                        tf('addedPrompt2', { name: itemName(item) }),
-                        t('addedPrompt3')
-                    ];
-                    speakGentVoice(prompts[Math.floor(Math.random() * prompts.length)]);
-                }
+            if (delta > 0) {
+                const prompts = [
+                    tf('addedPrompt1', { name: itemName(item) }),
+                    tf('addedPrompt2', { name: itemName(item) }),
+                    t('addedPrompt3')
+                ];
+                speakGentVoice(prompts[Math.floor(Math.random() * prompts.length)]);
             }
         }
 
@@ -1455,7 +1714,7 @@
         function updateSplitDisplay() {
             const perHead = splitCount > 0 ? Math.ceil(currentGrandTotal / splitCount) : currentGrandTotal;
             const splitEl = document.getElementById('splitAmountDisplay');
-            if (splitEl) splitEl.innerText = `₹${perHead}`;
+            if (splitEl) splitEl.innerText = fmtPrice(perHead);
         }
 
         function renderOrderPad() {
@@ -1473,7 +1732,7 @@
                     linesHtml += `
                         <div class="writing-line-item">
                             <span>✍️ ${itemName(item)} × ${item.count}</span>
-                            <span>₹${itemTotal}</span>
+                            <span>${fmtPrice(itemTotal)}</span>
                         </div>
                     `;
                 }
@@ -1488,7 +1747,7 @@
             }
 
             const padTotalEl = document.getElementById('padTotalAmount');
-            if (padTotalEl) padTotalEl.innerText = `₹${total}`;
+            if (padTotalEl) padTotalEl.innerText = fmtPrice(total);
             const cartEl = document.getElementById('cartCount');
             if (cartEl) cartEl.innerText = String(totalCount);
             updateSplitDisplay();
@@ -1566,7 +1825,7 @@
             HOTEL_MENU.forEach(item => {
                 if (item.count > 0) {
                     const cost = item.count * item.price;
-                    orderLines.push(`• ${encodeURIComponent(item.name)} x ${item.count} = ₹${cost}`);
+                    orderLines.push(`• ${encodeURIComponent(item.name)} x ${item.count} = ${fmtPrice(cost)}`);
                     grandTotal += cost;
                 }
             });
@@ -1580,15 +1839,15 @@
             const noteStr = chefNote ? `%0A*చెఫ్ సూచన:* ${encodeURIComponent(chefNote)}` : "";
 
             const itemsStr = orderLines.join('%0A');
-            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${encodeURIComponent(hotelName)}%0A*టేబుల్:* ${encodeURIComponent(tableNumber)}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${encodeURIComponent(new Date().toLocaleTimeString())}%0A-----------------------------%0A*కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
+            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${encodeURIComponent(hotelName)}%0A*టేబుల్:* ${encodeURIComponent(tableNumber)}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ${fmtPrice(grandTotal)}%0A*సమయం:* ${encodeURIComponent(new Date().toLocaleTimeString())}%0A-----------------------------%0A*కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
 
             const displayLines = [];
             HOTEL_MENU.forEach(item => {
-                if (item.count > 0) displayLines.push(`• ${itemName(item)} × ${item.count} = ₹${item.count * item.price}`);
+                if (item.count > 0) displayLines.push(`• ${itemName(item)} × ${item.count} = ${fmtPrice(item.count * item.price)}`);
             });
             const summaryLines = displayLines.map(l => `<div>${escHtml(l)}</div>`).join('');
             const noteLine = chefNote ? `<div style="margin-top: 6px;">${t('chefNoteLabel')} ${escHtml(chefNote)}</div>` : '';
-            const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${t('tableLabel')} ${escHtml(tableDisplay())}</div>${summaryLines}${noteLine}<div style="border-top: 1px dashed #94a3b8; margin-top: 8px; padding-top: 8px; font-weight: 800; color: #fff;">${t('totalBillLabel')} ₹${grandTotal}</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
+            const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${t('tableLabel')} ${escHtml(tableDisplay())}</div>${summaryLines}${noteLine}<div style="border-top: 1px dashed #94a3b8; margin-top: 8px; padding-top: 8px; font-weight: 800; color: #fff;">${t('totalBillLabel')} ${fmtPrice(grandTotal)}</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
             speakGentVoice(t('orderReadySpeak'));
             pendingOrderItems = orderLines.join(', ');
             pendingOrderRef = availoRef();
@@ -1609,11 +1868,11 @@
                 let lines = [];
                 let total = 0;
                 HOTEL_MENU.forEach(item => {
-                    if (item.count > 0) { lines.push(`• ${item.name} x ${item.count} = ₹${item.count * item.price}`); total += item.count * item.price; }
+                    if (item.count > 0) { lines.push(`• ${item.name} x ${item.count} = ${fmtPrice(item.count * item.price)}`); total += item.count * item.price; }
                 });
                 const itemsStr = lines.length ? lines.join('\n') : (currentLang === 'hi' ? '(कार्ट खाली है — कृपया बिल भेजें)' : currentLang === 'en' ? '(Cart is empty — please send the bill)' : '(కార్ట్ ఖాళీగా ఉంది — దయచేసి బిల్లు పంపండి)');
                 const totalLabel = currentLang === 'hi' ? 'कुल बिल' : currentLang === 'en' ? 'Total Bill' : 'మొత్తం బిల్లు';
-                msg = `[SERVICE] TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}\n-----------------------------\n${itemsStr}\n-----------------------------\n*${totalLabel}:* ₹${total}`;
+                msg = `[SERVICE] TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}\n-----------------------------\n${itemsStr}\n-----------------------------\n*${totalLabel}:* ${fmtPrice(total)}`;
             }
             const svcRef = availoRef();
             pushKitchenEvent('refills', { table: tableNum, text: loudText, time: new Date().toLocaleTimeString(), ref: svcRef });
@@ -1739,7 +1998,11 @@
         }
 
         // Apply the saved language on load (no cycling) and show the CURRENT
-        // language on the button.
+        // language on the button. Chips are built from the menu data first,
+        // and the availability listener is armed so sold-out items hide
+        // live (fail-open: no Firebase = show everything).
+        buildCategoryChips();
+        initAvailability();
         toggleLanguage(currentLang);
     </script>
 </body>
