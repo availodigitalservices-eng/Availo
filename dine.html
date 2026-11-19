@@ -840,7 +840,7 @@
     <div id="welcomeOverlay" class="welcome-overlay">
         <div class="welcome-card">
             <div class="welcome-brand">AVAILO</div>
-            <div class="welcome-hotel" id="welcomeHotel">Khaleel Bhai Family Restaurant</div>
+            <div class="welcome-hotel" id="welcomeHotel">Avaylo Dine</div>
             <div class="welcome-table" id="welcomeTable">టేబుల్ 01</div>
             <div class="welcome-sub" data-te="స్కాన్ చేసినందుకు ధన్యవాదాలు! మెనూ చూసి ఆర్డర్ చేయండి." data-en="Thanks for scanning! Browse the menu and order." data-hi="स्कैन करने के लिए धन्यवाद! मेनू देखकर ऑर्डर कीजिए।">స్కాన్ చేసినందుకు ధన్యవాదాలు! మెనూ చూసి ఆర్డర్ చేయండి.</div>
             <button class="welcome-enter" id="welcomeEnterBtn" onclick="enterMenu()" data-te="📖 మెనూ చూడండి" data-en="📖 View Menu" data-hi="📖 मेनू देखिए">📖 మెనూ చూడండి</button>
@@ -851,7 +851,7 @@
     <!-- 1. AI Voice Concierge Stage -->
     <div id="voiceStage" class="stage-box">
         <div class="top-meta-bar">
-            <div class="venue-pill" id="badgeText">Khaleel Bhai Family Restaurant · Table 01</div>
+            <div class="venue-pill" id="badgeText">Avaylo Dine · Table 01</div>
             <div class="live-clock-pill" id="liveClock">--:--</div>
             <span class="table-pill" id="tablePill">టేబుల్ 01</span>
             <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
@@ -1028,7 +1028,7 @@
         const tableParam = params.get('table');
         // Kitchen-facing (WhatsApp) names stay Telugu by design; these two are
         // only for the on-screen text below.
-        const hotelName = hotelParam || "Khaleel Bhai Family Restaurant";
+        const hotelName = hotelParam || "Avaylo Dine";
         // WhatsApp messages print their own "టేబుల్:" label, so the value
         // must be just the number ("01") — never "Table 01" (19 Nov 2026:
         // the KOT used to read "టేబుల్: Table 01"). A ?table= value that
@@ -1039,7 +1039,7 @@
 
         // On-screen venue names follow the selected language (defaults only;
         // a ?hotel= / ?table= value passed in is a proper noun and is kept as-is).
-        const HOTEL_DISPLAY = { te: "Khaleel Bhai Family Restaurant", en: "Khaleel Bhai Family Restaurant", hi: "Khaleel Bhai Family Restaurant" };
+        const HOTEL_DISPLAY = { te: "Avaylo Dine", en: "Avaylo Dine", hi: "Avaylo Dine" };
         const TABLE_DISPLAY = { te: "టేబుల్ 01", en: "Table 01", hi: "टेबल 01" };
         function hotelDisplay() { return hotelParam || HOTEL_DISPLAY[currentLang]; }
         function tableDisplay() { return tableParam ? tableParam.toUpperCase() : TABLE_DISPLAY[currentLang]; }
