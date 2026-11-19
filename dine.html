@@ -199,9 +199,14 @@
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            padding-bottom: 8px;
-            margin-bottom: 10px;
             scrollbar-width: none;
+            position: sticky;
+            top: 0;
+            z-index: 60;
+            background: var(--brand-navy);
+            margin: 0 -14px 10px;
+            padding: 8px 14px;
+            border-bottom: 1px solid rgba(32, 221, 224, 0.2);
         }
 
         .cat-scroll::-webkit-scrollbar {
@@ -227,6 +232,189 @@
             color: #071426;
             border-color: var(--brand-cyan);
             box-shadow: 0 0 12px rgba(32, 221, 224, 0.4);
+        }
+
+        .cat-count {
+            font-size: 11px;
+            font-weight: 700;
+            opacity: 0.85;
+        }
+
+        /* Table pill — prominent, top-right of the header */
+        .table-pill {
+            background: rgba(221, 182, 93, 0.15);
+            border: 1px solid var(--brand-gold);
+            color: var(--brand-gold);
+            font-size: 12px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+        }
+
+        /* Search box (live filter, current language) */
+        .search-row {
+            margin-bottom: 10px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(13, 34, 63, 0.8);
+            border: 1px solid rgba(32, 221, 224, 0.35);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: #fff;
+            font-size: 13px;
+            font-family: 'Ramabhadra', sans-serif;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--brand-cyan);
+        }
+
+        /* Menu sections (one per category, with item count) */
+        .menu-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .menu-section-head {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--brand-gold);
+            letter-spacing: 0.5px;
+            margin: 12px 0 2px;
+        }
+
+        /* Standard veg / non-veg / egg marks (FSSAI style) */
+        .veg-mark {
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--veg-green);
+            border-radius: 3px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .veg-mark::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--veg-green);
+            border-radius: 50%;
+        }
+
+        .mark-nonveg {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 14px solid #92400e;
+            flex-shrink: 0;
+        }
+
+        .mark-egg {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #eab308;
+            border-radius: 3px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .mark-egg::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #eab308;
+            border-radius: 50%;
+        }
+
+        /* Welcome / landing overlay (two-step entry, like a QR menu) */
+        .welcome-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: radial-gradient(circle at 50% 15%, #0e2f57 0%, var(--brand-navy) 80%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .welcome-card {
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        .welcome-brand {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: var(--brand-cyan);
+            margin-bottom: 14px;
+        }
+
+        .welcome-hotel {
+            font-family: 'Ramabhadra', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .welcome-table {
+            display: inline-block;
+            background: rgba(221, 182, 93, 0.15);
+            border: 1.5px solid var(--brand-gold);
+            color: var(--brand-gold);
+            font-size: 15px;
+            font-weight: 800;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .welcome-sub {
+            font-size: 13.5px;
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .welcome-enter {
+            background: var(--brand-cyan);
+            color: #071426;
+            border: none;
+            padding: 14px 34px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: 'Ramabhadra', sans-serif;
+            box-shadow: 0 0 20px rgba(32, 221, 224, 0.4);
+        }
+
+        .welcome-note {
+            margin-top: 16px;
+            font-size: 11.5px;
+            color: #94a3b8;
+            line-height: 1.6;
         }
 
         /* Sub-category / Diet Filter Pills */
@@ -648,11 +836,24 @@
 </head>
 <body>
 
+    <!-- 0. Welcome / landing overlay — restaurant name + table, tap to see the menu -->
+    <div id="welcomeOverlay" class="welcome-overlay">
+        <div class="welcome-card">
+            <div class="welcome-brand">AVAILO</div>
+            <div class="welcome-hotel" id="welcomeHotel">అమరావతి గ్రాండ్</div>
+            <div class="welcome-table" id="welcomeTable">టేబుల్ 01</div>
+            <div class="welcome-sub" data-te="స్కాన్ చేసినందుకు ధన్యవాదాలు! మెనూ చూసి ఆర్డర్ చేయండి." data-en="Thanks for scanning! Browse the menu and order." data-hi="स्कैन करने के लिए धन्यवाद! मेनू देखकर ऑर्डर कीजिए।">స్కాన్ చేసినందుకు ధన్యవాదాలు! మెనూ చూసి ఆర్డర్ చేయండి.</div>
+            <button class="welcome-enter" id="welcomeEnterBtn" onclick="enterMenu()" data-te="📖 మెనూ చూడండి" data-en="📖 View Menu" data-hi="📖 मेनू देखिए">📖 మెనూ చూడండి</button>
+            <div class="welcome-note" data-te="వాయిస్‌తో కూడా ఆర్డర్ చేయవచ్చు · తెలుగు / English / हिन्दी" data-en="You can also order by voice · Telugu / English / हिन्दी" data-hi="आप वॉयस से भी ऑर्डर कर सकते हैं · తెలుగు / English / हिन्दी">వాయిస్‌తో కూడా ఆర్డర్ చేయవచ్చు · తెలుగు / English / हिन्दी</div>
+        </div>
+    </div>
+
     <!-- 1. AI Voice Concierge Stage -->
     <div id="voiceStage" class="stage-box">
         <div class="top-meta-bar">
             <div class="venue-pill" id="badgeText">అమరావతి గ్రాండ్ · టేబుల్ 01</div>
             <div class="live-clock-pill" id="liveClock">--:--</div>
+            <span class="table-pill" id="tablePill">టేబుల్ 01</span>
             <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
         </div>
         
@@ -675,11 +876,16 @@
         
         <!-- Main Categories -->
         <div class="cat-scroll" id="categoryTabs">
-            <button class="cat-chip active" onclick="selectCategory('ALL', this)" data-te="🍽️ అన్నీ" data-en="🍽️ All" data-hi="🍽️ सभी">🍽️ అన్నీ</button>
-            <button class="cat-chip" onclick="selectCategory('STARTERS', this)" data-te="🍢 స్టార్టర్స్" data-en="🍢 Starters" data-hi="🍢 स्टार्टर्स">🍢 స్టార్టర్స్</button>
-            <button class="cat-chip" onclick="selectCategory('BIRYANIS', this)" data-te="🍲 బిర్యానీలు" data-en="🍲 Biryanis" data-hi="🍲 बिरयानी">🍲 బిర్యానీలు</button>
-            <button class="cat-chip" onclick="selectCategory('CURRIES_ROTIS', this)" data-te="🍛 కర్రీస్ &amp; రోటీ" data-en="🍛 Curries &amp; Rotis" data-hi="🍛 करी और रोटी">🍛 కర్రీస్ & రోటీ</button>
-            <button class="cat-chip" onclick="selectCategory('DRINKS', this)" data-te="🥤 డ్రింక్స్" data-en="🥤 Drinks" data-hi="🥤 ड्रिंक्स">🥤 డ్రింక్స్</button>
+            <button class="cat-chip active" data-cat="ALL" onclick="selectCategory('ALL', this)" data-te="🍽️ అన్నీ" data-en="🍽️ All" data-hi="🍽️ सभी">🍽️ అన్నీ</button>
+            <button class="cat-chip" data-cat="STARTERS" onclick="selectCategory('STARTERS', this)" data-te="🍢 స్టార్టర్స్" data-en="🍢 Starters" data-hi="🍢 स्टार्टर्स">🍢 స్టార్టర్స్</button>
+            <button class="cat-chip" data-cat="BIRYANIS" onclick="selectCategory('BIRYANIS', this)" data-te="🍲 బిర్యానీలు" data-en="🍲 Biryanis" data-hi="🍲 बिरयानी">🍲 బిర్యానీలు</button>
+            <button class="cat-chip" data-cat="CURRIES_ROTIS" onclick="selectCategory('CURRIES_ROTIS', this)" data-te="🍛 కర్రీస్ &amp; రోటీ" data-en="🍛 Curries &amp; Rotis" data-hi="🍛 करी और रोटी">🍛 కర్రీస్ & రోటీ</button>
+            <button class="cat-chip" data-cat="DRINKS" onclick="selectCategory('DRINKS', this)" data-te="🥤 డ్రింక్స్" data-en="🥤 Drinks" data-hi="🥤 ड्रिंक्स">🥤 డ్రింక్స్</button>
+        </div>
+
+        <!-- Live search (filters by item name in the current language) -->
+        <div class="search-row">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 ఐటమ్ వెతకండి..." data-te-ph="🔍 ఐటమ్ వెతకండి..." data-en-ph="🔍 Search item..." data-hi-ph="🔍 आइटम खोजिए..." oninput="onSearchInput(this.value)">
         </div>
 
         <!-- Sub-Categories (built by renderSubBar — changes with the selected category) -->
@@ -827,6 +1033,23 @@
             document.getElementById('badgeText').innerText = `${hotelDisplay().toUpperCase()} · ${tableDisplay().toUpperCase()}`;
             const bookLabel = document.getElementById('bookTableLabel');
             if (bookLabel) bookLabel.innerText = tableDisplay().toUpperCase();
+            const tablePill = document.getElementById('tablePill');
+            if (tablePill) tablePill.innerText = tableDisplay().toUpperCase();
+            const welcomeHotel = document.getElementById('welcomeHotel');
+            if (welcomeHotel) welcomeHotel.innerText = hotelDisplay();
+            const welcomeTable = document.getElementById('welcomeTable');
+            if (welcomeTable) {
+                if (tableParam) { welcomeTable.innerText = tableDisplay().toUpperCase(); welcomeTable.style.display = ''; }
+                else { welcomeTable.style.display = 'none'; }
+            }
+        }
+
+        // Welcome overlay: tap "View Menu" to reveal the menu (two-step entry).
+        let menuEntered = false;
+        function enterMenu() {
+            menuEntered = true;
+            const ov = document.getElementById('welcomeOverlay');
+            if (ov) ov.style.display = 'none';
         }
 
         document.getElementById('badgeText').innerText = `${hotelName.toUpperCase()} · ${tableNumber.toUpperCase()}`;
@@ -843,22 +1066,22 @@
         // 🌟 EASY TO EDIT RESTAURANT MENU (Categories & Sub-categories)
         const HOTEL_MENU = [
             // STARTERS
-            { id: 'paneerTikka', photo: 'images/dine/paneer-tikka.jpg', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', name: 'పన్నీర్ టిక్కా (6 ముక్కలు)', nameEn: 'Paneer Tikka (6 Pcs)', nameHi: 'पनीर टिक्का (6 पीस)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', descEn: 'Charcoal-grilled paneer', descHi: 'कोयले पर सेंका हुआ पनीर', price: 190, count: 0 },
-            { id: 'crispyCorn', photo: 'images/dine/crispy-chilli-corn.jpg', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', name: 'క్రిస్పీ చిల్లీ కార్న్', nameEn: 'Crispy Chilli Corn', nameHi: 'क्रिस्पी चिल्ली कॉर्न', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', descEn: 'Spicy sweet corn fry', descHi: 'मसालेदार स्वीट कॉर्न फ्राई', price: 150, count: 0 },
-            { id: 'chicken65', photo: 'images/dine/chicken-65.jpg', cat: 'STARTERS', subcat: 'NONVEG_STARTERS', diet: 'NONVEG', name: 'చికెన్ 65 (బోన్‌లెస్)', nameEn: 'Chicken 65 (Boneless)', nameHi: 'चिकन 65 (बोनलेस)', desc: 'కరివేపాకు మసాలా ఫ్రై', descEn: 'Curry-leaf masala fry', descHi: 'करी पत्ता मसाला फ्राई', price: 220, count: 0 },
+            { id: 'paneerTikka', photo: 'images/dine/paneer-tikka.jpg', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', veg: 'veg', name: 'పన్నీర్ టిక్కా (6 ముక్కలు)', nameEn: 'Paneer Tikka (6 Pcs)', nameHi: 'पनीर टिक्का (6 पीस)', desc: 'బొగ్గుల మీద కాల్చిన పన్నీర్', descEn: 'Charcoal-grilled paneer', descHi: 'कोयले पर सेंका हुआ पनीर', price: 190, count: 0 },
+            { id: 'crispyCorn', photo: 'images/dine/crispy-chilli-corn.jpg', cat: 'STARTERS', subcat: 'VEG_STARTERS', diet: 'VEG', veg: 'veg', name: 'క్రిస్పీ చిల్లీ కార్న్', nameEn: 'Crispy Chilli Corn', nameHi: 'क्रिस्पी चिल्ली कॉर्न', desc: 'స్పైసీ స్వీట్ కార్న్ ఫ్రై', descEn: 'Spicy sweet corn fry', descHi: 'मसालेदार स्वीट कॉर्न फ्राई', price: 150, count: 0 },
+            { id: 'chicken65', photo: 'images/dine/chicken-65.jpg', cat: 'STARTERS', subcat: 'NONVEG_STARTERS', diet: 'NONVEG', veg: 'nonveg', name: 'చికెన్ 65 (బోన్‌లెస్)', nameEn: 'Chicken 65 (Boneless)', nameHi: 'चिकन 65 (बोनलेस)', desc: 'కరివేపాకు మసాలా ఫ్రై', descEn: 'Curry-leaf masala fry', descHi: 'करी पत्ता मसाला फ्राई', price: 220, count: 0 },
 
             // BIRYANIS
-            { id: 'vegDumBiryani', photo: 'images/dine/veg-biryani.jpg', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', name: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', nameEn: 'Special Veg Dum Biryani', nameHi: 'स्पेशल वेज दम बिरयानी', desc: 'మిర్చి కా సాలన్ & రైతా', descEn: 'Mirchi ka salan & raita', descHi: 'मिर्ची का सालन और रायता', price: 220, count: 0 },
-            { id: 'kajuBiryani', photo: 'images/dine/kaju-biryani.jpg', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', name: 'జీడిపప్పు బిర్యానీ', nameEn: 'Cashew (Kaju) Biryani', nameHi: 'काजू बिरयानी', desc: 'నెయ్యిలో వేయించిన జీడిపప్పుతో', descEn: 'With cashews roasted in ghee', descHi: 'घी में भुने हुए काजू के साथ', price: 260, count: 0 },
-            { id: 'chickenDumBiryani', photo: 'images/dine/chicken-biryani.jpg', cat: 'BIRYANIS', subcat: 'NONVEG_BIRYANI', diet: 'NONVEG', name: 'చికెన్ దమ్ బిర్యానీ', nameEn: 'Chicken Dum Biryani', nameHi: 'चिकन दम बिरयानी', desc: 'అసలైన దమ్ మసాలా రుచి', descEn: 'Authentic dum masala flavour', descHi: 'असली दम मसाले का स्वाद', price: 280, count: 0 },
+            { id: 'vegDumBiryani', photo: 'images/dine/veg-biryani.jpg', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', veg: 'veg', name: 'స్పెషల్ వెజ్ దమ్ బిర్యానీ', nameEn: 'Special Veg Dum Biryani', nameHi: 'स्पेशल वेज दम बिरयानी', desc: 'మిర్చి కా సాలన్ & రైతా', descEn: 'Mirchi ka salan & raita', descHi: 'मिर्ची का सालन और रायता', price: 220, count: 0 },
+            { id: 'kajuBiryani', photo: 'images/dine/kaju-biryani.jpg', cat: 'BIRYANIS', subcat: 'VEG_BIRYANI', diet: 'VEG', veg: 'veg', name: 'జీడిపప్పు బిర్యానీ', nameEn: 'Cashew (Kaju) Biryani', nameHi: 'काजू बिरयानी', desc: 'నెయ్యిలో వేయించిన జీడిపప్పుతో', descEn: 'With cashews roasted in ghee', descHi: 'घी में भुने हुए काजू के साथ', price: 260, count: 0 },
+            { id: 'chickenDumBiryani', photo: 'images/dine/chicken-biryani.jpg', cat: 'BIRYANIS', subcat: 'NONVEG_BIRYANI', diet: 'NONVEG', veg: 'nonveg', name: 'చికెన్ దమ్ బిర్యానీ', nameEn: 'Chicken Dum Biryani', nameHi: 'चिकन दम बिरयानी', desc: 'అసలైన దమ్ మసాలా రుచి', descEn: 'Authentic dum masala flavour', descHi: 'असली दम मसाले का स्वाद', price: 280, count: 0 },
 
             // CURRIES & ROTIS
-            { id: 'paneerButter', photo: 'images/dine/paneer-butter-masala.jpg', cat: 'CURRIES_ROTIS', subcat: 'VEG_CURRIES', diet: 'VEG', name: 'పన్నీర్ బట్టర్ మసాలా', nameEn: 'Paneer Butter Masala', nameHi: 'पनीर बटर मसाला', desc: 'క్రీమీ టొమాటో & జీడిపప్పు గ్రేవీ', descEn: 'Creamy tomato & cashew gravy', descHi: 'क्रीमी टमाटर और काजू की ग्रेवी', price: 180, count: 0 },
-            { id: 'butterNaan', photo: 'images/dine/butter-naan.jpg', cat: 'CURRIES_ROTIS', subcat: 'BREADS', diet: 'VEG', name: 'బట్టర్ నాన్ (2 ముక్కలు)', nameEn: 'Butter Naan (2 Pcs)', nameHi: 'बटर नान (2 पीस)', desc: 'వేడి వేడి తందూరీ నాన్', descEn: 'Hot tandoori naan', descHi: 'गरमागरम तंदूरी नान', price: 60, count: 0 },
+            { id: 'paneerButter', photo: 'images/dine/paneer-butter-masala.jpg', cat: 'CURRIES_ROTIS', subcat: 'VEG_CURRIES', diet: 'VEG', veg: 'veg', name: 'పన్నీర్ బట్టర్ మసాలా', nameEn: 'Paneer Butter Masala', nameHi: 'पनीर बटर मसाला', desc: 'క్రీమీ టొమాటో & జీడిపప్పు గ్రేవీ', descEn: 'Creamy tomato & cashew gravy', descHi: 'क्रीमी टमाटर और काजू की ग्रेवी', price: 180, count: 0 },
+            { id: 'butterNaan', photo: 'images/dine/butter-naan.jpg', cat: 'CURRIES_ROTIS', subcat: 'BREADS', diet: 'VEG', veg: 'veg', name: 'బట్టర్ నాన్ (2 ముక్కలు)', nameEn: 'Butter Naan (2 Pcs)', nameHi: 'बटर नान (2 पीस)', desc: 'వేడి వేడి తందూరీ నాన్', descEn: 'Hot tandoori naan', descHi: 'गरमागरम तंदूरी नान', price: 60, count: 0 },
 
             // DRINKS
-            { id: 'sweetLassi', photo: 'images/dine/sweet-lassi.jpg', cat: 'DRINKS', subcat: 'COOLERS', diet: 'VEG', name: 'స్పెషల్ స్వీట్ లస్సీ', nameEn: 'Special Sweet Lassi', nameHi: 'स्पेशल स्वीट लस्सी', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', descEn: 'Thick curd with almond flakes', descHi: 'गाढ़ा दही और बादाम के टुकड़े', price: 70, count: 0 },
-            { id: 'waterBottle', photo: 'images/dine/mineral-water-bottle.jpg', cat: 'DRINKS', subcat: 'WATER', diet: 'VEG', name: 'మినరల్ వాటర్ (1 లీటర్)', nameEn: 'Mineral Water (1L)', nameHi: 'मिनरल वॉटर (1 लीटर)', desc: 'కూల్డ్ వాటర్ బాటిల్', descEn: 'Chilled water bottle', descHi: 'ठंडी पानी की बोतल', price: 25, count: 0 }
+            { id: 'sweetLassi', photo: 'images/dine/sweet-lassi.jpg', cat: 'DRINKS', subcat: 'COOLERS', diet: 'VEG', veg: 'veg', name: 'స్పెషల్ స్వీట్ లస్సీ', nameEn: 'Special Sweet Lassi', nameHi: 'स्पेशल स्वीट लस्सी', desc: 'చిక్కటి పెరుగు & బాదం పలుకులు', descEn: 'Thick curd with almond flakes', descHi: 'गाढ़ा दही और बादाम के टुकड़े', price: 70, count: 0 },
+            { id: 'waterBottle', photo: 'images/dine/mineral-water-bottle.jpg', cat: 'DRINKS', subcat: 'WATER', diet: 'VEG', veg: 'veg', name: 'మినరల్ వాటర్ (1 లీటర్)', nameEn: 'Mineral Water (1L)', nameHi: 'मिनरल वॉटर (1 लीटर)', desc: 'కూల్డ్ వాటర్ బాటిల్', descEn: 'Chilled water bottle', descHi: 'ठंडी पानी की बोतल', price: 25, count: 0 }
         ];
 
         // Sub-categories: two-level menu. Each category has its own sub-categories;
@@ -887,6 +1110,54 @@
         let currentSub = 'ALL';
         let splitCount = 1;
         let currentGrandTotal = 0;
+        let currentSearch = '';
+
+        // Diet filter values (sub-bar pills) -> item.veg values.
+        const DIET_TO_VEG = { VEG: 'veg', NONVEG: 'nonveg', EGG: 'egg' };
+
+        // Category names in all three languages (section headings).
+        const CATS = {
+            ALL: { te: '🍽️ అన్నీ', en: '🍽️ All', hi: '🍽️ सभी' },
+            STARTERS: { te: '🍢 స్టార్టర్స్', en: '🍢 Starters', hi: '🍢 स्टार्टर्स' },
+            BIRYANIS: { te: '🍲 బిర్యానీలు', en: '🍲 Biryanis', hi: '🍲 बिरयानी' },
+            CURRIES_ROTIS: { te: '🍛 కర్రీస్ & రోటీ', en: '🍛 Curries & Rotis', hi: '🍛 करी और रोटी' },
+            DRINKS: { te: '🥤 డ్రింక్స్', en: '🥤 Drinks', hi: '🥤 ड्रिंक्स' }
+        };
+        function catLabel(cat) { const c = CATS[cat]; return c ? (c[currentLang] || c.te) : cat; }
+        function catCount(cat) { return cat === 'ALL' ? HOTEL_MENU.length : HOTEL_MENU.filter(i => i.cat === cat).length; }
+        // Item counts next to each category chip (total items in that category).
+        function renderCategoryCounts() {
+            document.querySelectorAll('.cat-chip').forEach(chip => {
+                const cat = chip.getAttribute('data-cat');
+                if (!cat) return;
+                const label = chip.getAttribute('data-' + currentLang) || chip.getAttribute('data-te') || '';
+                chip.innerHTML = label + ' <span class="cat-count">(' + catCount(cat) + ')</span>';
+            });
+        }
+        // Live search (item name in the current language).
+        function onSearchInput(value) {
+            currentSearch = value || '';
+            renderMenu();
+        }
+        // Veg flag with a diet fallback (older items without a veg field).
+        function itemVeg(item) {
+            if (item.veg) return item.veg;
+            return item.diet === 'VEG' ? 'veg' : 'nonveg';
+        }
+        // Standard FSSAI-style mark: green square = veg, brown triangle = non-veg, yellow square = egg.
+        function vegMark(item) {
+            const v = itemVeg(item);
+            if (v === 'veg') return '<span class="veg-mark" title="Veg"></span>';
+            if (v === 'egg') return '<span class="mark-egg" title="Egg"></span>';
+            return '<span class="mark-nonveg" title="Non-Veg"></span>';
+        }
+        // Same marks for the diet / sub-category pills (dot: 'veg' | 'nonveg' | 'egg').
+        function dietMarkHtml(dot) {
+            if (dot === 'veg') return '<span class="veg-mark"></span> ';
+            if (dot === 'egg') return '<span class="mark-egg"></span> ';
+            if (dot === 'nonveg') return '<span class="mark-nonveg"></span> ';
+            return '';
+        }
 
         // 🌐 LANGUAGE: Telugu (default) / English / Hindi — button shows NEXT language
         let currentLang = localStorage.getItem('availo_lang');
@@ -930,7 +1201,8 @@
             orderSentKitchen: { te: "✅ ఆర్డర్ కిచెన్‌కి వెళ్ళింది", en: "✅ Order sent to the kitchen", hi: "✅ ऑर्डर किचन भेज दिया गया" },
             progressSuffix: { te: "పూర్తయింది", en: "COMPLETED", hi: "पूरा हुआ" },
             readyText: { te: "సిద్ధం!", en: "READY!", hi: "तैयार!" },
-            readyServe: { te: "100% సర్వ్ చేయడానికి సిద్ధం", en: "100% READY TO SERVE", hi: "100% परोसने के लिए तैयार" }
+            readyServe: { te: "100% సర్వ్ చేయడానికి సిద్ధం", en: "100% READY TO SERVE", hi: "100% परोसने के लिए तैयार" },
+            noResults: { te: "ఈ ఫిల్టర్‌లో ఐటమ్‌లు దొరకలేదు — వేరే కేటగిరీ / ఫిల్టర్ / పేరుతో వెతకండి.", en: "No items match — try another category, filter or search.", hi: "कोई आइटम नहीं मिला — दूसरी कैटेगरी, फ़िल्टर या खोज आज़माइए।" }
         };
 
         // One-tap refill buttons: on-screen label + spoken reply follow the selected
@@ -978,6 +1250,7 @@
                 const text = el.getAttribute('data-' + currentLang + '-ph');
                 if (text) el.placeholder = text;
             });
+            renderCategoryCounts();
             renderSubBar();
             renderMenu();
             renderOrderPad();
@@ -986,23 +1259,14 @@
 
         function speakHubGreeting() { speakGentVoice(t('hubGreeting')); }
 
-        // Render Menu based on Category & Sub-category
-        function renderMenu() {
-            const listEl = document.getElementById('menuItemsContainer');
-            if (!listEl) return;
-            const filtered = HOTEL_MENU.filter(item => {
-                const matchCat = (currentCategory === 'ALL' || item.cat === currentCategory);
-                const matchDiet = (currentDiet === 'ALL' || item.diet === currentDiet);
-                const matchSub = (currentSub === 'ALL' || item.subcat === currentSub);
-                return matchCat && matchDiet && matchSub;
-            });
-
-            listEl.innerHTML = filtered.map(item => `
+        // One dish card (veg mark + sub-tag + name + desc + price + qty).
+        function dishRowHtml(item) {
+            return `
                 <div class="dish-row">
                     ${item.photo ? `<img class="dish-photo" src="${item.photo}" alt="" loading="lazy">` : ''}
                     <div class="dish-text">
                         <div class="dish-badge-row">
-                            <span class="${item.diet === 'VEG' ? 'dot-veg' : 'dot-nonveg'}"></span>
+                            ${vegMark(item)}
                             <span class="sub-tag">${itemSub(item)}</span>
                         </div>
                         <div class="dish-title">${itemName(item)}</div>
@@ -1015,8 +1279,57 @@
                         <button class="qty-btn" onclick="modifyItem('${item.id}', 1)">+</button>
                     </div>
                 </div>
-            `).join('');
+            `;
         }
+
+        // Render Menu as stacked category sections (category, diet, sub-category
+        // and live search all combine). Each section carries its item count.
+        function renderMenu() {
+            const listEl = document.getElementById('menuItemsContainer');
+            if (!listEl) return;
+            const q = (currentSearch || '').trim().toLowerCase();
+            const visible = item => {
+                const matchCat = (currentCategory === 'ALL' || item.cat === currentCategory);
+                const matchDiet = (currentDiet === 'ALL' || itemVeg(item) === DIET_TO_VEG[currentDiet]);
+                const matchSub = (currentSub === 'ALL' || item.subcat === currentSub);
+                const matchSearch = !q || itemName(item).toLowerCase().includes(q);
+                return matchCat && matchDiet && matchSub && matchSearch;
+            };
+            const cats = currentCategory === 'ALL'
+                ? ['STARTERS', 'BIRYANIS', 'CURRIES_ROTIS', 'DRINKS']
+                : [currentCategory];
+            let html = '';
+            let anyItem = false;
+            cats.forEach(cat => {
+                const items = HOTEL_MENU.filter(i => i.cat === cat && visible(i));
+                if (!items.length) return;
+                anyItem = true;
+                html += `<div class="menu-section" data-cat="${cat}">
+                    <div class="menu-section-head">${catLabel(cat)} <span class="cat-count">(${items.length})</span></div>
+                    ${items.map(dishRowHtml).join('')}
+                </div>`;
+            });
+            if (!anyItem) html = `<div class="empty-hint">${t('noResults')}</div>`;
+            listEl.innerHTML = html;
+            updateScrollSpy();
+        }
+
+        // Scroll-spy: in the ALL view, highlight the chip of the section
+        // currently on screen. (Single-category view keeps the filter chip.)
+        function updateScrollSpy() {
+            if (currentCategory !== 'ALL') return;
+            const sections = document.querySelectorAll('.menu-section');
+            if (!sections.length) return;
+            let current = sections[0].getAttribute('data-cat');
+            sections.forEach(sec => {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top <= 90) current = sec.getAttribute('data-cat');
+            });
+            document.querySelectorAll('.cat-chip').forEach(c => {
+                c.classList.toggle('active', c.getAttribute('data-cat') === current);
+            });
+        }
+        window.addEventListener('scroll', updateScrollSpy, { passive: true });
 
         function selectCategory(cat, btnEl) {
             currentCategory = cat;
@@ -1038,7 +1351,8 @@
                 chips = [
                     { id: 'ALL', dot: null, label: { te: 'అన్నీ', en: 'All', hi: 'सभी' } },
                     { id: 'VEG', dot: 'veg', label: { te: 'ప్యూర్ వెజ్', en: 'Pure Veg', hi: 'शुद्ध शाकाहारी' } },
-                    { id: 'NONVEG', dot: 'nonveg', label: { te: 'నాన్-వెజ్', en: 'Non-Veg', hi: 'मांसाहारी' } }
+                    { id: 'NONVEG', dot: 'nonveg', label: { te: 'నాన్-వెజ్', en: 'Non-Veg', hi: 'मांसाहारी' } },
+                    { id: 'EGG', dot: 'egg', label: { te: 'ఎగ్', en: 'Egg', hi: 'अंडा' } }
                 ];
             } else {
                 chips = [{ id: 'ALL', dot: null, label: { te: 'అన్నీ', en: 'All', hi: 'सभी' } }].concat(SUBCATS[currentCategory]);
@@ -1047,7 +1361,7 @@
                 const active = currentCategory === 'ALL'
                     ? (c.id === 'ALL' ? currentDiet === 'ALL' : currentDiet === c.id)
                     : (currentSub === c.id);
-                const dotHtml = c.dot === 'veg' ? '<span class="dot-veg"></span> ' : c.dot === 'nonveg' ? '<span class="dot-nonveg"></span> ' : '';
+                const dotHtml = dietMarkHtml(c.dot);
                 const label = c.label[currentLang] || c.label.te;
                 return `<button class="diet-pill${active ? ' active' : ''}" onclick="selectSub('${c.id}')">${dotHtml}${label}</button>`;
             }).join('');
@@ -1176,7 +1490,7 @@
             const padTotalEl = document.getElementById('padTotalAmount');
             if (padTotalEl) padTotalEl.innerText = `₹${total}`;
             const cartEl = document.getElementById('cartCount');
-            if (cartEl) cartEl.innerText = totalCount;
+            if (cartEl) cartEl.innerText = String(totalCount);
             updateSplitDisplay();
         }
 
