@@ -113,7 +113,7 @@
             object-fit: cover;
         }
 
-        /* Fallback Visual if host.mp4 is not uploaded yet */
+        /* Host visual (19 Nov 2026: host.mp4 removed — the video file was never uploaded; this fallback visual is the host display now) */
         .fallback-host {
             width: 100%;
             height: 100%;
@@ -375,8 +375,7 @@
 
         <div class="avatar-frame" id="avatarFrame" onclick="replayWelcome()">
             <span class="live-dot" id="liveDot">● AI హోస్ట్</span>
-            <video id="hostVideo" class="host-video" src="host.mp4" autoplay loop muted playsinline onerror="showFallbackHost()"></video>
-            <div id="fallbackHost" class="fallback-host" style="display:none;">
+            <div id="fallbackHost" class="fallback-host">
                 <div style="font-size: 46px; margin-bottom: 6px;">👩‍💼</div>
                 <div id="fallbackHostLabel" style="font-size: 11px; color: var(--brand-cyan); font-weight: 800;">AVAILO హోస్ట్</div>
                 <div id="fallbackHint" style="font-size: 10px; color: #94a3b8; margin-top: 2px;">వాయిస్ వినడానికి నొక్కండి</div>
@@ -578,7 +577,10 @@
         ];
 
         function showFallbackHost() {
-            document.getElementById('hostVideo').style.display = 'none';
+            // host.mp4 was removed 19 Nov 2026 (file was never uploaded, 404);
+            // the fallback visual is now the permanent host display.
+            var v = document.getElementById('hostVideo');
+            if (v) v.style.display = 'none';
             document.getElementById('fallbackHost').style.display = 'flex';
         }
 

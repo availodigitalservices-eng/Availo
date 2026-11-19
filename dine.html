@@ -755,6 +755,7 @@
         </div>
         <div data-te="AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు" data-en="AVAILO Digital Services · Vijayawada &amp; Guntur" data-hi="AVAILO डिजिटल सर्विसेज़ · विजयवाड़ा और गुंटूर">AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు</div>
         <div style="margin-top: 6px; font-size: 11px;"><a href="privacy.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a></div>
+        <div style="margin-top: 6px; font-size: 11px;"><a href="ai-waiter.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="🤖 AI వాయిస్ కన్సియర్జ్" data-en="🤖 AI Voice Concierge" data-hi="🤖 AI वॉइस कंसीयर्ज">🤖 AI వాయిస్ కన్సియర్జ్</a> &nbsp;·&nbsp; <a href="smart.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="🖥️ సూపర్‌వైజర్ డాష్‌బోర్డ్" data-en="🖥️ Supervisor Dashboard" data-hi="🖥️ सुपरवाइज़र डैशबोर्ड">🖥️ సూపర్‌వైజర్ డాష్‌బోర్డ్</a></div>
         <div style="margin-top: 6px; font-size: 11px;" data-te="📷 ఫోటోలు: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata" data-en="📷 Photos: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata" data-hi="📷 फ़ोटो: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata">📷 Photos: Wikimedia Commons (CC BY / CC BY-SA) — SuVaM Epicure · Amiyashrivastava · Sukhiideep · Dr. Chinchu C. · Nish1892 · Gpkp · Radhika41 · Krishnam Raju · Gunawan Kartapranata</div>
     </footer>
 
@@ -808,7 +809,12 @@
         // Kitchen-facing (WhatsApp) names stay Telugu by design; these two are
         // only for the on-screen text below.
         const hotelName = hotelParam || "అమరావతి గ్రాండ్";
-        const tableNumber = tableParam || "Table 01";
+        // WhatsApp messages print their own "టేబుల్:" label, so the value
+        // must be just the number ("01") — never "Table 01" (19 Nov 2026:
+        // the KOT used to read "టేబుల్: Table 01"). A ?table= value that
+        // still carries the word "Table" is normalised the same way.
+        // On-screen display is unaffected (it uses tableDisplay()).
+        const tableNumber = (tableParam || "01").replace(/^(table|టేబుల్|टेबल)[\s:.\-]*/i, "");
         const targetWhatsApp = params.get('desk') || "919966157369";
 
         // On-screen venue names follow the selected language (defaults only;
@@ -1260,7 +1266,7 @@
             const noteStr = chefNote ? `%0A*చెఫ్ సూచన:* ${encodeURIComponent(chefNote)}` : "";
 
             const itemsStr = orderLines.join('%0A');
-            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${encodeURIComponent(hotelName)}%0A*టేబుల్:* ${encodeURIComponent(tableNumber)}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${encodeURIComponent(new Date().toLocaleTimeString())}%0A-----------------------------%0A🔔 *కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
+            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${encodeURIComponent(hotelName)}%0A*టేబుల్:* ${encodeURIComponent(tableNumber)}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ₹${grandTotal}%0A*సమయం:* ${encodeURIComponent(new Date().toLocaleTimeString())}%0A-----------------------------%0A*కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
 
             const displayLines = [];
             HOTEL_MENU.forEach(item => {
@@ -1275,7 +1281,7 @@
             showOrderConfirm(summaryHtml, msg, `₹${grandTotal}`);
         }
 
-        // Loud refill alert: bell + TABLE number first, short, in the site language,
+        // Loud refill alert: [SERVICE] tag + TABLE number first, short, in the site language,
         // so the kitchen notices it on WhatsApp. (No buzzer/backend in this batch.)
         // The BILL entry includes the full items list + total, not just "BILL NEEDED".
         function requestTableService(idx) {
@@ -1284,7 +1290,7 @@
             speakGentVoice(r.reply[currentLang]);
             const tableNum = (String(tableNumber).match(/\d+/) || [tableNumber])[0];
             const loudText = (r.loud && (r.loud[currentLang] || r.loud.te)) || r.label[currentLang];
-            let msg = `🔔🔔 TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}`;
+            let msg = `[SERVICE] TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}`;
             if (r.bill) {
                 let lines = [];
                 let total = 0;
@@ -1293,7 +1299,7 @@
                 });
                 const itemsStr = lines.length ? lines.join('\n') : (currentLang === 'hi' ? '(कार्ट खाली है — कृपया बिल भेजें)' : currentLang === 'en' ? '(Cart is empty — please send the bill)' : '(కార్ట్ ఖాళీగా ఉంది — దయచేసి బిల్లు పంపండి)');
                 const totalLabel = currentLang === 'hi' ? 'कुल बिल' : currentLang === 'en' ? 'Total Bill' : 'మొత్తం బిల్లు';
-                msg = `🔔🔔 TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}\n-----------------------------\n${itemsStr}\n-----------------------------\n*${totalLabel}:* ₹${total}`;
+                msg = `[SERVICE] TABLE ${tableNum} — ${loudText}\n${hotelName} · ${new Date().toLocaleTimeString()}\n-----------------------------\n${itemsStr}\n-----------------------------\n*${totalLabel}:* ₹${total}`;
             }
             const svcRef = availoRef();
             pushKitchenEvent('refills', { table: tableNum, text: loudText, time: new Date().toLocaleTimeString(), ref: svcRef });

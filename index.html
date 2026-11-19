@@ -7,6 +7,8 @@
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="Bv-aBAVU9UHys7RSbCjfMLYhabTyfU_wJFrrwf9qbd0" />
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700;800&family=Ramabhadra&family=Suranna&display=swap" rel="stylesheet">
@@ -932,7 +934,7 @@
             <a href="#gate-section" onclick="toggleDrawer();"><span data-te="సొసైటీ గేట్ పాస్" data-en="Society Gate Pass" data-hi="सोसाइटी गेट पास">Society Gate Pass</span> <span>›</span></a>
             <a href="#business" onclick="toggleDrawer();"><span data-te="బిజినెస్ సొల్యూషన్స్" data-en="Business Solutions" data-hi="बिज़नेस सॉल्यूशन्स">Business Solutions</span> <span>›</span></a>
             <button onclick="toggleDrawer(); openModal('howItWorksModal');"><span data-te="ఎలా పనిచేస్తుంది" data-en="How It Works" data-hi="यह कैसे काम करता है">How It Works</span> <span>›</span></button>
-            <button onclick="toggleDrawer(); openModal('aimModal');"><span data-te="లక్ష్యం & నిబంధనలు" data-en="Scope & Terms" data-hi="लक्ष्य और नियम">Scope & Terms</span> <span>›</span></button>
+            <button onclick="toggleDrawer(); openModal('scopeModal');"><span data-te="లక్ష్యం & నిబంధనలు" data-en="Scope & Terms" data-hi="लक्ष्य और नियम">Scope & Terms</span> <span>›</span></button>
             <button onclick="toggleDrawer(); openModal('contactModal');"><span data-te="సంప్రదించండి" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</span> <span>›</span></button>
         </div>
     </div>
@@ -1252,7 +1254,7 @@
             <p class="font-te-body" data-te="విజయవాడ మరియు గుంటూరులో నివసిస్తున్న మీ పెద్దలకు నమ్మకమైన, వ్యక్తిగత సహాయ సేవలు." data-en="Practical assistance for families living away from their parents in Vijayawada and Guntur." data-hi="विजयवाड़ा और गुंटूर में रहने वाले आपके बड़ों के लिए भरोसेमंद, व्यक्तिगत सहायता सेवाएँ।">Practical assistance for families living away from their parents in Vijayawada and Guntur.</p>
 
             <div class="nri-plans-row">
-                <div class="nri-plan-mini" onclick="openModal('nriModal')">
+                <div class="nri-plan-mini" onclick="openModal('nriModalCare')">
                     <div>
                         <strong data-te="AVAILO కేర్" data-en="AVAILO Care" data-hi="AVAILO केयर">AVAILO Care</strong>
                         <div style="font-size: 11px; color: #94a3b8;" data-te="1 చెక్-ఇన్ · 1 ఎస్కార్ట్ (3 గం.) · 2 పనులు" data-en="1 Check-in · 1 Escort (3 hrs) · 2 Errands" data-hi="1 चेक-इन · 1 एस्कॉर्ट (3 घंटे) · 2 काम">1 Check-in · 1 Escort (3 hrs) · 2 Errands</div>
@@ -1260,7 +1262,7 @@
                     <span>₹2,499<small style="font-size: 10px; color: #cbd5e1;" data-te="/నెల" data-en="/mo" data-hi="/माह">/mo</small></span>
                 </div>
 
-                <div class="nri-plan-mini" style="border-color: var(--brand-cyan);" onclick="openModal('nriModal')">
+                <div class="nri-plan-mini" style="border-color: var(--brand-cyan);" onclick="openModal('nriModalPlus')">
                     <div>
                         <strong style="color: var(--brand-cyan);" data-te="AVAILO ప్లస్ (ప్రజాదరణ ⭐)" data-en="AVAILO Plus (Popular ⭐)" data-hi="AVAILO प्लस (लोकप्रिय ⭐)">AVAILO Plus (Popular ⭐)</strong>
                         <div style="font-size: 11px; color: #94a3b8;" data-te="2 చెక్-ఇన్‌లు · 2 ఎస్కార్ట్‌లు (4 గం.) · 4 పనులు" data-en="2 Check-ins · 2 Escorts (4 hrs) · 4 Errands" data-hi="2 चेक-इन · 2 एस्कॉर्ट (4 घंटे) · 4 काम">2 Check-ins · 2 Escorts (4 hrs) · 4 Errands</div>
@@ -1268,10 +1270,10 @@
                     <span>₹4,999<small style="font-size: 10px; color: #cbd5e1;" data-te="/నెల" data-en="/mo" data-hi="/माह">/mo</small></span>
                 </div>
 
-                <div class="nri-plan-mini" onclick="openModal('nriModal')">
+                <div class="nri-plan-mini" onclick="openModal('nriModalElite')">
                     <div>
                         <strong data-te="AVAILO ఎలైట్" data-en="AVAILO Elite" data-hi="AVAILO एलीट">AVAILO Elite</strong>
-                        <div style="font-size: 11px; color: #94a3b8;" data-te="4 చెక్-ఇన్‌లు · 4 ఎస్కార్ట్‌లు · 8 పనులు" data-en="4 Check-ins · 4 Escorts · 8 Errands" data-hi="4 चेक-इन · 4 एस्कॉर्ट · 8 काम">4 Check-ins · 4 Escorts · 8 Errands</div>
+                        <div style="font-size: 11px; color: #94a3b8;" data-te="4 చెక్-ఇన్‌లు · 4 ఎస్కార్ట్‌లు /నెల (పరిమితి లేని గంటలు) · 8 పనులు" data-en="4 Check-ins · 4 Escorts /mo (unlimited hrs) · 8 Errands" data-hi="4 चेक-इन · 4 एस्कॉर्ट /माह (असीमित घंटे) · 8 काम">4 Check-ins · 4 Escorts /mo (unlimited hrs) · 8 Errands</div>
                     </div>
                     <span>₹9,999<small style="font-size: 10px; color: #cbd5e1;" data-te="/నెల" data-en="/mo" data-hi="/माह">/mo</small></span>
                 </div>
@@ -1378,7 +1380,7 @@
 
         <div class="jio-support-card">
             <div class="circle-icons-grid">
-                <div class="circle-icon-btn" onclick="openModal('nriModal')">
+                <div class="circle-icon-btn" onclick="openModal('nriModalPlus')">
                     <div class="circle-round-bubble" style="background: #ede9fe; color: #7c3aed;">👴</div>
                     <span class="font-te-title" data-te="NRI కేర్ ప్లాన్స్" data-en="NRI Care Plans" data-hi="NRI केयर प्लान">NRI కేర్ ప్లాన్స్</span>
                 </div>
@@ -1396,7 +1398,7 @@
                 </div>
                 <div class="circle-icon-btn" onclick="openModal('technicianApplyModal')">
                     <div class="circle-round-bubble" style="background: #fef3c7; color: #d97706;">🤝</div>
-                    <span class="font-te-title" data-te="పార్ట్‌నర్ జాయిన్" data-en="Join Partner" data-hi="पार्टनर बनें">పార్ట్‌నర్ జాయిన్</span>
+                    <span class="font-te-title" data-te="టెక్నీషియన్‌గా జాయిన్ అవ్వండి" data-en="Join as Technician" data-hi="टेक्नीशियन के रूप में जुड़ें">టెక్నీషియన్‌గా జాయిన్ అవ్వండి</span>
                 </div>
                 <div class="circle-icon-btn" onclick="openModal('contactModal')">
                     <div class="circle-round-bubble">📞</div>
@@ -1443,7 +1445,7 @@
                 <p><span data-te="రకం:" data-en="Type:" data-hi="प्रकार:">రకం:</span> <span data-te="మైక్రో ఎంటర్‌ప్రైజ్ · సర్వీసెస్ · రిజిస్టర్డ్ 24/08/2026" data-en="Micro enterprise · Services · Registered 24/08/2026" data-hi="माइक्रो एंटरप्राइज़ · सर्विसेज़ · रजिस्टर्ड 24/08/2026">మైక్రో ఎంటర్‌ప్రైజ్ · సర్వీసెస్ · రిజిస్టర్డ్ 24/08/2026</span></p>
                 <p><span data-te="చిరునామా:" data-en="Address:" data-hi="पता:">చిరునామా:</span> 1-492, Srinagar Colony, Navata Transport Road, Kanuru, Vijayawada, Andhra Pradesh — 520007</p>
                 <p><span data-te="ఈమెయిల్:" data-en="Email:" data-hi="ईमेल:">ఈమెయిల్:</span> <a href="mailto:availodigitalservices@gmail.com" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;">availodigitalservices@gmail.com</a></p>
-                <p><span data-te="వాట్సాప్ నంబర్ 1:" data-en="WhatsApp 1:" data-hi="WhatsApp 1:">వాట్సాప్ నంబర్ 1:</span> <a href="https://wa.me/919966157369" style="color: #16a34a; font-weight: 700; text-decoration: none;">9966157369</a> &nbsp;·&nbsp; <span data-te="వాట్సాప్ నంబర్ 2 (బ్యాకప్):" data-en="WhatsApp 2 (backup):" data-hi="WhatsApp 2 (बैकअप):">వాట్సాప్ నంబర్ 2 (బ్యాకప్):</span> <a href="tel:8686761098" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;">8686761098</a></p>
+                <p><span data-te="వాట్సాప్ నంబర్ 1:" data-en="WhatsApp 1:" data-hi="WhatsApp 1:">వాట్సాప్ నంబర్ 1:</span> <a href="https://wa.me/919966157369" target="_blank" rel="noopener" style="color: #16a34a; font-weight: 700; text-decoration: none;">9966157369</a> &nbsp;·&nbsp; <span data-te="వాట్సాప్ నంబర్ 2 (బ్యాకప్):" data-en="WhatsApp 2 (backup):" data-hi="WhatsApp 2 (बैकअप):">వాట్సాప్ నంబర్ 2 (బ్యాకప్):</span> <a href="tel:8686761098" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;">8686761098</a></p>
                 <p style="color: #166534; font-weight: 700;" data-te="📞 మిస్డ్ కాల్ అయితే మేము కాల్ చేస్తాం" data-en="📞 Give a missed call — we will call you back" data-hi="📞 मिस्ड कॉल दीजिए — हम आपको कॉल करेंगे">📞 మిస్డ్ కాల్ అయితే మేము కాల్ చేస్తాం</p>
                 <p><span data-te="సర్వీస్ సమయాలు:" data-en="Service hours:" data-hi="सर्विस का समय:">సర్వీస్ సమయాలు:</span> <span data-te="రోజూ ఉదయం 7:00 – రాత్రి 9:00 · ఎమర్జెన్సీ 24/7" data-en="Daily 7:00 AM – 9:00 PM · Emergency 24/7" data-hi="रोज़ सुबह 7:00 – रात 9:00 · इमरजेंसी 24/7">రోజూ ఉదయం 7:00 – రాత్రి 9:00 · ఎమర్జెన్సీ 24/7</span></p>
             </div>
@@ -1461,7 +1463,7 @@
             <p style="margin-top: 4px;" data-te="రిజిస్టర్డ్ MSME సంస్థ · విజయవాడ & గుంటూరు ప్రాంతం" data-en="Registered MSME Entity · Vijayawada & Guntur Region" data-hi="रजिस्टर्ड MSME संस्था · विजयवाड़ा और गुंटूर क्षेत्र">Registered MSME Entity · Vijayawada & Guntur Region</p>
             <p style="margin-top: 2px;" data-te="డైరెక్ట్ హెల్ప్‌లైన్: +91 9966157369" data-en="Direct Helpline: +91 9966157369" data-hi="डायरेक्ट हेल्पलाइन: +91 9966157369">Direct Helpline: +91 9966157369</p>
             <p style="margin-top: 2px;" data-te="వాట్సాప్ నంబర్ 2 (బ్యాకప్): 8686761098 · మిస్డ్ కాల్ అయితే మేము కాల్ చేస్తాం" data-en="WhatsApp 2 (backup): 8686761098 · Give a missed call — we will call you back" data-hi="WhatsApp 2 (बैकअप): 8686761098 · मिस्ड कॉल दीजिए — हम आपको कॉल करेंगे">WhatsApp 2 (backup): 8686761098 · Give a missed call — we will call you back</p>
-            <p style="margin-top: 8px; font-size: 12px;"><a href="privacy.html" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a> &nbsp;·&nbsp; <a href="#company-profile" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="కంపెనీ ప్రొఫైల్" data-en="Company Profile" data-hi="कंपनी प्रोफ़ाइल">కంపెనీ ప్రొఫైల్</a></p>
+            <p style="margin-top: 8px; font-size: 12px;"><a href="privacy.html" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a> &nbsp;·&nbsp; <a href="#company-profile" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="కంపెనీ ప్రొఫైల్" data-en="Company Profile" data-hi="कंपनी प्रोफ़ाइल">కంపెనీ ప్రొఫైల్</a> &nbsp;·&nbsp; <a href="app.html" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="యాప్ డెమో" data-en="App Demo" data-hi="ऐप डेमो">యాప్ డెమో</a> &nbsp;·&nbsp; <a href="chat.html" style="color: var(--brand-navy); font-weight: 700; text-decoration: none;" data-te="OneChat" data-en="OneChat" data-hi="OneChat">OneChat</a></p>
             <p style="margin-top: 10px; font-size: 11px;" data-te="© 2026 AVAILO. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి. స్పష్టమైన పరిధి & పారదర్శక నిబంధనలు వర్తిస్తాయి." data-en="© 2026 AVAILO. All Rights Reserved. Clear Scope & Transparent Terms Apply." data-hi="© 2026 AVAILO. सभी अधिकार सुरक्षित। स्पष्ट दायरा और पारदर्शी नियम लागू होते हैं।">© 2026 AVAILO. All Rights Reserved. Clear Scope & Transparent Terms Apply.</p>
         </footer>
 
@@ -1656,14 +1658,15 @@
     </div>
 
     <!-- 2. NRI Care Pricing Plans Modal -->
-    <div class="modal-overlay" id="nriModal">
+        <!-- 2C. NRI Plan Modal — AVAILO Care only (split from combined nriModal, 19 Nov 2026) -->
+    <div class="modal-overlay" id="nriModalCare">
         <div class="modal-window">
             <div class="modal-header">
-                <h3 class="font-te-title" data-te="AVAILO NRI తల్లిదండ్రుల సంరక్షణ ప్లాన్లు" data-en="AVAILO NRI Parents Care Plans" data-hi="AVAILO NRI माता-पिता की देखभाल प्लान">AVAILO NRI Parents Care ప్లాన్లు</h3>
-                <button class="modal-close-btn" onclick="closeModal('nriModal')">✕</button>
+                <h3 class="font-te-title" data-te="💙 AVAILO కేర్ — ₹2,499 / నెల" data-en="💙 AVAILO CARE — ₹2,499 / Month" data-hi="💙 AVAILO केयर — ₹2,499 / महीना">💙 AVAILO కేర్ — ₹2,499 / నెల</h3>
+                <button class="modal-close-btn" onclick="closeModal('nriModalCare')">✕</button>
             </div>
             <div class="modal-body">
-                <div class="nri-tier-card">
+<div class="nri-tier-card">
                     <strong style="color: var(--brand-navy);" data-te="💙 AVAILO కేర్" data-en="💙 AVAILO CARE" data-hi="💙 AVAILO केयर">💙 AVAILO CARE</strong>
                     <div class="nri-price-txt">₹2,499 / <span data-te="నెల" data-en="Month" data-hi="महीना">నెల</span></div>
                     <ul class="font-te-body">
@@ -1674,8 +1677,19 @@
                     </ul>
                     <button class="choose-plan-btn font-te-title" style="background: var(--brand-navy); color: white;" onclick="selectNRIPlan('AVAILO Care (₹2,499/month)')" data-te="👉 ఈ ప్లాన్ ఎంచుకోండి" data-en="👉 Choose this Plan" data-hi="👉 यह प्लान चुनें">👉 ఈ ప్లాన్ ఎంచుకోండి</button>
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <div class="nri-tier-card featured">
+    <!-- 2P. NRI Plan Modal — AVAILO Plus only (split from combined nriModal, 19 Nov 2026) -->
+    <div class="modal-overlay" id="nriModalPlus">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="font-te-title" data-te="💙 AVAILO ప్లస్ — ₹4,999 / నెల (ప్రజాదరణ ⭐)" data-en="💙 AVAILO PLUS — ₹4,999 / Month (Most Popular ⭐)" data-hi="💙 AVAILO प्लस — ₹4,999 / महीना (सबसे लोकप्रिय ⭐)">💙 AVAILO ప్లస్ — ₹4,999 / నెల (ప్రజాదరణ ⭐)</h3>
+                <button class="modal-close-btn" onclick="closeModal('nriModalPlus')">✕</button>
+            </div>
+            <div class="modal-body">
+<div class="nri-tier-card featured">
                     <strong style="color: var(--brand-navy);" data-te="💙 AVAILO ప్లస్ (అత్యంత ప్రజాదరణ ⭐)" data-en="💙 AVAILO PLUS (Most Popular ⭐)" data-hi="💙 AVAILO प्लस (सबसे लोकप्रिय ⭐)">💙 AVAILO PLUS (Most Popular ⭐)</strong>
                     <div class="nri-price-txt">₹4,999 / <span data-te="నెల" data-en="Month" data-hi="महीना">నెల</span></div>
                     <ul class="font-te-body">
@@ -1686,8 +1700,19 @@
                     </ul>
                     <button class="choose-plan-btn font-te-title" style="background: var(--brand-navy); color: white;" onclick="selectNRIPlan('AVAILO Plus (₹4,999/month)')" data-te="👉 ఈ ప్లాన్ ఎంచుకోండి (ప్రజాదరణ పొందినది)" data-en="👉 Choose this Plan (Popular)" data-hi="👉 यह प्लान चुनें (लोकप्रिय)">👉 ఈ ప్లాన్ ఎంచుకోండి (Popular)</button>
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <div class="nri-tier-card" style="border: 1.5px solid var(--purple-vip); background: #faf5ff;">
+    <!-- 2E. NRI Plan Modal — AVAILO Elite only (split from combined nriModal, 19 Nov 2026) -->
+    <div class="modal-overlay" id="nriModalElite">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="font-te-title" data-te="💜 AVAILO ఎలైట్ — ₹9,999 / నెల" data-en="💜 AVAILO ELITE — ₹9,999 / Month" data-hi="💜 AVAILO एलीट — ₹9,999 / महीना">💜 AVAILO ఎలైట్ — ₹9,999 / నెల</h3>
+                <button class="modal-close-btn" onclick="closeModal('nriModalElite')">✕</button>
+            </div>
+            <div class="modal-body">
+<div class="nri-tier-card" style="border: 1.5px solid var(--purple-vip); background: #faf5ff;">
                     <strong style="color: #7c3aed;" data-te="💜 AVAILO ఎలైట్" data-en="💜 AVAILO ELITE" data-hi="💜 AVAILO एलीट">💜 AVAILO ELITE</strong>
                     <div class="nri-price-txt" style="color: #7c3aed;">₹9,999 / <span data-te="నెల" data-en="Month" data-hi="महीना">నెల</span></div>
                     <ul class="font-te-body">
@@ -1702,7 +1727,7 @@
         </div>
     </div>
 
-    <!-- 3. NRI Application Form Modal -->
+<!-- 3. NRI Application Form Modal -->
     <div class="modal-overlay" id="nriApplyModal">
         <div class="modal-window">
             <div class="modal-header">
@@ -1770,15 +1795,27 @@
         </div>
     </div>
 
-    <!-- 5. Scope & Aim Modal -->
+    <!-- 5. Aim Modal -->
     <div class="modal-overlay" id="aimModal">
         <div class="modal-window">
             <div class="modal-header">
-                <h3 class="font-te-title" data-te="లక్ష్యం & సర్వీస్ స్కోప్" data-en="Aim & Service Scope" data-hi="लक्ष्य और सर्विस का दायरा">లక్ష్యం & సర్వీస్ స్కోప్</h3>
+                <h3 class="font-te-title" data-te="మన లక్ష్యం" data-en="Our Aim" data-hi="हमारा लक्ष्य">మన లక్ష్యం</h3>
                 <button class="modal-close-btn" onclick="closeModal('aimModal')">✕</button>
             </div>
             <div class="modal-body font-te-body" style="font-size: 13px; color: #374151; line-height: 1.6;">
                 <p style="margin-bottom: 12px;" data-te="ప్రజలను సంక్లిష్టమైన మొబైల్ యాప్ డౌన్‌లోడ్‌లు లేకుండా, రోజూ వాడే WhatsApp ద్వారానే నమ్మకమైన సేవలు మరియు కుటుంబ సంరక్షణను సులభంగా అందించడమే మన ధ్యేయం." data-en="Empowering households with effortless WhatsApp-based home services, elderly care, and digital utilities without downloading complex mobile apps." data-hi="लोगों को बिना जटिल मोबाइल ऐप डाउनलोड किए, रोज़ इस्तेमाल होने वाले WhatsApp से ही भरोसेमंद सेवाएँ और परिवार की देखभाल आसानी से देना ही हमारा उद्देश्य है।">ప్రజలను సంక్లిష్టమైన మొబైల్ యాప్ డౌన్‌లోడ్‌లు లేకుండా, రోజూ వాడే WhatsApp ద్వారానే నమ్మకమైన సేవలు మరియు కుటుంబ సంరక్షణను సులభంగా అందించడమే మన ధ్యేయం.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5b. Scope & Terms Modal -->
+    <div class="modal-overlay" id="scopeModal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="font-te-title" data-te="లక్ష్యం & నిబంధనలు" data-en="Scope & Terms" data-hi="लक्ष्य और नियम">లక్ష్యం & నిబంధనలు</h3>
+                <button class="modal-close-btn" onclick="closeModal('scopeModal')">✕</button>
+            </div>
+            <div class="modal-body font-te-body" style="font-size: 13px; color: #374151; line-height: 1.6;">
                 <p style="margin-bottom: 12px;" data-te="<strong>పరిధి & నిబంధనలు:</strong> AVAILO డిజిటల్ సర్వీసెస్ విజయవాడ & గుంటూరులో కస్టమర్లు, కుటుంబాలు మరియు స్వతంత్ర సేవా ప్రదాతల మధ్య సమన్వయం చేస్తుంది. మూడవ పక్షం బిల్లింగ్ నేరుగా చెల్లించదగినది మరియు పారదర్శకమైనది." data-en="<strong>Scope & Terms:</strong> AVAILO Digital Services facilitates coordination between customers, families, and independent service providers in Vijayawada & Guntur. Third-party billing is directly payable and transparent." data-hi="<strong>दायरा और नियम:</strong> AVAILO डिजिटल सर्विसेज़ विजयवाड़ा और गुंटूर में ग्राहकों, परिवारों और स्वतंत्र सेवा प्रदाताओं के बीच समन्वय करता है। तीसरे पक्ष की बिलिंग सीधे देय और पारदर्शी है।"><strong>Scope & Terms:</strong> AVAILO Digital Services facilitates coordination between customers, families, and independent service providers in Vijayawada & Guntur. Third-party billing is directly payable and transparent.</p>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                     <div style="background: #f8fafc; border-left: 3px solid var(--brand-navy); padding: 10px;">
@@ -1804,7 +1841,7 @@
             <div class="modal-body font-te-body" style="font-size: 13px;">
                 <p><strong data-te="ప్ర: సర్వీస్ ప్రొవైడర్స్ వెరిఫైడ్ అయినవారేనా?" data-en="Q: Are service providers verified?" data-hi="प्र: क्या सर्विस प्रोवाइडर वेरिफ़ाइड हैं?">Q: సర్వీస్ ప్రొవైడర్స్ వెరిఫైడ్ అయినవారేనా?</strong><br><span data-te="జ: ఖచ్చితంగా! ప్రతి ప్రొవైడర్‌కు ఫోటో ఐడీ కార్డ్ మరియు బ్యాక్‌గ్రౌండ్ వెరిఫికేషన్ ఉంటుంది." data-en="A: Absolutely! Every provider carries verified ID and background verification." data-hi="उ: बिल्कुल! हर प्रोवाइडर के पास फ़ोटो आईडी कार्ड और बैकग्राउंड वेरिफ़िकेशन होता है।">A: ఖచ్చితంగా! ప్రతి ప్రొవైడర్‌కు ఫోటో ఐడీ కార్డ్ మరియు బ్యాక్‌గ్రౌండ్ వెరిఫికేషన్ ఉంటుంది.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
-                <p><strong data-te="ప్ర: మహిళల ఫోన్ నంబర్లు భద్రమేనా?" data-en="Q: Are female users numbers secure?" data-hi="प्र: क्या महिलाओं के फ़ोन नंबर सुरक्षित हैं?">Q: మహిళల ఫోన్ నంబర్లు భద్రమేనా?</strong><br><span data-te="జ: పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది, సిబ్బందికి ఫోన్ నంబర్లు కనిపించవు." data-en="A: Full phone masking security is deployed to safeguard user privacy." data-hi="उ: पूरी फ़ोन मास्किंग सुरक्षा है, स्टाफ़ को फ़ोन नंबर दिखाई नहीं देते।">A: పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది, సిబ్బందికి ఫోన్ నంబర్లు కనిపించవు.</span></p>
+                <p><strong data-te="ప్ర: మహిళల ఫోన్ నంబర్లు భద్రమేనా?" data-en="Q: Are female users' phone numbers secure?" data-hi="प्र: क्या महिलाओं के फ़ोन नंबर सुरक्षित हैं?">Q: మహిళల ఫోన్ నంబర్లు భద్రమేనా?</strong><br><span data-te="జ: పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది, సిబ్బందికి ఫోన్ నంబర్లు కనిపించవు." data-en="A: Full phone masking security is deployed to safeguard user privacy." data-hi="उ: पूरी फ़ोन मास्किंग सुरक्षा है, स्टाफ़ को फ़ोन नंबर दिखाई नहीं देते।">A: పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది, సిబ్బందికి ఫోన్ నంబర్లు కనిపించవు.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
                 <p><strong data-te="ప్ర: AVAILO ఎలా పని చేస్తుంది?" data-en="Q: How does AVAILO work?" data-hi="प्र: AVAILO कैसे काम करता है?">Q: AVAILO ఎలా పని చేస్తుంది?</strong><br><span data-te="జ: 3 దశలు — 1) QR కోడ్ స్కాన్ చేయండి, 2) WhatsAppలో వాయిస్ నోట్ పంపండి, 3) వెరిఫైడ్ ప్రొఫెషనల్ మీ డోర్‌స్టెప్ వద్దకు వస్తారు. యాప్ డౌన్‌లోడ్ అవసరం లేదు." data-en="A: 3 steps — 1) Scan the QR code, 2) Send a voice note on WhatsApp, 3) A verified professional comes to your doorstep. No app download needed." data-hi="उ: 3 चरण — 1) QR कोड स्कैन करें, 2) WhatsApp पर वॉइस नोट भेजें, 3) वेरिफ़ाइड प्रोफ़ेशनल आपके दरवाज़े तक आएँगे। ऐप डाउनलोड की ज़रूरत नहीं।">A: 3 దశలు — 1) QR కోడ్ స్కాన్ చేయండి, 2) WhatsAppలో వాయిస్ నోట్ పంపండి, 3) వెరిఫైడ్ ప్రొఫెషనల్ మీ డోర్‌స్టెప్ వద్దకు వస్తారు. యాప్ డౌన్‌లోడ్ అవసరం లేదు.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
@@ -1844,7 +1881,7 @@
                     <div style="font-size: 22px;">💬</div>
                     <div>
                         <div style="font-size: 11px; color: var(--text-muted);" data-te="WhatsApp సపోర్ట్" data-en="WhatsApp Support" data-hi="WhatsApp सपोर्ट">WhatsApp సపోర్ట్</div>
-                        <a href="https://wa.me/919966157369" style="font-size: 15px; font-weight: 700; color: var(--call-green); text-decoration: none;">+91 99661 57369</a>
+                        <a href="https://wa.me/919966157369" target="_blank" rel="noopener" style="font-size: 15px; font-weight: 700; color: var(--call-green); text-decoration: none;">+91 99661 57369</a>
                     </div>
                 </div>
                 <div style="margin-bottom: 14px; display: flex; align-items: center; gap: 12px;">
@@ -2030,6 +2067,11 @@
             });
             updateLiveClock();
             if (typeof renderRateCard === 'function') renderRateCard('rateCardBody', currentLang);
+            // Rebuild the Gate Pass quick-select chips in the new language —
+            // their labels are set by JS at build time (no data-* attributes),
+            // so applyLanguage() alone would leave them in the old language.
+            if (typeof buildGatePartnerChips === 'function') buildGatePartnerChips();
+            if (typeof buildGateGenderChips === 'function') buildGateGenderChips();
             // Keep the Mayura panel greeting in the current language.
             const mp = document.getElementById('mayuraPanelText');
             if (mp) { const t = mp.getAttribute('data-' + currentLang); if (t) mp.innerHTML = t; }
@@ -2327,7 +2369,7 @@
                 b.type = 'button';
                 b.setAttribute('data-value', name);
                 b.textContent = name === 'Other' ? (currentLang === 'te' ? 'ఇతరము' : currentLang === 'hi' ? 'अन्य' : 'Other') : name;
-                styleGatePartnerChip(b, false);
+                styleGatePartnerChip(b, gatePartner === name);
                 b.onclick = () => {
                     gatePartner = name;
                     const other = document.getElementById('gatePartnerOther');
@@ -2362,7 +2404,7 @@
                 b.type = 'button';
                 b.setAttribute('data-value', value);
                 b.textContent = gateGenderLabel(value);
-                styleGateGenderChip(b, false);
+                styleGateGenderChip(b, gateGender === value);
                 b.onclick = () => {
                     gateGender = value;
                     wrap.querySelectorAll('button').forEach(c => styleGateGenderChip(c, c.getAttribute('data-value') === value));
@@ -2810,7 +2852,7 @@
         // Select NRI Plan & Open Form
         function selectNRIPlan(planName) {
             availoModalSwap = true; // one modal replaces the other: keep a single history entry
-            closeModal('nriModal');
+            closeModal('nriModalCare'); closeModal('nriModalPlus'); closeModal('nriModalElite');
             document.getElementById('nriPlanSelected').value = planName;
             openModal('nriApplyModal');
             availoModalSwap = false;
