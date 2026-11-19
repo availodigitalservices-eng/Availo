@@ -1919,6 +1919,9 @@
                 <div id="mayuraPanelText" style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px; font-size: 13.5px; line-height: 1.7; color: #1e3a5f; margin-bottom: 12px;" data-te="నమస్కారం! నేను మీ అవైలో మయూరను. స్కాన్ చేసి మీ డోర్‌స్టెప్ వద్దకే సర్వీస్ పొందండి. సైడ్ మెనూ టచ్ చేసి అన్ని సర్వీసులను చూడండి." data-en="Welcome to AVAILO Digital Services! One platform, multiple possibilities. Touch the side menu to explore all verified services." data-hi="नमस्ते! मैं आपकी अवैलो मयूरा हूँ। स्कैन करें और अपने डोरस्टेप पर ही सर्विस पाएँ। साइड मेनू को टच करके सभी सेवाएँ देखें।">నమస్కారం! నేను మీ అవైలో మయూరను. స్కాన్ చేసి మీ డోర్‌స్టెప్ వద్దకే సర్వీస్ పొందండి. సైడ్ మెనూ టచ్ చేసి అన్ని సర్వీసులను చూడండి.</div>
                 <div id="mayuraListenLine" style="display: none; background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 10px 12px; font-size: 13px; line-height: 1.6; color: #166534; margin-bottom: 12px;"></div>
                 <div id="mayuraErrorLine" style="display: none; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; padding: 10px 12px; font-size: 13px; line-height: 1.6; color: #b91c1c; margin-bottom: 12px;"></div>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 12px;">
+                    <button onclick="mayuraReplayGreeting()" style="background: #eff6ff; color: #0f2a5c; border: 1px solid #93c5fd; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer;" data-te="🔊 మళ్ళీ వినండి" data-en="🔊 Listen again" data-hi="🔊 फिर से सुनें">🔊 మళ్ళీ వినండి</button>
+                </div>
 
                 <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
                     <button onclick="mayuraQuickAction('service')" style="flex: 1; min-width: 120px; background: #16a34a; color: #fff; border: none; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer;" data-te="🔧 సర్వీస్ బుక్ చేయండి" data-en="🔧 Book a Service" data-hi="🔧 सर्विस बुक करें">🔧 సర్వీస్ బుక్ చేయండి</button>
@@ -2105,14 +2108,12 @@
             if (m && m.style.display === 'block' && !m.contains(e.target) && e.target !== b) m.style.display = 'none';
         });
 
-        // NOTE (18 Nov 2026, owner order): ALL voice was removed from the
-        // Mayura panel — no greeting speech on open, no mic input, no replay.
-        // The voice code below (loadMayuraVoices, setMayuraSpeaking,
-        // mayuraGreeting, waitMayuraVoices, playMayuraMp3, speakMayuraGreeting,
-        // mayuraListen, mayuraReplayGreeting) is KEPT ONLY so voice can be
-        // restored later; nothing on the page calls it any more. The male-voice
-        // selection in speakMayuraGreeting() (commit a5f7fdf) stays in the
-        // file unused.
+        // NOTE (19 Nov 2026, owner order): Mayura voice RESTORED — the
+        // greeting speaks on panel open in a deep, serious (గంభీరం) male
+        // voice (male-voice selection, pitch 0.76, rate 0.95; MP3 fallback
+        // audio/mayura-greeting-{te,en,hi}.mp3). Mic input is still NOT
+        // restored (owner only asked for the speaking voice back).
+        // (18 Nov 2026: voice had been removed by owner order; restored 19 Nov.)
         // Mayura voice warm-up: load the browser's TTS voices once so a tap
         // never fires before any voice is available (desktop Chrome often has
         // no te-IN voice and would otherwise drop the greeting silently).
@@ -2225,13 +2226,12 @@
             // on desktop Chrome — speak on the next tick instead.
             setTimeout(() => { if (myToken === mayuraSpeakToken) window.speechSynthesis.speak(utterance); }, 150);
         }
-        // Peacock button / Talk to Mayura: opens the assistant panel silently.
-        // Voice was removed from the panel by owner order on 18 Nov 2026 —
-        // no greeting speech on open, no mic input, no replay. A tap must
-        // still visibly do something, so the panel opens with the greeting
-        // shown as text.
+        // Peacock button / Talk to Mayura: opens the assistant panel and
+        // speaks the greeting in the deep, serious (గంభీరం) voice.
+        // Voice restored 19 Nov 2026 by owner order (was removed 18 Nov).
         function speakMayura() {
             openModal('mayuraPanel');
+            speakMayuraGreeting();
         }
         function closeMayuraPanel() { stopMayuraAudio(); closeModal('mayuraPanel'); }
         function mayuraReplayGreeting() { speakMayuraGreeting(); }
