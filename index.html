@@ -12,6 +12,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700;800&family=Ramabhadra&family=Suranna&display=swap" rel="stylesheet">
+    <!-- Firebase (free Spark, availo-kitchen) — gate–kitchen live chain only:
+         reads 'ready' Dine orders by flat and writes the pickup confirm.
+         Fail-open: if this fails to load, the gate pass works as before. -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
     <style>
         :root {
             --brand-navy: #071426;
@@ -1076,6 +1081,8 @@
                         <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 6px;" data-te="🛵 డెలివరీ పార్టనర్ ఏమిటి? *" data-en="🛵 Which delivery partner? *" data-hi="🛵 डिलीवरी पार्टनर कौन है? *">🛵 డెలివరీ పార్టనర్ ఏమిటి? *</label>
                         <div id="gatePartnerChips" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
                         <input type="text" id="gatePartnerOther" maxlength="40" data-ph-te="పార్టనర్ పేరు రాయండి" data-ph-en="Type partner name" data-ph-hi="पार्टनर का नाम लिखें" placeholder="పార్టనర్ పేరు రాయండి" style="display: none; width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; margin-top: 8px;">
+                    <!-- Gate–kitchen live chain: a 'ready' Dine order for the flat typed above (built by JS; hidden until a match) -->
+                    <div id="gateReadyOrder" style="display: none; background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 12px; padding: 12px 14px; margin-top: 10px;"></div>
                     </div>
 
                     <!-- Step 2 (cont.) — mobile number (required) + gender (required, drives privacy) -->
@@ -2075,6 +2082,7 @@
             // so applyLanguage() alone would leave them in the old language.
             if (typeof buildGatePartnerChips === 'function') buildGatePartnerChips();
             if (typeof buildGateGenderChips === 'function') buildGateGenderChips();
+            if (typeof renderGateReadyOrder === 'function') renderGateReadyOrder();
             // Keep the Mayura panel greeting in the current language.
             const mp = document.getElementById('mayuraPanelText');
             if (mp) { const t = mp.getAttribute('data-' + currentLang); if (t) mp.innerHTML = t; }
@@ -2410,6 +2418,153 @@
                     wrap.querySelectorAll('button').forEach(c => styleGateGenderChip(c, c.getAttribute('data-value') === value));
                 };
                 wrap.appendChild(b);
+            });
+        }
+
+        // ---- Gate–kitchen live chain (20 Nov 2026) ----
+        // When a Dine delivery order becomes 'ready' in Firebase, the
+        // guard's gate screen shows it for the flat typed above — flat +
+        // order ref + items only, never another flat's order. The guard
+        // taps "confirm pickup" and the customer's tracker flips to
+        // "గేట్ దగ్గర ఉంది". Fail-open: no Firebase / no match / any
+        // error hides the card silently; the 3-step gate pass is never
+        // blocked by this. No phone numbers or names are written here.
+        const GATE_FIREBASE_CONFIG = {
+            apiKey: "AIzaSyCbLfAb7tDu7vdr73oEjl414BjGBdlGw-Q",
+            authDomain: "availo-kitchen.firebaseapp.com",
+            databaseURL: "https://availo-kitchen-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "availo-kitchen",
+            storageBucket: "availo-kitchen.firebasestorage.app",
+            messagingSenderId: "182835141482",
+            appId: "1:182835141482:web:8cbbffe83fcfd4cf9aa313"
+        };
+        const GATE_DINE_ORDERS_PATH = 'availo-kitchen-v1/dineOrders/khaleel';
+        let gateDb = null;
+        try {
+            if (typeof firebase !== 'undefined' && !firebase.apps.length) firebase.initializeApp(GATE_FIREBASE_CONFIG);
+            if (typeof firebase !== 'undefined') gateDb = firebase.database();
+        } catch (e) { gateDb = null; }
+
+        // Same normalisation as dine.html: "ఫ్లాట్ 302" / "Flat 302" /
+        // "A-204" -> "302" / "A204", so the guard's typing matches the
+        // flat the customer typed at order time.
+        function normalizeFlat(s) {
+            return String(s || '').replace(/^(flat|ఫ్లాట్|फ़्लैट)[\s:.\-]*/i, '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+        }
+        // Pure: newest 'ready' delivery order whose flat matches (null if none).
+        function findReadyOrderForFlat(orders, flat) {
+            const want = normalizeFlat(flat);
+            if (!want || !orders || typeof orders !== 'object') return null;
+            let best = null;
+            Object.keys(orders).forEach(id => {
+                const o = orders[id] || {};
+                if (o.status !== 'ready' || o.mode !== 'delivery') return;
+                if (normalizeFlat(o.flat) !== want) return;
+                if (!best || (o.createdAt || 0) >= (best.order.createdAt || 0)) best = { orderId: id, order: o };
+            });
+            return best;
+        }
+        function gateOrderSummaryText(order) {
+            if (!order) return '';
+            // RTDB stores arrays as numeric-key objects; the SDK returns
+            // arrays, but a gapped array comes back as an object — handle both.
+            const items = Array.isArray(order.items) ? order.items
+                : (order.items && typeof order.items === 'object'
+                    ? Object.keys(order.items).sort((a, b) => Number(a) - Number(b)).map(k => order.items[k])
+                    : []);
+            if (!items.length) return '';
+            const s = items.map(it => (it.name || '') + ' × ' + (it.qty || 1)).join(', ');
+            return s.length > 90 ? s.slice(0, 90) + '…' : s;
+        }
+        const GATE_CHAIN_STR = {
+            readyTitle: { te: '🍽️ ఫుడ్ రెడీ — పికప్‌కి సిద్ధం', en: '🍽️ Food ready — pickup waiting', hi: '🍽️ खाना तैयार है — पिकअप के लिए तैयार' },
+            flatLabel: { te: 'ఫ్లాట్', en: 'Flat', hi: 'फ़्लैट' },
+            confirmBtn: { te: '✅ పికప్ నిర్ధారించు', en: '✅ Confirm pickup', hi: '✅ पिकअप कन्फ़र्म कीजिए' },
+            confirmed: { te: '✅ పికప్ నిర్ధారించబడింది — కస్టమర్ ట్రాకర్‌లో "గేట్ దగ్గర ఉంది" అని కనిపిస్తుంది.', en: '✅ Pickup confirmed — the customer tracker now shows "At the gate".', hi: '✅ पिकअप कन्फ़र्म हो गया — कस्टमर ट्रैकर में "गेट पर है" दिखेगा।' },
+            confirmFail: { te: '⚠️ పికప్ నిర్ధారించలేకపోయాం — ఇంటర్నెట్ చూసి మళ్ళీ నొక్కండి. గేట్ పాస్ మాత్రం ఎప్పటిలాగే పనిచేస్తుంది.', en: '⚠️ Could not confirm the pickup — check the internet and tap again. The gate pass still works as usual.', hi: '⚠️ पिकअप कन्फ़र्म नहीं हो पाया — इंटरनेट देखकर फिर से दबाएँ। गेट पास वैसे ही काम करता है।' }
+        };
+        function gateChainText(key) { const v = GATE_CHAIN_STR[key]; return v ? (v[currentLang] || v.te) : ''; }
+        function escGateHtml(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+        let gateMatchedOrder = null;   // { orderId, order } or null
+        let gatePickupConfirmed = false;
+        let gateLookupTimer = null;
+        function renderGateReadyOrder() {
+            const card = document.getElementById('gateReadyOrder');
+            if (!card) return;
+            if (!gateMatchedOrder) { card.style.display = 'none'; card.innerHTML = ''; return; }
+            const o = gateMatchedOrder.order;
+            const ref = gateMatchedOrder.orderId;
+            const total = (o && typeof o.total === 'number') ? ('₹' + (Math.round(o.total * 100) / 100).toFixed(2)) : '';
+            card.style.display = 'block';
+            if (gatePickupConfirmed) {
+                card.innerHTML = '<div style="font-size: 13.5px; font-weight: 800; color: #166534; line-height: 1.6;">' + gateChainText('confirmed') + '</div>';
+                return;
+            }
+            card.innerHTML =
+                '<div style="font-size: 14px; font-weight: 800; color: #92400e; margin-bottom: 4px;">' + gateChainText('readyTitle') + '</div>' +
+                '<div style="font-size: 13px; color: #334155; line-height: 1.7;">' + gateChainText('flatLabel') + ' ' + escGateHtml(o.flat || '') + ' · Ref: ' + escGateHtml(ref) + (total ? ' · ' + escGateHtml(total) : '') + '<br>' + escGateHtml(gateOrderSummaryText(o)) + '</div>' +
+                '<button type="button" id="gatePickupBtn" style="margin-top: 10px; width: 100%; background: #16a34a; color: #ffffff; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 800; cursor: pointer;">' + gateChainText('confirmBtn') + '</button>';
+            const btn = document.getElementById('gatePickupBtn');
+            if (btn) btn.onclick = function () { confirmGatePickup(ref); };
+        }
+        // Single read, only after the guard typed a flat. Returns the
+        // matched order (or null); never throws, never blocks the pass.
+        function lookupGateReadyOrderNow() {
+            const flatInput = document.getElementById('gateFlatNo');
+            const flat = flatInput ? flatInput.value : '';
+            gateMatchedOrder = null;
+            gatePickupConfirmed = false;
+            if (!gateDb || !normalizeFlat(flat)) { renderGateReadyOrder(); return Promise.resolve(null); }
+            let p = null;
+            try {
+                p = gateDb.ref(GATE_DINE_ORDERS_PATH).once('value');
+            } catch (e) { renderGateReadyOrder(); return Promise.resolve(null); }
+            return Promise.resolve(p).then(function (snap) {
+                const orders = snap ? snap.val() : null;
+                gateMatchedOrder = findReadyOrderForFlat(orders, flat);
+                renderGateReadyOrder();
+                return gateMatchedOrder;
+            }).catch(function () {
+                gateMatchedOrder = null;
+                renderGateReadyOrder();
+                return null;
+            });
+        }
+        function scheduleGateReadyLookup() {
+            try { if (gateLookupTimer) clearTimeout(gateLookupTimer); } catch (e) {}
+            gateLookupTimer = setTimeout(lookupGateReadyOrderNow, 600);
+        }
+        function bindGateReadyLookup() {
+            const flatInput = document.getElementById('gateFlatNo');
+            if (!flatInput) return;
+            flatInput.addEventListener('input', scheduleGateReadyLookup);
+            flatInput.addEventListener('change', lookupGateReadyOrderNow);
+        }
+        // Guard confirms the partner picked the food up at the gate. Only
+        // the status + pickup timestamp are written (flat + ref only —
+        // no phone, no names). The customer's tracker flips to 'at-gate'.
+        function confirmGatePickup(orderId) {
+            if (!orderId || !gateDb) return Promise.resolve(false);
+            const btn = document.getElementById('gatePickupBtn');
+            if (btn) btn.disabled = true;
+            let p = null;
+            try {
+                p = gateDb.ref(GATE_DINE_ORDERS_PATH + '/' + orderId).update({ status: 'at-gate', pickedUpAt: Date.now() });
+            } catch (e) { p = Promise.reject(e); }
+            return Promise.resolve(p).then(function () {
+                gatePickupConfirmed = true;
+                renderGateReadyOrder();
+                return true;
+            }).catch(function () {
+                if (btn) btn.disabled = false;
+                const card = document.getElementById('gateReadyOrder');
+                if (card) {
+                    const err = document.createElement('div');
+                    err.style.cssText = 'font-size: 12.5px; font-weight: 700; color: #b91c1c; margin-top: 8px; line-height: 1.5;';
+                    err.textContent = gateChainText('confirmFail');
+                    card.appendChild(err);
+                }
+                return false;
             });
         }
 
@@ -2890,6 +3045,7 @@
         bindPhoneField('gateMobile');
         bindPhoneField('trialPhone');
         bindPhoneField('techPhone');
+        bindGateReadyLookup();
         applyLanguage();
     </script>
 </body>
