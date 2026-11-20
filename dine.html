@@ -731,6 +731,48 @@
             color: #fff;
         }
 
+        /* Order mode: dine at the table (default) or deliver to the flat
+           (gate–kitchen live chain). */
+        .mode-btns {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            background: #e2e8f0;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 10px 8px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            color: #0f172a;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .mode-btn.active {
+            background: #0f172a;
+            color: #fff;
+            border-color: var(--brand-gold);
+        }
+
+        .delivery-flat-row {
+            margin-bottom: 10px;
+        }
+
+        .delivery-flat-row input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            background: #fff;
+            color: #0f172a;
+        }
+
         /* 4. LIVE TRACKER & REFILLS */
         .tracker-card {
             background: #0d223f;
@@ -971,6 +1013,14 @@
                 <span id="bookTableLabel">టేబుల్ 01</span>
             </div>
             
+            <!-- Order mode: dine at the table, or deliver to the flat (gate–kitchen live chain) -->
+            <div class="mode-btns">
+                <button type="button" id="modeDineInBtn" class="mode-btn active" onclick="setOrderMode('dine-in')" data-te="🍽️ టేబుల్‌లో తినడం" data-en="🍽️ Dine at table" data-hi="🍽️ टेबल पर खाना">🍽️ టేబుల్‌లో తినడం</button>
+                <button type="button" id="modeDeliveryBtn" class="mode-btn" onclick="setOrderMode('delivery')" data-te="🚚 ఫ్లాట్‌కు డెలివరీ" data-en="🚚 Deliver to flat" data-hi="🚚 फ़्लैट पर डिलीवरी">🚚 ఫ్లాట్‌కు డెలివరీ</button>
+            </div>
+            <div class="delivery-flat-row" id="deliveryFlatRow" style="display: none;">
+                <input type="text" id="deliveryFlatInput" maxlength="20" placeholder="ఉదా: 302" data-te-ph="ఉదా: 302" data-en-ph="e.g. 302" data-hi-ph="उदा: 302">
+            </div>
             <div class="writing-lines" id="orderPadLines">
                 <div class="empty-hint" data-te="పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️" data-en="Select items above — they will be noted here ✍️" data-hi="ऊपर से आइटम चुनिए, यहाँ नोट हो जाएँगे ✍️">పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️</div>
             </div>
@@ -1126,6 +1176,34 @@
                 if (tableParam) { welcomeTable.innerText = tableDisplay().toUpperCase(); welcomeTable.style.display = ''; }
                 else { welcomeTable.style.display = 'none'; }
             }
+        }
+
+        // ---- Order mode: dine at the table (default) or deliver to the
+        // flat (gate–kitchen live chain). A delivery order carries
+        // mode:'delivery' + a normalised flat in its Firebase record so
+        // the guard's gate screen can match it by flat. No personal data.
+        // Same normalisation as index.html: "ఫ్లాట్ 302" / "Flat 302" /
+        // "A-204" -> "302" / "A204".
+        function normalizeFlat(s) {
+            return String(s || '').replace(/^(flat|ఫ్లాట్|फ़्लैट)[\s:.\-]*/i, '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+        }
+        let orderMode = 'dine-in';
+        function setOrderMode(mode) {
+            orderMode = (mode === 'delivery') ? 'delivery' : 'dine-in';
+            const dineBtn = document.getElementById('modeDineInBtn');
+            const delBtn = document.getElementById('modeDeliveryBtn');
+            const flatRow = document.getElementById('deliveryFlatRow');
+            if (dineBtn) dineBtn.classList.toggle('active', orderMode === 'dine-in');
+            if (delBtn) delBtn.classList.toggle('active', orderMode === 'delivery');
+            if (flatRow) flatRow.style.display = orderMode === 'delivery' ? 'block' : 'none';
+            if (orderMode === 'delivery') {
+                const inp = document.getElementById('deliveryFlatInput');
+                if (inp) inp.focus();
+            }
+        }
+        function deliveryFlat() {
+            const inp = document.getElementById('deliveryFlatInput');
+            return normalizeFlat(inp ? inp.value : '');
         }
 
         // Welcome overlay: tap "View Menu" to reveal the menu (two-step entry).
@@ -1557,6 +1635,10 @@
             trackPreparing: { te: "తయారవుతోంది", en: "Preparing", hi: "तैयार हो रहा है" },
             trackReady: { te: "రెడీ", en: "Ready", hi: "तैयार है" },
             trackServed: { te: "అందించారు", en: "Served", hi: "परोस दिया गया" },
+            trackAtGate: { te: "గేట్ దగ్గర ఉంది", en: "At the gate", hi: "गेट पर है" },
+            trackerAtGateSpeak: { te: "మీ ఆర్డర్ గేట్ దగ్గరకు వచ్చింది సర్ — డెలివరీ పార్ట్‌నర్ తీసుకున్నారు.", en: "Your order has reached the gate, sir — the delivery partner has picked it up.", hi: "आपका ऑर्डर गेट पर आ गया है सर — डिलीवरी पार्टनर ने ले लिया है।" },
+            flatLabel: { te: "ఫ్లాట్", en: "Flat", hi: "फ़्लैट" },
+            flatRequired: { te: "డెలివరీకి ఫ్లాట్ నంబర్ రాయండి సర్.", en: "Please type your flat number for delivery, sir.", hi: "डिलीवरी के लिए फ़्लैट नंबर लिखिए सर।" },
             trackerReadySpeak: { te: "మీ ఆర్డర్ రెడీ అయింది సర్ — ఇప్పుడు టేబుల్ వద్దకు వస్తోంది.", en: "Your order is ready, sir — it is on its way to your table.", hi: "आपका ऑर्डर तैयार है सर — अब आपकी टेबल पर आ रहा है।" },
             trackerNewOrder: { te: "🔄 కొత్త ఆర్డర్ చేయండి", en: "🔄 Place a new order", hi: "🔄 नया ऑर्डर कीजिए" },
             refillTitle: { te: "⚡ తక్షణ అవసరాలు / రీఫిల్స్:", en: "⚡ Instant needs / refills:", hi: "⚡ तुरंत ज़रूरतें / रीफ़िल:" },
@@ -2089,8 +2171,8 @@
             const orderId = pendingOrderRef || makeDineOrderId();
             // Live tracker record (fail-open: WhatsApp never waits on it).
             writeDineOrderRecord(orderId, buildDineOrderRecord(orderId));
-            saveActiveOrder(orderId, billLabel);
-            displayLiveTrackerScreen(billLabel, orderId);
+            saveActiveOrder(orderId, billLabel, orderMode);
+            displayLiveTrackerScreen(billLabel, orderId, undefined, orderMode);
             pushKitchenEvent('orders', { table: tableNumber, hotel: hotelName, items: pendingOrderItems || billLabel, time: new Date().toLocaleTimeString(), ref: orderId });
             // Log to Google Sheets (never blocks WhatsApp).
             sendToSheet('Orders', { source: 'Dine', hotel: hotelName, table: tableNumber, items: pendingOrderItems || billLabel, total: pendingOrderBill, ref: orderId });
@@ -2114,11 +2196,28 @@
                 return;
             }
 
+            // Delivery needs a flat number — the gate chain matches the
+            // ready order to the flat, so an order without one can never
+            // be picked up at the gate.
+            const flat = orderMode === 'delivery' ? deliveryFlat() : '';
+            if (orderMode === 'delivery' && !flat) {
+                speakGentVoice(t('flatRequired'));
+                const sup = document.getElementById('supervisorText');
+                if (sup) sup.innerText = t('flatRequired');
+                return;
+            }
+
             const chefNote = document.getElementById('chefNoteInput').value.trim();
             const noteStr = chefNote ? `%0A*చెఫ్ సూచన:* ${encodeURIComponent(chefNote)}` : "";
 
             const itemsStr = orderLines.join('%0A');
-            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${encodeURIComponent(hotelName)}%0A*టేబుల్:* ${encodeURIComponent(tableNumber)}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ${fmtPrice(grandTotal)}%0A*సమయం:* ${encodeURIComponent(new Date().toLocaleTimeString())}%0A-----------------------------%0A*కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
+            // Delivery orders tell the kitchen the flat (not the table) —
+            // the partner collects at the counter and the guard matches
+            // the same flat at the gate.
+            const venueLine = orderMode === 'delivery'
+                ? `%0A*ఫ్లాట్:* ${encodeURIComponent(flat)} (డెలివరీ)`
+                : `%0A*టేబుల్:* ${encodeURIComponent(tableNumber)}`;
+            const msg = `*AVAILO LIVE KOT (ఆర్డర్ స్లిప్)*%0A-----------------------------%0A*హోటల్:* ${encodeURIComponent(hotelName)}${venueLine}%0A-----------------------------%0A${itemsStr}${noteStr}%0A-----------------------------%0A*మొత్తం బిల్లు:* ${fmtPrice(grandTotal)}%0A*సమయం:* ${encodeURIComponent(new Date().toLocaleTimeString())}%0A-----------------------------%0A*కిచెన్ సూచన:* ఆర్డర్ రెడీ అయ్యాక ఇదే కస్టమర్ వాట్సాప్ కు "ఆర్డర్ రెడీ సర్" అని రిప్లై పంపండి.`;
 
             const displayLines = [];
             HOTEL_MENU.forEach(item => {
@@ -2126,7 +2225,10 @@
             });
             const summaryLines = displayLines.map(l => `<div>${escHtml(l)}</div>`).join('');
             const noteLine = chefNote ? `<div style="margin-top: 6px;">${t('chefNoteLabel')} ${escHtml(chefNote)}</div>` : '';
-            const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${t('tableLabel')} ${escHtml(tableDisplay())}</div>${summaryLines}${noteLine}<div style="border-top: 1px dashed #94a3b8; margin-top: 8px; padding-top: 8px; font-weight: 800; color: #fff;">${t('totalBillLabel')} ${fmtPrice(grandTotal)}</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
+            const venueText = orderMode === 'delivery'
+                ? `${t('flatLabel')} ${escHtml(flat)} (🚚)`
+                : `${t('tableLabel')} ${escHtml(tableDisplay())}`;
+            const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${venueText}</div>${summaryLines}${noteLine}<div style="border-top: 1px dashed #94a3b8; margin-top: 8px; padding-top: 8px; font-weight: 800; color: #fff;">${t('totalBillLabel')} ${fmtPrice(grandTotal)}</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
             speakGentVoice(t('orderReadySpeak'));
             pendingOrderItems = orderLines.join(', ');
             pendingOrderRef = makeDineOrderId();
@@ -2168,8 +2270,24 @@
         // the 4 stages. The WhatsApp order never waits on Firebase.
         // No personal data (no phone, no name) is written to Firebase.
         const DINE_ORDERS_PATH = 'availo-kitchen-v1/dineOrders/khaleel';
-        const TRACKER_STAGES = ['received', 'preparing', 'ready', 'served'];
-        const TRACKER_STAGE_KEY = { received: 'trackReceived', preparing: 'trackPreparing', ready: 'trackReady', served: 'trackServed' };
+        // Dine-in orders end at 'served'; delivery orders end at 'at-gate'
+        // (the guard's pickup confirmation — "గేట్ దగ్గర ఉంది"). The
+        // listener accepts the union of both stage lists.
+        const TRACKER_STAGES_DINEIN = ['received', 'preparing', 'ready', 'served'];
+        const TRACKER_STAGES_DELIVERY = ['received', 'preparing', 'ready', 'at-gate'];
+        const TRACKER_STAGE_KEY = { received: 'trackReceived', preparing: 'trackPreparing', ready: 'trackReady', served: 'trackServed', 'at-gate': 'trackAtGate' };
+        function trackerStages() {
+            return (trackerState && trackerState.mode === 'delivery') ? TRACKER_STAGES_DELIVERY : TRACKER_STAGES_DINEIN;
+        }
+        // Rebuild the steps strip when the mode changes (e.g. the record
+        // says delivery after a reload restore that had no mode saved).
+        function setTrackerMode(mode) {
+            if (!trackerState) return;
+            trackerState.mode = (mode === 'delivery') ? 'delivery' : 'dine-in';
+            const stepsEl = document.getElementById('trackerSteps');
+            if (stepsEl) stepsEl.innerHTML = trackerStages().map(st => `<div class="step-item" id="trackStep-${st}"><div class="step-dot"></div><span>${t(TRACKER_STAGE_KEY[st])}</span></div>`).join('');
+            renderTrackerSteps();
+        }
         const ACTIVE_ORDER_KEY = 'availo_active_dine_order';
 
         let trackerState = null;
@@ -2191,7 +2309,12 @@
                     total += item.count * item.price;
                 }
             });
-            return { table: tableNumber, items, total: Math.round(total * 100) / 100, status: 'received', createdAt: Date.now() };
+            const rec = { table: tableNumber, items, total: Math.round(total * 100) / 100, status: 'received', createdAt: Date.now(), mode: orderMode };
+            // Delivery only: the normalised flat lets the guard's gate
+            // screen match this order (flat + order ref only — no names,
+            // no phone numbers, ever).
+            if (orderMode === 'delivery') rec.flat = deliveryFlat();
+            return rec;
         }
 
         // Fail-open: returns false on any failure; the caller never blocks.
@@ -2204,8 +2327,8 @@
             } catch (e) { return false; }
         }
 
-        function saveActiveOrder(orderId, billInfo) {
-            try { localStorage.setItem(ACTIVE_ORDER_KEY, JSON.stringify({ orderId, billInfo })); } catch (e) {}
+        function saveActiveOrder(orderId, billInfo, mode) {
+            try { localStorage.setItem(ACTIVE_ORDER_KEY, JSON.stringify({ orderId, billInfo, mode: mode || 'dine-in' })); } catch (e) {}
         }
 
         function clearActiveOrder() {
@@ -2225,9 +2348,10 @@
                 trackerListenerRef = kitchenDb.ref(DINE_ORDERS_PATH + '/' + orderId);
                 trackerListenerRef.on('value', function (snap) {
                     const rec = snap.val();
-                    if (rec && rec.status && TRACKER_STAGES.indexOf(rec.status) !== -1) {
+                    if (rec && rec.status && (TRACKER_STAGES_DINEIN.indexOf(rec.status) !== -1 || TRACKER_STAGES_DELIVERY.indexOf(rec.status) !== -1)) {
                         const announce = !trackerSuppressAnnounce;
                         trackerSuppressAnnounce = false;
+                        if (rec.mode && rec.mode !== trackerState.mode) setTrackerMode(rec.mode);
                         updateTrackerStatus(rec.status, announce);
                     }
                 }, function () { /* read failed: keep the last known status */ });
@@ -2245,10 +2369,11 @@
             trackerState.status = status;
             renderTrackerSteps();
             if (announce !== false && status === 'ready' && prev !== 'ready') speakGentVoice(t('trackerReadySpeak'));
+            if (announce !== false && status === 'at-gate' && prev !== 'at-gate') speakGentVoice(t('trackerAtGateSpeak'));
         }
 
         function trackerStageIndex() {
-            return Math.max(0, TRACKER_STAGES.indexOf(trackerState ? trackerState.status : 'received'));
+            return Math.max(0, trackerStages().indexOf(trackerState ? trackerState.status : 'received'));
         }
 
         function renderTrackerSteps() {
@@ -2260,15 +2385,15 @@
             if (pctEl) pctEl.textContent = pct + '%';
             const badge = document.getElementById('trackerStatusBadge');
             if (badge) badge.textContent = t(TRACKER_STAGE_KEY[trackerState.status]);
-            TRACKER_STAGES.forEach((st, i) => {
+            trackerStages().forEach((st, i) => {
                 const el = document.getElementById('trackStep-' + st);
                 if (el) el.classList.toggle('active', i <= idx);
             });
         }
 
-        function displayLiveTrackerScreen(billInfo, orderRef, speak) {
+        function displayLiveTrackerScreen(billInfo, orderRef, speak, mode) {
             const orderId = orderRef || '';
-            trackerState = { billInfo: billInfo, orderId: orderId, status: 'received' };
+            trackerState = { billInfo: billInfo, orderId: orderId, status: 'received', mode: (mode === 'delivery') ? 'delivery' : 'dine-in' };
             const container = document.getElementById('mainContainer');
             container.innerHTML = `
                 <div class="tracker-card">
@@ -2286,7 +2411,7 @@
                     <div style="margin: 10px 0 2px;"><span id="trackerStatusBadge" style="display: inline-block; background: rgba(32,221,224,0.15); border: 1px solid var(--brand-cyan); color: var(--brand-cyan); border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 800;">${t('trackReceived')}</span></div>
 
                     <div class="progress-steps" id="trackerSteps">
-                        ${TRACKER_STAGES.map(st => `<div class="step-item" id="trackStep-${st}"><div class="step-dot"></div><span>${t(TRACKER_STAGE_KEY[st])}</span></div>`).join('')}
+                        ${trackerStages().map(st => `<div class="step-item" id="trackStep-${st}"><div class="step-dot"></div><span>${t(TRACKER_STAGE_KEY[st])}</span></div>`).join('')}
                     </div>
 
                     <div class="timer-box">
@@ -2318,7 +2443,7 @@
             const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
             setText('trackerTitle', t('trackerTitle'));
             setText('trackerBillLine', `${t('totalBillLabel')} ${trackerState.billInfo}`);
-            TRACKER_STAGES.forEach(st => {
+            trackerStages().forEach(st => {
                 const span = document.querySelector('#trackStep-' + st + ' span');
                 // textContent (not innerText): these spans are built by JS via
                 // innerHTML, and innerText is layout-dependent.
@@ -2338,7 +2463,7 @@
             let saved = null;
             try { saved = JSON.parse(localStorage.getItem(ACTIVE_ORDER_KEY) || 'null'); } catch (e) { saved = null; }
             if (!saved || !saved.orderId) return;
-            displayLiveTrackerScreen(saved.billInfo || '', saved.orderId, false);
+            displayLiveTrackerScreen(saved.billInfo || '', saved.orderId, false, saved.mode);
         }
 
         // Apply the saved language on load (no cycling) and show the CURRENT
