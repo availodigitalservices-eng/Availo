@@ -103,6 +103,7 @@
             కొత్త ఆర్డర్ లేదా రీఫిల్ వచ్చిన ప్రతిసారీ బజర్ <b>3 సార్లు</b> మోగి, తెలుగులో ఒకసారి చెప్తుంది.
             పేజీ తెరిచినప్పుడు గత ఆర్డర్లు కూడా కనిపిస్తాయి (బజర్ లేకుండా). ✅ చూశాను నొక్కితే ఆ ఆర్డర్ కిచెన్ డిస్‌ప్లే నుంచి పూర్తిగా తొలగిపోతుంది.
             Dine ఆర్డర్లు కింద ప్రత్యేకంగా కనిపిస్తాయి — స్టేటస్ బటన్ నొక్కితే కస్టమర్ ట్రాకర్‌లో అదే స్టేటస్ కనిపిస్తుంది.
+            డెలివరీ ఆర్డర్ రెడీ అయితే గార్డ్ గేట్ దగ్గర పికప్ నిర్ధారిస్తాడు — అప్పుడు కస్టమర్ ట్రాకర్‌లో "గేట్ దగ్గర ఉంది" అని కనిపిస్తుంది.
         </div>
 
         <div class="actions">
@@ -291,14 +292,18 @@
             received: '🆕 కొత్త ఆర్డర్',
             preparing: '👨‍🍳 తయారవుతోంది',
             ready: '✅ రెడీ',
-            served: '🍽️ అందించారు'
+            served: '🍽️ అందించారు',
+            'at-gate': '🛵 గేట్ దగ్గర ఉంది'
         };
         // Next status + the button label that advances to it.
+        // 'at-gate' is terminal here: the guard confirmed the pickup at
+        // the gate, so the card can only be removed from this display.
         const DINE_NEXT = {
             received: { status: 'preparing', btn: '👨‍🍳 తయారు మొదలు' },
             preparing: { status: 'ready', btn: '✅ రెడీ అయింది' },
             ready: { status: 'served', btn: '🍽️ టేబుల్‌కు అందించారు' },
-            served: null
+            served: null,
+            'at-gate': null
         };
         const dineOrdersEl = document.getElementById('dineOrders');
         const dineEmptyMsg = document.getElementById('dineEmptyMsg');
@@ -308,8 +313,14 @@
         function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
         function dineOrderItemsText(d) {
-            if (!d || !Array.isArray(d.items)) return '';
-            return d.items.map(it => (it.name || '') + ' × ' + (it.qty || 1)).join(', ');
+            if (!d) return '';
+            // RTDB stores arrays as numeric-key objects; the SDK returns
+            // arrays, but a gapped array comes back as an object — handle both.
+            const items = Array.isArray(d.items) ? d.items
+                : (d.items && typeof d.items === 'object'
+                    ? Object.keys(d.items).sort((a, b) => Number(a) - Number(b)).map(k => d.items[k])
+                    : []);
+            return items.map(it => (it.name || '') + ' × ' + (it.qty || 1)).join(', ');
         }
 
         function dineOrderTotal(d) {
@@ -341,13 +352,21 @@
                 const status = DINE_STATUS_LABEL[d.status] ? d.status : 'received';
                 const next = DINE_NEXT[status];
                 const time = d.createdAt ? new Date(d.createdAt).toLocaleTimeString() : '';
+                const isDelivery = d.mode === 'delivery';
                 const card = document.createElement('div');
-                card.className = 'card dine-card' + (status === 'served' ? ' served' : '');
-                let html = '<div class="card-type">' + DINE_STATUS_LABEL[status] + '</div>' +
-                    '<div class="card-table">టేబుల్ ' + tableDigits(d.table) + '</div>' +
+                card.className = 'card dine-card' + (status === 'served' || status === 'at-gate' ? ' served' : '');
+                const venueHtml = isDelivery
+                    ? '<div class="card-table">🚚 ఫ్లాట్ ' + esc(d.flat || '') + '</div>'
+                    : '<div class="card-table">టేబుల్ ' + tableDigits(d.table) + '</div>';
+                let html = '<div class="card-type">' + DINE_STATUS_LABEL[status] + (isDelivery ? ' · 🚚 డెలివరీ' : '') + '</div>' + venueHtml +
                     '<div class="card-body">' + esc(dineOrderItemsText(d)) + '</div>' +
                     '<div class="card-meta">' + esc(dineOrderTotal(d)) + (time ? ' · ' + esc(time) : '') + ' · Ref: ' + esc(id) + '</div>';
-                if (next) html += '<button class="dine-next-btn" data-next="' + next.status + '">' + next.btn + '</button>';
+                // A ready delivery order is picked up at the gate by the
+                // guard (gate–kitchen chain) — but if the partner collects
+                // it at the counter instead, the kitchen can still close
+                // it here with the partner-handed label.
+                const nextBtnLabel = next ? ((status === 'ready' && isDelivery) ? '✅ డెలివరీ పార్ట్‌నర్‌కు ఇచ్చాను' : next.btn) : '';
+                if (next) html += '<button class="dine-next-btn" data-next="' + next.status + '">' + nextBtnLabel + '</button>';
                 else html += '<button class="dine-remove-btn">🗑️ తొలగించు</button>';
                 card.innerHTML = html;
                 const nextBtn = card.querySelector('.dine-next-btn');
