@@ -257,10 +257,14 @@
         /* Search box (live filter, current language) */
         .search-row {
             margin-bottom: 10px;
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
         }
 
         .search-input {
-            width: 100%;
+            flex: 1;
+            min-width: 0;
             background: rgba(13, 34, 63, 0.8);
             border: 1px solid rgba(32, 221, 224, 0.35);
             border-radius: 10px;
@@ -273,6 +277,68 @@
 
         .search-input:focus {
             border-color: var(--brand-cyan);
+        }
+
+        /* Voice-order mic button next to search (same look as the bottom-bar mic) */
+        .voice-mic-btn {
+            flex-shrink: 0;
+            width: 46px;
+            background: rgba(32, 221, 224, 0.12);
+            border: 1.5px solid var(--brand-cyan);
+            color: var(--brand-cyan);
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            font-family: 'Ramabhadra', sans-serif;
+        }
+
+        /* Listening indicator: red pulse while the mic is on */
+        .voice-mic-btn.listening, .btn-speak.listening {
+            background: #dc2626;
+            border-color: #fca5a5;
+            color: #ffffff;
+            animation: micPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes micPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.55); }
+            50% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); }
+        }
+
+        /* Voice-match suggestion chips (tap to add the dish) */
+        #voiceSuggest {
+            display: none;
+            margin: 0 0 10px;
+            background: rgba(13, 34, 63, 0.9);
+            border: 1px solid rgba(32, 221, 224, 0.35);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        #voiceSuggest .suggest-title {
+            font-size: 12.5px;
+            color: var(--brand-gold);
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-family: 'Ramabhadra', sans-serif;
+        }
+
+        #voiceSuggest .suggest-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .suggest-chip {
+            background: rgba(32, 221, 224, 0.12);
+            border: 1px solid var(--brand-cyan);
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Ramabhadra', sans-serif;
         }
 
         /* Menu sections (one per category, with item count) */
@@ -880,7 +946,11 @@
         <!-- Live search (filters by item name in the current language) -->
         <div class="search-row">
             <input type="text" id="searchInput" class="search-input" placeholder="🔍 ఐటమ్ వెతకండి..." data-te-ph="🔍 ఐటమ్ వెతకండి..." data-en-ph="🔍 Search item..." data-hi-ph="🔍 आइटम खोजिए..." oninput="onSearchInput(this.value)">
+            <button class="voice-mic-btn" id="voiceMicBtn" onclick="listenToVoiceOrder()" aria-label="Voice order">🎤</button>
         </div>
+
+        <!-- Voice-match suggestions (shown when the spoken dish is ambiguous / not found) -->
+        <div id="voiceSuggest"></div>
 
         <!-- Sub-Categories (built by renderSubBar — changes with the selected category) -->
         <div class="sub-filter-bar" id="subBar"></div>
@@ -937,8 +1007,8 @@
 
     <!-- 4. Bottom Action Bar -->
     <div class="bottom-bar" id="bottomNavBar">
-        <button class="btn-speak" onclick="listenToVoiceOrder()">
-            <span>🎤</span> <span data-te="ఆర్డర్ చెప్పండి" data-en="Say Your Order" data-hi="ऑर्डर बोलिए">ఆర్డర్ చెప్పండి</span>
+        <button class="btn-speak" id="bottomMicBtn" onclick="listenToVoiceOrder()">
+            <span>🎤</span> <span data-te="వాయిస్‌తో ఆర్డర్" data-en="Voice Order" data-hi="वॉइस ऑर्डर">వాయిస్‌తో ఆర్డర్</span>
         </button>
         <button class="btn-order" onclick="sendOrderWhatsApp()">
             <span>🛒</span> <span data-te="ఆర్డర్ పంపండి" data-en="Send Order" data-hi="ऑर्डर भेजिए">ఆర్డర్ పంపండి</span> (<span id="cartCount">0</span>)
@@ -1470,30 +1540,29 @@
             emptyCartSpeak: { te: "ఒక్క ఐటమ్ అయినా సెలెక్ట్ చేయండి సర్, ఆర్డర్ పంపిస్తాను.", en: "Please select at least one item, sir, and I will send the order.", hi: "कृपया कम से कम एक आइटम चुनिए सर, फिर ऑर्डर भेज दूँगा।" },
             orderReadySpeak: { te: "మీ ఆర్డర్ సిద్ధంగా ఉంది సర్. నిర్ధారించి పంపండి.", en: "Your order is ready, sir. Please confirm and send it.", hi: "आपका ऑर्डर तैयार है सर। कृपया कन्फ़र्म करके भेजिए।" },
             emptyHint: { te: "పైన ఐటమ్స్ సెలెక్ట్ చేయండి, ఇక్కడ నోట్ అవుతాయి ✍️", en: "Select items above — they will be noted here ✍️", hi: "ऊपर से आइटम चुनिए, यहाँ नोट हो जाएँगे ✍️" },
-            voiceChromeAlert: { te: "వాయిస్ రికగ్నిషన్ కోసం Chrome వాడండి.", en: "Please use Chrome for voice recognition.", hi: "वॉयस पहचान के लिए कृपया Chrome इस्तेमाल कीजिए।" },
+            voiceChromeAlert: { te: "ఈ ఫీచర్ Chrome/Android లో మాత్రమే పనిచేస్తుంది — టచ్‌తో ఆర్డర్ చేయండి.", en: "This feature works only in Chrome/Android — please order by touch.", hi: "यह सुविधा सिर्फ़ Chrome/Android में काम करती है — टच से ऑर्डर कीजिए।" },
             listening: { te: "🔴 వింటున్నాను సర్, మీ ఆర్డర్ చెప్పండి...", en: "🔴 Listening, sir — please tell me your order...", hi: "🔴 सुन रहा हूँ सर, अपना ऑर्डर बताइए..." },
             voiceMicDenied: { te: "🎙️ మైక్ అనుమతి లేదు సర్ — బ్రౌజర్ సెట్టింగ్స్‌లో మైక్ ఆన్ చేసి మళ్ళీ ప్రయత్నించండి, లేదా టచ్‌తో ఆర్డర్ చేయండి.", en: "🎙️ Microphone not allowed, sir — please allow the mic in browser settings and try again, or order by touch.", hi: "🎙️ माइक की अनुमति नहीं है सर — ब्राउज़र सेटिंग्स में माइक चालू करके फिर से कोशिश करें, या टच से ऑर्डर करें।" },
             voiceNoSpeech: { te: "🎙️ మీ మాట వినబడలేదు సర్ — మళ్ళీ చెప్పండి, లేదా టచ్‌తో ఆర్డర్ చేయండి.", en: "🎙️ I could not hear you, sir — please say it again, or order by touch.", hi: "🎙️ आपकी बात सुनाई नहीं दी सर — फिर से कहिए, या टच से ऑर्डर करें।" },
             voiceError: { te: "🎙️ వాయిస్ ఆర్డర్ ఇప్పుడు పని చేయట్లేదు సర్ — టచ్‌తో ఆర్డర్ చేయండి లేదా WhatsAppలో వాయిస్ నోట్ పంపండి.", en: "🎙️ Voice order is not working right now, sir — please order by touch or send a voice note on WhatsApp.", hi: "🎙️ वॉयस ऑर्डर अभी काम नहीं कर रहा है सर — टच से ऑर्डर करें या WhatsApp पर वॉयस नोट भेजें।" },
-            voiceNoted: { te: "రాసుకున్నాను సర్: {text}", en: "Noted down, sir: {text}", hi: "लिख लिया सर: {text}" },
-            voiceOrderLabel: { te: "మీ వాయిస్ ఆర్డర్:", en: "Your voice order:", hi: "आपका वॉयस ऑर्डर:" },
-            voiceOrderBill: { te: "వాయిస్ ఆర్డర్", en: "Voice Order", hi: "वॉयस ऑर्डर" },
+            voiceAddedSuffix: { te: "కార్ట్‌లో చేర్చాను", en: "added to the cart", hi: "कार्ट में जोड़ दिया" },
+            voiceNotFound: { te: "ఆ వంటకం దొరకలేదు — మళ్ళీ చెప్పండి", en: "That dish was not found — please say it again", hi: "वह व्यंजन नहीं मिला — फिर से कहिए" },
+            voiceSoldOut: { te: "{name} ఇప్పుడు అందుబాటులో లేదు", en: "{name} is not available right now", hi: "{name} अभी उपलब्ध नहीं है" },
+            voiceSuggestTitle: { te: "ఇదేనా? నొక్కండి:", en: "Did you mean this? Tap one:", hi: "क्या आपका मतलब यह था? चुनिए:" },
             sendToKitchenQ: { te: "ఈ ఆర్డర్‌ను WhatsApp ద్వారా కిచెన్‌కు పంపాలా?", en: "Send this order to the kitchen on WhatsApp?", hi: "क्या यह ऑर्डर WhatsApp से किचन को भेजें?" },
             tableLabel: { te: "టేబుల్", en: "Table", hi: "टेबल" },
             chefNoteLabel: { te: "చెఫ్ సూచన:", en: "Chef's note:", hi: "शेफ़ के लिए नोट:" },
             totalBillLabel: { te: "మొత్తం బిల్లు:", en: "Total bill:", hi: "कुल बिल:" },
-            estTime: { te: "అంచనా సమయం", en: "Estimated delivery time", hi: "अनुमानित समय" },
-            step1: { te: "1. ఆర్డర్ కిచెన్‌కు చేరింది", en: "1. Order reached the kitchen", hi: "1. ऑर्डर किचन पहुँच गया" },
-            step2: { te: "2. చెఫ్ తయారు చేస్తున్నారు", en: "2. The chef is preparing your food", hi: "2. शेफ़ खाना तैयार कर रहे हैं" },
-            step3: { te: "3. టేబుల్ వద్దకు వస్తోంది", en: "3. On its way to your table", hi: "3. आपकी टेबल पर आ रहा है" },
+            trackReceived: { te: "ఆర్డర్ అందింది", en: "Order received", hi: "ऑर्डर मिल गया" },
+            trackPreparing: { te: "తయారవుతోంది", en: "Preparing", hi: "तैयार हो रहा है" },
+            trackReady: { te: "రెడీ", en: "Ready", hi: "तैयार है" },
+            trackServed: { te: "అందించారు", en: "Served", hi: "परोस दिया गया" },
+            trackerReadySpeak: { te: "మీ ఆర్డర్ రెడీ అయింది సర్ — ఇప్పుడు టేబుల్ వద్దకు వస్తోంది.", en: "Your order is ready, sir — it is on its way to your table.", hi: "आपका ऑर्डर तैयार है सर — अब आपकी टेबल पर आ रहा है।" },
+            trackerNewOrder: { te: "🔄 కొత్త ఆర్డర్ చేయండి", en: "🔄 Place a new order", hi: "🔄 नया ऑर्डर कीजिए" },
             refillTitle: { te: "⚡ తక్షణ అవసరాలు / రీఫిల్స్:", en: "⚡ Instant needs / refills:", hi: "⚡ तुरंत ज़रूरतें / रीफ़िल:" },
-            addMoreFood: { te: "🔄 ఇంకా ఏమైనా ఫుడ్ ఆర్డర్ చేయండి", en: "🔄 Order more food", hi: "🔄 और खाना ऑर्डर कीजिए" },
             thankYouSpeak: { te: "థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. మధ్యలో ఉల్లిపాయలు, నిమ్మకాయ, పెరుగు లేదా ఏసీ అడ్జస్ట్‌మెంట్ కోసం కింద బటన్లు వాడుకోండి సర్.", en: "Thank you, sir! Your order has gone to the kitchen. It will reach your table hot in fifteen minutes. Meanwhile, use the buttons below for onions, lemon, curd or AC adjustment, sir.", hi: "धन्यवाद सर! आपका ऑर्डर किचन चला गया है। पंद्रह मिनट में गरमागरम आपकी टेबल पर आ जाएगा। बीच में प्याज़, नींबू, दही या एसी के लिए नीचे दिए गए बटन इस्तेमाल कीजिए सर।" },
             trackerTitle: { te: "లైవ్ ఆర్డర్ ట్రాకర్", en: "LIVE ORDER TRACKER", hi: "लाइव ऑर्डर ट्रैकर" },
             orderSentKitchen: { te: "✅ ఆర్డర్ కిచెన్‌కి వెళ్ళింది", en: "✅ Order sent to the kitchen", hi: "✅ ऑर्डर किचन भेज दिया गया" },
-            progressSuffix: { te: "పూర్తయింది", en: "COMPLETED", hi: "पूरा हुआ" },
-            readyText: { te: "సిద్ధం!", en: "READY!", hi: "तैयार!" },
-            readyServe: { te: "100% సర్వ్ చేయడానికి సిద్ధం", en: "100% READY TO SERVE", hi: "100% परोसने के लिए तैयार" },
             noResults: { te: "ఈ ఫిల్టర్‌లో ఐటమ్‌లు దొరకలేదు — వేరే కేటగిరీ / ఫిల్టర్ / పేరుతో వెతకండి.", en: "No items match — try another category, filter or search.", hi: "कोई आइटम नहीं मिला — दूसरी कैटेगरी, फ़िल्टर या खोज आज़माइए।" }
         };
 
@@ -1753,6 +1822,213 @@
             updateSplitDisplay();
         }
 
+        // ---- Voice ordering: spoken words -> menu items (pure, testable) ----
+        // Telugu/Hindi speech recognition returns dish words in Telugu/Hindi
+        // script; the menu names are English as-is. Aliases translate the
+        // common dish words, so "చికెన్ 65" and "chicken 65" both resolve.
+        // Quantity words (Telugu/English/Hindi + digits, incl. Telugu digits)
+        // are stripped before matching; item numbers like 65/555 are never
+        // quantities (only 1-10 count). One utterance may hold several dishes
+        // ("చికెన్ 65 రెండు, బిర్యానీ ఒకటి").
+        const VOICE_QTY_WORDS = {
+            'ఒకటి': 1, 'ఒక్క': 1, 'రెండు': 2, 'మూడు': 3, 'నాలుగు': 4, 'ఐదు': 5,
+            'ఆరు': 6, 'ఏడు': 7, 'ఎనిమిది': 8, 'తొమ్మిది': 9, 'పది': 10,
+            'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5,
+            'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10,
+            'एक': 1, 'दो': 2, 'तीन': 3, 'चार': 4, 'पाँच': 5,
+            'छह': 6, 'सात': 7, 'आठ': 8, 'नौ': 9, 'दस': 10
+        };
+        const VOICE_ALIASES = {
+            'చికెన్': 'chicken', 'కోడి': 'chicken', 'బిర్యానీ': 'biryani', 'బిరియాని': 'biryani',
+            'బిరియానీ': 'biryani', 'మటన్': 'mutton', 'చేప': 'fish',
+            'రొయ్యలు': 'prawns', 'రొయ్య': 'prawns', 'పన్నీర్': 'panner',
+            'గుడ్డు': 'egg', 'పెరుగు': 'curd', 'మజ్జిగ': 'butter milk',
+            'బటర్': 'butter', 'మిల్క్': 'milk',
+            'లస్సీ': 'lassi', 'సూప్': 'soup', 'రోటీ': 'roti', 'పుల్కా': 'pulka',
+            'పరాటా': 'parata', 'పరోటా': 'parata', 'అన్నం': 'rice',
+            'రైస్': 'rice', 'కూర': 'curry', 'కర్రీ': 'curry',
+            'నాటుకోడి': 'natukodi', 'పకోడా': 'pakoda', 'పకోడీ': 'pakoda',
+            'మంచూరియా': 'manchuria', 'ఫ్రై': 'fry', 'కబాబ్': 'kabab',
+            'టిక్కా': 'tikka', 'సలాడ్': 'salad', 'ఖీర్': 'kheer',
+            'चिकन': 'chicken', 'बिरयानी': 'biryani', 'मटन': 'mutton',
+            'मछली': 'fish', 'पनीर': 'panner', 'अंडा': 'egg', 'दही': 'curd',
+            'रोटी': 'roti', 'चावल': 'rice', 'सूप': 'soup', 'करी': 'curry'
+        };
+        // Filler words the recogniser often adds — never part of a dish name.
+        const VOICE_FILLERS = ['కావాలి', 'నాకు', 'దయచేసి', 'ఇవ్వండి', 'చెయ్యండి',
+            'ఆర్డర్', 'order', 'please', 'plate', 'ప్లేట్', 'मुझे', 'चाहिए',
+            'ऑर्डर', 'कृपया', 'दीजिए', 'a', 'an', 'the'];
+        // Split one utterance into dish segments ("చికెన్ 65 రెండు, బిర్యానీ ఒకటి").
+        const VOICE_SEGMENT_SPLIT = /[,;]|\s+మరియు\s+|\s+and\s+|\s+और\s+/;
+
+        function voiceNormalize(text) {
+            let s = String(text || '').toLowerCase();
+            // Telugu + Devanagari digits -> ASCII digits.
+            const digits = '౦౧౨౩౪౫౬౭౮౯०१२३४५६७८९';
+            s = s.replace(/[౦-౯०-९]/g, ch => String(digits.indexOf(ch) % 10));
+            // "1/2" sizes stay one token; other punctuation becomes a space.
+            s = s.replace(/[^a-z0-9\u0c00-\u0c7f\u0900-\u097f\/ ]/g, ' ');
+            return s.replace(/\s+/g, ' ').trim();
+        }
+
+        function voiceTokens(text) {
+            return voiceNormalize(text).split(' ').filter(tok => {
+                if (!tok) return false;
+                if (VOICE_FILLERS.indexOf(tok) !== -1) return false;
+                if (tok.length < 2 && !/^\d$/.test(tok)) return false; // stray "a"
+                return true;
+            }).map(tok => VOICE_ALIASES[tok] || tok);
+        }
+
+        // Quantity words/digits 1-10 anywhere in the segment; the rest is
+        // the dish query. Item numbers (65, 555, 85) are > 10, never qty.
+        function voiceExtractQty(tokens) {
+            let qty = 1;
+            const rest = [];
+            tokens.forEach(tok => {
+                if (VOICE_QTY_WORDS[tok]) qty = Math.max(qty, VOICE_QTY_WORDS[tok]);
+                else if (/^([1-9]|10)$/.test(tok)) qty = Math.max(qty, parseInt(tok, 10));
+                else rest.push(tok);
+            });
+            return { qty, rest };
+        }
+
+        function voiceNameTokens(item) {
+            return voiceNormalize(item.nameEn || item.name).split(' ').filter(Boolean);
+        }
+
+        // 100 exact name · 80 every query token present (substring-aware) ·
+        // 40-70 partial overlap · 0 no overlap. A substring counts only when
+        // the shorter side is >= 3 chars (so "a" can never match "panner").
+        function voiceScoreItem(qTokens, itemTokens) {
+            const q = qTokens.join(' ');
+            const n = itemTokens.join(' ');
+            if (q === n) return 100;
+            const hit = (a, b) => a === b || (Math.min(a.length, b.length) >= 3 && (a.indexOf(b) !== -1 || b.indexOf(a) !== -1));
+            const matched = qTokens.filter(qt => itemTokens.some(it => hit(qt, it)));
+            if (matched.length === qTokens.length) return 80;
+            if (matched.length) return 30 + matched.length * 10;
+            return 0;
+        }
+
+        function voiceFindMatches(qTokens) {
+            const scored = [];
+            HOTEL_MENU.forEach((item, idx) => {
+                const score = voiceScoreItem(qTokens, voiceNameTokens(item));
+                if (score > 0) scored.push({ item, score, idx });
+            });
+            scored.sort((a, b) => b.score - a.score || voiceNameTokens(a.item).length - voiceNameTokens(b.item).length || a.idx - b.idx);
+            return scored;
+        }
+
+        // One dish segment -> { item, qty } (confident, unique) |
+        // { suggestions } (ambiguous / partial) | { none: true }.
+        function matchVoiceSegment(segment) {
+            const tokens = voiceTokens(segment);
+            if (!tokens.length) return { none: true, suggestions: [] };
+            const full = voiceFindMatches(tokens);
+            if (full.length && full[0].score >= 80 && full.filter(m => m.score === full[0].score).length === 1) {
+                return { item: full[0].item, qty: 1 };
+            }
+            const q = voiceExtractQty(tokens);
+            if (q.rest.length) {
+                const ranked = voiceFindMatches(q.rest);
+                if (ranked.length && ranked[0].score >= 80) {
+                    const top = ranked.filter(m => m.score === ranked[0].score);
+                    if (top.length === 1) return { item: top[0].item, qty: q.qty };
+                    return { suggestions: top.slice(0, 5).map(m => m.item) };
+                }
+                if (ranked.length && ranked[0].score >= 40) {
+                    return { suggestions: ranked.slice(0, 5).map(m => m.item) };
+                }
+            }
+            if (full.length && full[0].score >= 40) {
+                return { suggestions: full.slice(0, 5).map(m => m.item) };
+            }
+            return { none: true, suggestions: [] };
+        }
+
+        function matchVoiceOrder(transcript) {
+            const segments = String(transcript || '').split(VOICE_SEGMENT_SPLIT).map(s => s.trim()).filter(Boolean);
+            const added = [];
+            const unmatched = [];
+            let suggestions = [];
+            segments.forEach(seg => {
+                const r = matchVoiceSegment(seg);
+                if (r.item) added.push({ item: r.item, qty: r.qty });
+                else if (r.suggestions && r.suggestions.length) { unmatched.push(seg); suggestions = suggestions.concat(r.suggestions); }
+                else unmatched.push(seg);
+            });
+            const seen = {};
+            suggestions = suggestions.filter(s => { if (seen[s.id]) return false; seen[s.id] = true; return true; }).slice(0, 5);
+            return { added, unmatched, suggestions };
+        }
+
+        function setListeningUI(on) {
+            ['voiceMicBtn', 'bottomMicBtn'].forEach(id => {
+                const b = document.getElementById(id);
+                if (b) b.classList.toggle('listening', !!on);
+            });
+            const stage = document.getElementById('voiceStage');
+            if (stage) stage.classList.toggle('listening', !!on);
+        }
+
+        function showVoiceSuggestions(items) {
+            const box = document.getElementById('voiceSuggest');
+            if (!box) return;
+            if (!items || !items.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
+            box.innerHTML = '<div class="suggest-title">' + t('voiceSuggestTitle') + '</div><div class="suggest-chips">' +
+                items.map(it => '<button class="suggest-chip" onclick="addVoiceSuggestion(\'' + it.id + '\')">' + escHtml(itemName(it)) + ' · ' + fmtPrice(it.price) + '</button>').join('') + '</div>';
+            box.style.display = 'block';
+        }
+
+        function hideVoiceSuggestions() {
+            const box = document.getElementById('voiceSuggest');
+            if (box) { box.style.display = 'none'; box.innerHTML = ''; }
+        }
+
+        function addVoiceSuggestion(id) {
+            const item = HOTEL_MENU.find(i => i.id === id);
+            if (!item) return;
+            if (!isAvailable(item)) { speakGentVoice(tf('voiceSoldOut', { name: itemName(item) })); return; }
+            item.count = Math.max(0, item.count + 1);
+            renderMenu();
+            renderOrderPad();
+            hideVoiceSuggestions();
+            speakGentVoice(itemName(item) + ' ' + t('voiceAddedSuffix'));
+        }
+
+        // Handle one recognised utterance: add matched dishes to the cart and
+        // speak the confirmation; on no match, speak + show tap suggestions.
+        function handleVoiceTranscript(transcript) {
+            const res = matchVoiceOrder(transcript);
+            const soldOut = [];
+            res.added.forEach(a => {
+                if (!isAvailable(a.item)) { soldOut.push(a.item); return; }
+                a.item.count = Math.max(0, a.item.count + a.qty);
+            });
+            const added = res.added.filter(a => isAvailable(a.item));
+            if (added.length) {
+                renderMenu();
+                renderOrderPad();
+                const parts = added.map(a => itemName(a.item) + (a.qty > 1 ? ' × ' + a.qty : '')).join(', ');
+                document.getElementById('supervisorText').innerText = parts + ' ' + t('voiceAddedSuffix');
+                speakGentVoice(parts + ' ' + t('voiceAddedSuffix'));
+            } else if (soldOut.length) {
+                const msg = tf('voiceSoldOut', { name: itemName(soldOut[0]) });
+                document.getElementById('supervisorText').innerText = msg;
+                speakGentVoice(msg);
+            } else if (res.suggestions.length) {
+                document.getElementById('supervisorText').innerText = t('voiceSuggestTitle');
+            } else {
+                document.getElementById('supervisorText').innerText = t('voiceNotFound');
+                speakGentVoice(t('voiceNotFound'));
+            }
+            if (res.suggestions.length) showVoiceSuggestions(res.suggestions);
+            else hideVoiceSuggestions();
+            return res;
+        }
+
         function listenToVoiceOrder() {
             const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) {
@@ -1762,9 +2038,12 @@
             const rec = new SpeechRec();
             rec.lang = LANG_CODE[currentLang];
             rec.onstart = () => {
+                setListeningUI(true);
                 document.getElementById('supervisorText').innerText = t('listening');
             };
+            rec.onend = () => setListeningUI(false);
             rec.onerror = (e) => {
+                setListeningUI(false);
                 const err = (e && e.error) || '';
                 const msg = err === 'not-allowed' || err === 'service-not-allowed' ? t('voiceMicDenied')
                     : err === 'no-speech' ? t('voiceNoSpeech') : t('voiceError');
@@ -1773,17 +2052,13 @@
             };
             rec.onresult = (e) => {
                 const spokenText = e.results[0][0].transcript;
-                speakGentVoice(tf('voiceNoted', { text: spokenText }));
-                
-                // Voice-order frame follows the selected site language;
-                // the spoken order itself stays exactly as the customer said it.
-                const msg = currentLang === 'hi' ? `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*होटल:* ${hotelName}%0A*टेबल:* ${tableNumber}%0A*वॉइस ऑर्डर:* ${spokenText}%0A-----------------------------%0A_(किचन में तैयार होने के बाद इसी चैट में ग्राहक को जवाब दें)_` : currentLang === 'en' ? `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*Hotel:* ${hotelName}%0A*Table:* ${tableNumber}%0A*Voice Order:* ${spokenText}%0A-----------------------------%0A_(Please reply in this same chat after the kitchen prepares it)_` : `*AVAILO SMART DINE - VOICE ORDER*%0A-----------------------------%0A*హోటల్:* ${hotelName}%0A*టేబుల్:* ${tableNumber}%0A*వాయిస్ ఆర్డర్:* ${spokenText}%0A-----------------------------%0A_(కిచెన్ ప్రిపరేషన్ అయ్యాక ఇదే చాట్‌లో కస్టమర్‌కు రిప్లై ఇవ్వండి)_`;
-                const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${t('tableLabel')} ${escHtml(tableDisplay())}</div><div style="margin-top: 6px;">${t('voiceOrderLabel')}</div><div style="font-weight: 700; color: #fff;">"${escHtml(spokenText)}"</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
-            pendingOrderItems = spokenText;
-            pendingOrderRef = availoRef();
-                showOrderConfirm(summaryHtml, msg, t('voiceOrderBill'));
+                handleVoiceTranscript(spokenText);
             };
-            rec.start();
+            try { rec.start(); }
+            catch (e) {
+                setListeningUI(false);
+                document.getElementById('supervisorText').innerText = t('voiceError');
+            }
         }
 
         let pendingOrderMsg = "";
@@ -1811,10 +2086,14 @@
             const billLabel = pendingOrderBill;
             if (!msg) { closeOrderConfirm(); return; }
             closeOrderConfirm();
-            displayLiveTrackerScreen(billLabel, 15, pendingOrderRef);
-            pushKitchenEvent('orders', { table: tableNumber, hotel: hotelName, items: pendingOrderItems || billLabel, time: new Date().toLocaleTimeString(), ref: pendingOrderRef || '' });
+            const orderId = pendingOrderRef || makeDineOrderId();
+            // Live tracker record (fail-open: WhatsApp never waits on it).
+            writeDineOrderRecord(orderId, buildDineOrderRecord(orderId));
+            saveActiveOrder(orderId, billLabel);
+            displayLiveTrackerScreen(billLabel, orderId);
+            pushKitchenEvent('orders', { table: tableNumber, hotel: hotelName, items: pendingOrderItems || billLabel, time: new Date().toLocaleTimeString(), ref: orderId });
             // Log to Google Sheets (never blocks WhatsApp).
-            sendToSheet('Orders', { source: 'Dine', hotel: hotelName, table: tableNumber, items: pendingOrderItems || billLabel, total: pendingOrderBill, ref: pendingOrderRef || '' });
+            sendToSheet('Orders', { source: 'Dine', hotel: hotelName, table: tableNumber, items: pendingOrderItems || billLabel, total: pendingOrderBill, ref: orderId });
             window.open(`https://wa.me/${targetWhatsApp}?text=${msg}`, '_blank', 'noopener');
         }
 
@@ -1850,7 +2129,7 @@
             const summaryHtml = `<div style="color: #94a3b8; font-size: 12px;">${escHtml(hotelDisplay())} · ${t('tableLabel')} ${escHtml(tableDisplay())}</div>${summaryLines}${noteLine}<div style="border-top: 1px dashed #94a3b8; margin-top: 8px; padding-top: 8px; font-weight: 800; color: #fff;">${t('totalBillLabel')} ${fmtPrice(grandTotal)}</div><div style="margin-top: 6px; color: #94a3b8; font-size: 12px;">${t('sendToKitchenQ')}</div>`;
             speakGentVoice(t('orderReadySpeak'));
             pendingOrderItems = orderLines.join(', ');
-            pendingOrderRef = availoRef();
+            pendingOrderRef = makeDineOrderId();
             showOrderConfirm(summaryHtml, msg, `₹${grandTotal}`);
         }
 
@@ -1881,47 +2160,137 @@
             window.open(`https://wa.me/${targetWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
         }
 
-        let trackerState = null;
-        let lastPct = 35;
-        let trackerReady = false;
+        // ---- Live order tracker (Firebase, fail-open) ----
+        // On confirm, the order is ALSO written to
+        // availo-kitchen-v1/dineOrders/khaleel/{orderId} with status
+        // 'received'. The kitchen display advances it (received ->
+        // preparing -> ready -> served); this page listens live and moves
+        // the 4 stages. The WhatsApp order never waits on Firebase.
+        // No personal data (no phone, no name) is written to Firebase.
+        const DINE_ORDERS_PATH = 'availo-kitchen-v1/dineOrders/khaleel';
+        const TRACKER_STAGES = ['received', 'preparing', 'ready', 'served'];
+        const TRACKER_STAGE_KEY = { received: 'trackReceived', preparing: 'trackPreparing', ready: 'trackReady', served: 'trackServed' };
+        const ACTIVE_ORDER_KEY = 'availo_active_dine_order';
 
-        function displayLiveTrackerScreen(billInfo, minutes, orderRef) {
-            trackerState = { billInfo: billInfo };
-            trackerReady = false;
-            lastPct = 35;
+        let trackerState = null;
+        let trackerListenerRef = null;
+        let trackerSuppressAnnounce = false;
+
+        function makeDineOrderId() {
+            const d = new Date();
+            const p = n => String(n).padStart(2, '0');
+            return 'AV-DINE-' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
+        }
+
+        function buildDineOrderRecord(orderId) {
+            const items = [];
+            let total = 0;
+            HOTEL_MENU.forEach(item => {
+                if (item.count > 0) {
+                    items.push({ id: item.id, name: item.name, qty: item.count, price: item.price });
+                    total += item.count * item.price;
+                }
+            });
+            return { table: tableNumber, items, total: Math.round(total * 100) / 100, status: 'received', createdAt: Date.now() };
+        }
+
+        // Fail-open: returns false on any failure; the caller never blocks.
+        function writeDineOrderRecord(orderId, record) {
+            try {
+                if (!kitchenDb || !orderId || !record || !record.items || !record.items.length) return false;
+                const p = kitchenDb.ref(DINE_ORDERS_PATH + '/' + orderId).set(record);
+                if (p && typeof p.catch === 'function') p.catch(function () { /* fail-open */ });
+                return true;
+            } catch (e) { return false; }
+        }
+
+        function saveActiveOrder(orderId, billInfo) {
+            try { localStorage.setItem(ACTIVE_ORDER_KEY, JSON.stringify({ orderId, billInfo })); } catch (e) {}
+        }
+
+        function clearActiveOrder() {
+            try { localStorage.removeItem(ACTIVE_ORDER_KEY); } catch (e) {}
+        }
+
+        function clearActiveOrderAndReload() {
+            clearActiveOrder();
+            location.reload();
+        }
+
+        function attachTrackerListener(orderId) {
+            detachTrackerListener();
+            if (!kitchenDb || !orderId) return;
+            try {
+                trackerSuppressAnnounce = true; // first snapshot is history: no voice
+                trackerListenerRef = kitchenDb.ref(DINE_ORDERS_PATH + '/' + orderId);
+                trackerListenerRef.on('value', function (snap) {
+                    const rec = snap.val();
+                    if (rec && rec.status && TRACKER_STAGES.indexOf(rec.status) !== -1) {
+                        const announce = !trackerSuppressAnnounce;
+                        trackerSuppressAnnounce = false;
+                        updateTrackerStatus(rec.status, announce);
+                    }
+                }, function () { /* read failed: keep the last known status */ });
+            } catch (e) { trackerListenerRef = null; }
+        }
+
+        function detachTrackerListener() {
+            try { if (trackerListenerRef) trackerListenerRef.off('value'); } catch (e) {}
+            trackerListenerRef = null;
+        }
+
+        function updateTrackerStatus(status, announce) {
+            if (!trackerState) return;
+            const prev = trackerState.status;
+            trackerState.status = status;
+            renderTrackerSteps();
+            if (announce !== false && status === 'ready' && prev !== 'ready') speakGentVoice(t('trackerReadySpeak'));
+        }
+
+        function trackerStageIndex() {
+            return Math.max(0, TRACKER_STAGES.indexOf(trackerState ? trackerState.status : 'received'));
+        }
+
+        function renderTrackerSteps() {
+            const idx = trackerStageIndex();
+            const pct = [25, 50, 75, 100][idx];
+            const barFill = document.getElementById('progressBarFill');
+            if (barFill) barFill.style.width = pct + '%';
+            const pctEl = document.getElementById('progressPercent');
+            if (pctEl) pctEl.textContent = pct + '%';
+            const badge = document.getElementById('trackerStatusBadge');
+            if (badge) badge.textContent = t(TRACKER_STAGE_KEY[trackerState.status]);
+            TRACKER_STAGES.forEach((st, i) => {
+                const el = document.getElementById('trackStep-' + st);
+                if (el) el.classList.toggle('active', i <= idx);
+            });
+        }
+
+        function displayLiveTrackerScreen(billInfo, orderRef, speak) {
+            const orderId = orderRef || '';
+            trackerState = { billInfo: billInfo, orderId: orderId, status: 'received' };
             const container = document.getElementById('mainContainer');
             container.innerHTML = `
                 <div class="tracker-card">
                     <div style="background: #16a34a; color: #ffffff; border-radius: 10px; padding: 12px; font-size: 15px; font-weight: 800; text-align: center; margin-bottom: 12px;">${t('orderSentKitchen')}</div>
-                    ${orderRef ? `<div style="font-size: 12.5px; color: #94a3b8; font-weight: 700; text-align: center; margin-bottom: 12px;">Ref: ${orderRef}</div>` : ''}
+                    ${orderId ? `<div style="font-size: 12.5px; color: #94a3b8; font-weight: 700; text-align: center; margin-bottom: 12px;">Ref: ${escHtml(orderId)}</div>` : ''}
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                         <span id="trackerTitle" style="font-size: 12px; color: var(--brand-gold); font-family: 'Rajdhani', sans-serif; font-weight: 800;">${t('trackerTitle')}</span>
-                        <span style="font-size: 12px; color: var(--brand-cyan); font-family: 'Rajdhani', sans-serif; font-weight: 800;" id="progressPercent">${'35% ' + t('progressSuffix')}</span>
+                        <span style="font-size: 12px; color: var(--brand-cyan); font-family: 'Rajdhani', sans-serif; font-weight: 800;" id="progressPercent">25%</span>
                     </div>
-                    
+
                     <div class="progress-track">
                         <div class="progress-fill" id="progressBarFill"></div>
                     </div>
 
-                    <div class="timer-box">
-                        <div id="estTimeLabel" style="font-size: 11px; color: #94a3b8; margin-bottom: 2px;">${t('estTime')}</div>
-                        <div class="timer-digits" id="liveTimer">${minutes}:00</div>
-                        <div id="trackerBillLine" style="font-size: 12.5px; color: var(--accent-green); font-weight: 700; margin-top: 4px;">${t('totalBillLabel')} ${billInfo}</div>
+                    <div style="margin: 10px 0 2px;"><span id="trackerStatusBadge" style="display: inline-block; background: rgba(32,221,224,0.15); border: 1px solid var(--brand-cyan); color: var(--brand-cyan); border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 800;">${t('trackReceived')}</span></div>
+
+                    <div class="progress-steps" id="trackerSteps">
+                        ${TRACKER_STAGES.map(st => `<div class="step-item" id="trackStep-${st}"><div class="step-dot"></div><span>${t(TRACKER_STAGE_KEY[st])}</span></div>`).join('')}
                     </div>
 
-                    <div class="progress-steps">
-                        <div class="step-item active" id="step1">
-                            <div class="step-dot"></div>
-                            <span>${t('step1')}</span>
-                        </div>
-                        <div class="step-item active" id="step2">
-                            <div class="step-dot"></div>
-                            <span>${t('step2')}</span>
-                        </div>
-                        <div class="step-item" id="step3">
-                            <div class="step-dot"></div>
-                            <span>${t('step3')}</span>
-                        </div>
+                    <div class="timer-box">
+                        <div id="trackerBillLine" style="font-size: 12.5px; color: var(--accent-green); font-weight: 700;">${t('totalBillLabel')} ${escHtml(billInfo)}</div>
                     </div>
 
                     <div class="refill-section-title" id="refillTitleEl">${t('refillTitle')}</div>
@@ -1932,69 +2301,44 @@
             `;
 
             document.getElementById('bottomNavBar').innerHTML = `
-                <button id="addMoreBtn" onclick="location.reload()" style="width: 100%; background: var(--brand-cyan); color: #071426; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Rajdhani', sans-serif;">
-                    ${t('addMoreFood')}
+                <button id="addMoreBtn" onclick="clearActiveOrderAndReload()" style="width: 100%; background: var(--brand-cyan); color: #071426; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; font-family: 'Rajdhani', sans-serif;">
+                    ${t('trackerNewOrder')}
                 </button>
             `;
 
-            speakGentVoice(t('thankYouSpeak'));
-            startCountdown(minutes * 60);
+            if (speak !== false) speakGentVoice(t('thankYouSpeak'));
+            renderTrackerSteps();
+            attachTrackerListener(orderId);
         }
 
         // Re-apply the selected language to the live-tracker screen (built by JS,
-        // so the data-* sweep cannot reach it). Timer digits keep counting.
+        // so the data-* sweep cannot reach it).
         function applyTrackerLang() {
             if (!trackerState) return;
             const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
             setText('trackerTitle', t('trackerTitle'));
-            setText('estTimeLabel', t('estTime'));
             setText('trackerBillLine', `${t('totalBillLabel')} ${trackerState.billInfo}`);
-            const s1 = document.querySelector('#step1 span'); if (s1) s1.innerText = t('step1');
-            const s2 = document.querySelector('#step2 span'); if (s2) s2.innerText = t('step2');
-            const s3 = document.querySelector('#step3 span'); if (s3) s3.innerText = t('step3');
+            TRACKER_STAGES.forEach(st => {
+                const span = document.querySelector('#trackStep-' + st + ' span');
+                // textContent (not innerText): these spans are built by JS via
+                // innerHTML, and innerText is layout-dependent.
+                if (span) span.textContent = t(TRACKER_STAGE_KEY[st]);
+            });
             setText('refillTitleEl', t('refillTitle'));
             const grid = document.getElementById('refillGrid');
             if (grid) grid.innerHTML = REFILLS.map((r, i) => `<button class="srv-btn${r.bill ? ' bill-btn' : ''}" onclick="requestTableService(${i})">${r.label[currentLang]}</button>`).join('');
-            setText('progressPercent', trackerReady ? t('readyServe') : `${lastPct}% ${t('progressSuffix')}`);
-            setText('addMoreBtn', t('addMoreFood'));
+            setText('addMoreBtn', t('trackerNewOrder'));
+            renderTrackerSteps();
         }
 
-        function startCountdown(durationInSeconds) {
-            const totalDuration = durationInSeconds;
-            let timer = durationInSeconds;
-            const display = document.getElementById('liveTimer');
-            const barFill = document.getElementById('progressBarFill');
-            const percentText = document.getElementById('progressPercent');
-            
-            const interval = setInterval(() => {
-                if (!display) {
-                    clearInterval(interval);
-                    return;
-                }
-                let mins = Math.floor(timer / 60);
-                let secs = timer % 60;
-                mins = mins < 10 ? "0" + mins : mins;
-                secs = secs < 10 ? "0" + secs : secs;
-                
-                display.textContent = mins + ":" + secs;
-
-                const elapsed = totalDuration - timer;
-                const pct = Math.min(100, Math.max(35, Math.round((elapsed / totalDuration) * 100)));
-                lastPct = pct;
-                if (barFill) barFill.style.width = pct + "%";
-                if (percentText) percentText.textContent = pct + "% " + t('progressSuffix');
-
-                if (timer <= 120) {
-                    const step3 = document.getElementById('step3');
-                    if (step3) step3.classList.add('active');
-                }
-
-                if (--timer < 0) {
-                    clearInterval(interval);
-                    display.textContent = t('readyText'); trackerReady = true;
-                    if (percentText) percentText.textContent = t('readyServe');
-                }
-            }, 1000);
+        // Reload restore: if an order is still active, show its live tracker
+        // again instead of the menu (the tracker survives a refresh).
+        // Silent: a reload must never speak (no auto-voice on load).
+        function restoreActiveTracker() {
+            let saved = null;
+            try { saved = JSON.parse(localStorage.getItem(ACTIVE_ORDER_KEY) || 'null'); } catch (e) { saved = null; }
+            if (!saved || !saved.orderId) return;
+            displayLiveTrackerScreen(saved.billInfo || '', saved.orderId, false);
         }
 
         // Apply the saved language on load (no cycling) and show the CURRENT
@@ -2004,6 +2348,7 @@
         buildCategoryChips();
         initAvailability();
         toggleLanguage(currentLang);
+        restoreActiveTracker();
     </script>
 </body>
 </html>
