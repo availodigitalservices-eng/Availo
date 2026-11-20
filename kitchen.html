@@ -62,6 +62,23 @@
             background: #16a34a; color: #ffffff; border: none; border-radius: 12px; cursor: pointer;
             font-family: 'Ramabhadra', sans-serif;
         }
+
+        /* Dine live orders (customer tracker) — status advances here */
+        .dine-section { margin: 18px 0; }
+        .dine-section h2 { font-size: 20px; color: #00e5ff; text-align: center; margin-bottom: 2px; font-family: 'Ramabhadra', sans-serif; }
+        .dine-sub { text-align: center; color: #94a3b8; font-size: 13px; margin-bottom: 12px; }
+        #dineOrders { display: flex; flex-direction: column; gap: 14px; }
+        .dine-card.served { border-left-color: #94a3b8; opacity: 0.85; }
+        .dine-next-btn {
+            margin-top: 14px; width: 100%; padding: 14px; font-size: 19px; font-weight: 800;
+            background: #0ea5e9; color: #ffffff; border: none; border-radius: 12px; cursor: pointer;
+            font-family: 'Ramabhadra', sans-serif;
+        }
+        .dine-remove-btn {
+            margin-top: 14px; width: 100%; padding: 12px; font-size: 16px; font-weight: 800;
+            background: #334155; color: #ffffff; border: none; border-radius: 12px; cursor: pointer;
+            font-family: 'Ramabhadra', sans-serif;
+        }
         #dbError {
             display: none; margin-top: 12px; background: #7f1d1d; color: #fecaca;
             border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 700; text-align: center;
@@ -85,11 +102,20 @@
             బ్రౌజర్ సౌండ్‌ను అనుమతించదు కాబట్టి, ముందు పైన ఉన్న <b>సౌండ్ బటన్‌ను ఒక్కసారి నొక్కాలి</b> — ఆ తర్వాతే బజర్ + వాయిస్ వినిపిస్తాయి.
             కొత్త ఆర్డర్ లేదా రీఫిల్ వచ్చిన ప్రతిసారీ బజర్ <b>3 సార్లు</b> మోగి, తెలుగులో ఒకసారి చెప్తుంది.
             పేజీ తెరిచినప్పుడు గత ఆర్డర్లు కూడా కనిపిస్తాయి (బజర్ లేకుండా). ✅ చూశాను నొక్కితే ఆ ఆర్డర్ కిచెన్ డిస్‌ప్లే నుంచి పూర్తిగా తొలగిపోతుంది.
+            Dine ఆర్డర్లు కింద ప్రత్యేకంగా కనిపిస్తాయి — స్టేటస్ బటన్ నొక్కితే కస్టమర్ ట్రాకర్‌లో అదే స్టేటస్ కనిపిస్తుంది.
         </div>
 
         <div class="actions">
             <button id="testBtn">🔔 బజర్ టెస్ట్</button>
             <button id="clearBtn">🗑️ అన్నీ తొలగించు</button>
+        </div>
+
+        <div class="dine-section">
+            <h2>🍽️ Dine లైవ్ ఆర్డర్లు</h2>
+            <div class="dine-sub">కస్టమర్ ట్రాకర్‌లో చూసే స్టేటస్ ఇక్కడే మారుతుంది — బటన్ నొక్కితే చాలు</div>
+            <div id="dineOrders">
+                <div class="empty" id="dineEmptyMsg">Dine ఆర్డర్లు లేవు — కొత్త ఆర్డర్ వస్తే ఇక్కడ కనిపిస్తుంది.</div>
+            </div>
         </div>
 
         <div id="events">
@@ -253,6 +279,107 @@
             speakTelugu(announceText(type, d || {}));
         }
 
+        // ---- Dine live orders (dine.html customer tracker) ----
+        // dine.html writes one record per confirmed order to
+        // availo-kitchen-v1/dineOrders/khaleel/{orderId} with status
+        // received -> preparing -> ready -> served. The buttons below
+        // advance the status; the customer's tracker updates live.
+        // New orders buzz + announce exactly like the WhatsApp orders
+        // above (sound must be ON). Served orders can be removed here.
+        const DINE_ORDERS_PATH = 'availo-kitchen-v1/dineOrders/khaleel';
+        const DINE_STATUS_LABEL = {
+            received: '🆕 కొత్త ఆర్డర్',
+            preparing: '👨‍🍳 తయారవుతోంది',
+            ready: '✅ రెడీ',
+            served: '🍽️ అందించారు'
+        };
+        // Next status + the button label that advances to it.
+        const DINE_NEXT = {
+            received: { status: 'preparing', btn: '👨‍🍳 తయారు మొదలు' },
+            preparing: { status: 'ready', btn: '✅ రెడీ అయింది' },
+            ready: { status: 'served', btn: '🍽️ టేబుల్‌కు అందించారు' },
+            served: null
+        };
+        const dineOrdersEl = document.getElementById('dineOrders');
+        const dineEmptyMsg = document.getElementById('dineEmptyMsg');
+        let dineHistoryLoaded = false;
+        const seenDineOrders = new Set();
+
+        function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+        function dineOrderItemsText(d) {
+            if (!d || !Array.isArray(d.items)) return '';
+            return d.items.map(it => (it.name || '') + ' × ' + (it.qty || 1)).join(', ');
+        }
+
+        function dineOrderTotal(d) {
+            const total = d && typeof d.total === 'number' ? d.total : 0;
+            return '₹' + (Math.round(total * 100) / 100).toFixed(2);
+        }
+
+        function advanceDineOrder(orderId, nextStatus) {
+            if (!db || !orderId || !nextStatus) return;
+            db.ref(DINE_ORDERS_PATH + '/' + orderId).update({ status: nextStatus }).catch(function () {});
+        }
+
+        function removeDineOrder(orderId) {
+            if (!db || !orderId) return;
+            db.ref(DINE_ORDERS_PATH + '/' + orderId).remove().catch(function () {});
+        }
+
+        function renderDineOrders(orders) {
+            const ids = Object.keys(orders || {}).sort((a, b) => (orders[b].createdAt || 0) - (orders[a].createdAt || 0));
+            dineOrdersEl.innerHTML = '';
+            if (!ids.length) {
+                dineOrdersEl.appendChild(dineEmptyMsg);
+                dineEmptyMsg.style.display = 'block';
+                return;
+            }
+            dineEmptyMsg.style.display = 'none';
+            ids.forEach(id => {
+                const d = orders[id] || {};
+                const status = DINE_STATUS_LABEL[d.status] ? d.status : 'received';
+                const next = DINE_NEXT[status];
+                const time = d.createdAt ? new Date(d.createdAt).toLocaleTimeString() : '';
+                const card = document.createElement('div');
+                card.className = 'card dine-card' + (status === 'served' ? ' served' : '');
+                let html = '<div class="card-type">' + DINE_STATUS_LABEL[status] + '</div>' +
+                    '<div class="card-table">టేబుల్ ' + tableDigits(d.table) + '</div>' +
+                    '<div class="card-body">' + esc(dineOrderItemsText(d)) + '</div>' +
+                    '<div class="card-meta">' + esc(dineOrderTotal(d)) + (time ? ' · ' + esc(time) : '') + ' · Ref: ' + esc(id) + '</div>';
+                if (next) html += '<button class="dine-next-btn" data-next="' + next.status + '">' + next.btn + '</button>';
+                else html += '<button class="dine-remove-btn">🗑️ తొలగించు</button>';
+                card.innerHTML = html;
+                const nextBtn = card.querySelector('.dine-next-btn');
+                if (nextBtn) nextBtn.addEventListener('click', function () { advanceDineOrder(id, nextBtn.getAttribute('data-next')); });
+                const rmBtn = card.querySelector('.dine-remove-btn');
+                if (rmBtn) rmBtn.addEventListener('click', function () { removeDineOrder(id); });
+                dineOrdersEl.appendChild(card);
+            });
+        }
+
+        function armDineOrders() {
+            if (!db) return;
+            db.ref(DINE_ORDERS_PATH).on('value', function (snap) {
+                const orders = snap.val() || {};
+                if (!dineHistoryLoaded) {
+                    // First snapshot is history: show silently, mark all seen.
+                    Object.keys(orders).forEach(id => seenDineOrders.add(id));
+                    dineHistoryLoaded = true;
+                } else {
+                    // New orders only: buzz + announce once each.
+                    Object.keys(orders).forEach(id => {
+                        const d = orders[id] || {};
+                        if (!seenDineOrders.has(id) && d.status === 'received') {
+                            seenDineOrders.add(id);
+                            if (soundOn) { buzzTimes(3); speakTelugu('టేబుల్ ' + tableDigits(d.table) + ' కొత్త Dine ఆర్డర్ వచ్చింది'); }
+                        }
+                    });
+                }
+                renderDineOrders(orders);
+            }, function (err) { showDbError(err && err.message ? err.message : 'Dine ఆర్డర్లు చదవలేకపోయాం'); });
+        }
+
         // ---- Firebase: history (last 20 per node, silent) + live events (buzz + announce) ----
         let db = null;
         try {
@@ -308,6 +435,7 @@
             }
             armListener('orders', 'order');
             armListener('refills', 'refill');
+            armDineOrders();
         }
     </script>
 
