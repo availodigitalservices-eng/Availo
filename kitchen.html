@@ -119,6 +119,14 @@
             </div>
         </div>
 
+        <div class="dine-section">
+            <h2>📅 టేబుల్ బుకింగ్స్</h2>
+            <div class="dine-sub">కస్టమర్ బుక్ చేసిన టేబుళ్లు — కూర్చోబెట్టాక స్టేటస్ మార్చండి</div>
+            <div id="tableBookings">
+                <div class="empty" id="tableBookingsEmptyMsg">టేబుల్ బుకింగ్స్ లేవు — కొత్త బుకింగ్ వస్తే ఇక్కడ కనిపిస్తుంది.</div>
+            </div>
+        </div>
+
         <div id="events">
             <div class="empty" id="emptyMsg">ఇంకా ఆర్డర్లు లేవు — కొత్త ఆర్డర్ వస్తే ఇక్కడ కనిపిస్తుంది.</div>
         </div>
@@ -399,6 +407,82 @@
             }, function (err) { showDbError(err && err.message ? err.message : 'Dine ఆర్డర్లు చదవలేకపోయాం'); });
         }
 
+        // ---- Table bookings (dine.html table booking form) ----
+        // dine.html writes one record per confirmed booking to
+        // availo-kitchen-v1/tableBookings/khaleel/{bookingId} with status
+        // 'booked'. The button below marks it 'seated'; seated bookings
+        // can be removed here. Same buzz + announce as Dine orders.
+        const TABLE_BOOKINGS_PATH = 'availo-kitchen-v1/tableBookings/khaleel';
+        const TABLE_BOOKING_STATUS_LABEL = {
+            booked: '🆕 బుక్ అయ్యింది',
+            seated: '✅ కూర్చున్నారు'
+        };
+        const tableBookingsEl = document.getElementById('tableBookings');
+        const tableBookingsEmptyMsg = document.getElementById('tableBookingsEmptyMsg');
+        let tableBookingsHistoryLoaded = false;
+        const seenTableBookings = new Set();
+
+        function advanceTableBooking(bookingId) {
+            if (!db || !bookingId) return;
+            db.ref(TABLE_BOOKINGS_PATH + '/' + bookingId).update({ status: 'seated' }).catch(function () {});
+        }
+
+        function removeTableBooking(bookingId) {
+            if (!db || !bookingId) return;
+            db.ref(TABLE_BOOKINGS_PATH + '/' + bookingId).remove().catch(function () {});
+        }
+
+        function renderTableBookings(bookings) {
+            const ids = Object.keys(bookings || {}).sort((a, b) => (bookings[b].createdAt || 0) - (bookings[a].createdAt || 0));
+            tableBookingsEl.innerHTML = '';
+            if (!ids.length) {
+                tableBookingsEl.appendChild(tableBookingsEmptyMsg);
+                tableBookingsEmptyMsg.style.display = 'block';
+                return;
+            }
+            tableBookingsEmptyMsg.style.display = 'none';
+            ids.forEach(id => {
+                const b = bookings[id] || {};
+                const status = TABLE_BOOKING_STATUS_LABEL[b.status] ? b.status : 'booked';
+                const bookedAt = b.createdAt ? new Date(b.createdAt).toLocaleTimeString() : '';
+                const card = document.createElement('div');
+                card.className = 'card dine-card' + (status === 'seated' ? ' served' : '');
+                let html = '<div class="card-type">' + TABLE_BOOKING_STATUS_LABEL[status] + '</div>' +
+                    '<div class="card-table">📅 ' + esc(b.date || '') + ' · ' + esc(b.slot || '') + ' · టేబుల్ ' + esc(b.table || '') + '</div>' +
+                    '<div class="card-body">👥 ' + esc(String(b.partySize == null ? '' : b.partySize)) + ' మంది' +
+                    (b.name ? ' · ' + esc(b.name) : '') + (b.mobile ? ' · ' + esc(b.mobile) : '') + '</div>' +
+                    '<div class="card-meta">' + (bookedAt ? 'బుక్ చేసింది ' + esc(bookedAt) + ' · ' : '') + 'Ref: ' + esc(id) + '</div>';
+                if (status === 'booked') html += '<button class="dine-next-btn">✅ కూర్చోబెట్టాను</button>';
+                else html += '<button class="dine-remove-btn">🗑️ తొలగించు</button>';
+                card.innerHTML = html;
+                const nextBtn = card.querySelector('.dine-next-btn');
+                if (nextBtn) nextBtn.addEventListener('click', function () { advanceTableBooking(id); });
+                const rmBtn = card.querySelector('.dine-remove-btn');
+                if (rmBtn) rmBtn.addEventListener('click', function () { removeTableBooking(id); });
+                tableBookingsEl.appendChild(card);
+            });
+        }
+
+        function armTableBookings() {
+            if (!db) return;
+            db.ref(TABLE_BOOKINGS_PATH).on('value', function (snap) {
+                const bookings = snap.val() || {};
+                if (!tableBookingsHistoryLoaded) {
+                    Object.keys(bookings).forEach(id => seenTableBookings.add(id));
+                    tableBookingsHistoryLoaded = true;
+                } else {
+                    Object.keys(bookings).forEach(id => {
+                        const b = bookings[id] || {};
+                        if (!seenTableBookings.has(id) && b.status === 'booked') {
+                            seenTableBookings.add(id);
+                            if (soundOn) { buzzTimes(3); speakTelugu('టేబుల్ ' + (b.table || '') + ' బుకింగ్ వచ్చింది'); }
+                        }
+                    });
+                }
+                renderTableBookings(bookings);
+            }, function (err) { showDbError(err && err.message ? err.message : 'టేబుల్ బుకింగ్స్ చదవలేకపోయాం'); });
+        }
+
         // ---- Firebase: history (last 20 per node, silent) + live events (buzz + announce) ----
         let db = null;
         try {
@@ -455,6 +539,7 @@
             armListener('orders', 'order');
             armListener('refills', 'refill');
             armDineOrders();
+            armTableBookings();
         }
     </script>
 
