@@ -593,6 +593,49 @@
             display: inline-block;
         }
 
+        /* Ratings & reviews (feature 3 of 8): average stars on the dish
+           card, a small rate button, and the reviews list below the menu.
+           Dishes with no ratings show nothing — never fake stars. */
+        .dish-rating {
+            font-size: 12px;
+            color: #fbbf24;
+            font-weight: 700;
+            margin-top: 3px;
+        }
+        .rate-btn {
+            margin-top: 5px;
+            background: rgba(251, 191, 36, 0.12);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            color: #fde68a;
+            border-radius: 6px;
+            padding: 4px 9px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Ramabhadra', sans-serif;
+        }
+        .review-row {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+        }
+        .review-stars { color: #fbbf24; font-size: 14px; letter-spacing: 2px; }
+        .review-dish { font-weight: 800; font-size: 13.5px; margin-top: 2px; }
+        .review-text { font-size: 13px; color: #e2e8f0; margin-top: 3px; line-height: 1.6; }
+        .review-meta { font-size: 11.5px; color: #94a3b8; margin-top: 4px; }
+        .rate-star-btn {
+            background: none;
+            border: none;
+            font-size: 30px;
+            color: #475569;
+            cursor: pointer;
+            padding: 2px 4px;
+            line-height: 1;
+        }
+        .rate-star-btn.lit { color: #fbbf24; }
+
         .qty-box {
             display: flex;
             align-items: center;
@@ -1057,6 +1100,16 @@
                 <button class="srv-btn bill-btn" onclick="requestTableService(5)" data-te="🧾 బిల్లు పంపండి" data-en="🧾 Send the Bill" data-hi="🧾 बिल भेजिए">🧾 బిల్లు పంపండి</button>
             </div>
         </div>
+        <!-- Customer reviews (feature 3 of 8): recent reviews, newest first.
+             Starts empty — ratings and reviews appear only when real
+             customers submit them; nothing is seeded or invented. -->
+        <div style="margin-top: 18px; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 12px;">
+            <div class="refill-section-title" data-te="⭐ కస్టమర్ రివ్యూలు" data-en="⭐ Customer Reviews" data-hi="⭐ ग्राहक समीक्षाएँ">⭐ కస్టమర్ రివ్యూలు</div>
+            <select id="reviewFilterSel" onchange="setReviewFilter(this.value)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #1e293b; color: #fff; font-size: 13.5px; margin-bottom: 10px;">
+                <option value="ALL">అన్ని వంటకాలు</option>
+            </select>
+            <div id="reviewsList"><div class="empty-hint" data-te="ఇంకా రివ్యూలు లేవు — మొదటి రివ్యూ మీరే ఇవ్వండి!" data-en="No reviews yet — be the first to review!" data-hi="अभी कोई समीक्षा नहीं है — पहली समीक्षा आप दीजिए!">ఇంకా రివ్యూలు లేవు — మొదటి రివ్యూ మీరే ఇవ్వండి!</div></div>
+        </div>
     </div>
 
     <!-- 4. Bottom Action Bar -->
@@ -1131,6 +1184,36 @@
             <div style="display: flex; gap: 10px; margin-top: 14px;">
                 <button id="bookConfirmBtn" onclick="confirmTableBooking()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;" data-te="✅ బుక్ చేయండి" data-en="✅ Book Table" data-hi="✅ बुक कीजिए">✅ బుక్ చేయండి</button>
                 <button onclick="closeTableBooking()" style="flex: 1; background: #334155; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="వెనక్కి" data-en="Back" data-hi="वापस">వెనక్కి</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rate a dish overlay (feature 3 of 8): 1–5 stars + optional comment.
+         Name is optional; no mobile number is ever asked. -->
+    <div id="rateOverlay" style="display: none; position: fixed; inset: 0; background: rgba(3,11,30,0.88); z-index: 999; align-items: center; justify-content: center; padding: 16px;">
+        <div style="background: #0d284e; border: 1.5px solid var(--brand-gold); border-radius: 14px; padding: 18px 16px; max-width: 420px; width: 100%; color: #fff;">
+            <h3 style="font-family: 'Rajdhani', sans-serif; color: var(--brand-gold); font-size: 18px; font-weight: 800; margin-bottom: 6px;" data-te="⭐ ఈ వంటకం ఎలా ఉంది?" data-en="⭐ How was this dish?" data-hi="⭐ यह व्यंजन कैसा लगा?">⭐ ఈ వంటకం ఎలా ఉంది?</h3>
+            <div id="rateDishName" style="font-size: 14px; font-weight: 800; color: #fde68a; margin-bottom: 10px;"></div>
+            <div id="rateStarsRow" style="display: flex; gap: 2px; margin-bottom: 4px;">
+                <button type="button" class="rate-star-btn" onclick="pickRateStars(1)">☆</button>
+                <button type="button" class="rate-star-btn" onclick="pickRateStars(2)">☆</button>
+                <button type="button" class="rate-star-btn" onclick="pickRateStars(3)">☆</button>
+                <button type="button" class="rate-star-btn" onclick="pickRateStars(4)">☆</button>
+                <button type="button" class="rate-star-btn" onclick="pickRateStars(5)">☆</button>
+            </div>
+            <div id="ratePickNote" style="display: none; font-size: 12.5px; color: #fbbf24; margin-bottom: 8px;" data-te="దయచేసి స్టార్లు ఎంచుకోండి" data-en="Please pick the stars first" data-hi="कृपया पहले स्टार चुनिए">దయచేసి స్టార్లు ఎంచుకోండి</div>
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13.5px;">
+                <label style="display: flex; flex-direction: column; gap: 4px;"><span data-te="మీ పేరు (ఐచ్ఛికం):" data-en="Your name (optional):" data-hi="आपका नाम (वैकल्पिक):">మీ పేరు (ఐచ్ఛికం):</span>
+                    <input type="text" id="rateNameInput" maxlength="50" style="padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #1e293b; color: #fff; font-size: 14px;">
+                </label>
+                <label style="display: flex; flex-direction: column; gap: 4px;"><span data-te="కామెంట్ (ఐచ్ఛికం):" data-en="Comment (optional):" data-hi="टिप्पणी (वैकल्पिक):">కామెంట్ (ఐచ్ఛికం):</span>
+                    <input type="text" id="rateCommentInput" maxlength="200" placeholder="ఎలా ఉంది? (ఉదా: చాలా బాగుంది!)" data-te-ph="ఎలా ఉంది? (ఉదా: చాలా బాగుంది!)" data-en-ph="How was it? (e.g.: really tasty!)" data-hi-ph="कैसा लगा? (जैसे: बहुत स्वादिष्ट!)" style="padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #1e293b; color: #fff; font-size: 14px;">
+                </label>
+            </div>
+            <div id="rateFailNote" style="display: none; margin-top: 10px; font-size: 12.5px; color: #f87171;" data-te="సేవ్ కాలేదు — ఇంటర్నెట్ చూసి మళ్ళీ ప్రయత్నించండి" data-en="Could not save — check your internet and try again" data-hi="सहेजा नहीं गया — इंटरनेट देखकर फिर से कोशिश कीजिए">సేవ్ కాలేదు — ఇంటర్నెట్ చూసి మళ్ళీ ప్రయత్నించండి</div>
+            <div style="display: flex; gap: 10px; margin-top: 14px;">
+                <button onclick="sendRating()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;" data-te="✅ రివ్యూ పంపండి" data-en="✅ Submit Review" data-hi="✅ समीक्षा भेजिए">✅ రివ్యూ పంపండి</button>
+                <button onclick="closeRateForm()" style="flex: 1; background: #334155; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="వెనక్కి" data-en="Back" data-hi="वापस">వెనక్కి</button>
             </div>
         </div>
     </div>
@@ -1971,6 +2054,20 @@
             refillTitle: { te: "⚡ తక్షణ అవసరాలు / రీఫిల్స్:", en: "⚡ Instant needs / refills:", hi: "⚡ तुरंत ज़रूरतें / रीफ़िल:" },
             thankYouSpeak: { te: "థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. మధ్యలో ఉల్లిపాయలు, నిమ్మకాయ, పెరుగు లేదా ఏసీ అడ్జస్ట్‌మెంట్ కోసం కింద బటన్లు వాడుకోండి సర్.", en: "Thank you, sir! Your order has gone to the kitchen. It will reach your table hot in fifteen minutes. Meanwhile, use the buttons below for onions, lemon, curd or AC adjustment, sir.", hi: "धन्यवाद सर! आपका ऑर्डर किचन चला गया है। पंद्रह मिनट में गरमागरम आपकी टेबल पर आ जाएगा। बीच में प्याज़, नींबू, दही या एसी के लिए नीचे दिए गए बटन इस्तेमाल कीजिए सर।" },
             trackerTitle: { te: "లైవ్ ఆర్డర్ ట్రాకర్", en: "LIVE ORDER TRACKER", hi: "लाइव ऑर्डर ट्रैकर" },
+            reviewsTitle: { te: "⭐ కస్టమర్ రివ్యూలు", en: "⭐ Customer Reviews", hi: "⭐ ग्राहक समीक्षाएँ" },
+            reviewsWord: { te: "రివ్యూలు", en: "reviews", hi: "समीक्षाएँ" },
+            rateDishBtn: { te: "⭐ రేట్ చేయండి", en: "⭐ Rate this dish", hi: "⭐ रेट कीजिए" },
+            noReviewsYet: { te: "ఇంకా రివ్యూలు లేవు — మొదటి రివ్యూ మీరే ఇవ్వండి!", en: "No reviews yet — be the first to review!", hi: "अभी कोई समीक्षा नहीं है — पहली समीक्षा आप दीजिए!" },
+            rateTitle: { te: "⭐ ఈ వంటకం ఎలా ఉంది?", en: "⭐ How was this dish?", hi: "⭐ यह व्यंजन कैसा लगा?" },
+            rateYourName: { te: "మీ పేరు (ఐచ్ఛికం):", en: "Your name (optional):", hi: "आपका नाम (वैकल्पिक):" },
+            rateYourComment: { te: "కామెంట్ (ఐచ్ఛికం):", en: "Comment (optional):", hi: "टिप्पणी (वैकल्पिक):" },
+            rateCommentPh: { te: "ఎలా ఉంది? (ఉదా: చాలా బాగుంది!)", en: "How was it? (e.g.: really tasty!)", hi: "कैसा लगा? (जैसे: बहुत स्वादिष्ट!)" },
+            rateSubmit: { te: "✅ రివ్యూ పంపండి", en: "✅ Submit Review", hi: "✅ समीक्षा भेजिए" },
+            ratePickStars: { te: "దయచేసి స్టార్లు ఎంచుకోండి", en: "Please pick the stars first", hi: "कृपया पहले स्टार चुनिए" },
+            rateThanks: { te: "ధన్యవాదాలు! మీ రివ్యూ సేవ్ అయ్యింది 🙏", en: "Thank you! Your review was saved 🙏", hi: "धन्यवाद! आपकी समीक्षा सहेजी गई 🙏" },
+            rateSaveFail: { te: "సేవ్ కాలేదు — ఇంటర్నెట్ చూసి మళ్ళీ ప్రయత్నించండి", en: "Could not save — check your internet and try again", hi: "सहेजा नहीं गया — इंटरनेट देखकर फिर से कोशिश कीजिए" },
+            guestName: { te: "అతిథి", en: "Guest", hi: "अतिथि" },
+            allDishes: { te: "అన్ని వంటకాలు", en: "All dishes", hi: "सभी व्यंजन" },
             orderSentKitchen: { te: "✅ ఆర్డర్ కిచెన్‌కి వెళ్ళింది", en: "✅ Order sent to the kitchen", hi: "✅ ऑर्डर किचन भेज दिया गया" },
             noResults: { te: "ఈ ఫిల్టర్‌లో ఐటమ్‌లు దొరకలేదు — వేరే కేటగిరీ / ఫిల్టర్ / పేరుతో వెతకండి.", en: "No items match — try another category, filter or search.", hi: "कोई आइटम नहीं मिला — दूसरी कैटेगरी, फ़िल्टर या खोज आज़माइए।" }
         };
@@ -2014,6 +2111,7 @@
             renderCategoryCounts();
             renderSubBar();
             renderMenu();
+            renderReviews();
             renderOrderPad();
             applyTrackerLang();
             refreshPaymentUI();
@@ -2034,6 +2132,8 @@
                         </div>
                         <div class="dish-title">${escHtml(itemName(item))}</div>
                         <span class="dish-cost">${fmtPrice(item.price)}</span>
+                        ${ratingLineHtml(item.id)}
+                        <button type="button" class="rate-btn" onclick="openRateForm('${item.id}')">${t('rateDishBtn')}</button>
                     </div>
                     <div class="qty-box">
                         <button class="qty-btn" onclick="modifyItem('${item.id}', -1)">-</button>
@@ -2231,6 +2331,174 @@
             const cartEl = document.getElementById('cartCount');
             if (cartEl) cartEl.innerText = String(totalCount);
             updateSplitDisplay();
+        }
+
+        // ---- Ratings & reviews (feature 3 of 8) ----
+        // Firebase paths (same "availo-kitchen-v1" node as availability):
+        //   ratings/khaleel/{itemId}  {sum, count} — aggregate, updated by
+        //     transaction so two customers rating at once never lose a vote.
+        //   reviews/khaleel/{reviewId} {itemId, stars, text, name, createdAt}
+        //     — one record per review; the owner page may add hidden:true.
+        // Nothing is seeded or invented: a dish with no ratings shows no
+        // stars at all, and the reviews list starts empty. Fail-open: if
+        // Firebase is unreachable, the menu works as before and a failed
+        // submit shows a retry note instead of losing the page state.
+        const RATINGS_PATH = 'availo-kitchen-v1/ratings/khaleel';
+        const REVIEWS_PATH = 'availo-kitchen-v1/reviews/khaleel';
+        let ratingsMap = {};
+        let reviewsList = [];
+        let currentReviewFilter = 'ALL';
+        let rateItemId = null;
+        let rateStars = 0;
+
+        function validStars(n) { n = Number(n); return Number.isInteger(n) && n >= 1 && n <= 5; }
+        function averageRating(itemId) {
+            const r = ratingsMap[itemId];
+            if (!r || !r.count || Number(r.count) <= 0) return null;
+            return { avg: (Number(r.sum) || 0) / Number(r.count), count: Number(r.count) };
+        }
+        // Empty string when the dish has no ratings — never fake stars.
+        function ratingLineHtml(itemId) {
+            const a = averageRating(itemId);
+            if (!a) return '';
+            return '<div class="dish-rating">★' + a.avg.toFixed(1) + ' · ' + a.count + ' ' + t('reviewsWord') + '</div>';
+        }
+        function starsText(n) {
+            let s = '';
+            for (let i = 1; i <= 5; i++) s += (i <= n ? '★' : '☆');
+            return s;
+        }
+        function isReviewVisible(r) { return !r || r.hidden !== true; }
+        function buildReviewRecord(itemId, stars, text, name) {
+            return {
+                itemId: itemId,
+                stars: stars,
+                text: String(text || '').trim().slice(0, 200),
+                name: String(name || '').trim().slice(0, 50),
+                createdAt: Date.now()
+            };
+        }
+        // Writes the aggregate (transaction) and the review record. Returns
+        // true on success, false on any failure — the caller shows the
+        // retry note and keeps the form open.
+        async function submitRating(itemId, stars, text, name) {
+            if (!kitchenDb || !itemId || !validStars(stars)) return false;
+            try {
+                await kitchenDb.ref(RATINGS_PATH + '/' + itemId).transaction(function (cur) {
+                    const c = cur || { sum: 0, count: 0 };
+                    return { sum: (Number(c.sum) || 0) + stars, count: (Number(c.count) || 0) + 1 };
+                });
+                const ref = kitchenDb.ref(REVIEWS_PATH).push();
+                await ref.set(buildReviewRecord(itemId, stars, text, name));
+                return true;
+            } catch (e) { return false; }
+        }
+        function initRatings() {
+            try {
+                if (!kitchenDb) return; // offline / SDK missing: fail-open
+                kitchenDb.ref(RATINGS_PATH).on('value', function (snap) {
+                    ratingsMap = snap.val() || {};
+                    renderMenu();
+                    renderReviews();
+                }, function () { /* read failed: fail-open, keep showing the menu */ });
+                kitchenDb.ref(REVIEWS_PATH).on('value', function (snap) {
+                    const val = snap.val() || {};
+                    reviewsList = Object.keys(val).map(function (id) {
+                        const r = val[id] || {};
+                        return { id: id, itemId: r.itemId, stars: r.stars, text: r.text || '', name: r.name || '', createdAt: r.createdAt || 0, hidden: r.hidden === true };
+                    });
+                    renderReviews();
+                }, function () { /* read failed: fail-open, keep the old list */ });
+            } catch (e) { /* fail-open */ }
+        }
+        function visibleReviews() {
+            return reviewsList.filter(function (r) {
+                return isReviewVisible(r) && (currentReviewFilter === 'ALL' || r.itemId === currentReviewFilter);
+            }).slice().sort(function (a, b) {
+                return (b.createdAt - a.createdAt) || String(b.id).localeCompare(String(a.id));
+            });
+        }
+        function renderReviews() {
+            const listEl = document.getElementById('reviewsList');
+            if (!listEl) return;
+            const filterSel = document.getElementById('reviewFilterSel');
+            if (filterSel) {
+                const seen = {};
+                const dishIds = [];
+                reviewsList.forEach(function (r) {
+                    if (isReviewVisible(r) && r.itemId && !seen[r.itemId]) { seen[r.itemId] = true; dishIds.push(r.itemId); }
+                });
+                filterSel.innerHTML = '<option value="ALL">' + escHtml(t('allDishes')) + '</option>' +
+                    dishIds.map(function (id) {
+                        const it = HOTEL_MENU.find(function (i) { return i.id === id; });
+                        return '<option value="' + escHtml(id) + '">' + escHtml(it ? itemName(it) : id) + '</option>';
+                    }).join('');
+                if (currentReviewFilter !== 'ALL' && dishIds.indexOf(currentReviewFilter) === -1) currentReviewFilter = 'ALL';
+                filterSel.value = currentReviewFilter;
+            }
+            const vis = visibleReviews();
+            if (!vis.length) {
+                listEl.innerHTML = '<div class="empty-hint">' + t('noReviewsYet') + '</div>';
+                return;
+            }
+            listEl.innerHTML = vis.map(function (r) {
+                const item = HOTEL_MENU.find(function (i) { return i.id === r.itemId; });
+                const when = new Date(r.createdAt || 0);
+                const dateStr = when.getTime() ? when.toLocaleDateString(currentLang === 'hi' ? 'hi-IN' : currentLang === 'en' ? 'en-IN' : 'te-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+                return '<div class="review-row"><div class="review-stars">' + starsText(Number(r.stars) || 0) + '</div>' +
+                    '<div class="review-dish">' + escHtml(item ? itemName(item) : r.itemId) + '</div>' +
+                    (r.text ? '<div class="review-text">' + escHtml(r.text) + '</div>' : '') +
+                    '<div class="review-meta">' + escHtml(r.name || t('guestName')) + (dateStr ? ' · ' + escHtml(dateStr) : '') + '</div></div>';
+            }).join('');
+        }
+        function setReviewFilter(v) { currentReviewFilter = v || 'ALL'; renderReviews(); }
+        function openRateForm(itemId) {
+            const item = HOTEL_MENU.find(function (i) { return i.id === itemId; });
+            if (!item) return;
+            rateItemId = itemId;
+            rateStars = 0;
+            const nameEl = document.getElementById('rateDishName');
+            if (nameEl) nameEl.textContent = itemName(item);
+            const pickNote = document.getElementById('ratePickNote');
+            if (pickNote) pickNote.style.display = 'none';
+            const failNote = document.getElementById('rateFailNote');
+            if (failNote) failNote.style.display = 'none';
+            paintRateStars();
+            document.getElementById('rateOverlay').style.display = 'flex';
+        }
+        function closeRateForm() {
+            const ov = document.getElementById('rateOverlay');
+            if (ov) ov.style.display = 'none';
+        }
+        function pickRateStars(n) {
+            rateStars = validStars(n) ? Number(n) : 0;
+            paintRateStars();
+        }
+        function paintRateStars() {
+            const btns = document.querySelectorAll('#rateStarsRow .rate-star-btn');
+            btns.forEach(function (b, i) {
+                const lit = i < rateStars;
+                b.classList.toggle('lit', lit);
+                b.textContent = lit ? '★' : '☆';
+            });
+        }
+        async function sendRating() {
+            if (!validStars(rateStars)) {
+                const pickNote = document.getElementById('ratePickNote');
+                if (pickNote) pickNote.style.display = 'block';
+                return false;
+            }
+            const textEl = document.getElementById('rateCommentInput');
+            const nameEl = document.getElementById('rateNameInput');
+            const ok = await submitRating(rateItemId, rateStars, textEl ? textEl.value : '', nameEl ? nameEl.value : '');
+            if (ok) {
+                closeRateForm();
+                speakGentVoice(t('rateThanks'));
+                return true;
+            }
+            const failNote = document.getElementById('rateFailNote');
+            if (failNote) failNote.style.display = 'block';
+            return false;
         }
 
         // ---- Voice ordering: spoken words -> menu items (pure, testable) ----
@@ -2815,6 +3083,8 @@
         // live (fail-open: no Firebase = show everything).
         buildCategoryChips();
         initAvailability();
+        initRatings();
+        renderReviews();
         toggleLanguage(currentLang);
         restoreActiveTracker();
     </script>

@@ -29,6 +29,7 @@
         .filter-btn.active { border-color: #DDB65D; color: #DDB65D; background: rgba(221, 182, 93, 0.12); }
         .cat-head { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 800; color: #DDB65D; letter-spacing: 0.5px; margin: 16px 0 6px; }
         .cat-head .hidden-n { color: #ef4444; font-size: 12px; }
+        .reviews-head { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 800; color: #DDB65D; letter-spacing: 0.5px; margin: 22px 0 6px; }
         .owner-row { background: #0d223f; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
         .owner-row.hidden-row { opacity: 0.55; border-color: rgba(239, 68, 68, 0.5); }
         .veg-mark { width: 14px; height: 14px; border: 2px solid #22c55e; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -64,6 +65,11 @@
             <button class="filter-btn" data-filter="AVAILABLE" onclick="setOwnerFilter('AVAILABLE', this)">అందుబాటులో ఉన్నవి</button>
         </div>
         <div id="ownerList"></div>
+        <!-- Customer reviews (feature 3 of 8): all reviews, newest first.
+             Hidden reviews stay visible here (dimmed) so the owner can
+             bring them back; hiding one removes it from the customer menu. -->
+        <div class="reviews-head">⭐ కస్టమర్ రివ్యూలు <span id="ownerReviewsCount" style="color:#94a3b8; font-size:12px;"></span></div>
+        <div id="ownerReviewsList"><div class="empty-hint">రివ్యూలు లోడ్ అవుతున్నాయి…</div></div>
         <div class="note">
             📌 <b>ఇది ఎలా పనిచేస్తుంది:</b> ఏదైనా ఐటమ్ అయిపోతే దాని బటన్ నొక్కండి —
             అది వెంటనే కస్టమర్ మెనూ నుంచి కనపడకుండా పోతుంది (పేజీ రిఫ్రెష్ అవసరం లేదు).
@@ -93,6 +99,11 @@
         // Same path as dine.html: availo-kitchen-v1/dineAvailability/khaleel/{itemId}
         //   false = sold out (hidden) · absent = available (shown).
         const AVAILABILITY_PATH = 'availo-kitchen-v1/dineAvailability/khaleel';
+        // Same path as dine.html: availo-kitchen-v1/reviews/khaleel/{reviewId}
+        //   {itemId, stars, text, name, createdAt} — the owner may add
+        //   hidden:true; a hidden review disappears from the customer menu
+        //   but stays visible here so it can be brought back.
+        const REVIEWS_PATH = 'availo-kitchen-v1/reviews/khaleel';
 
         // ---- The menu (identical data to dine.html — same ids, names, prices) ----
         // AVAILO Dine — full menu, exactly as on the
@@ -416,6 +427,7 @@
         let availabilityMap = {};
         let ownerSearch = '';
         let ownerFilter = 'ALL';
+        let ownerReviews = [];
 
         try {
             if (typeof firebase !== 'undefined' && !firebase.apps.length) firebase.initializeApp(firebaseConfig);
@@ -496,6 +508,47 @@
             } catch (e) { done(); }
         }
 
+        // ---- Customer reviews (feature 3 of 8) ----
+        // Newest first. Hidden reviews are dimmed and marked so the owner
+        // can bring them back; the customer menu never shows them.
+        function renderOwnerReviews() {
+            const el = document.getElementById('ownerReviewsList');
+            if (!el) return;
+            const countEl = document.getElementById('ownerReviewsCount');
+            const hidden = ownerReviews.filter(function (r) { return r.hidden; }).length;
+            if (countEl) countEl.textContent = ownerReviews.length
+                ? '· ' + ownerReviews.length + ' రివ్యూలు' + (hidden ? ' · ' + hidden + ' దాచబడ్డాయి' : '')
+                : '';
+            if (!ownerReviews.length) {
+                el.innerHTML = '<div class="empty-hint">ఇంకా రివ్యూలు లేవు.</div>';
+                return;
+            }
+            el.innerHTML = ownerReviews.map(function (r) {
+                const item = HOTEL_MENU.find(function (i) { return i.id === r.itemId; });
+                const when = new Date(r.createdAt || 0);
+                const dateStr = when.getTime() ? when.toLocaleDateString('te-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+                const stars = '★'.repeat(Math.max(0, Math.min(5, Number(r.stars) || 0))) + '☆'.repeat(5 - Math.max(0, Math.min(5, Number(r.stars) || 0)));
+                return '<div class="owner-row' + (r.hidden ? ' hidden-row' : '') + '">' +
+                    '<div class="owner-text"><div class="owner-name">' + escHtml(stars) + ' · ' + escHtml(item ? item.name : r.itemId) + '</div>' +
+                    (r.text ? '<div style="font-size:13px; color:#e2e8f0; margin-top:3px; line-height:1.6;">' + escHtml(r.text) + '</div>' : '') +
+                    '<div class="owner-price">' + escHtml(r.name || 'అతిథి') + (dateStr ? ' · ' + escHtml(dateStr) : '') + (r.hidden ? ' · 🚫 దాచబడింది' : '') + '</div></div>' +
+                    '<button class="avail-btn ' + (r.hidden ? 'off' : 'on') + '" onclick="toggleReviewVisibility(\'' + r.id + '\', this)">' +
+                    (r.hidden ? '👁️ చూపించు' : '🚫 దాచు') + '</button></div>';
+            }).join('');
+        }
+        // Hide / show one review in Firebase (live — the customer menu
+        // updates without a refresh). Only the hidden flag is written;
+        // the review itself is never deleted.
+        function toggleReviewVisibility(id, btnEl) {
+            const r = ownerReviews.find(function (x) { return x.id === id; });
+            if (!r || !db) return;
+            if (btnEl) btnEl.disabled = true;
+            const done = function () { if (btnEl) btnEl.disabled = false; };
+            try {
+                db.ref(REVIEWS_PATH + '/' + id).update({ hidden: !r.hidden }).then(done, done);
+            } catch (e) { done(); }
+        }
+
         if (db) {
             db.ref('.info/connected').on('value', function (snap) {
                 const el = document.getElementById('connStatus');
@@ -512,12 +565,21 @@
                 const el = document.getElementById('connStatus');
                 if (el) { el.textContent = '🔴 చదవలేకపోయాం — ఇంటర్నెట్ చూసి రిఫ్రెష్ చేయండి'; el.className = 'conn bad'; }
             });
+            db.ref(REVIEWS_PATH).on('value', function (snap) {
+                const val = snap.val() || {};
+                ownerReviews = Object.keys(val).map(function (id) {
+                    const r = val[id] || {};
+                    return { id: id, itemId: r.itemId, stars: r.stars, text: r.text || '', name: r.name || '', createdAt: r.createdAt || 0, hidden: r.hidden === true };
+                }).sort(function (a, b) { return (b.createdAt - a.createdAt) || String(b.id).localeCompare(String(a.id)); });
+                renderOwnerReviews();
+            }, function () { /* read failed: keep the old list */ });
         } else {
             const el = document.getElementById('connStatus');
             if (el) { el.textContent = '🔴 Firebase లోడ్ కాలేదు — ఇంటర్నెట్ చూసి రిఫ్రెష్ చేయండి'; el.className = 'conn bad'; }
         }
 
         renderOwnerList();
+        renderOwnerReviews();
     </script>
 </body>
 </html>
