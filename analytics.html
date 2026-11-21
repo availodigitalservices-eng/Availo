@@ -54,6 +54,25 @@
         .note { margin-top: 18px; background: #071530; border: 1px solid rgba(0,229,255,0.35); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: #cbd5e1; line-height: 1.7; }
         .footer { text-align: center; color: #64748b; font-size: 12px; margin-top: 18px; line-height: 1.9; }
         .footer a { color: #DDB65D; font-weight: 700; text-decoration: none; }
+        .hero-row { display: flex; gap: 8px; margin-bottom: 12px; }
+        .hero-card { flex: 1; min-width: 0; background: #0d223f; border: 1.5px solid rgba(32, 221, 224, 0.35); border-radius: 12px; padding: 12px 14px; }
+        .hero-card.gold { border-color: rgba(221, 182, 93, 0.65); background: linear-gradient(180deg, rgba(221, 182, 93, 0.12), rgba(13, 34, 63, 1) 70%); }
+        .hero-head { font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 800; color: #DDB65D; margin-bottom: 6px; line-height: 1.4; }
+        .hero-name { font-size: 16px; font-weight: 800; color: #fff; line-height: 1.35; word-break: break-word; }
+        .hero-meta { font-size: 13px; color: #94a3b8; font-weight: 600; margin-top: 4px; line-height: 1.6; }
+        .hero-meta b { color: #20DDE0; }
+        .hero-stars { font-family: 'Rajdhani', sans-serif; font-size: 26px; font-weight: 800; color: #fbbf24; line-height: 1.2; }
+        .report-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 13.5px; }
+        .report-row:last-child { border-bottom: none; }
+        .report-row .rl { color: #cbd5e1; font-weight: 600; }
+        .report-row .rv { color: #fff; font-weight: 800; text-align: right; }
+        .report-row .rv b { color: #20DDE0; }
+        .report-btns { display: flex; gap: 8px; margin-top: 12px; }
+        .share-btn, .print-btn { flex: 1; text-align: center; padding: 10px 6px; border-radius: 8px; font-size: 13.5px; font-weight: 700; cursor: pointer; font-family: 'Ramabhadra', sans-serif; text-decoration: none; }
+        .share-btn { background: #22c55e; color: #fff; border: 1.5px solid #22c55e; }
+        .print-btn { background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.15); color: #cbd5e1; }
+        .availo-only { margin-top: 10px; font-size: 12px; color: #94a3b8; font-style: italic; line-height: 1.6; text-align: center; }
+        @media (max-width: 420px) { .hero-row { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -66,6 +85,16 @@
             <button class="lang-btn" data-lang="hi" onclick="setAnalyticsLang('hi', this)">हिंदी</button>
         </div>
         <div class="conn" id="connStatus">⏳ కనెక్ట్ అవుతోంది…</div>
+        <div class="hero-row">
+            <div class="hero-card gold">
+                <div class="hero-head"><span data-te="🥇 ఈరోజు టాప్ వంటకం" data-en="🥇 Today’s Top Dish" data-hi="🥇 आज का टॉप व्यंजन">🥇 ఈరోజు టాప్ వంటకం</span></div>
+                <div id="topDishSection"><div class="empty-hint">డేటా లోడ్ అవుతోంది…</div></div>
+            </div>
+            <div class="hero-card">
+                <div class="hero-head"><span data-te="❤️ అత్యధికంగా నచ్చిన వంటకం" data-en="❤️ Most-liked dish" data-hi="❤️ सबसे पसंदीदा व्यंजन">❤️ అత్యధికంగా నచ్చిన వంటకం</span></div>
+                <div id="mostLikedSection"><div class="empty-hint">డేటా లోడ్ అవుతోంది…</div></div>
+            </div>
+        </div>
         <div class="range-row">
             <button class="range-btn active" data-range="today" onclick="setAnalyticsRange('today', this)" data-te="ఈరోజు" data-en="Today" data-hi="आज">ఈరోజు</button>
             <button class="range-btn" data-range="7d" onclick="setAnalyticsRange('7d', this)" data-te="గత 7 రోజులు" data-en="Last 7 days" data-hi="पिछले 7 दिन">గత 7 రోజులు</button>
@@ -107,9 +136,25 @@
             <div id="splitSection"><div class="empty-hint">డేటా లోడ్ అవుతోంది…</div></div>
         </div>
 
+        <div class="card">
+            <div class="card-head"><span data-te="📋 రోజువారీ రిపోర్ట్" data-en="📋 Daily report" data-hi="📋 दैनिक रिपोर्ट">📋 రోజువారీ రిపోర్ట్</span> <span class="range-tag" id="dailyRangeTag"></span></div>
+            <div id="dailySection"><div class="empty-hint">డేటా లోడ్ అవుతోంది…</div></div>
+            <div class="report-btns">
+                <a id="waShareBtn" class="share-btn" href="#" target="_blank" rel="noopener"><span data-te="📤 WhatsAppలో పంపండి" data-en="📤 Send on WhatsApp" data-hi="📤 WhatsApp पर भेजें">📤 WhatsAppలో పంపండి</span></a>
+                <button class="print-btn" type="button" onclick="window.print()"><span data-te="🖨️ ప్రింట్" data-en="🖨️ Print" data-hi="🖨️ प्रिंट">🖨️ ప్రింట్</span></button>
+            </div>
+            <div class="availo-only"><span data-te="AVAILO ద్వారా వచ్చిన ఆర్డర్లు మాత్రమే — కౌంటర్ / వాక్-ఇన్ అమ్మకాలు రెస్టారెంట్ సొంత బిల్లింగ్‌లో ఉంటాయి, ఇక్కడ కనిపించవు." data-en="AVAILO orders only — counter / walk-in sales live in the restaurant’s own billing system and are not shown here." data-hi="सिर्फ AVAILO ऑर्डर — काउंटर / वॉक-इन बिक्री रेस्टोरेंट की अपनी बिलिंग में होती है, यहाँ नहीं दिखती।">AVAILO ద్వారా వచ్చిన ఆర్డర్లు మాత్రమే — కౌంటర్ / వాక్-ఇన్ అమ్మకాలు రెస్టారెంట్ సొంత బిల్లింగ్‌లో ఉంటాయి, ఇక్కడ కనిపించవు.</span></div>
+        </div>
+
+        <div class="card">
+            <div class="card-head"><span data-te="📅 వారపు రిపోర్ట్" data-en="📅 Weekly report" data-hi="📅 साप्ताहिक रिपोर्ट">📅 వారపు రిపోర్ట్</span> <span class="range-tag" id="weeklyRangeTag"></span></div>
+            <div id="weeklySection"><div class="empty-hint">డేటా లోడ్ అవుతోంది…</div></div>
+            <div class="availo-only"><span data-te="AVAILO ద్వారా వచ్చిన ఆర్డర్లు మాత్రమే — కౌంటర్ / వాక్-ఇన్ అమ్మకాలు రెస్టారెంట్ సొంత బిల్లింగ్‌లో ఉంటాయి, ఇక్కడ కనిపించవు." data-en="AVAILO orders only — counter / walk-in sales live in the restaurant’s own billing system and are not shown here." data-hi="सिर्फ AVAILO ऑर्डर — काउंटर / वॉक-इन बिक्री रेस्टोरेंट की अपनी बिलिंग में होती है, यहाँ नहीं दिखती।">AVAILO ద్వారా వచ్చిన ఆర్డర్లు మాత్రమే — కౌంటర్ / వాక్-ఇన్ అమ్మకాలు రెస్టారెంట్ సొంత బిల్లింగ్‌లో ఉంటాయి, ఇక్కడ కనిపించవు.</span></div>
+        </div>
+
         <div class="note">
             📌 <b data-te="ఇది ఎలా పనిచేస్తుంది:" data-en="How this works:" data-hi="यह कैसे काम करता है:">ఇది ఎలా పనిచేస్తుంది:</b>
-            <span data-te="అన్ని లెక్కలు Firebase లో నిజంగా నమోదైన ఆర్డర్లు, రేటింగ్‌లు, బుకింగ్‌ల నుంచే వస్తాయి — ఏదీ అంచనా వేయలేదు, సీడ్ చేయలేదు. రేటింగ్ మాత్రం మొత్తం కాలానికి (all-time) చూపిస్తుంది, ఎందుకంటే రేటింగ్ మొత్తాలకు తేదీ ఉండదు. బుకింగ్‌లు బుక్ చేసిన తేదీ ప్రకారం లెక్కిస్తారు." data-en="Every figure comes only from orders, ratings and bookings actually recorded in Firebase — nothing is estimated or seeded. Ratings are shown for all time, because rating totals carry no date. Bookings are counted by the date they were booked." data-hi="हर आंकड़ा सिर्फ Firebase में दर्ज असली ऑर्डर, रेटिंग और बुकिंग से आता है — कुछ भी अनुमान नहीं लगाया गया है। रेटिंग कुल समय की दिखती है, क्योंकि रेटिंग के कुल में तारीख नहीं होती। बुकिंग बुक करने की तारीख के हिसाब से गिनी जाती है।">అన్ని లెక్కలు Firebase లో నిజంగా నమోదైన ఆర్డర్లు, రేటింగ్‌లు, బుకింగ్‌ల నుంచే వస్తాయి — ఏదీ అంచనా వేయలేదు, సీడ్ చేయలేదు. రేటింగ్ మాత్రం మొత్తం కాలానికి (all-time) చూపిస్తుంది, ఎందుకంటే రేటింగ్ మొత్తాలకు తేదీ ఉండదు. బుకింగ్‌లు బుక్ చేసిన తేదీ ప్రకారం లెక్కిస్తారు.</span>
+            <span data-te="అన్ని లెక్కలు Firebase లో నిజంగా నమోదైన ఆర్డర్లు, రేటింగ్‌లు, బుకింగ్‌ల నుంచే వస్తాయి — ఏదీ అంచనా వేయలేదు, సీడ్ చేయలేదు. రేటింగ్ మాత్రం మొత్తం కాలానికి (all-time) చూపిస్తుంది, ఎందుకంటే రేటింగ్ మొత్తాలకు తేదీ ఉండదు. బుకింగ్‌లు బుక్ చేసిన తేదీ ప్రకారం లెక్కిస్తారు. రోజువారీ / వారపు రిపోర్ట్‌లో AVAILO ద్వారా వచ్చిన ఆర్డర్లు మాత్రమే ఉంటాయి — కౌంటర్ / వాక్-ఇన్ అమ్మకాలు రెస్టారెంట్ సొంత బిల్లింగ్‌లో ఉంటాయి, ఇక్కడ కనిపించవు." data-en="Every figure comes only from orders, ratings and bookings actually recorded in Firebase — nothing is estimated or seeded. Ratings are shown for all time, because rating totals carry no date. Bookings are counted by the date they were booked. The daily / weekly report covers AVAILO orders only — counter / walk-in sales live in the restaurant’s own billing system and are not shown here." data-hi="हर आंकड़ा सिर्फ Firebase में दर्ज असली ऑर्डर, रेटिंग और बुकिंग से आता है — कुछ भी अनुमान नहीं लगाया गया है। रेटिंग कुल समय की दिखती है, क्योंकि रेटिंग के कुल में तारीख नहीं होती। बुकिंग बुक करने की तारीख के हिसाब से गिनी जाती है। दैनिक / साप्ताहिक रिपोर्ट में सिर्फ AVAILO ऑर्डर होते हैं — काउंटर / वॉक-इन बिक्री रेस्टोरेंट की अपनी बिलिंग में होती है, यहाँ नहीं दिखती।">అన్ని లెక్కలు Firebase లో నిజంగా నమోదైన ఆర్డర్లు, రేటింగ్‌లు, బుకింగ్‌ల నుంచే వస్తాయి — ఏదీ అంచనా వేయలేదు, సీడ్ చేయలేదు. రేటింగ్ మాత్రం మొత్తం కాలానికి (all-time) చూపిస్తుంది, ఎందుకంటే రేటింగ్ మొత్తాలకు తేదీ ఉండదు. బుకింగ్‌లు బుక్ చేసిన తేదీ ప్రకారం లెక్కిస్తారు. రోజువారీ / వారపు రిపోర్ట్‌లో AVAILO ద్వారా వచ్చిన ఆర్డర్లు మాత్రమే ఉంటాయి — కౌంటర్ / వాక్-ఇన్ అమ్మకాలు రెస్టారెంట్ సొంత బిల్లింగ్‌లో ఉంటాయి, ఇక్కడ కనిపించవు.</span>
         </div>
         <div class="footer">
             <a href="dine-owner.html">🍽️ ఓనర్ పేజీకి వెళ్ళండి</a><br>
@@ -210,6 +255,114 @@
             'VEG_STARTERS-veg-manchuria': 'veg', 'VEG_STARTERS-veg-shangrilla': 'veg'
         };
 
+        // ---- Dish names: itemId -> display name --------------------
+        // Generated from the exact 284-item HOTEL_MENU in dine.html
+        // (same ids and `name` values — never hand-typed). The ratings
+        // aggregates are keyed by itemId only, so this map is what lets
+        // the dashboard show the most-liked dish by NAME. An id missing
+        // here falls back to the id itself — never guessed.
+        const ITEM_NAMES = {
+    'VEG_BEVERAGES-butter-milk': "Butter Milk", 'VEG_BEVERAGES-curd': "Curd", 'VEG_BEVERAGES-kheer': "Kheer", 'VEG_BEVERAGES-kheer-1-2': "Kheer 1/2",
+    'VEG_BEVERAGES-lassi': "Lassi", 'VEG_BEVERAGES-lassi-1-2': "Lassi 1/2", 'VEG_SOUPS-veg-corn-soup': "Veg Corn Soup", 'VEG_SOUPS-veg-hot-sour-soup': "Veg Hot&sour Soup",
+    'VEG_SOUPS-tomato-soup': "Tomato Soup", 'VEG_SOUPS-veg-manchow-soup': "Veg Manchow Soup", 'VEG_SOUPS-mushroom-soup': "Mushroom Soup",
+    'VEG_SOUPS-baby-corn-soup': "Baby Corn Soup", 'VEG_SOUPS-veg-hot-sour-soup-1-2': "Veg Hot&sour Soup 1/2", 'VEG_SOUPS-veg-corn-soup-1-2': "Veg Corn Soup 1/2",
+    'VEG_SOUPS-tomato-soup1-2': "Tomato Soup1/2", 'VEG_SOUPS-veg-manchow-soup-1-2': "Veg Manchow Soup 1/2", 'VEG_SOUPS-baby-corn-soup-1-2': "Baby Corn Soup 1/2",
+    'VEG_SOUPS-mushroom-soup-1-2': "Mushroom Soup 1/2", 'VEG_SOUPS-veg-corn-soup-2-3': "Veg Corn Soup 2/3", 'VEG_SOUPS-veg-hot-sour-2-3': "Veg Hot&sour 2/3",
+    'VEG_SOUPS-veg-manchow-soup-2-3': "Veg Manchow Soup 2/3", 'VEG_SOUPS-tomato-soup-2-3': "Tomato Soup 2/3", 'VEG_SOUPS-baby-corn-soup-2-3': "Baby Corn Soup 2/3",
+    'VEG_SOUPS-mushrrom-soup-2-3': "Mushrrom Soup 2/3", 'NONVEG_SOUPS-chicken-corn-soup': "Chicken Corn Soup", 'NONVEG_SOUPS-chicken-manchow-soup': "Chicken Manchow Soup",
+    'NONVEG_SOUPS-chicken-hot-sour-soup': "Chicken Hot&sour Soup", 'NONVEG_SOUPS-chicken-hot-sour-soups-1-2': "Chicken Hot Sour Soups 1/2",
+    'NONVEG_SOUPS-chicken-corn-soup-1-2': "Chicken Corn Soup 1/2", 'NONVEG_SOUPS-chicken-manchow-soup-1-2': "Chicken Manchow Soup 1/2",
+    'NONVEG_SOUPS-mutton-soup': "Mutton Soup", 'NONVEG_SOUPS-mutton-soup-1-2': "Mutton Soup 1/2", 'NONVEG_SOUPS-mutton-soup-2-3': "Mutton Soup 2/3",
+    'NONVEG_SOUPS-chicken': "Chicken", 'NONVEG_SOUPS-chicken-hot-sour-2-3': "Chicken Hot&sour 2/3", 'NONVEG_SOUPS-chicken-corn-soup-2-3': "Chicken Corn Soup 2/3",
+    'VEG_STARTERS-crispy-veg': "Crispy Veg", 'VEG_STARTERS-veg-manchuria': "Veg Manchuria", 'VEG_STARTERS-chilly-baby-corn': "Chilly Baby Corn",
+    'VEG_STARTERS-baby-corn-manchuria': "Baby Corn Manchuria", 'VEG_STARTERS-crispy-baby-corn': "Crispy Baby Corn", 'VEG_STARTERS-chilly-panner': "Chilly Panner",
+    'VEG_STARTERS-panner-65': "Panner 65", 'VEG_STARTERS-chilly-murshroom': "Chilly Murshroom", 'VEG_STARTERS-mushroom-dry': "Mushroom Dry",
+    'VEG_STARTERS-mushroom-manchuria': "Mushroom Manchuria", 'VEG_STARTERS-gobi-manchuria': "Gobi Manchuria", 'VEG_STARTERS-veg-shangrilla': "Veg Shangrilla",
+    'VEG_STARTERS-mushroom-65': "Mushroom 65", 'VEG_STARTERS-panner-manchuria': "Panner Manchuria", 'VEG_STARTERS-panner-555': "Panner 555",
+    'VEG_STARTERS-baby-corn-65': "Baby Corn 65", 'VEG_STARTERS-veg-chakra': "Veg Chakra", 'VEG_STARTERS-chilly-egg': "Chilly Egg", 'VEG_STARTERS-egg-65': "Egg 65",
+    'VEG_STARTERS-egg-manchuria': "Egg Manchuria", 'VEG_STARTERS-boield-egg-3': "Boield Egg (3)", 'VEG_STARTERS-green-salad': "Green Salad",
+    'VEG_STARTERS-kaju-pakoda': "Kaju Pakoda", 'VEG_STARTERS-baby-corn-mejistic': "Baby Corn Mejistic", 'VEG_STARTERS-boild-egg-1': "Boild Egg 1",
+    'VEG_STARTERS-kaju-fry': "Kaju Fry", 'VEG_STARTERS-boiled-egg-2': "Boiled Egg(2)", 'VEG_STARTERS-pepper-mushroom': "Pepper Mushroom", 'VEG_STARTERS-egg-fry': "Egg Fry",
+    'VEG_STARTERS-panner-magestic': "Panner Magestic", 'VEG_STARTERS-crispy-corn': "Crispy Corn", 'VEG_STARTERS-pepper-baby-corn': "Pepper Baby Corn",
+    'VEG_STARTERS-pepper-gobi': "Pepper Gobi", 'VEG_STARTERS-egg-roast': "Egg Roast", 'VEG_STARTERS-butter-garlic-broccoli': "Butter Garlic Broccoli",
+    'VEG_STARTERS-broccoli-65': "Broccoli 65", 'VEG_STARTERS-chilli-broccoli': "Chilli Broccoli", 'VEG_STARTERS-chilli-gobi': "Chilli Gobi",
+    'VEG_STARTERS-gobi-65': "Gobi 65", 'NONVEG_STARTERS-brain-fry-half': "Brain Fry Half", 'NONVEG_STARTERS-chicken-65': "Chicken 65",
+    'NONVEG_STARTERS-chilly-chicken': "Chilly Chicken", 'NONVEG_STARTERS-chicken-manchuria': "Chicken Manchuria", 'NONVEG_STARTERS-chicken-lollypop': "Chicken Lollypop",
+    'NONVEG_STARTERS-chicken-fried-wings-full': "Chicken Fried Wings-full", 'NONVEG_STARTERS-chicken-555': "Chicken 555",
+    'NONVEG_STARTERS-chicken-magestic': "Chicken Magestic", 'NONVEG_STARTERS-loose-prawns': "Loose Prawns", 'NONVEG_STARTERS-pepper-chicken-b-l': "Pepper Chicken B/l",
+    'NONVEG_STARTERS-basket-chicken': "Basket Chicken", 'NONVEG_STARTERS-fish-fry': "Fish Fry", 'NONVEG_STARTERS-chicken-fry': "Chicken Fry",
+    'NONVEG_STARTERS-chicken-fried-wings-half': "Chicken Fried Wings-half", 'NONVEG_STARTERS-kaju-chicken-dry': "Kaju Chicken Dry",
+    'NONVEG_STARTERS-ks-boneless-dry': "Ks.boneless Dry", 'NONVEG_STARTERS-ks-bone-dry': "Ks.bone Dry", 'NONVEG_STARTERS-chicken-chakra': "Chicken Chakra",
+    'NONVEG_STARTERS-chicken-85-bone': "Chicken 85 Bone", 'NONVEG_STARTERS-mutton-liver-fry': "Mutton Liver Fry", 'NONVEG_STARTERS-ks-mutton-dry': "Ks.mutton Dry",
+    'NONVEG_STARTERS-prawns-fry': "Prawns Fry", 'NONVEG_STARTERS-fried-prawns': "Fried Prawns", 'NONVEG_STARTERS-ks-prawns-dry': "Ks.prawns Dry",
+    'NONVEG_STARTERS-ks-natukodi-dry': "Ks. Natukodi Dry", 'NONVEG_STARTERS-chicken-pakkoda': "Chicken Pakkoda", 'NONVEG_STARTERS-rr-chicken': "Rr Chicken",
+    'NONVEG_STARTERS-pepper-prawns': "Pepper Prawns", 'NONVEG_STARTERS-head-fry': "Head Fry", 'NONVEG_STARTERS-brain-fry': "Brain Fry",
+    'NONVEG_STARTERS-fish-roast-b-l': "Fish Roast B/l", 'NONVEG_STARTERS-mutton-fry': "Mutton Fry", 'NONVEG_STARTERS-chicken-roast': "Chicken Roast",
+    'NONVEG_STARTERS-nk-fry': "Nk.fry", 'NONVEG_STARTERS-apolo-fish': "Apolo Fish", 'NONVEG_STARTERS-chilly-fish': "Chilly Fish",
+    'NONVEG_STARTERS-chicken-fry-b-l': "Chicken Fry B/l", 'NONVEG_STARTERS-basket-fish': "Basket Fish", 'NONVEG_STARTERS-dum-joint': "Dum Joint",
+    'NONVEG_STARTERS-guntur-chicken-bone-snack': "Guntur Chicken Bone Snack", 'NONVEG_STARTERS-dragon-chicken': "Dragon Chicken",
+    'NONVEG_STARTERS-dragon-fish': "Dragon Fish", 'NONVEG_STARTERS-chicken-85-b-l': "Chicken 85 B/l", 'NONVEG_STARTERS-chicken-lollipop-half': "Chicken Lollipop - Half",
+    'NONVEG_STARTERS-chilli-prawns': "Chilli Prawns", 'VEG_CURRYS-plain-palak': "Plain Palak", 'VEG_CURRYS-dal-fry': "Dal Fry", 'VEG_CURRYS-tomato-curry': "Tomato Curry",
+    'VEG_CURRYS-palak-panner': "Palak Panner", 'VEG_CURRYS-dal-palak': "Dal Palak", 'VEG_CURRYS-dal-tomato': "Dal Tomato", 'VEG_CURRYS-dal-tadka': "Dal Tadka",
+    'VEG_CURRYS-egg-dal': "Egg Dal", 'VEG_CURRYS-egg-palak': "Egg Palak", 'VEG_CURRYS-egg-tomato': "Egg Tomato", 'VEG_CURRYS-dal-palak-tomato-mix': "Dal Palak Tomato Mix",
+    'VEG_CURRYS-kaju-tomato': "Kaju Tomato", 'VEG_CURRYS-kaju-panner': "Kaju Panner", 'VEG_CURRYS-kaju-capsicum': "Kaju Capsicum",
+    'VEG_CURRYS-kaju-murshroom': "Kaju Murshroom", 'VEG_CURRYS-kaju-baby-corn': "Kaju Baby Corn", 'VEG_CURRYS-mixed-veg-curry': "Mixed Veg Curry",
+    'VEG_CURRYS-veg-sahi-panneer': "Veg Sahi Panneer", 'VEG_CURRYS-veg-kola-puri': "Veg Kola Puri", 'VEG_CURRYS-veg-sham-shavera': "Veg Sham Shavera",
+    'VEG_CURRYS-veg-maharani': "Veg Maharani", 'VEG_CURRYS-kadai-veg': "Kadai Veg", 'VEG_CURRYS-kadai-panner': "Kadai Panner",
+    'VEG_CURRYS-baby-corn-curry': "Baby Corn Curry", 'VEG_CURRYS-baby-corn-masala': "Baby Corn Masala", 'VEG_CURRYS-mushroom-curry': "Mushroom Curry",
+    'VEG_CURRYS-murshroom-masala': "Murshroom Masala", 'VEG_CURRYS-baby-corn-murshroom-panner-mix': "Baby Corn Murshroom Panner Mix",
+    'VEG_CURRYS-murshroom-palak': "Murshroom Palak", 'VEG_CURRYS-panner-butter-masala': "Panner Butter Masala", 'VEG_CURRYS-methy-chaman': "Methy Chaman",
+    'VEG_CURRYS-malai-kofta': "Malai Kofta", 'VEG_CURRYS-kaju-methi-chaman': "Kaju Methi Chaman", 'VEG_CURRYS-kaju-palak': "Kaju Palak",
+    'VEG_CURRYS-capsicum-tomato-curry': "Capsicum Tomato Curry", 'VEG_CURRYS-methi-panner': "Methi Panner", 'VEG_CURRYS-egg-curry': "Egg Curry",
+    'VEG_CURRYS-egg-masala': "Egg Masala", 'VEG_CURRYS-egg-kheema-curry': "Egg Kheema Curry", 'VEG_CURRYS-kaju-curry': "Kaju Curry",
+    'VEG_CURRYS-veg-shahi-kurma': "Veg Shahi Kurma", 'VEG_CURRYS-egg-burji': "Egg Burji", 'VEG_CURRYS-kadai-mashroom': "Kadai Mashroom",
+    'VEG_CURRYS-baby-corn-murshroom-masala': "Baby Corn Murshroom Masala", 'VEG_CURRYS-gongora-mushroom': "Gongora Mushroom", 'VEG_CURRYS-veg-palak': "Veg Palak",
+    'VEG_CURRYS-capsicum-curry': "Capsicum Curry", 'VEG_CURRYS-kaju-masala': "Kaju Masala", 'VEG_CURRYS-broccoli-curry': "Broccoli Curry",
+    'NONVEG_CURRYS-chicken-curry': "Chicken Curry", 'NONVEG_CURRYS-chicken-curry-b-l': "Chicken Curry B/l", 'NONVEG_CURRYS-chicken-keema-curry': "Chicken Keema Curry",
+    'NONVEG_CURRYS-and-chicken-curry': "And.chicken Curry", 'NONVEG_CURRYS-and-chicken-curry-b-l': "And Chicken Curry B/l", 'NONVEG_CURRYS-kadai-chicken': "Kadai Chicken",
+    'NONVEG_CURRYS-chicken-kolapuri': "Chicken Kolapuri", 'NONVEG_CURRYS-chicken-afghani': "Chicken Afghani", 'NONVEG_CURRYS-kaju-chicken-curry': "Kaju Chicken Curry",
+    'NONVEG_CURRYS-punjab-chicken-curry': "Punjab Chicken Curry", 'NONVEG_CURRYS-punjab-chicken-curry-b-l': "Punjab Chicken Curry B/l",
+    'NONVEG_CURRYS-chicken-kurma-b-l': "Chicken Kurma B/l", 'NONVEG_CURRYS-gnt-chicken-curry': "Gnt Chicken Curry",
+    'NONVEG_CURRYS-gnt-chicken-curry-b-l': "Gnt Chicken Curry B/l", 'NONVEG_CURRYS-chicken-moglai-curry': "Chicken Moglai Curry",
+    'NONVEG_CURRYS-butter-chicken': "Butter Chicken", 'NONVEG_CURRYS-mutton-curry': "Mutton Curry", 'NONVEG_CURRYS-mutton-roghan-josh': "Mutton Roghan Josh",
+    'NONVEG_CURRYS-prawns-curry': "Prawns Curry", 'NONVEG_CURRYS-prawns-masala': "Prawns Masala", 'NONVEG_CURRYS-head-curry': "Head Curry",
+    'NONVEG_CURRYS-gongura-chicken': "Gongura Chicken", 'NONVEG_CURRYS-methi-chicken-curry': "Methi Chicken Curry",
+    'NONVEG_CURRYS-kaju-chicken-masala': "Kaju Chicken Masala", 'NONVEG_CURRYS-mutton-masala': "Mutton Masala", 'NONVEG_CURRYS-gongura-mutton': "Gongura Mutton",
+    'NONVEG_CURRYS-natukodi-masala': "Natukodi Masala", 'NONVEG_CURRYS-gongura-prawns': "Gongura Prawns", 'NONVEG_CURRYS-and-mutton-curry': "And Mutton Curry",
+    'NONVEG_CURRYS-kadai-chicken-b-l': "Kadai Chicken B/l", 'NONVEG_CURRYS-chicken-maharani': "Chicken Maharani",
+    'NONVEG_CURRYS-chicken-tikka-masala': "Chicken Tikka Masala", 'NONVEG_CURRYS-chicken-masala': "Chicken Masala", 'NONVEG_CURRYS-mutton-keema-curry': "Mutton Keema Curry",
+    'NONVEG_CURRYS-chicken-masala-b-l': "Chicken Masala B/l", 'NONVEG_CURRYS-fish-curry': "Fish Curry", 'NONVEG_CURRYS-fish-pulusu': "Fish Pulusu",
+    'NONVEG_CURRYS-n-k-curry': "N K Curry", 'NONVEG_CURRYS-chicken-kolapuri-b-l': "Chicken Kolapuri B/l.", 'BIRYANI_VEG-veg-biryani': "Veg Biryani",
+    'BIRYANI_VEG-egg-biryani': "Egg Biryani", 'BIRYANI_VEG-mushroom-biryani': "Mushroom Biryani", 'BIRYANI_VEG-kaju-biryani': "Kaju Biryani",
+    'BIRYANI_VEG-panner-biryani': "Panner Biryani", 'BIRYANI_VEG-ks-veg-biryani': "Ks.veg Biryani", 'BIRYANI_VEG-biryani-rice-veg': "Biryani Rice Veg",
+    'BIRYANI_NONVEG-biryani-rice': "Biryani Rice", 'BIRYANI_NONVEG-sp-chicken-biryani': "Sp.chicken Biryani",
+    'BIRYANI_NONVEG-chicken-fripiece-biryani': "Chicken Fripiece Biryani", 'BIRYANI_NONVEG-chicken-wings-biryani': "Chicken Wings Biryani",
+    'BIRYANI_NONVEG-chicken-lollypop-biryani': "Chicken Lollypop Biryani", 'BIRYANI_NONVEG-chicken-keema-biryani': "Chicken Keema Biryani",
+    'BIRYANI_NONVEG-chicken-tikka-biryani': "Chicken Tikka Biryani", 'BIRYANI_NONVEG-chicken-moghalai-biryani': "Chicken Moghalai Biryani",
+    'BIRYANI_NONVEG-chicken-roast-biryani': "Chicken Roast Biryani", 'BIRYANI_NONVEG-fish-biryani': "Fish Biryani", 'BIRYANI_NONVEG-ks-mutton-biryani': "Ks Mutton Biryani",
+    'BIRYANI_NONVEG-non-veg-mixed-biryani': "Non-veg Mixed Biryani", 'BIRYANI_NONVEG-mutton-liver-biryani': "Mutton Liver Biryani",
+    'BIRYANI_NONVEG-ks-prawns-biryani': "Ks.prawns Biryani", 'BIRYANI_NONVEG-ks-natukodi-biryani': "Ks.natukodi Biryani",
+    'BIRYANI_NONVEG-mutton-keema-biryani': "Mutton Keema Biryani", 'BIRYANI_NONVEG-chicken-dumbiryani': "Chicken Dumbiryani",
+    'BIRYANI_NONVEG-sp-chicken-biryani-curry-type': "Sp Chicken Biryani Curry Type", 'BIRYANI_NONVEG-mutton-dum-biryni': "Mutton Dum Biryni",
+    'BIRYANI_NONVEG-tangdi-kabab-biryani': "Tangdi Kabab Biryani", 'VEG_RICE-white-rice': "White Rice", 'VEG_RICE-veg-fride-rice': "Veg Fride Rice",
+    'VEG_RICE-ks-veg-fride-rice': "Ks.veg Fride Rice", 'VEG_RICE-egg-fride-rice': "Egg Fride Rice", 'VEG_RICE-zeera-rice': "Zeera Rice",
+    'VEG_RICE-panner-fried-rice': "Panner Fried Rice", 'VEG_RICE-kaju-fride-rice': "Kaju Fride Rice", 'VEG_RICE-mushroom-fride-rice': "Mushroom Fride Rice",
+    'VEG_RICE-baby-corn-fride-rice': "Baby Corn Fride Rice", 'VEG_RICE-veg-sezwan-fride-rice': "Veg Sezwan Fride Rice", 'VEG_RICE-ragi-sangati': "Ragi Sangati",
+    'VEG_RICE-curd-rice': "Curd Rice", 'VEG_RICE-sp-curd-rice': "Sp.curd Rice", 'VEG_RICE-kaju-zeera-fried-rice': "Kaju Zeera Fried Rice",
+    'VEG_RICE-veg-manchurian-fried-rice': "Veg Manchurian Fried Rice", 'VEG_RICE-ghee-rice': "Ghee Rice", 'VEG_RICE-egg-shewzan-fried-rice': "Egg Shewzan Fried Rice",
+    'NONVEG_RICE-spl-chicken-fride-rice': "Spl.chicken Fride Rice", 'NONVEG_RICE-chicken-fried-rice': "Chicken Fried Rice", 'NONVEG_RICE-nk-fride-rice': "Nk.fride Rice",
+    'NONVEG_RICE-fish-fride-rice': "Fish Fride Rice", 'NONVEG_RICE-ks-prawns-fride-rice': "Ks.prawns Fride Rice", 'NONVEG_RICE-ks-mutton-fride-rice': "Ks.mutton Fride Rice",
+    'NONVEG_RICE-chicken-sezwan-fride-rice': "Chicken Sezwan Fride Rice", 'NONVEG_RICE-non-veg-mixed-fride-rice': "Non-veg Mixed Fride Rice",
+    'NONVEG_RICE-kaju-chicken-fried-rice': "Kaju Chicken Fried Rice", 'ROTIS-lachha-parota': "Lachha Parota", 'ROTIS-butter-roti': "Butter Roti",
+    'ROTIS-butter-naan': "Butter Naan", 'ROTIS-plain-naan': "Plain Naan", 'ROTIS-plain-kulcha': "Plain Kulcha", 'ROTIS-masala-kulcha': "Masala Kulcha",
+    'ROTIS-pulka': "Pulka", 'ROTIS-tandoori-roti': "Tandoori Roti", 'ROTIS-kulcha': "Kulcha", 'ROTIS-garlic-naan': "Garlic Naan",
+    'TANDOORI_NONVEG-tandoori-chicken-full': "Tandoori Chicken Full", 'TANDOORI_NONVEG-tandoori-chicken-half': "Tandoori Chicken Half",
+    'TANDOORI_NONVEG-chicken-tikka': "Chicken Tikka", 'TANDOORI_NONVEG-tangdi-kebab-full': "Tangdi Kebab Full", 'TANDOORI_NONVEG-tangdi-kebab-half': "Tangdi Kebab Half",
+    'TANDOORI_NONVEG-kalmi-kebab': "Kalmi Kebab", 'TANDOORI_NONVEG-malai-kabab': "Malai Kabab", 'TANDOORI_NONVEG-today-spl-kabab': "Today Spl Kabab",
+    'TANDOORI_NONVEG-fish-tikka': "Fish Tikka", 'TANDOORI_VEG-panner-tikka': "Panner Tikka", 'TANDOORI_VEG-alu-parata': "Alu Parata",
+    'TANDOORI_VEG-mushroom-tikka': "Mushroom Tikka", 'TANDOORI_VEG-harabhara-kabab': "Harabhara Kabab",
+        };
+
         // ---- Language (Telugu default, like the Dine pages) --------------
         const T = {
             noData: { te: 'ఇంకా డేటా లేదు', en: 'No data yet', hi: 'अभी कोई डेटा नहीं' },
@@ -234,7 +387,21 @@
             connConnecting: { te: '⏳ కనెక్ట్ అవుతోంది…', en: '⏳ Connecting…', hi: '⏳ कनेक्ट हो रहा है…' },
             connOk: { te: '🟢 కనెక్ట్ అయ్యింది', en: '🟢 Connected', hi: '🟢 कनेक्ट हो गया' },
             connBad: { te: '🔴 కనెక్ట్ కాలేదు — ఇంటర్నెట్ చూడండి', en: '🔴 Not connected — check internet', hi: '🔴 कनेक्ट नहीं हुआ — इंटरनेट देखें' },
-            connNoFirebase: { te: '🔴 Firebase లోడ్ కాలేదు — ఇంటర్నెట్ చూసి రిఫ్రెష్ చేయండి', en: '🔴 Firebase did not load — check internet and refresh', hi: '🔴 Firebase लोड नहीं हुआ — इंटरनेट देखकर रिफ्रेश करें' }
+            connNoFirebase: { te: '🔴 Firebase లోడ్ కాలేదు — ఇంటర్నెట్ చూసి రిఫ్రెష్ చేయండి', en: '🔴 Firebase did not load — check internet and refresh', hi: '🔴 Firebase लोड नहीं हुआ — इंटरनेट देखकर रिफ्रेश करें' },
+            topDishToday: { te: '🥇 ఈరోజు టాప్ వంటకం', en: '🥇 Today’s Top Dish', hi: '🥇 आज का टॉप व्यंजन' },
+            mostLiked: { te: '❤️ అత్యధికంగా నచ్చిన వంటకం', en: '❤️ Most-liked dish', hi: '❤️ सबसे पसंदीदा व्यंजन' },
+            noOrdersToday: { te: 'ఇంకా ఆర్డర్లు లేవు', en: 'No orders yet today', hi: 'आज अभी कोई ऑर्डर नहीं' },
+            noRatingsYet: { te: 'ఇంకా రేటింగ్స్ లేవు', en: 'No ratings yet', hi: 'अभी कोई रेटिंग नहीं' },
+            topDish: { te: 'టాప్ వంటకం', en: 'Top dish', hi: 'टॉप व्यंजन' },
+            allTime: { te: 'మొత్తం', en: 'all-time', hi: 'कुल' },
+            dailyReport: { te: '📋 రోజువారీ రిపోర్ట్', en: '📋 Daily report', hi: '📋 दैनिक रिपोर्ट' },
+            weeklyReport: { te: '📅 వారపు రిపోర్ట్', en: '📅 Weekly report', hi: '📅 साप्ताहिक रिपोर्ट' },
+            shareWhatsApp: { te: '📤 WhatsAppలో పంపండి', en: '📤 Send on WhatsApp', hi: '📤 WhatsApp पर भेजें' },
+            printBtn: { te: '🖨️ ప్రింట్', en: '🖨️ Print', hi: '🖨️ प्रिंट' },
+            totalOrders: { te: 'మొత్తం ఆర్డర్లు', en: 'Total orders', hi: 'कुल ऑर्डर' },
+            totalRevenue: { te: 'మొత్తం ఆదాయం', en: 'Total revenue', hi: 'कुल कमाई' },
+            dayOrders: { te: 'ఆర్డర్లు', en: 'orders', hi: 'ऑर्डर' },
+            availoOnlyShort: { te: 'AVAILO ద్వారా వచ్చిన ఆర్డర్లు మాత్రమే', en: 'AVAILO orders only', hi: 'सिर्फ AVAILO ऑर्डर' }
         };
         let currentLang = 'te';
         function t(key) { const d = T[key] || {}; return d[currentLang] || d.te || key; }
@@ -401,7 +568,8 @@
             const hh = h % 12; return (hh === 0 ? 12 : hh) + ap;
         }
         // One call for the whole dashboard (pure): ranged order metrics +
-        // ranged booking metrics + all-time rating metrics.
+        // ranged booking metrics + all-time rating metrics + today's top
+        // dish, the most-liked dish, and the daily / weekly reports.
         function computeDashboard(orders, ratingsMap, reviews, bookings, range, nowMs) {
             const ranged = ordersInRange(orders, range, nowMs);
             const rangedBookings = ordersInRange(bookings, range, nowMs);
@@ -414,8 +582,140 @@
                 coupons: computeCouponStats(ranged),
                 bookings: computeBookingStats(rangedBookings),
                 peak: peakHours(ranged),
-                split: vegSplit(ranged, ITEM_VEG)
+                split: vegSplit(ranged, ITEM_VEG),
+                todayTop: todaysTopDish(orders, nowMs),
+                mostLiked: mostLikedDish(ratingsMap, 3, ITEM_NAMES),
+                daily: dailyReport(orders, ratingsMap, reviews, bookings, nowMs),
+                weekly: weeklyReport(orders, nowMs)
             };
+        }
+
+        // ---- Today's top dish + most-liked dish + daily/weekly reports ----
+        const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        // Deterministic date labels (never toLocaleDateString, whose
+        // output differs by engine/locale): '21 Nov', '21 Nov 2026'.
+        function dayLabel(ms) {
+            const d = new Date(ms);
+            return d.getDate() + ' ' + MONTHS_SHORT[d.getMonth()];
+        }
+        function fullDateLabel(ms) {
+            return dayLabel(ms) + ' ' + new Date(ms).getFullYear();
+        }
+        // Today's single most-ordered dish (quantity first, revenue breaks
+        // ties — same ranking as topDishes). Null when nothing was ordered
+        // today — never a guessed dish.
+        function todaysTopDish(orders, nowMs) {
+            const today = ordersInRange(orders, 'today', nowMs);
+            return topDishes(today, 1)[0] || null;
+        }
+        // Highest average star rating, only dishes with at least
+        // minReviews reviews qualify (default 3) — a single 5-star review
+        // must not crown a dish. Ties: more reviews first, then name.
+        // Null when no dish qualifies. Names come from ITEM_NAMES (the
+        // exact menu); an unknown id falls back to the id itself.
+        function mostLikedDish(ratingsMap, minReviews, nameMap) {
+            const min = minReviews == null ? 3 : minReviews;
+            const m = ratingsMap || {};
+            let best = null;
+            Object.keys(m).forEach(function (id) {
+                const r = m[id] || {};
+                const count = Number(r.count) || 0;
+                const sum = Number(r.sum) || 0;
+                if (count < min) return;
+                const avg = round2(sum / count);
+                const name = (nameMap && nameMap[id]) || id;
+                const cand = { id: id, name: name, avg: avg, count: count };
+                if (!best || cand.avg > best.avg ||
+                    (cand.avg === best.avg && cand.count > best.count) ||
+                    (cand.avg === best.avg && cand.count === best.count && cand.name < best.name)) best = cand;
+            });
+            return best;
+        }
+        // Today's average rating, from today's review records (createdAt
+        // is on the record; hidden reviews are left out — the owner hid
+        // them). When nobody reviewed today, fall back to the all-time
+        // average from the aggregates, labelled 'all-time' so it is never
+        // mistaken for a daily figure. Null when there is no rating
+        // anywhere.
+        function todaysRating(reviews, ratingsMap, nowMs) {
+            const start = rangeStartMs('today', nowMs);
+            let sum = 0, count = 0;
+            asArray(reviews).forEach(function (r) {
+                if (!r || r.hidden) return;
+                const tstamp = Number(r.createdAt) || 0;
+                if (tstamp < start) return;
+                const stars = Number(r.stars) || 0;
+                if (stars <= 0) return;
+                sum += stars; count++;
+            });
+            if (count > 0) return { avg: round2(sum / count), count: count, scope: 'today' };
+            const all = computeRatings(ratingsMap);
+            if (!all) return null;
+            return { avg: all.avg, count: all.count, scope: 'all-time' };
+        }
+        // Daily report (today, Availo orders only): orders, revenue,
+        // average order value, top dish of the day, coupon discount
+        // given, table bookings booked today, and today's rating.
+        function dailyReport(orders, ratingsMap, reviews, bookings, nowMs) {
+            const todayOrders = ordersInRange(orders, 'today', nowMs);
+            const rev = computeRevenue(todayOrders);
+            const todayBookings = ordersInRange(bookings, 'today', nowMs);
+            return {
+                dateMs: (nowMs == null ? Date.now() : nowMs),
+                orders: rev.count,
+                revenue: rev.revenue,
+                avgOrder: rev.avgOrder,
+                topDish: topDishes(todayOrders, 1)[0] || null,
+                couponDiscount: computeCouponStats(todayOrders).totalDiscount,
+                bookings: todayBookings.length,
+                rating: todaysRating(reviews, ratingsMap, nowMs)
+            };
+        }
+        // Weekly report: the last 7 calendar days ending today, oldest
+        // first. Every day is listed — a day with no orders shows 0,
+        // never skipped or estimated.
+        function weeklyReport(orders, nowMs) {
+            const now = new Date(nowMs == null ? Date.now() : nowMs);
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+            const DAY = 864e5;
+            const days = [];
+            let totalOrders = 0, totalRevenue = 0;
+            for (let i = 6; i >= 0; i--) {
+                const start = todayStart - i * DAY;
+                const end = start + DAY;
+                let count = 0, revenue = 0;
+                asArray(orders).forEach(function (o) {
+                    const tstamp = Number(o && o.createdAt) || 0;
+                    if (tstamp >= start && tstamp < end) {
+                        count++;
+                        revenue = round2(revenue + (Number(o.total) || 0));
+                    }
+                });
+                totalOrders += count;
+                totalRevenue = round2(totalRevenue + revenue);
+                days.push({ startMs: start, label: dayLabel(start), orders: count, revenue: revenue });
+            }
+            return { totalOrders: totalOrders, totalRevenue: totalRevenue, days: days };
+        }
+        // Prefilled WhatsApp text for the daily report (current language).
+        // Always built from the computed report — an empty day still
+        // shares honestly ("0 orders"), never a made-up figure.
+        function whatsappDailyText(d) {
+            const lines = [];
+            lines.push('AVAILO Dine — ' + t('dailyReport') + ' (' + fullDateLabel(d.dateMs) + ')');
+            lines.push(t('availoOnlyShort'));
+            lines.push('• ' + t('orders') + ': ' + d.orders);
+            lines.push('• ' + t('revenue') + ': ' + fmtINR(d.revenue));
+            lines.push('• ' + t('topDish') + ': ' + (d.topDish ? d.topDish.name + ' (' + d.topDish.qty + ' ' + t('sold') + ')' : '—'));
+            lines.push('• ' + t('avgOrder') + ': ' + (d.avgOrder == null ? '—' : fmtINR(d.avgOrder)));
+            lines.push('• ' + t('totalDiscount') + ': ' + fmtINR(d.couponDiscount));
+            lines.push('• ' + t('bookings') + ': ' + d.bookings);
+            if (d.rating) lines.push('• ' + t('avgRating') + ': ★ ' + d.rating.avg.toFixed(1) + ' (' + (d.rating.scope === 'today' ? t('rangeToday') : t('allTime')) + ' · ' + d.rating.count + ' ' + t('reviewsWord') + ')');
+            else lines.push('• ' + t('avgRating') + ': —');
+            return lines.join('\n');
+        }
+        function reportRow(label, valueHtml) {
+            return '<div class="report-row"><div class="rl">' + escHtml(label) + '</div><div class="rv">' + valueHtml + '</div></div>';
         }
 
         // ---- Live state + rendering ---------------------------------------
@@ -539,6 +839,67 @@
                             '<div class="bar-count">' + r.n + '</div></div>';
                     }).join('') +
                     '<div class="split-line">' + escHtml(t('itemsWord')) + ': <b>' + d.split.total + '</b></div>';
+                }
+            }
+
+            // Today's top dish (hero card, always today).
+            const tdEl = document.getElementById('topDishSection');
+            if (tdEl) {
+                if (!analyticsLoaded) tdEl.innerHTML = '<div class="empty-hint">…</div>';
+                else if (!d.todayTop) tdEl.innerHTML = '<div class="empty-hint">' + escHtml(t('noOrdersToday')) + '</div>';
+                else tdEl.innerHTML = '<div class="hero-name">' + escHtml(d.todayTop.name) + '</div>' +
+                    '<div class="hero-meta">' + d.todayTop.qty + ' ' + escHtml(t('sold')) + ' · <b>' + escHtml(fmtINR(d.todayTop.revenue)) + '</b></div>';
+            }
+
+            // Most-liked dish (hero card, all-time, min 3 reviews).
+            const mlEl = document.getElementById('mostLikedSection');
+            if (mlEl) {
+                if (!analyticsLoaded) mlEl.innerHTML = '<div class="empty-hint">…</div>';
+                else if (!d.mostLiked) mlEl.innerHTML = '<div class="empty-hint">' + escHtml(t('noRatingsYet')) + '</div>';
+                else mlEl.innerHTML = '<div class="hero-stars">★ ' + d.mostLiked.avg.toFixed(1) + '</div>' +
+                    '<div class="hero-name">' + escHtml(d.mostLiked.name) + '</div>' +
+                    '<div class="hero-meta">' + d.mostLiked.count + ' ' + escHtml(t('reviewsWord')) + '</div>';
+            }
+
+            // Daily report (today, Availo orders only) + WhatsApp share link.
+            const drTag = document.getElementById('dailyRangeTag');
+            if (drTag) drTag.textContent = '· ' + fullDateLabel(d.daily.dateMs);
+            const drEl = document.getElementById('dailySection');
+            if (drEl) {
+                if (!analyticsLoaded) drEl.innerHTML = '<div class="empty-hint">…</div>';
+                else {
+                    const ratingTxt = !d.daily.rating ? '—' :
+                        '★ ' + d.daily.rating.avg.toFixed(1) + ' (' + (d.daily.rating.scope === 'today' ? t('rangeToday') : t('allTime')) + ' · ' + d.daily.rating.count + ' ' + t('reviewsWord') + ')';
+                    const topTxt = d.daily.topDish ? escHtml(d.daily.topDish.name) + ' (' + d.daily.topDish.qty + ' ' + escHtml(t('sold')) + ')' : '—';
+                    drEl.innerHTML = reportRow(t('orders'), String(d.daily.orders)) +
+                        reportRow(t('revenue'), escHtml(fmtINR(d.daily.revenue))) +
+                        reportRow(t('topDish'), topTxt) +
+                        reportRow(t('avgOrder'), d.daily.avgOrder == null ? '—' : escHtml(fmtINR(d.daily.avgOrder))) +
+                        reportRow(t('totalDiscount'), escHtml(fmtINR(d.daily.couponDiscount))) +
+                        reportRow(t('bookings'), String(d.daily.bookings)) +
+                        reportRow(t('avgRating'), ratingTxt);
+                }
+            }
+            const waBtn = document.getElementById('waShareBtn');
+            if (waBtn) waBtn.href = 'https://wa.me/?text=' + encodeURIComponent(whatsappDailyText(d.daily));
+
+            // Weekly report (last 7 days, day by day, oldest first).
+            const wrTag = document.getElementById('weeklyRangeTag');
+            if (wrTag && d.weekly.days.length) wrTag.textContent = '· ' + d.weekly.days[0].label + ' – ' + d.weekly.days[d.weekly.days.length - 1].label;
+            const wrEl = document.getElementById('weeklySection');
+            if (wrEl) {
+                if (!analyticsLoaded) wrEl.innerHTML = '<div class="empty-hint">…</div>';
+                else {
+                    let html = '<div class="stat-grid">' +
+                        '<div class="stat-box"><div class="stat-num">' + d.weekly.totalOrders + '</div><div class="stat-label">' + escHtml(t('totalOrders')) + '</div></div>' +
+                        '<div class="stat-box"><div class="stat-num">' + escHtml(fmtINR(d.weekly.totalRevenue)) + '</div><div class="stat-label">' + escHtml(t('totalRevenue')) + '</div></div>' +
+                        '</div>';
+                    html += d.weekly.days.map(function (day) {
+                        const isToday = day.startMs === rangeStartMs('today');
+                        return '<div class="report-row"><div class="rl">' + escHtml(day.label) + (isToday ? ' · ' + escHtml(t('rangeToday')) : '') + '</div>' +
+                            '<div class="rv">' + day.orders + ' ' + escHtml(t('dayOrders')) + ' · <b>' + escHtml(fmtINR(day.revenue)) + '</b></div></div>';
+                    }).join('');
+                    wrEl.innerHTML = html;
                 }
             }
         }
