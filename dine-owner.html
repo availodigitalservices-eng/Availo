@@ -70,6 +70,10 @@
              bring them back; hiding one removes it from the customer menu. -->
         <div class="reviews-head">⭐ కస్టమర్ రివ్యూలు <span id="ownerReviewsCount" style="color:#94a3b8; font-size:12px;"></span></div>
         <div id="ownerReviewsList"><div class="empty-hint">రివ్యూలు లోడ్ అవుతున్నాయి…</div></div>
+        <!-- Coupon redemptions (feature 4 of 8): orders that used a coupon,
+             newest first. Read-only — coupons come from the Dine config. -->
+        <div class="reviews-head">🎟️ కూపన్ వాడకాలు <span id="ownerCouponCount" style="color:#94a3b8; font-size:12px;"></span></div>
+        <div id="ownerCouponList"><div class="empty-hint">కూపన్ వాడకాలు లోడ్ అవుతున్నాయి…</div></div>
         <div class="note">
             📌 <b>ఇది ఎలా పనిచేస్తుంది:</b> ఏదైనా ఐటమ్ అయిపోతే దాని బటన్ నొక్కండి —
             అది వెంటనే కస్టమర్ మెనూ నుంచి కనపడకుండా పోతుంది (పేజీ రిఫ్రెష్ అవసరం లేదు).
@@ -104,6 +108,11 @@
         //   hidden:true; a hidden review disappears from the customer menu
         //   but stays visible here so it can be brought back.
         const REVIEWS_PATH = 'availo-kitchen-v1/reviews/khaleel';
+        // Same path as dine.html: availo-kitchen-v1/dineOrders/khaleel/{orderId}
+        //   {items, total, coupon, discount, loyaltyClaim, createdAt, ...} —
+        //   the coupon-redemptions view below reads only orders that
+        //   actually used a coupon.
+        const DINE_ORDERS_PATH = 'availo-kitchen-v1/dineOrders/khaleel';
 
         // ---- The menu (identical data to dine.html — same ids, names, prices) ----
         // AVAILO Dine — full menu, exactly as on the
@@ -428,6 +437,7 @@
         let ownerSearch = '';
         let ownerFilter = 'ALL';
         let ownerReviews = [];
+        let ownerCouponOrders = [];
 
         try {
             if (typeof firebase !== 'undefined' && !firebase.apps.length) firebase.initializeApp(firebaseConfig);
@@ -549,6 +559,32 @@
             } catch (e) { done(); }
         }
 
+        // ---- Coupon redemptions (feature 4 of 8) ----
+        // Newest first. Read-only: only orders that actually used a coupon
+        // are listed (date, coupon code, discount, total). A loyalty claim
+        // rides on the same record and is marked too.
+        function renderOwnerCoupons() {
+            const el = document.getElementById('ownerCouponList');
+            if (!el) return;
+            const countEl = document.getElementById('ownerCouponCount');
+            if (countEl) countEl.textContent = ownerCouponOrders.length
+                ? '· ' + ownerCouponOrders.length + ' ఆర్డర్లు'
+                : '';
+            if (!ownerCouponOrders.length) {
+                el.innerHTML = '<div class="empty-hint">ఇంకా కూపన్ వాడకాలు లేవు.</div>';
+                return;
+            }
+            el.innerHTML = ownerCouponOrders.map(function (o) {
+                const when = new Date(o.createdAt || 0);
+                const dateStr = when.getTime() ? when.toLocaleDateString('te-IN', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + when.toLocaleTimeString('te-IN', { hour: '2-digit', minute: '2-digit' }) : '';
+                const itemsCount = Array.isArray(o.items) ? o.items.reduce(function (n, it) { return n + (Number(it.qty) || 0); }, 0) : 0;
+                return '<div class="owner-row">' +
+                    '<div class="owner-text"><div class="owner-name">🎟️ ' + escHtml(o.coupon) + ' · −' + fmtPrice(Number(o.discount) || 0) + '</div>' +
+                    '<div class="owner-price">' + fmtPrice(Number(o.total) || 0) + ' · ' + itemsCount + ' ఐటమ్' + (o.loyaltyClaim ? ' · 🎁 లాయల్టీ క్లెయిమ్' : '') + (dateStr ? ' · ' + escHtml(dateStr) : '') + '</div></div>' +
+                    '<div style="font-size: 11.5px; color: #94a3b8; font-weight: 700; text-align: right; flex-shrink: 0;">' + escHtml(o.id || '') + '</div></div>';
+            }).join('');
+        }
+
         if (db) {
             db.ref('.info/connected').on('value', function (snap) {
                 const el = document.getElementById('connStatus');
@@ -573,6 +609,16 @@
                 }).sort(function (a, b) { return (b.createdAt - a.createdAt) || String(b.id).localeCompare(String(a.id)); });
                 renderOwnerReviews();
             }, function () { /* read failed: keep the old list */ });
+            db.ref(DINE_ORDERS_PATH).on('value', function (snap) {
+                const val = snap.val() || {};
+                ownerCouponOrders = Object.keys(val).map(function (id) {
+                    const o = val[id] || {};
+                    o.id = id;
+                    return o;
+                }).filter(function (o) { return !!o.coupon; })
+                .sort(function (a, b) { return (b.createdAt - a.createdAt) || String(b.id).localeCompare(String(a.id)); });
+                renderOwnerCoupons();
+            }, function () { /* read failed: keep the old list */ });
         } else {
             const el = document.getElementById('connStatus');
             if (el) { el.textContent = '🔴 Firebase లోడ్ కాలేదు — ఇంటర్నెట్ చూసి రిఫ్రెష్ చేయండి'; el.className = 'conn bad'; }
@@ -580,6 +626,7 @@
 
         renderOwnerList();
         renderOwnerReviews();
+        renderOwnerCoupons();
     </script>
 </body>
 </html>
