@@ -2509,6 +2509,14 @@
         }
         // Single read, only after the guard typed a flat. Returns the
         // matched order (or null); never throws, never blocks the pass.
+        // Query by flat: only this flat's orders download. (The old code
+        // read the WHOLE dineOrders node per lookup — every lookup
+        // burned the full node against the 10 GB/month free quota.)
+        // The stored flat is already normalised by dine.html, so
+        // equalTo(normalizeFlat(flat)) matches exactly.
+        // NOTE: add "flat" to .indexOn for dineOrders/khaleel in the
+        // Firebase console rules — without it the query still works but
+        // the server logs a warning and scans the node.
         function lookupGateReadyOrderNow() {
             const flatInput = document.getElementById('gateFlatNo');
             const flat = flatInput ? flatInput.value : '';
@@ -2517,7 +2525,7 @@
             if (!gateDb || !normalizeFlat(flat)) { renderGateReadyOrder(); return Promise.resolve(null); }
             let p = null;
             try {
-                p = gateDb.ref(GATE_DINE_ORDERS_PATH).once('value');
+                p = gateDb.ref(GATE_DINE_ORDERS_PATH).orderByChild('flat').equalTo(normalizeFlat(flat)).once('value');
             } catch (e) { renderGateReadyOrder(); return Promise.resolve(null); }
             return Promise.resolve(p).then(function (snap) {
                 const orders = snap ? snap.val() : null;

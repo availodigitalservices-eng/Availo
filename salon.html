@@ -429,6 +429,21 @@ apiKey: "AIzaSyCbLfAb7tDu7vdr73oEjl414BjGBdlGw-Q",
             if (typeof firebase !== 'undefined') salonDb = firebase.database();
         } catch (e) { salonDb = null; }
 
+        // Tab hidden → disconnect Firebase (frees one of the 100 free
+        // connections while the tab sits in the background); visible
+        // again → reconnect. Listeners re-fire automatically on
+        // reconnect. (Scalability review 21 Nov 2026, Risk 2.)
+        function availoHandleVisibilityChange() {
+            try {
+                if (typeof firebase === 'undefined' || !firebase.database) return;
+                if (document.hidden) firebase.database().goOffline();
+                else firebase.database().goOnline();
+            } catch (e) { /* never break the page */ }
+        }
+        if (typeof document !== 'undefined' && document.addEventListener) {
+            document.addEventListener('visibilitychange', availoHandleVisibilityChange);
+        }
+
         const SALON_STR = {
             te: {
                 nowServing: 'ఇప్పుడు: ', noneServing: 'ఇప్పుడు: ఎవరూ లేరు',

@@ -493,6 +493,22 @@
             showDbError(e.message || 'Firebase ప్రారంభం కాలేదు');
         }
 
+        // Tab hidden → disconnect Firebase (frees one of the 100 free
+        // connections while the tab sits in the background); visible
+        // again → reconnect. Listeners re-fire automatically on
+        // reconnect; buzzers are guarded by "seen" sets, so nothing
+        // re-announces. (Scalability review 21 Nov 2026, Risk 2.)
+        function availoHandleVisibilityChange() {
+            try {
+                if (typeof firebase === 'undefined' || !firebase.database) return;
+                if (document.hidden) firebase.database().goOffline();
+                else firebase.database().goOnline();
+            } catch (e) { /* never break the page */ }
+        }
+        if (typeof document !== 'undefined' && document.addEventListener) {
+            document.addEventListener('visibilitychange', availoHandleVisibilityChange);
+        }
+
         if (db) {
             db.ref('.info/connected').on('value', function (snap) {
                 const on = snap.val() === true;

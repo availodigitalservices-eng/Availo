@@ -1260,6 +1260,21 @@
             if (typeof firebase !== 'undefined' && !firebase.apps.length) firebase.initializeApp(KITCHEN_FIREBASE_CONFIG);
             if (typeof firebase !== 'undefined') kitchenDb = firebase.database();
         } catch (e) { kitchenDb = null; }
+        // Tab hidden → disconnect Firebase (frees one of the 100 free
+        // connections while the tab sits in the background); visible
+        // again → reconnect. Listeners re-fire automatically on
+        // reconnect; the tracker re-renders from the fresh snapshot.
+        // (Scalability review 21 Nov 2026, Risk 2.)
+        function availoHandleVisibilityChange() {
+            try {
+                if (typeof firebase === 'undefined' || !firebase.database) return;
+                if (document.hidden) firebase.database().goOffline();
+                else firebase.database().goOnline();
+            } catch (e) { /* never break the page */ }
+        }
+        if (typeof document !== 'undefined' && document.addEventListener) {
+            document.addEventListener('visibilitychange', availoHandleVisibilityChange);
+        }
         function availoRef() {
             const d = new Date();
             const ymd = d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
