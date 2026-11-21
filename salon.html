@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@600;700&family=Ramabhadra&family=Suranna&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
     <style>
         :root {
             --bg-dark: #030b1e;
@@ -230,6 +232,26 @@
             <p class="te-body" style="margin-top: 10px;" data-te="సర్వీస్ ధరలు త్వరలో ప్రకటిస్తాం — బుకింగ్ చేస్తే ధర WhatsApp లో తెలియజేస్తాం." data-en="Service prices will be announced soon — book now and we will share the price on WhatsApp." data-hi="सर्विस की कीमतें जल्द घोषित की जाएँगी — बुक करें, कीमत WhatsApp पर बताई जाएगी।">సర్వీస్ ధరలు త్వరలో ప్రకటిస్తాం — బుకింగ్ చేస్తే ధర WhatsApp లో తెలియజేస్తాం.</p>
         </div>
 
+        <div class="block-card" id="salonQueueCard">
+            <h3 class="te-heading" data-te="🔴 లైవ్ క్యూ" data-en="🔴 Live Queue" data-hi="🔴 लाइव कतार">🔴 లైవ్ క్యూ</h3>
+            <p class="te-body" id="queueNowServing">ఇప్పుడు: —</p>
+            <div id="queueJoinBox">
+                <label class="form-label" for="queueName" data-te="మీ పేరు (ఐచ్ఛికం)" data-en="Your name (optional)" data-hi="आपका नाम (वैकल्पिक)">మీ పేరు (ఐచ్ఛికం)</label>
+                <input class="form-input" type="text" id="queueName" maxlength="50" data-ph-te="పేరు రాయండి (ఖాళీగా వదిలేయొచ్చు)" data-ph-en="Enter your name (optional)" data-ph-hi="नाम लिखें (वैकल्पिक)" placeholder="పేరు రాయండి (ఖాళీగా వదిలేయొచ్చు)">
+                <div id="queueServiceRow" style="display:none;">
+                    <label class="form-label" for="queueServiceSel" data-te="సర్వీస్ ఎంచుకోండి" data-en="Choose a service" data-hi="सर्विस चुनें">సర్వీస్ ఎంచుకోండి</label>
+                    <select class="form-select" id="queueServiceSel"></select>
+                </div>
+                <button class="cta-btn" id="queueJoinBtn" onclick="joinSalonQueue()" data-te="➕ క్యూలో చేరండి" data-en="➕ Join the queue" data-hi="➕ कतार में जुड़ें">➕ క్యూలో చేరండి</button>
+                <div class="warn-line" id="queueWarnLine"></div>
+            </div>
+            <div id="myQueueCard" style="display:none; margin-top:12px; background:#0b1e3f; border:1px solid rgba(0,229,255,0.35); border-radius:8px; padding:12px;">
+                <div id="myQueueText" style="font-size:14px; font-weight:700;"></div>
+            </div>
+            <div id="queueList" style="margin-top:12px;"></div>
+            <p class="te-body" style="margin-top:10px; font-size:12px; color:#94a3b8;" data-te="టోకెన్ నంబర్లు ప్రతిరోజూ కొత్తగా మొదలవుతాయి." data-en="Token numbers restart fresh every day." data-hi="टोकन नंबर हर दिन नए सिरे से शुरू होते हैं।">టోకెన్ నంబర్లు ప్రతిరోజూ కొత్తగా మొదలవుతాయి.</p>
+        </div>
+
         <div class="block-card">
             <h3 class="te-heading" data-te="ఎలా బుక్ చేసుకోవాలి" data-en="How to Book" data-hi="बुक कैसे करें">ఎలా బుక్ చేసుకోవాలి</h3>
             <ol class="te-body">
@@ -319,6 +341,7 @@
                 const text = el.getAttribute('data-ph-' + currentLang);
                 if (text) el.placeholder = text;
             });
+            if (typeof renderSalonQueue === 'function') renderSalonQueue();
         }
 
         // Reference numbers: AV-YYYYMMDD-XXXX (4 random digits).
@@ -375,9 +398,270 @@
             window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
         }
 
+        // ---- Salon live queue (feature 7 of 8) ----
+        // Firebase path: availo-kitchen-v1/salonQueue/{pushKey}
+        //   {name, service|null, token, status:'waiting'|'serving'|'done',
+        //    createdAt, dateKey:'YYYYMMDD'}
+        // Tokens come from a transaction counter at
+        //   availo-kitchen-v1/salonQueueCounter/{YYYYMMDD}
+        // so two customers joining at once never share a token. Tokens
+        // restart every day (counter node is per-date; the list shows
+        // today only). Service list is CONFIG-GATED: SALON_SERVICES
+        // defaults to EMPTY — while empty the form asks for name only.
+        // Never invent service names or prices.
+        const SALON_FIREBASE_CONFIG = {
+apiKey: "AIzaSyCbLfAb7tDu7vdr73oEjl414BjGBdlGw-Q",
+            authDomain: "availo-kitchen.firebaseapp.com",
+            databaseURL: "https://availo-kitchen-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "availo-kitchen",
+            storageBucket: "availo-kitchen.firebasestorage.app",
+            messagingSenderId: "182835141482",
+            appId: "1:182835141482:web:8cbbffe83fcfd4cf9aa313"
+        };
+        const SALON_QUEUE_PATH = 'availo-kitchen-v1/salonQueue';
+        const SALON_QUEUE_COUNTER_PATH = 'availo-kitchen-v1/salonQueueCounter';
+        const SALON_QUEUE_STORE_KEY = 'availo_salon_queue';
+        let SALON_SERVICES = [];
+        let salonDb = null;
+        let salonQueueRecords = {};
+        try {
+            if (typeof firebase !== 'undefined' && !firebase.apps.length) firebase.initializeApp(SALON_FIREBASE_CONFIG);
+            if (typeof firebase !== 'undefined') salonDb = firebase.database();
+        } catch (e) { salonDb = null; }
+
+        const SALON_STR = {
+            te: {
+                nowServing: 'ఇప్పుడు: ', noneServing: 'ఇప్పుడు: ఎవరూ లేరు',
+                token: 'టోకెన్', guest: 'అతిథి',
+                ahead: 'మీ ముందు {n} మంది ఉన్నారు',
+                yourTurn: 'మీ వంతు వచ్చింది — లోపలికి రండి!',
+                done: 'మీ సర్వీస్ పూర్తయింది — ధన్యవాదాలు!',
+                waiting: 'వేచి ఉన్నారు', serving: 'సర్వీస్ జరుగుతోంది',
+                empty: 'ఇంకా క్యూలో ఎవరూ లేరు — మొదటి వ్యక్తి మీరే అవ్వండి!',
+                joinFail: 'క్యూలో చేరలేకపోయాం — ఇంటర్నెట్ చూసి మళ్లీ ప్రయత్నించండి.',
+                chooseService: '— సర్వీస్ ఎంచుకోండి —', myToken: 'మీ టోకెన్'
+            },
+            en: {
+                nowServing: 'Now serving: ', noneServing: 'Now serving: nobody yet',
+                token: 'Token', guest: 'Guest',
+                ahead: '{n} people ahead of you',
+                yourTurn: "It's your turn — please come in!",
+                done: 'Your service is done — thank you!',
+                waiting: 'Waiting', serving: 'In service',
+                empty: 'Nobody in the queue yet — be the first!',
+                joinFail: 'Could not join the queue — check the internet and try again.',
+                chooseService: '— Choose a service —', myToken: 'Your token'
+            },
+            hi: {
+                nowServing: 'अभी: ', noneServing: 'अभी: कोई नहीं',
+                token: 'टोकन', guest: 'अतिथि',
+                ahead: 'आपसे पहले {n} लोग हैं',
+                yourTurn: 'आपकी बारी आ गई — कृपया अंदर आएँ!',
+                done: 'आपकी सर्विस पूरी हो गई — धन्यवाद!',
+                waiting: 'प्रतीक्षा में', serving: 'सर्विस चल रही है',
+                empty: 'कतार में अभी कोई नहीं — पहले आप बनें!',
+                joinFail: 'कतार में जुड़ नहीं पाए — इंटरनेट देखकर फिर कोशिश करें।',
+                chooseService: '— सर्विस चुनें —', myToken: 'आपका टोकन'
+            }
+        };
+        function sq(key) { return (SALON_STR[currentLang] || SALON_STR.te)[key]; }
+
+        function escapeHtml(s) {
+            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function salonQueueTodayKey(d) {
+            d = d || new Date();
+            return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+        }
+
+        function buildSalonQueueRecord(opts) {
+            const name = String((opts && opts.name) || '').trim().slice(0, 50);
+            const service = (opts && opts.service) ? String(opts.service) : null;
+            return {
+                name: name,
+                service: service,
+                token: (opts && opts.token) || 0,
+                status: 'waiting',
+                createdAt: (opts && opts.createdAt) || Date.now(),
+                dateKey: (opts && opts.dateKey) || salonQueueTodayKey()
+            };
+        }
+
+        function salonQueueTodaysRecords(all, dateKey) {
+            const key = dateKey || salonQueueTodayKey();
+            const out = {};
+            Object.keys(all || {}).forEach(function (id) {
+                if (all[id] && all[id].dateKey === key) out[id] = all[id];
+            });
+            return out;
+        }
+
+        function salonQueueNextToken(records) {
+            let max = 0;
+            Object.keys(records || {}).forEach(function (id) {
+                const t = records[id] && records[id].token;
+                if (typeof t === 'number' && t > max) max = t;
+            });
+            return max + 1;
+        }
+
+        // {status:'waiting'|'serving'|'done'|'gone', ahead:number}
+        function salonQueueMyPosition(records, myToken) {
+            let mine = null;
+            Object.keys(records || {}).forEach(function (id) {
+                if (records[id] && records[id].token === myToken) mine = records[id];
+            });
+            if (!mine) return { status: 'gone', ahead: 0 };
+            if (mine.status === 'serving') return { status: 'serving', ahead: 0 };
+            if (mine.status === 'done') return { status: 'done', ahead: 0 };
+            let ahead = 0;
+            Object.keys(records).forEach(function (id) {
+                const r = records[id];
+                if (r && r.status === 'waiting' && r.token < myToken) ahead++;
+            });
+            return { status: 'waiting', ahead: ahead };
+        }
+
+        // Serving first, then waiting newest first, then done.
+        function salonQueueSortForDisplay(records) {
+            const rank = { serving: 0, waiting: 1, done: 2 };
+            const arr = Object.keys(records || {}).map(function (id) {
+                return Object.assign({ _id: id }, records[id]);
+            });
+            arr.sort(function (a, b) {
+                const ra = (rank[a.status] === undefined) ? 3 : rank[a.status];
+                const rb = (rank[b.status] === undefined) ? 3 : rank[b.status];
+                if (ra !== rb) return ra - rb;
+                if (a.status === 'serving') return a.token - b.token;
+                return b.token - a.token;
+            });
+            return arr;
+        }
+
+        function setSalonServices(list) {
+            if (!Array.isArray(list)) { SALON_SERVICES = []; }
+            else {
+                SALON_SERVICES = list.filter(function (s) { return typeof s === 'string' && s.trim(); }).map(function (s) { return s.trim(); });
+            }
+            renderSalonServiceRow();
+            return SALON_SERVICES.slice();
+        }
+        function salonServicesConfigured() { return SALON_SERVICES.length > 0; }
+
+        function renderSalonServiceRow() {
+            const row = document.getElementById('queueServiceRow');
+            const sel = document.getElementById('queueServiceSel');
+            if (!row || !sel) return;
+            if (!salonServicesConfigured()) { row.style.display = 'none'; sel.innerHTML = ''; return; }
+            row.style.display = 'block';
+            sel.innerHTML = '<option value="">' + escapeHtml(sq('chooseService')) + '</option>' +
+                SALON_SERVICES.map(function (s) { return '<option value="' + escapeHtml(s) + '">' + escapeHtml(s) + '</option>'; }).join('');
+        }
+
+        function salonQueueDisplayName(r) {
+            return (r && r.name) ? r.name : sq('guest');
+        }
+
+        function renderSalonQueue() {
+            const today = salonQueueTodaysRecords(salonQueueRecords);
+            const sorted = salonQueueSortForDisplay(today);
+            const nowEl = document.getElementById('queueNowServing');
+            const serving = sorted.find(function (r) { return r.status === 'serving'; });
+            if (nowEl) {
+                nowEl.textContent = serving
+                    ? sq('nowServing') + sq('token') + ' #' + serving.token + ' — ' + salonQueueDisplayName(serving) + (serving.service ? ' (' + serving.service + ')' : '')
+                    : sq('noneServing');
+            }
+            const listEl = document.getElementById('queueList');
+            if (listEl) {
+                if (!sorted.length) {
+                    listEl.innerHTML = '<p style="color:#94a3b8;font-size:13px;">' + escapeHtml(sq('empty')) + '</p>';
+                } else {
+                    listEl.innerHTML = sorted.map(function (r) {
+                        const badge = r.status === 'serving' ? '🟢 ' + sq('serving') : r.status === 'done' ? '✅ ' + sq('done') : '⏳ ' + sq('waiting');
+                        return '<div style="display:flex;justify-content:space-between;gap:8px;padding:8px 4px;border-bottom:1px solid rgba(148,163,184,0.2);font-size:13.5px;">' +
+                            '<span><b>#' + r.token + '</b> ' + escapeHtml(salonQueueDisplayName(r)) + (r.service ? ' · ' + escapeHtml(r.service) : '') + '</span>' +
+                            '<span style="color:#94a3b8;white-space:nowrap;">' + escapeHtml(badge) + '</span></div>';
+                    }).join('');
+                }
+            }
+            renderMySalonQueue(today);
+        }
+
+        function renderMySalonQueue(today) {
+            const card = document.getElementById('myQueueCard');
+            const textEl = document.getElementById('myQueueText');
+            const joinBox = document.getElementById('queueJoinBox');
+            if (!card || !textEl) return;
+            let mine = null;
+            try { mine = JSON.parse(localStorage.getItem(SALON_QUEUE_STORE_KEY) || 'null'); } catch (e) { mine = null; }
+            if (!mine || typeof mine.token !== 'number') {
+                card.style.display = 'none';
+                if (joinBox) joinBox.style.display = 'block';
+                return;
+            }
+            const pos = salonQueueMyPosition(today, mine.token);
+            if (pos.status === 'gone') {
+                try { localStorage.removeItem(SALON_QUEUE_STORE_KEY); } catch (e) {}
+                card.style.display = 'none';
+                if (joinBox) joinBox.style.display = 'block';
+                return;
+            }
+            if (joinBox) joinBox.style.display = 'none';
+            card.style.display = 'block';
+            let msg = sq('myToken') + ' #' + mine.token + ' — ';
+            if (pos.status === 'serving') msg += sq('yourTurn');
+            else if (pos.status === 'done') msg += sq('done');
+            else msg += sq('ahead').replace('{n}', String(pos.ahead));
+            textEl.textContent = msg;
+        }
+
+        async function joinSalonQueue() {
+            const warnEl = document.getElementById('queueWarnLine');
+            function fail() {
+                if (warnEl) { warnEl.textContent = sq('joinFail'); warnEl.style.display = 'block'; }
+            }
+            try {
+                if (!salonDb) return fail();
+                const nameEl = document.getElementById('queueName');
+                const name = nameEl ? nameEl.value.trim().slice(0, 50) : '';
+                let service = null;
+                if (salonServicesConfigured()) {
+                    const sel = document.getElementById('queueServiceSel');
+                    service = sel && sel.value ? sel.value : null;
+                }
+                const dateKey = salonQueueTodayKey();
+                const res = await salonDb.ref(SALON_QUEUE_COUNTER_PATH + '/' + dateKey).transaction(function (cur) {
+                    return (typeof cur === 'number' ? cur : 0) + 1;
+                });
+                if (!res || !res.committed) return fail();
+                const token = res.snapshot.val();
+                const rec = buildSalonQueueRecord({ name: name, service: service, token: token, createdAt: Date.now(), dateKey: dateKey });
+                const ref = salonDb.ref(SALON_QUEUE_PATH).push();
+                await ref.set(rec);
+                try { localStorage.setItem(SALON_QUEUE_STORE_KEY, JSON.stringify({ queueId: ref.key, token: token })); } catch (e) {}
+                if (warnEl) warnEl.style.display = 'none';
+                renderSalonQueue();
+            } catch (e) { fail(); }
+        }
+
+        function initSalonQueue() {
+            renderSalonServiceRow();
+            renderMySalonQueue({});
+            try {
+                if (!salonDb) return; // offline / SDK missing: fail-open, page still works
+                salonDb.ref(SALON_QUEUE_PATH).on('value', function (snap) {
+                    salonQueueRecords = snap.val() || {};
+                    renderSalonQueue();
+                }, function () { /* read failed: fail-open */ });
+            } catch (e) { /* fail-open */ }
+        }
+
         // Apply the saved language on load (no cycling) and show the CURRENT
         // language on the button.
         toggleLanguage(currentLang);
+        initSalonQueue();
     </script>
 
 </body>

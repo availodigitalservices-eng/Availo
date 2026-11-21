@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow">
+    <title>AVAILO Salon — స్టాఫ్ క్యూ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Rajdhani:wght@700;800&family=Ramabhadra&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { background: #071426; color: #f8fafc; font-family: 'Inter', sans-serif; padding: 14px 14px 40px; }
+        .wrap { max-width: 560px; margin: 0 auto; }
+        h1 { font-family: 'Rajdhani', sans-serif; font-size: 22px; color: #20DDE0; text-align: center; margin-bottom: 4px; }
+        .sub { text-align: center; color: #94a3b8; font-size: 13px; margin-bottom: 12px; line-height: 1.5; }
+        .conn { text-align: center; font-size: 13px; font-weight: 700; color: #DDB65D; margin-bottom: 12px; }
+        .conn.ok { color: #22c55e; }
+        .conn.bad { color: #ef4444; }
+        .summary { background: #0d223f; border: 1.5px solid rgba(32, 221, 224, 0.35); border-radius: 12px; padding: 12px 14px; font-size: 13.5px; line-height: 1.7; margin-bottom: 12px; }
+        .summary b { color: #DDB65D; }
+        .lang-btn { background: transparent; border: 1px solid #20DDE0; color: #20DDE0; font-size: 13px; font-weight: 700; padding: 5px 12px; border-radius: 16px; cursor: pointer; }
+        .sound-btn { display: block; width: 100%; background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.2); color: #cbd5e1; padding: 11px; border-radius: 10px; font-size: 13.5px; font-weight: 700; cursor: pointer; font-family: 'Ramabhadra', sans-serif; margin-bottom: 8px; }
+        .sound-btn.on { border-color: #22c55e; color: #4ade80; background: rgba(34, 197, 94, 0.12); }
+        .queue-row { background: #0d223f; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+        .queue-row.serving-row { border-color: #22c55e; background: rgba(34, 197, 94, 0.08); }
+        .queue-row.done-row { opacity: 0.55; }
+        .queue-top { display: flex; align-items: center; gap: 10px; }
+        .queue-token { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 800; color: #DDB65D; flex-shrink: 0; }
+        .queue-text { flex: 1; min-width: 0; }
+        .queue-name { font-size: 13.5px; font-weight: 700; color: #fff; }
+        .queue-meta { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+        .queue-btns { display: flex; gap: 6px; margin-top: 8px; }
+        .q-btn { flex: 1; padding: 8px 6px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: 'Ramabhadra', sans-serif; border: 1.5px solid; }
+        .q-btn.call { background: rgba(34, 197, 94, 0.15); border-color: #22c55e; color: #4ade80; }
+        .q-btn.done { background: rgba(32, 221, 224, 0.12); border-color: #20DDE0; color: #20DDE0; }
+        .q-btn.del { background: rgba(239, 68, 68, 0.12); border-color: #ef4444; color: #f87171; }
+        .q-btn:disabled { opacity: 0.5; cursor: wait; }
+        .empty-hint { color: #94a3b8; font-size: 13px; text-align: center; padding: 22px 0; font-style: italic; }
+        .warn-line { display: none; color: #fca5a5; font-size: 13px; font-weight: 700; margin-top: 10px; text-align: center; }
+        .note { margin-top: 18px; background: #071530; border: 1px solid rgba(0,229,255,0.35); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: #cbd5e1; line-height: 1.7; }
+        .footer { text-align: center; color: #64748b; font-size: 12px; margin-top: 18px; line-height: 1.9; }
+        .footer a { color: #DDB65D; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div style="display:flex; justify-content: flex-end; margin-bottom: 6px;">
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">తెలుగు</button>
+        </div>
+        <h1>✂️ AVAILO Salon — స్టాఫ్ క్యూ</h1>
+        <div class="sub" data-te="ఈరోజు క్యూ — కస్టమర్ చేరగానే ఇక్కడ కనిపిస్తారు" data-en="Today's queue — a customer appears here as soon as they join" data-hi="आज की कतार — ग्राहक जुड़ते ही यहाँ दिखेंगे">ఈరోజు క్యూ — కస్టమర్ చేరగానే ఇక్కడ కనిపిస్తారు</div>
+        <div class="conn" id="connStatus">⏳ కనెక్ట్ అవుతోంది…</div>
+        <div class="summary" id="summaryLine">క్యూ లోడ్ అవుతోంది…</div>
+        <button class="sound-btn" id="soundBtn">🔇 సౌండ్ ఆన్ చేయండి</button>
+        <button class="sound-btn" id="testBtn" data-te="🔊 సౌండ్ టెస్ట్" data-en="🔊 Test sound" data-hi="🔊 साउंड टेस्ट">🔊 సౌండ్ టెస్ట్</button>
+        <div id="queueList"></div>
+        <div class="warn-line" id="ownerWarnLine"></div>
+        <div class="note" data-te="• ఒకేసారి ఒక్కరి సర్వీస్ మాత్రమే జరుగుతుంది — ముందు వారిని పూర్తి చేస్తేనే తర్వాతి వ్యక్తిని పిలవగలరు.<br>• టోకెన్ నంబర్లు ప్రతిరోజూ కొత్తగా మొదలవుతాయి — నిన్నటి క్యూ ఇక్కడ కనిపించదు." data-en="• Only one person is served at a time — finish the current person before calling the next.<br>• Token numbers restart fresh every day — yesterday's queue never shows here." data-hi="• एक बार में एक ही व्यक्ति की सर्विस होती है — अगले को बुलाने से पहले वर्तमान को पूरा करें।<br>• टोकन नंबर हर दिन नए सिरे से शुरू होते हैं — कल की कतार यहाँ नहीं दिखती।">• ఒకేసారి ఒక్కరి సర్వీస్ మాత్రమే జరుగుతుంది — ముందు వారిని పూర్తి చేస్తేనే తర్వాతి వ్యక్తిని పిలవగలరు.<br>• టోకెన్ నంబర్లు ప్రతిరోజూ కొత్తగా మొదలవుతాయి — నిన్నటి క్యూ ఇక్కడ కనిపించదు.</div>
+        <div class="footer"><a href="salon.html">✂️ సెలూన్ పేజీ</a> &nbsp;·&nbsp; <a href="index.html">హోమ్</a></div>
+    </div>
+
+    <script>
+        // Button label always shows the CURRENT language.
+        let currentLang = localStorage.getItem('availo_lang');
+        if (currentLang !== 'te' && currentLang !== 'en' && currentLang !== 'hi') currentLang = 'te';
+        const LANG_ORDER = ['te', 'en', 'hi'];
+        const LANG_BTN_LABEL = { te: 'తెలుగు', en: 'English', hi: 'हिन्दी' };
+
+        function toggleLanguage(forceLang) {
+            const next = forceLang || LANG_ORDER[(LANG_ORDER.indexOf(currentLang) + 1) % LANG_ORDER.length];
+            currentLang = next;
+            localStorage.setItem('availo_lang', currentLang);
+            document.documentElement.lang = currentLang;
+            document.getElementById('langBtn').innerText = LANG_BTN_LABEL[currentLang];
+            document.querySelectorAll('[data-te]').forEach(el => {
+                const text = el.getAttribute('data-' + currentLang);
+                if (text) el.innerHTML = text;
+            });
+            renderSalonOwnerQueue();
+        }
+
+        // ---- Salon live queue — staff page (feature 7 of 8) ----
+        // Same Firebase project/paths as the customer page (salon.html).
+        // One person is served at a time: calling the next person is
+        // blocked while someone is 'serving' — finish them first.
+        const SALON_OWNER_FIREBASE_CONFIG = {
+apiKey: "AIzaSyCbLfAb7tDu7vdr73oEjl414BjGBdlGw-Q",
+            authDomain: "availo-kitchen.firebaseapp.com",
+            databaseURL: "https://availo-kitchen-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "availo-kitchen",
+            storageBucket: "availo-kitchen.firebasestorage.app",
+            messagingSenderId: "182835141482",
+            appId: "1:182835141482:web:8cbbffe83fcfd4cf9aa313"
+        };
+        const SALON_QUEUE_PATH = 'availo-kitchen-v1/salonQueue';
+        let salonOwnerDb = null;
+        let salonOwnerRecords = {};
+        let salonOwnerPrevIds = {};
+        let salonOwnerLoaded = false;
+        try {
+            if (typeof firebase !== 'undefined' && !firebase.apps.length) firebase.initializeApp(SALON_OWNER_FIREBASE_CONFIG);
+            if (typeof firebase !== 'undefined') salonOwnerDb = firebase.database();
+        } catch (e) { salonOwnerDb = null; }
+
+        const OWNER_STR = {
+            te: {
+                guest: 'అతిథి', waiting: 'వేచి ఉన్నారు', serving: 'సర్వీస్ జరుగుతోంది', done: 'పూర్తయింది',
+                call: '✅ పిలవండి', complete: '✔️ పూర్తయింది', remove: '🗑️ తొలగించు',
+                empty: 'ఇంకా క్యూలో ఎవరూ లేరు.',
+                alreadyServing: 'ఇప్పుడొకరి సర్వీస్ జరుగుతోంది — ముందు వారిని పూర్తి చేయండి.',
+                summary: 'ఇప్పుడు: {serving} · వేచి ఉన్నారు: {waiting} · పూర్తయింది: {done}',
+                noneServing: 'ఎవరూ లేరు',
+                newJoin: 'కొత్త కస్టమర్ క్యూలో చేరారు, టోకెన్ ',
+                connOk: '🟢 కనెక్ట్ అయింది', connBad: '🔴 కనెక్ట్ కాలేదు — ఇంటర్నెట్ చూడండి'
+            },
+            en: {
+                guest: 'Guest', waiting: 'Waiting', serving: 'In service', done: 'Done',
+                call: '✅ Call next', complete: '✔️ Done', remove: '🗑️ Remove',
+                empty: 'Nobody in the queue yet.',
+                alreadyServing: 'Someone is already in service — finish them first.',
+                summary: 'Now serving: {serving} · Waiting: {waiting} · Done: {done}',
+                noneServing: 'nobody',
+                newJoin: 'A new customer joined the queue, token ',
+                connOk: '🟢 Connected', connBad: '🔴 Not connected — check the internet'
+            },
+            hi: {
+                guest: 'अतिथि', waiting: 'प्रतीक्षा में', serving: 'सर्विस चल रही है', done: 'पूर्ण',
+                call: '✅ बुलाएँ', complete: '✔️ पूर्ण', remove: '🗑️ हटाएँ',
+                empty: 'कतार में अभी कोई नहीं।',
+                alreadyServing: 'किसी की सर्विस चल रही है — पहले उन्हें पूरा करें।',
+                summary: 'अभी: {serving} · प्रतीक्षा में: {waiting} · पूर्ण: {done}',
+                noneServing: 'कोई नहीं',
+                newJoin: 'नया ग्राहक कतार में जुड़ा, टोकन ',
+                connOk: '🟢 कनेक्टेड', connBad: '🔴 कनेक्ट नहीं — इंटरनेट देखें'
+            }
+        };
+        function osq(key) { return (OWNER_STR[currentLang] || OWNER_STR.te)[key]; }
+
+        function escapeHtml(s) {
+            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function salonQueueTodayKey(d) {
+            d = d || new Date();
+            return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+        }
+
+        function salonQueueTodaysRecords(all, dateKey) {
+            const key = dateKey || salonQueueTodayKey();
+            const out = {};
+            Object.keys(all || {}).forEach(function (id) {
+                if (all[id] && all[id].dateKey === key) out[id] = all[id];
+            });
+            return out;
+        }
+
+        // Serving first, then waiting newest first, then done.
+        function salonQueueSortForDisplay(records) {
+            const rank = { serving: 0, waiting: 1, done: 2 };
+            const arr = Object.keys(records || {}).map(function (id) {
+                return Object.assign({ _id: id }, records[id]);
+            });
+            arr.sort(function (a, b) {
+                const ra = (rank[a.status] === undefined) ? 3 : rank[a.status];
+                const rb = (rank[b.status] === undefined) ? 3 : rank[b.status];
+                if (ra !== rb) return ra - rb;
+                if (a.status === 'serving') return a.token - b.token;
+                return b.token - a.token;
+            });
+            return arr;
+        }
+
+        // New waiting joins since the previous snapshot (highest token first).
+        function salonOwnerDetectNewJoins(prevIds, records) {
+            const fresh = [];
+            Object.keys(records || {}).forEach(function (id) {
+                if (!prevIds[id] && records[id] && records[id].status === 'waiting') {
+                    fresh.push({ id: id, token: records[id].token || 0 });
+                }
+            });
+            fresh.sort(function (a, b) { return b.token - a.token; });
+            return fresh;
+        }
+
+        function salonOwnerDisplayName(r) {
+            return (r && r.name) ? r.name : osq('guest');
+        }
+
+        function renderSalonOwnerQueue() {
+            const today = salonQueueTodaysRecords(salonOwnerRecords);
+            const sorted = salonQueueSortForDisplay(today);
+            const serving = sorted.find(function (r) { return r.status === 'serving'; });
+            const waitingN = sorted.filter(function (r) { return r.status === 'waiting'; }).length;
+            const doneN = sorted.filter(function (r) { return r.status === 'done'; }).length;
+            const summaryEl = document.getElementById('summaryLine');
+            if (summaryEl) {
+                summaryEl.innerHTML = osq('summary')
+                    .replace('{serving}', serving ? ('#' + serving.token + ' ' + escapeHtml(salonOwnerDisplayName(serving))) : osq('noneServing'))
+                    .replace('{waiting}', String(waitingN))
+                    .replace('{done}', String(doneN));
+            }
+            const listEl = document.getElementById('queueList');
+            if (!listEl) return;
+            if (!sorted.length) {
+                listEl.innerHTML = '<p class="empty-hint">' + escapeHtml(osq('empty')) + '</p>';
+                return;
+            }
+            listEl.innerHTML = sorted.map(function (r) {
+                const rowClass = r.status === 'serving' ? 'queue-row serving-row' : r.status === 'done' ? 'queue-row done-row' : 'queue-row';
+                const statusText = r.status === 'serving' ? '🟢 ' + osq('serving') : r.status === 'done' ? '✅ ' + osq('done') : '⏳ ' + osq('waiting');
+                let btns = '';
+                if (r.status === 'waiting') btns += '<button class="q-btn call" onclick="callSalonPerson(\'' + r._id + '\')">' + escapeHtml(osq('call')) + '</button>';
+                if (r.status === 'serving') btns += '<button class="q-btn done" onclick="completeSalonPerson(\'' + r._id + '\')">' + escapeHtml(osq('complete')) + '</button>';
+                btns += '<button class="q-btn del" onclick="removeSalonPerson(\'' + r._id + '\')">' + escapeHtml(osq('remove')) + '</button>';
+                return '<div class="' + rowClass + '">' +
+                    '<div class="queue-top"><div class="queue-token">#' + r.token + '</div>' +
+                    '<div class="queue-text"><div class="queue-name">' + escapeHtml(salonOwnerDisplayName(r)) + '</div>' +
+                    '<div class="queue-meta">' + statusText + (r.service ? ' · ' + escapeHtml(r.service) : '') + '</div></div></div>' +
+                    '<div class="queue-btns">' + btns + '</div></div>';
+            }).join('');
+        }
+
+        function callSalonPerson(queueId) {
+            const today = salonQueueTodaysRecords(salonOwnerRecords);
+            const already = Object.keys(today).some(function (id) { return today[id] && today[id].status === 'serving'; });
+            const warnEl = document.getElementById('ownerWarnLine');
+            if (already) {
+                if (warnEl) { warnEl.textContent = osq('alreadyServing'); warnEl.style.display = 'block'; }
+                return Promise.resolve(false);
+            }
+            if (warnEl) warnEl.style.display = 'none';
+            try {
+                if (!salonOwnerDb) return Promise.resolve(false);
+                return salonOwnerDb.ref(SALON_QUEUE_PATH + '/' + queueId).update({ status: 'serving' })
+                    .then(function () { return true; })
+                    .catch(function () { return false; });
+            } catch (e) { return Promise.resolve(false); }
+        }
+
+        function completeSalonPerson(queueId) {
+            try {
+                if (!salonOwnerDb) return Promise.resolve(false);
+                return salonOwnerDb.ref(SALON_QUEUE_PATH + '/' + queueId).update({ status: 'done' })
+                    .then(function () { return true; })
+                    .catch(function () { return false; });
+            } catch (e) { return Promise.resolve(false); }
+        }
+
+        function removeSalonPerson(queueId) {
+            try {
+                if (!salonOwnerDb) return Promise.resolve(false);
+                return salonOwnerDb.ref(SALON_QUEUE_PATH + '/' + queueId).remove()
+                    .then(function () { return true; })
+                    .catch(function () { return false; });
+            } catch (e) { return Promise.resolve(false); }
+        }
+
+        // ---- Sound: loud buzzer via Web Audio (no external audio file) ----
+        let audioCtx = null;
+        let soundOn = false;
+
+        function beep(freq, dur, delay) {
+            if (!audioCtx) return;
+            const t0 = audioCtx.currentTime + delay;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(freq, t0);
+            gain.gain.setValueAtTime(0.0001, t0);
+            gain.gain.exponentialRampToValueAtTime(0.5, t0 + 0.02);
+            gain.gain.setValueAtTime(0.5, t0 + dur - 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t0);
+            osc.stop(t0 + dur + 0.05);
+        }
+
+        function buzzTimes(n) {
+            if (!soundOn || !audioCtx) return;
+            for (let i = 0; i < n; i++) beep(880, 0.45, i * 0.65);
+        }
+
+        function speakTelugu(text) {
+            try {
+                if (!('speechSynthesis' in window)) return;
+                const u = new SpeechSynthesisUtterance(text);
+                const voices = speechSynthesis.getVoices();
+                const te = voices.find(v => v.lang && v.lang.toLowerCase().indexOf('te') === 0);
+                const en = voices.find(v => v.lang && v.lang.toLowerCase().indexOf('en-in') === 0)
+                    || voices.find(v => v.lang && v.lang.toLowerCase().indexOf('en') === 0);
+                if (te) { u.lang = te.lang; u.voice = te; }
+                else if (en) { u.lang = en.lang; u.voice = en; }
+                else u.lang = 'te-IN';
+                u.rate = 1;
+                u.volume = 1;
+                speechSynthesis.speak(u);
+            } catch (e) { /* sound is best-effort */ }
+        }
+
+        // Browsers block autoplay audio: staff must tap once to enable sound.
+        document.getElementById('soundBtn').addEventListener('click', function () {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                soundOn = true;
+                const btn = document.getElementById('soundBtn');
+                btn.textContent = '🔊 సౌండ్ ఆన్‌లో ఉంది ✅';
+                btn.classList.add('on');
+                buzzTimes(1); // test beep
+            } catch (e) { /* sound is best-effort */ }
+        });
+
+        document.getElementById('testBtn').addEventListener('click', function () {
+            if (!soundOn) { alert('ముందు పైన ఉన్న "సౌండ్ ఆన్" బటన్ నొక్కండి.'); return; }
+            buzzTimes(1);
+            speakTelugu('టెస్ట్ — సెలూన్ క్యూ సౌండ్ పనిచేస్తోంది.');
+        });
+
+        function initSalonOwnerQueue() {
+            renderSalonOwnerQueue();
+            try {
+                if (!salonOwnerDb) return; // offline / SDK missing: fail-open
+                salonOwnerDb.ref('.info/connected').on('value', function (snap) {
+                    const el = document.getElementById('connStatus');
+                    if (!el) return;
+                    if (snap.val() === true) { el.textContent = osq('connOk'); el.className = 'conn ok'; }
+                    else { el.textContent = osq('connBad'); el.className = 'conn bad'; }
+                });
+                salonOwnerDb.ref(SALON_QUEUE_PATH).on('value', function (snap) {
+                    const today = salonQueueTodaysRecords(snap.val() || {});
+                    if (salonOwnerLoaded) {
+                        const fresh = salonOwnerDetectNewJoins(salonOwnerPrevIds, today);
+                        if (fresh.length) {
+                            buzzTimes(1);
+                            speakTelugu(osq('newJoin') + fresh[0].token);
+                        }
+                    }
+                    salonOwnerRecords = snap.val() || {};
+                    salonOwnerPrevIds = {};
+                    Object.keys(today).forEach(function (id) { salonOwnerPrevIds[id] = true; });
+                    salonOwnerLoaded = true;
+                    renderSalonOwnerQueue();
+                }, function () { /* read failed: fail-open */ });
+            } catch (e) { /* fail-open */ }
+        }
+
+        toggleLanguage(currentLang);
+        initSalonOwnerQueue();
+    </script>
+</body>
+</html>
