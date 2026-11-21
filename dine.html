@@ -1083,8 +1083,17 @@
         <div style="background: #0d284e; border: 1.5px solid var(--brand-gold); border-radius: 14px; padding: 18px 16px; max-width: 420px; width: 100%; color: #fff;">
             <h3 style="font-family: 'Rajdhani', sans-serif; color: var(--brand-gold); font-size: 18px; font-weight: 800; margin-bottom: 10px;" data-te="ఆర్డర్ నిర్ధారణ" data-en="Confirm Order" data-hi="ऑर्डर कन्फ़र्म कीजिए">ఆర్డర్ నిర్ధారణ</h3>
             <div id="orderConfirmBody" style="font-size: 13.5px; line-height: 1.9; margin-bottom: 14px; color: #e2e8f0;"></div>
+            <!-- Payment method: Cash (default) or UPI (only when the restaurant's UPI ID is configured) -->
+            <div style="margin-bottom: 12px;">
+                <div style="font-size: 13px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px;" data-te="చెల్లింపు విధానం:" data-en="Payment method:" data-hi="भुगतान का तरीका:">చెల్లింపు విధానం:</div>
+                <div class="mode-btns" style="margin-bottom: 0;">
+                    <button type="button" id="payCashBtn" class="mode-btn active" onclick="setPaymentMethod('cash')" data-te="💵 నగదు" data-en="💵 Cash" data-hi="💵 नकद">💵 నగదు</button>
+                    <button type="button" id="payUpiBtn" class="mode-btn" onclick="setPaymentMethod('upi')" data-te="📱 UPI ద్వారా" data-en="📱 Via UPI" data-hi="📱 UPI से">📱 UPI ద్వారా</button>
+                </div>
+                <div id="payUpiNote" style="display: none; margin-top: 6px; font-size: 12.5px; color: #fbbf24;" data-te="UPI ID సెట్ చేయలేదు — రెస్టారెంట్‌ను అడగండి" data-en="UPI ID not set — please ask the restaurant" data-hi="UPI ID सेट नहीं है — कृपया रेस्टोरेंट से पूछें">UPI ID సెట్ చేయలేదు — రెస్టారెంట్‌ను అడగండి</div>
+            </div>
             <div style="display: flex; gap: 10px;">
-                <button onclick="confirmOrderSend()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;" data-te="✅ నిర్ధారించి పంపండి" data-en="✅ Confirm &amp; Send" data-hi="✅ कन्फ़र्म करके भेजिए">✅ నిర్ధారించి పంపండి</button>
+                <button id="confirmOrderBtn" onclick="confirmOrderSend()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;" data-te="✅ నిర్ధారించి పంపండి" data-en="✅ Confirm &amp; Send" data-hi="✅ कन्फ़र्म करके भेजिए">✅ నిర్ధారించి పంపండి</button>
                 <button onclick="closeOrderConfirm()" style="flex: 1; background: #334155; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="వెనక్కి" data-en="Back" data-hi="वापस">వెనక్కి</button>
             </div>
         </div>
@@ -1161,6 +1170,61 @@
         // a ?hotel= / ?table= value passed in is a proper noun and is kept as-is).
         const HOTEL_DISPLAY = { te: "AVAILO Dine", en: "AVAILO Dine", hi: "AVAILO Dine" };
         const TABLE_DISPLAY = { te: "టేబుల్ 01", en: "Table 01", hi: "टेबल 01" };
+
+        // ---- Restaurant UPI payment (free UPI intent links — no gateway) ----
+        // The restaurant's UPI ID is NOT on file: HOTEL_UPI_ID stays EMPTY
+        // until the restaurant gives it. While empty, the UPI option is
+        // disabled in the confirm overlay and orders fall back to Cash —
+        // never invent a UPI ID, phone number, or payee name.
+        // `let` (not const) so tests and a future per-restaurant loader can
+        // set these without editing the page.
+        let HOTEL_UPI_ID = '';   // e.g. 'khaleelbhai@okhdfcbank' — ask the restaurant
+        let HOTEL_UPI_NAME = ''; // e.g. 'Khaleel Bhai Family Restaurant'
+
+        // UPI intent link: upi://pay?pa=<id>&pn=<name>&am=<2-decimals>&cu=INR&tn=<order-ref>
+        // Pure helpers (tested in tests/dine-upi-payment.test.js).
+        function upiPayeeConfigured() { return typeof HOTEL_UPI_ID === 'string' && HOTEL_UPI_ID.trim().length > 0; }
+        function formatUpiAmount(amount) {
+            const n = Number(amount);
+            if (!isFinite(n) || n <= 0) return null;
+            return (Math.round(n * 100) / 100).toFixed(2);
+        }
+        function buildUpiPayLink(payeeId, payeeName, amount, orderRef) {
+            if (!payeeId || !String(payeeId).trim()) return null;
+            const am = formatUpiAmount(amount);
+            if (am === null) return null;
+            let link = 'upi://pay?pa=' + encodeURIComponent(String(payeeId).trim());
+            if (payeeName && String(payeeName).trim()) link += '&pn=' + encodeURIComponent(String(payeeName).trim());
+            link += '&am=' + am + '&cu=INR';
+            if (orderRef) link += '&tn=' + encodeURIComponent(String(orderRef));
+            return link;
+        }
+        // Requested method, honoured only when UPI is actually configured.
+        function resolvePaymentMethod(requested) { return (requested === 'upi' && upiPayeeConfigured()) ? 'upi' : 'cash'; }
+        // Insert "*Payment: UPI/Cash" before the "*సమయం:*" line of the
+        // WhatsApp KOT message (built URL-encoded in sendOrderWhatsApp);
+        // appends at the end if that marker is ever missing.
+        function withPaymentLine(msg, method) {
+            const line = '%0A*Payment:* ' + (method === 'upi' ? 'UPI' : 'Cash');
+            const marker = '%0A*సమయం:*';
+            if (String(msg).indexOf(marker) !== -1) return String(msg).replace(marker, line + marker);
+            return String(msg) + line;
+        }
+        function openUpiIntent(link) {
+            // Launching the UPI app is a navigation to the intent link. The
+            // order is already sent to WhatsApp before this runs, so a
+            // missing UPI app can never lose the order.
+            try { window.location.href = link; } catch (e) { /* no UPI app: order already placed */ }
+        }
+        // Test seam + future per-restaurant loader hook: set the UPI payee
+        // at runtime (e.g. from a per-hotel config fetch). Empty values
+        // disable UPI again. (jsdom tests cannot reach top-level `let`
+        // bindings through window.eval, so the config is settable this way.)
+        function setHotelUpiConfig(id, name) {
+            HOTEL_UPI_ID = (id == null ? '' : String(id));
+            HOTEL_UPI_NAME = (name == null ? '' : String(name));
+            refreshPaymentUI();
+        }
         function hotelDisplay() { return hotelParam || HOTEL_DISPLAY[currentLang]; }
         function tableDisplay() { return tableParam ? tableParam.toUpperCase() : TABLE_DISPLAY[currentLang]; }
         function renderVenueLabels() {
@@ -1204,6 +1268,37 @@
         function deliveryFlat() {
             const inp = document.getElementById('deliveryFlatInput');
             return normalizeFlat(inp ? inp.value : '');
+        }
+
+        // ---- Payment method (confirm overlay): Cash default, UPI only when
+        // the restaurant's UPI ID is configured. The choice is re-resolved
+        // at confirm time, so a stale 'upi' can never slip through.
+        let selectedPaymentMethod = 'cash';
+        let pendingOrderTotal = 0;
+        function setPaymentMethod(method) {
+            selectedPaymentMethod = resolvePaymentMethod(method);
+            refreshPaymentUI();
+        }
+        function refreshPaymentUI() {
+            const cashBtn = document.getElementById('payCashBtn');
+            const upiBtn = document.getElementById('payUpiBtn');
+            const note = document.getElementById('payUpiNote');
+            const confirmBtn = document.getElementById('confirmOrderBtn');
+            if (!cashBtn || !upiBtn) return;
+            const upiOk = upiPayeeConfigured();
+            cashBtn.classList.toggle('active', selectedPaymentMethod === 'cash');
+            upiBtn.classList.toggle('active', selectedPaymentMethod === 'upi');
+            upiBtn.disabled = !upiOk;
+            upiBtn.style.opacity = upiOk ? '' : '0.45';
+            if (note) {
+                note.style.display = upiOk ? 'none' : 'block';
+                note.innerText = t('payUpiNotSet');
+            }
+            if (confirmBtn) {
+                confirmBtn.innerText = selectedPaymentMethod === 'upi'
+                    ? tf('payUpiButton', { amount: fmtPrice(pendingOrderTotal) })
+                    : t('confirmOrderSend');
+            }
         }
 
         // Welcome overlay: tap "View Menu" to reveal the menu (two-step entry).
@@ -1639,6 +1734,12 @@
             trackerAtGateSpeak: { te: "మీ ఆర్డర్ గేట్ దగ్గరకు వచ్చింది సర్ — డెలివరీ పార్ట్‌నర్ తీసుకున్నారు.", en: "Your order has reached the gate, sir — the delivery partner has picked it up.", hi: "आपका ऑर्डर गेट पर आ गया है सर — डिलीवरी पार्टनर ने ले लिया है।" },
             flatLabel: { te: "ఫ్లాట్", en: "Flat", hi: "फ़्लैट" },
             flatRequired: { te: "డెలివరీకి ఫ్లాట్ నంబర్ రాయండి సర్.", en: "Please type your flat number for delivery, sir.", hi: "डिलीवरी के लिए फ़्लैट नंबर लिखिए सर।" },
+            payMethodTitle: { te: "చెల్లింపు విధానం:", en: "Payment method:", hi: "भुगतान का तरीका:" },
+            payCash: { te: "💵 నగదు", en: "💵 Cash", hi: "💵 नकद" },
+            payUpi: { te: "📱 UPI ద్వారా", en: "📱 Via UPI", hi: "📱 UPI से" },
+            payUpiNotSet: { te: "UPI ID సెట్ చేయలేదు — రెస్టారెంట్‌ను అడగండి", en: "UPI ID not set — please ask the restaurant", hi: "UPI ID सेट नहीं है — कृपया रेस्टोरेंट से पूछें" },
+            payUpiButton: { te: "💳 {amount} UPI ద్వారా చెల్లించండి", en: "💳 Pay {amount} via UPI", hi: "💳 {amount} UPI से भुगतान करें" },
+            confirmOrderSend: { te: "✅ నిర్ధారించి పంపండి", en: "✅ Confirm & Send", hi: "✅ कन्फ़र्म करके भेजिए" },
             trackerReadySpeak: { te: "మీ ఆర్డర్ రెడీ అయింది సర్ — ఇప్పుడు టేబుల్ వద్దకు వస్తోంది.", en: "Your order is ready, sir — it is on its way to your table.", hi: "आपका ऑर्डर तैयार है सर — अब आपकी टेबल पर आ रहा है।" },
             trackerNewOrder: { te: "🔄 కొత్త ఆర్డర్ చేయండి", en: "🔄 Place a new order", hi: "🔄 नया ऑर्डर कीजिए" },
             refillTitle: { te: "⚡ తక్షణ అవసరాలు / రీఫిల్స్:", en: "⚡ Instant needs / refills:", hi: "⚡ तुरंत ज़रूरतें / रीफ़िल:" },
@@ -1689,6 +1790,7 @@
             renderMenu();
             renderOrderPad();
             applyTrackerLang();
+            refreshPaymentUI();
         }
 
         function speakHubGreeting() { speakGentVoice(t('hubGreeting')); }
@@ -2150,16 +2252,21 @@
 
         function escHtml(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
-        function showOrderConfirm(summaryHtml, msg, billLabel) {
+        function showOrderConfirm(summaryHtml, msg, billLabel, totalNum) {
             pendingOrderMsg = msg;
             pendingOrderBill = billLabel;
+            pendingOrderTotal = (typeof totalNum === 'number' && isFinite(totalNum)) ? totalNum : 0;
+            selectedPaymentMethod = 'cash';
             document.getElementById('orderConfirmBody').innerHTML = summaryHtml;
             document.getElementById('orderConfirmOverlay').style.display = 'flex';
+            refreshPaymentUI();
         }
 
         function closeOrderConfirm() {
             pendingOrderMsg = "";
             pendingOrderBill = "";
+            pendingOrderTotal = 0;
+            selectedPaymentMethod = 'cash';
             document.getElementById('orderConfirmOverlay').style.display = 'none';
         }
 
@@ -2167,16 +2274,25 @@
             const msg = pendingOrderMsg;
             const billLabel = pendingOrderBill;
             if (!msg) { closeOrderConfirm(); return; }
+            const method = resolvePaymentMethod(selectedPaymentMethod);
+            const total = pendingOrderTotal;
             closeOrderConfirm();
             const orderId = pendingOrderRef || makeDineOrderId();
+            const msgWithPay = withPaymentLine(msg, method);
             // Live tracker record (fail-open: WhatsApp never waits on it).
-            writeDineOrderRecord(orderId, buildDineOrderRecord(orderId));
+            writeDineOrderRecord(orderId, buildDineOrderRecord(orderId, method));
             saveActiveOrder(orderId, billLabel, orderMode);
             displayLiveTrackerScreen(billLabel, orderId, undefined, orderMode);
             pushKitchenEvent('orders', { table: tableNumber, hotel: hotelName, items: pendingOrderItems || billLabel, time: new Date().toLocaleTimeString(), ref: orderId });
             // Log to Google Sheets (never blocks WhatsApp).
             sendToSheet('Orders', { source: 'Dine', hotel: hotelName, table: tableNumber, items: pendingOrderItems || billLabel, total: pendingOrderBill, ref: orderId });
-            window.open(`https://wa.me/${targetWhatsApp}?text=${msg}`, '_blank', 'noopener');
+            window.open(`https://wa.me/${targetWhatsApp}?text=${msgWithPay}`, '_blank', 'noopener');
+            // UPI: open the intent link AFTER the WhatsApp order, so the
+            // order is placed even if no UPI app handles the link.
+            if (method === 'upi') {
+                const upiLink = buildUpiPayLink(HOTEL_UPI_ID, HOTEL_UPI_NAME, total, orderId);
+                if (upiLink) openUpiIntent(upiLink);
+            }
         }
 
         function sendOrderWhatsApp() {
@@ -2232,7 +2348,7 @@
             speakGentVoice(t('orderReadySpeak'));
             pendingOrderItems = orderLines.join(', ');
             pendingOrderRef = makeDineOrderId();
-            showOrderConfirm(summaryHtml, msg, `₹${grandTotal}`);
+            showOrderConfirm(summaryHtml, msg, `₹${grandTotal}`, grandTotal);
         }
 
         // Loud refill alert: [SERVICE] tag + TABLE number first, short, in the site language,
@@ -2300,7 +2416,7 @@
             return 'AV-DINE-' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
         }
 
-        function buildDineOrderRecord(orderId) {
+        function buildDineOrderRecord(orderId, paymentMethod) {
             const items = [];
             let total = 0;
             HOTEL_MENU.forEach(item => {
@@ -2309,7 +2425,7 @@
                     total += item.count * item.price;
                 }
             });
-            const rec = { table: tableNumber, items, total: Math.round(total * 100) / 100, status: 'received', createdAt: Date.now(), mode: orderMode };
+            const rec = { table: tableNumber, items, total: Math.round(total * 100) / 100, status: 'received', createdAt: Date.now(), mode: orderMode, payment: resolvePaymentMethod(paymentMethod) };
             // Delivery only: the normalised flat lets the guard's gate
             // screen match this order (flat + order ref only — no names,
             // no phone numbers, ever).
