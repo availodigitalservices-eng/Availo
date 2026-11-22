@@ -403,7 +403,7 @@
                 <!-- ============ GATE PASS PDF REPORT ============ -->
                 <div class="block-card" id="gpReportCard" style="margin-top: 16px;">
                     <h3 class="te-heading" data-te="📄 గేట్ పాస్ PDF రిపోర్ట్" data-en="📄 Gate Pass PDF report" data-hi="📄 गेट पास PDF रिपोर्ट">📄 గేట్ పాస్ PDF రిపోర్ట్</h3>
-                    <p data-te="ఏ రోజుకైనా రిపోర్ట్ తయారు చేసుకోవచ్చు — సెక్రటరీ / ప్రెసిడెంట్‌కి WhatsAppలో పంపడానికి లేదా PDFగా సేవ్ చేసుకోవడానికి. మొబైల్ నంబర్ రిపోర్ట్‌లో అసలు ఉండదు; మహిళల ఫోటో బ్లర్ చేసి ఉంటుంది." data-en="Build a report for any day — send it to the secretary / president on WhatsApp, or save it as a PDF. No mobile number appears in the report at all; ladies' photos are blurred." data-hi="किसी भी दिन की रिपोर्ट बनाएँ — सचिव / अध्यक्ष को WhatsApp पर भेजें या PDF के रूप में सहेजें। रिपोर्ट में मोबाइल नंबर बिल्कुल नहीं होता; महिलाओं के फ़ोटो ब्लर रहते हैं।">ఏ రోజుకైనా రిపోర్ట్ తయారు చేసుకోవచ్చు — సెక్రటరీ / ప్రెసిడెంట్‌కి WhatsAppలో పంపడానికి లేదా PDFగా సేవ్ చేసుకోవడానికి. మొబైల్ నంబర్ రిపోర్ట్‌లో అసలు ఉండదు; మహిళల ఫోటో బ్లర్ చేసి ఉంటుంది.</p>
+                    <p data-te="ఏ రోజుకైనా రిపోర్ట్ తయారు చేసుకోవచ్చు — సెక్రటరీ / ప్రెసిడెంట్‌కి WhatsAppలో పంపడానికి లేదా PDFగా సేవ్ చేసుకోవడానికి. రిపోర్ట్‌లో మొబైల్ నంబర్ ఉంటుంది — మహిళల నంబర్ మాస్క్ చేసి, మగవాళ్ళది అలాగే; మహిళల ఫోటో బ్లర్ చేసి ఉంటుంది." data-en="Build a report for any day — send it to the secretary / president on WhatsApp, or save it as a PDF. The report includes mobile numbers — ladies' numbers masked, men's as-is; ladies' photos are blurred." data-hi="किसी भी दिन की रिपोर्ट बनाएँ — सचिव / अध्यक्ष को WhatsApp पर भेजें या PDF के रूप में सहेजें। रिपोर्ट में मोबाइल नंबर होते हैं — महिलाओं के नंबर मास्क करके, पुरुषों के वैसे ही; महिलाओं के फ़ोटो ब्लर रहते हैं।">ఏ రోజుకైనా రిపోర్ట్ తయారు చేసుకోవచ్చు — సెక్రటరీ / ప్రెసిడెంట్‌కి WhatsAppలో పంపడానికి లేదా PDFగా సేవ్ చేసుకోవడానికి. రిపోర్ట్‌లో మొబైల్ నంబర్ ఉంటుంది — మహిళల నంబర్ మాస్క్ చేసి, మగవాళ్ళది అలాగే; మహిళల ఫోటో బ్లర్ చేసి ఉంటుంది.</p>
                     <div class="toolbar">
                         <input type="date" id="gpReportDate">
                         <button class="ghost-btn" type="button" onclick="buildGatePassReport()" data-te="📄 రిపోర్ట్ తయారు చెయ్యండి" data-en="📄 Build report" data-hi="📄 रिपोर्ट बनाएँ">📄 రిపోర్ట్ తయారు చెయ్యండి</button>
@@ -807,11 +807,11 @@
         // separate weekly mode. Browser print-to-PDF only: no server,
         // no paid PDF service. The report shows ONLY what is already
         // in the Sheet (GatePass tab) — nothing is invented.
-        // Privacy: NO mobile number appears in the PDF at all (owner
-        // order, 22 Nov 2026 — the number is not needed in the gate
-        // pass). Female rows show the photo thumbnail blurred; Male
-        // rows are shown as-is. There is no per-row reveal inside a
-        // PDF. The WhatsApp share link carries NO phone number
+        // Privacy (owner order, 22 Nov 2026): the PDF DOES include the
+        // visitor's mobile number — Female numbers MASKED, Male numbers
+        // as-is. Female rows also show the photo thumbnail blurred;
+        // Male rows are shown as-is. There is no per-row reveal inside
+        // a PDF. The WhatsApp share link carries NO phone number
         // (wa.me/?text=...) — the admin sends it from their own
         // phone to whoever the secretary/president is.
         // Sheet Date column is DD/MM/YYYY (gateDateTimeParts).
@@ -858,6 +858,7 @@
                     flat: String(row[idx['Flat']] || ''),
                     apartment: String(row[idx['Apartment']] || ''),
                     partner: String(row[idx['Delivery Partner']] || ''),
+                    mobile: String(row[idx['Mobile']] || ''),
                     gender: String(row[idx['Gender']] || ''),
                     photo: String(row[idx['Photo']] || ''),
                     ref: String(row[idx['Ref']] || ''),
@@ -925,6 +926,7 @@
                 colFlat: { te: 'ఫ్లాట్', en: 'Flat', hi: 'फ़्लैट' },
                 colApartment: { te: 'అపార్ట్‌మెంట్', en: 'Apartment', hi: 'अपार्टमेंट' },
                 colPartner: { te: 'డెలివరీ పార్టనర్', en: 'Delivery partner', hi: 'डिलीवरी पार्टनर' },
+                colMobile: { te: 'మొబైల్', en: 'Mobile', hi: 'मोबाइल' },
                 colPhoto: { te: 'ఫోటో', en: 'Photo', hi: 'फ़ोटो' },
                 colRef: { te: 'రిఫ్', en: 'Ref', hi: 'रेफ़' },
                 colHistory: { te: 'ఈ ఫ్లాట్ చరిత్ర', en: 'Flat history', hi: 'फ़्लैट इतिहास' },
@@ -990,6 +992,7 @@
                     '<th>' + escHtml(gpT('colFlat')) + '</th>' +
                     '<th>' + escHtml(gpT('colApartment')) + '</th>' +
                     '<th>' + escHtml(gpT('colPartner')) + '</th>' +
+                    '<th>' + escHtml(gpT('colMobile')) + '</th>' +
                     '<th>' + escHtml(gpT('colPhoto')) + '</th>' +
                     '<th>' + escHtml(gpT('colRef')) + '</th>' +
                     '<th>' + escHtml(gpT('colHistory')) + '</th>' +
@@ -998,10 +1001,14 @@
                     const isFemale = e.gender === 'Female';
                     const thumb = e.photo ? driveThumbnailUrl(e.photo) : null;
                     const f = firstSeen[e.apartment + '|' + e.flat];
+                    // Mobile: Female masked, Male as-is; '—' when the
+                    // number was never captured for this row.
+                    const mobileCell = e.mobile ? (isFemale ? maskMobileNumber(e.mobile) : e.mobile) : '—';
                     html += '<tr><td>' + escHtml(e.time) + '</td>' +
                         '<td>' + escHtml(e.flat) + '</td>' +
                         '<td>' + escHtml(e.apartment) + '</td>' +
-                        '<td>' + escHtml(e.partner) + '</td><td>';
+                        '<td>' + escHtml(e.partner) + '</td>' +
+                        '<td>' + escHtml(mobileCell) + '</td><td>';
                     if (thumb) {
                         html += '<a href="' + escHtml(e.photo) + '" target="_blank" rel="noopener"><img src="' + escHtml(thumb) + '" alt="" class="gate-photo-thumb' + (isFemale ? ' gate-photo-blurred' : '') + '"></a>';
                     } else if (e.photo) {
