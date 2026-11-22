@@ -148,7 +148,7 @@
             text-decoration: none;
         }
 
-        input[type="password"], input[type="text"] {
+        input[type="password"], input[type="text"], input[type="date"] {
             width: 100%;
             background: #0b1e3f;
             border: 1px solid rgba(0, 229, 255, 0.4);
@@ -313,6 +313,33 @@
         .gate-photo-blurred { filter: blur(10px); }
 
         tr:last-child td { border-bottom: none; }
+
+        /* Gate Pass PDF report (on-demand daily report, admin only).
+           Light sheet so it prints cleanly as a PDF; the same
+           .gate-photo-thumb / .gate-photo-blurred classes from the
+           panel table apply to the thumbnails here. */
+        .gp-report-sheet {
+            background: #ffffff;
+            color: #0f172a;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+        .gp-report-sheet h4 { color: #0f172a; font-size: 16px; margin-bottom: 2px; }
+        .gp-report-sheet .gp-sub { color: #475569; font-size: 12px; margin-bottom: 10px; }
+        .gp-report-sheet table { min-width: 640px; }
+        .gp-report-sheet th { background: #e2e8f0; color: #0f172a; }
+        .gp-report-sheet td { color: #1e293b; border-bottom: 1px solid #cbd5e1; }
+        .gp-report-sheet .gp-history { font-size: 12px; color: #475569; }
+        .gp-report-sheet .gp-empty { color: #475569; padding: 10px 0; }
+        .gp-report-sheet .gate-photo-thumb { max-width: 90px; }
+        @media print {
+            body { background: #ffffff !important; }
+            body * { visibility: hidden !important; }
+            #gpReportSheet, #gpReportSheet * { visibility: visible !important; }
+            #gpReportSheet { position: absolute; left: 0; top: 0; width: 100%; margin: 0; }
+        }
     </style>
 </head>
 <body>
@@ -372,6 +399,23 @@
                         <tbody id="tableBody"></tbody>
                     </table>
                 </div>
+
+                <!-- ============ GATE PASS PDF REPORT ============ -->
+                <div class="block-card" id="gpReportCard" style="margin-top: 16px;">
+                    <h3 class="te-heading" data-te="📄 గేట్ పాస్ PDF రిపోర్ట్" data-en="📄 Gate Pass PDF report" data-hi="📄 गेट पास PDF रिपोर्ट">📄 గేట్ పాస్ PDF రిపోర్ట్</h3>
+                    <p data-te="ఏ రోజుకైనా రిపోర్ట్ తయారు చేసుకోవచ్చు — సెక్రటరీ / ప్రెసిడెంట్‌కి WhatsAppలో పంపడానికి లేదా PDFగా సేవ్ చేసుకోవడానికి. మొబైల్ నంబర్ రిపోర్ట్‌లో అసలు ఉండదు; మహిళల ఫోటో బ్లర్ చేసి ఉంటుంది." data-en="Build a report for any day — send it to the secretary / president on WhatsApp, or save it as a PDF. No mobile number appears in the report at all; ladies' photos are blurred." data-hi="किसी भी दिन की रिपोर्ट बनाएँ — सचिव / अध्यक्ष को WhatsApp पर भेजें या PDF के रूप में सहेजें। रिपोर्ट में मोबाइल नंबर बिल्कुल नहीं होता; महिलाओं के फ़ोटो ब्लर रहते हैं।">ఏ రోజుకైనా రిపోర్ట్ తయారు చేసుకోవచ్చు — సెక్రటరీ / ప్రెసిడెంట్‌కి WhatsAppలో పంపడానికి లేదా PDFగా సేవ్ చేసుకోవడానికి. మొబైల్ నంబర్ రిపోర్ట్‌లో అసలు ఉండదు; మహిళల ఫోటో బ్లర్ చేసి ఉంటుంది.</p>
+                    <div class="toolbar">
+                        <input type="date" id="gpReportDate">
+                        <button class="ghost-btn" type="button" onclick="buildGatePassReport()" data-te="📄 రిపోర్ట్ తయారు చెయ్యండి" data-en="📄 Build report" data-hi="📄 रिपोर्ट बनाएँ">📄 రిపోర్ట్ తయారు చెయ్యండి</button>
+                    </div>
+                    <div class="status-line" id="gpReportStatus"></div>
+                    <div id="gpReportSheet" class="gp-report-sheet" style="display: none;"></div>
+                    <div class="toolbar" id="gpReportBtns" style="display: none; margin-top: 12px;">
+                        <a id="gpWaShareBtn" class="cta-btn" href="#" target="_blank" rel="noopener" style="flex: 1;"><span data-te="📤 WhatsAppలో పంపండి" data-en="📤 Send on WhatsApp" data-hi="📤 WhatsApp पर भेजें">📤 WhatsAppలో పంపండి</span></a>
+                        <button class="ghost-btn" type="button" onclick="window.print()" data-te="🖨️ ప్రింట్ / PDF" data-en="🖨️ Print / PDF" data-hi="🖨️ प्रिंट / PDF">🖨️ ప్రింట్ / PDF</button>
+                    </div>
+                    <p class="status-line" style="margin-top: 10px;" data-te="ప్రింట్ చేసేటప్పుడు బ్రౌజర్‌లో 'Save as PDF' ఎంచుకుంటే PDF వస్తుంది. రిపోర్ట్‌లో ఉన్న వివరాలు Sheetలో ఉన్నవే — కొత్తగా ఏమీ రాయలేదు." data-en="When printing, choose 'Save as PDF' in the browser to get a PDF. The report shows only what is already in the Sheet — nothing new is written." data-hi="प्रिंट करते समय ब्राउज़र में 'Save as PDF' चुनें। रिपोर्ट में वही जानकारी है जो Sheet में है — कुछ नया नहीं लिखा गया है।">ప్రింట్ చేసేటప్పుడు బ్రౌజర్‌లో 'Save as PDF' ఎంచుకుంటే PDF వస్తుంది. రిపోర్ట్‌లో ఉన్న వివరాలు Sheetలో ఉన్నవే — కొత్తగా ఏమీ రాయలేదు.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -402,7 +446,7 @@
                 if (ph) si.placeholder = ph;
             }
             // Re-render dynamic labels in the new language.
-            if (unlocked) { renderCounts(); renderTabs(); renderTable(); }
+            if (unlocked) { renderCounts(); renderTabs(); renderTable(); if (gpReportBuilt) buildGatePassReport(); }
         }
 
         // ================= PASSCODE GATE =================
@@ -757,9 +801,229 @@
             }
         }
 
+        // ================= GATE PASS PDF REPORT =================
+        // On-demand daily report for any date the admin picks (date
+        // input). Daily and weekly are the same button — there is no
+        // separate weekly mode. Browser print-to-PDF only: no server,
+        // no paid PDF service. The report shows ONLY what is already
+        // in the Sheet (GatePass tab) — nothing is invented.
+        // Privacy: NO mobile number appears in the PDF at all (owner
+        // order, 22 Nov 2026 — the number is not needed in the gate
+        // pass). Female rows show the photo thumbnail blurred; Male
+        // rows are shown as-is. There is no per-row reveal inside a
+        // PDF. The WhatsApp share link carries NO phone number
+        // (wa.me/?text=...) — the admin sends it from their own
+        // phone to whoever the secretary/president is.
+        // Sheet Date column is DD/MM/YYYY (gateDateTimeParts).
+        let gpReportBuilt = false;
+
+        function escHtml(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
+        // '18/11/2026' -> '2026-11-18'; '' when unparseable.
+        function sheetDateToISO(s) {
+            const m = String(s || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+            if (!m) return '';
+            const d = +m[1], mo = +m[2], y = +m[3];
+            if (mo < 1 || mo > 12 || d < 1 || d > 31) return '';
+            const dt = new Date(Date.UTC(y, mo - 1, d));
+            if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== mo - 1 || dt.getUTCDate() !== d) return '';
+            return y + '-' + String(mo).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+        }
+        function isoToSheetDate(iso) {
+            const p = String(iso || '').split('-');
+            if (p.length !== 3 || p[0].length !== 4) return '';
+            return p[2] + '/' + p[1] + '/' + p[0];
+        }
+        // Today's date in IST as YYYY-MM-DD (the date input's value).
+        function todayISOIST() {
+            try {
+                return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+            } catch (e) {
+                return new Date().toISOString().slice(0, 10);
+            }
+        }
+        // GatePass rows for one day, as objects, newest first (Time desc).
+        function gatePassEntries(headers, rows, isoDate) {
+            const idx = {};
+            (headers || []).forEach(function (h, i) { idx[h] = i; });
+            const want = isoToSheetDate(isoDate);
+            const out = [];
+            (rows || []).forEach(function (row) {
+                if (String(row[idx['Date']] || '') !== want) return;
+                out.push({
+                    time: String(row[idx['Time']] || ''),
+                    flat: String(row[idx['Flat']] || ''),
+                    apartment: String(row[idx['Apartment']] || ''),
+                    partner: String(row[idx['Delivery Partner']] || ''),
+                    gender: String(row[idx['Gender']] || ''),
+                    photo: String(row[idx['Photo']] || ''),
+                    ref: String(row[idx['Ref']] || ''),
+                    date: want
+                });
+            });
+            out.sort(function (a, b) { return b.time < a.time ? -1 : (b.time > a.time ? 1 : 0); });
+            return out;
+        }
+        // Earliest saved Date per (apartment, flat) across ALL rows:
+        // { "Apartment|Flat": { apartment, flat, firstISO, firstSheet } }.
+        function firstSeenByFlat(headers, rows) {
+            const idx = {};
+            (headers || []).forEach(function (h, i) { idx[h] = i; });
+            const map = {};
+            (rows || []).forEach(function (row) {
+                const iso = sheetDateToISO(row[idx['Date']]);
+                if (!iso) return;
+                const apt = String(row[idx['Apartment']] || '');
+                const flat = String(row[idx['Flat']] || '');
+                const key = apt + '|' + flat;
+                if (!map[key] || iso < map[key].firstISO) {
+                    map[key] = { apartment: apt, flat: flat, firstISO: iso, firstSheet: isoToSheetDate(iso) };
+                }
+            });
+            return map;
+        }
+        // Full calendar months from firstISO to reportISO (>= 0).
+        function fullMonthsBetween(firstISO, reportISO) {
+            const a = firstISO.split('-').map(Number);
+            const b = reportISO.split('-').map(Number);
+            let months = (b[0] - a[0]) * 12 + (b[1] - a[1]);
+            if (b[2] < a[2]) months--;
+            return Math.max(0, months);
+        }
+        // Per-flat history line. Never invents a start before the
+        // database: the span is counted only from the first saved row.
+        function flatHistoryLine(first, reportISO) {
+            const months = fullMonthsBetween(first.firstISO, reportISO);
+            let span = '';
+            if (months >= 12) {
+                const y = Math.floor(months / 12), m = months % 12;
+                span = currentLang === 'hi' ? ' · ' + y + ' साल' + (m ? ' ' + m + ' महीने' : '') + ' से'
+                    : currentLang === 'en' ? ' · for ' + y + ' year' + (y > 1 ? 's' : '') + (m ? ' ' + m + ' month' + (m > 1 ? 's' : '') : '')
+                    : ' · ' + y + ' సంవత్సరం' + (m ? ' ' + m + ' నెలలు' : '') + 'గా';
+            } else if (months >= 1) {
+                span = currentLang === 'hi' ? ' · ' + months + ' महीने से'
+                    : currentLang === 'en' ? ' · for ' + months + ' month' + (months > 1 ? 's' : '')
+                    : ' · ' + months + ' నెలలుగా';
+            }
+            const since = currentLang === 'hi' ? ' (डेटाबेस में पहली एंट्री से)'
+                : currentLang === 'en' ? ' (since the first entry in the database)'
+                : ' (డేటాబేస్‌లో మొదటి ఎంట్రీ నుంచి)';
+            const firstWord = currentLang === 'hi' ? 'पहली बार: ' : currentLang === 'en' ? 'First seen: ' : 'మొదటిసారి: ';
+            return firstWord + first.firstSheet + span + since;
+        }
+        function gpT(key) {
+            const T = {
+                reportTitle: { te: 'గేట్ పాస్ రిపోర్ట్', en: 'Gate Pass Report', hi: 'गेट पास रिपोर्ट' },
+                totalEntries: { te: 'మొత్తం ఎంట్రీలు', en: 'Total entries', hi: 'कुल एंट्री' },
+                noEntries: { te: 'ఈ రోజు ఎంట్రీలు లేవు.', en: 'No entries on this day.', hi: 'इस दिन कोई एंट्री नहीं है।' },
+                noData: { te: 'డేటా ఇంకా లోడ్ కాలేదు — ముందు పైన ↻ అన్నీ రిఫ్రెష్ నొక్కండి.', en: 'Data has not loaded yet — press ↻ Refresh all above first.', hi: 'डेटा अभी लोड नहीं हुआ — ऊपर ↻ Refresh all दबाएँ।' },
+                pickDate: { te: 'ముందు తేదీ ఎంచుకోండి.', en: 'Pick a date first.', hi: 'पहले तारीख़ चुनें।' },
+                colTime: { te: 'సమయం', en: 'Time', hi: 'समय' },
+                colFlat: { te: 'ఫ్లాట్', en: 'Flat', hi: 'फ़्लैट' },
+                colApartment: { te: 'అపార్ట్‌మెంట్', en: 'Apartment', hi: 'अपार्टमेंट' },
+                colPartner: { te: 'డెలివరీ పార్టనర్', en: 'Delivery partner', hi: 'डिलीवरी पार्टनर' },
+                colPhoto: { te: 'ఫోటో', en: 'Photo', hi: 'फ़ोटो' },
+                colRef: { te: 'రిఫ్', en: 'Ref', hi: 'रेफ़' },
+                colHistory: { te: 'ఈ ఫ్లాట్ చరిత్ర', en: 'Flat history', hi: 'फ़्लैट इतिहास' },
+                perPartner: { te: 'పార్టనర్ వారీగా', en: 'By partner', hi: 'पार्टनर के अनुसार' },
+                fullDetailsPdf: { te: 'పూర్తి వివరాలు PDFలో ఉన్నాయి.', en: 'Full details are in the PDF.', hi: 'पूरी जानकारी PDF में है।' }
+            };
+            const row = T[key] || {};
+            return row[currentLang] || row.te || key;
+        }
+        // Prefilled WhatsApp text for the report (current language).
+        // Summary only — NO mobile numbers, NO photo links, NO number
+        // in the wa.me link itself. An empty day shares honestly (0).
+        function whatsappGatePassText(isoDate, entries, firstSeen) {
+            const lines = [];
+            lines.push('AVAILO Gate Pass — ' + gpT('reportTitle') + ' (' + isoToSheetDate(isoDate) + ')');
+            lines.push(gpT('totalEntries') + ': ' + entries.length);
+            const byPartner = {};
+            entries.forEach(function (e) { const p = e.partner || '—'; byPartner[p] = (byPartner[p] || 0) + 1; });
+            const parts = Object.keys(byPartner).sort().map(function (p) { return p + ': ' + byPartner[p]; });
+            if (parts.length) lines.push(gpT('perPartner') + ': ' + parts.join(' · '));
+            const flats = {};
+            entries.forEach(function (e) { flats[e.apartment + '|' + e.flat] = firstSeen[e.apartment + '|' + e.flat]; });
+            Object.keys(flats).sort().forEach(function (k) {
+                const f = flats[k];
+                if (f) lines.push('• ' + f.apartment + ' ' + f.flat + ' — ' + flatHistoryLine(f, isoDate));
+            });
+            lines.push(gpT('fullDetailsPdf'));
+            return lines.join('\n');
+        }
+        function buildGatePassReport() {
+            const dateInput = document.getElementById('gpReportDate');
+            const statusEl = document.getElementById('gpReportStatus');
+            const sheetEl = document.getElementById('gpReportSheet');
+            const btnsEl = document.getElementById('gpReportBtns');
+            const waBtn = document.getElementById('gpWaShareBtn');
+            const isoDate = dateInput ? dateInput.value : '';
+            if (!isoDate) {
+                if (statusEl) statusEl.textContent = gpT('pickDate');
+                return;
+            }
+            const d = ADMIN_DATA['GatePass'];
+            if (!d || !d.headers || !d.headers.length) {
+                if (statusEl) statusEl.textContent = gpT('noData');
+                return;
+            }
+            const entries = gatePassEntries(d.headers, d.rows, isoDate);
+            const firstSeen = firstSeenByFlat(d.headers, d.rows);
+            gpReportBuilt = true;
+            if (statusEl) statusEl.textContent = '';
+            // Summary + per-flat history + entries table (newest first).
+            let html = '<h4>AVAILO — ' + escHtml(gpT('reportTitle')) + ' · ' + escHtml(isoToSheetDate(isoDate)) + '</h4>';
+            html += '<div class="gp-sub">' + escHtml(gpT('totalEntries')) + ': <b>' + entries.length + '</b>';
+            const byPartner = {};
+            entries.forEach(function (e) { const p = e.partner || '—'; byPartner[p] = (byPartner[p] || 0) + 1; });
+            const parts = Object.keys(byPartner).sort().map(function (p) { return escHtml(p) + ': ' + byPartner[p]; });
+            if (parts.length) html += ' · ' + escHtml(gpT('perPartner')) + ': ' + parts.join(' · ');
+            html += '</div>';
+            if (!entries.length) {
+                html += '<div class="gp-empty">' + escHtml(gpT('noEntries')) + '</div>';
+            } else {
+                html += '<div class="table-wrap"><table><thead><tr>' +
+                    '<th>' + escHtml(gpT('colTime')) + '</th>' +
+                    '<th>' + escHtml(gpT('colFlat')) + '</th>' +
+                    '<th>' + escHtml(gpT('colApartment')) + '</th>' +
+                    '<th>' + escHtml(gpT('colPartner')) + '</th>' +
+                    '<th>' + escHtml(gpT('colPhoto')) + '</th>' +
+                    '<th>' + escHtml(gpT('colRef')) + '</th>' +
+                    '<th>' + escHtml(gpT('colHistory')) + '</th>' +
+                    '</tr></thead><tbody>';
+                entries.forEach(function (e) {
+                    const isFemale = e.gender === 'Female';
+                    const thumb = e.photo ? driveThumbnailUrl(e.photo) : null;
+                    const f = firstSeen[e.apartment + '|' + e.flat];
+                    html += '<tr><td>' + escHtml(e.time) + '</td>' +
+                        '<td>' + escHtml(e.flat) + '</td>' +
+                        '<td>' + escHtml(e.apartment) + '</td>' +
+                        '<td>' + escHtml(e.partner) + '</td><td>';
+                    if (thumb) {
+                        html += '<a href="' + escHtml(e.photo) + '" target="_blank" rel="noopener"><img src="' + escHtml(thumb) + '" alt="" class="gate-photo-thumb' + (isFemale ? ' gate-photo-blurred' : '') + '"></a>';
+                    } else if (e.photo) {
+                        html += '<a href="' + escHtml(e.photo) + '" target="_blank" rel="noopener">' + escHtml(e.photo) + '</a>';
+                    }
+                    html += '</td><td>' + escHtml(e.ref) + '</td>' +
+                        '<td class="gp-history">' + (f ? escHtml(flatHistoryLine(f, isoDate)) : '') + '</td></tr>';
+                });
+                html += '</tbody></table></div>';
+            }
+            sheetEl.innerHTML = html;
+            sheetEl.style.display = 'block';
+            btnsEl.style.display = 'flex';
+            if (waBtn) waBtn.href = 'https://wa.me/?text=' + encodeURIComponent(whatsappGatePassText(isoDate, entries, firstSeen));
+        }
+
         // Apply the saved language on load (no cycling) and show the CURRENT
         // language on the button. Restore an in-session unlock and any
         // lockout left from a previous try.
+        // Gate Pass PDF report: default the date picker to today (IST).
+        const gpDateInput = document.getElementById('gpReportDate');
+        if (gpDateInput && !gpDateInput.value) gpDateInput.value = todayISOIST();
         toggleLanguage(currentLang);
         if (sessionStorage.getItem(UNLOCK_KEY) === '1') {
             unlocked = true;
