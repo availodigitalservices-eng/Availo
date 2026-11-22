@@ -1085,15 +1085,11 @@
                     <div id="gateReadyOrder" style="display: none; background: #fffbeb; border: 1.5px solid #f59e0b; border-radius: 12px; padding: 12px 14px; margin-top: 10px;"></div>
                     </div>
 
-                    <!-- Step 2 (cont.) — mobile number (required) + gender (required, drives privacy) -->
-                    <div style="margin-bottom: 12px;">
-                        <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 4px;" data-te="📱 మొబైల్ నంబర్ *" data-en="📱 Mobile Number *" data-hi="📱 मोबाइल नंबर *">📱 మొబైల్ నంబర్ *</label>
-                        <input type="tel" id="gateMobile" inputmode="tel" autocomplete="off" maxlength="12" data-ph-te="ఉదా: 99661 57369" data-ph-en="e.g. 99661 57369" data-ph-hi="उदा: 99661 57369" placeholder="ఉదా: 99661 57369" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; font-weight: 600; background: #fff;">
-                    </div>
+                    <!-- Step 2 (cont.) — gender (required, drives photo privacy). No mobile number is asked at the gate. -->
                     <div style="margin-bottom: 12px;">
                         <label style="font-size: 11.5px; font-weight: 700; color: #334155; display: block; margin-bottom: 6px;" data-te="👤 లింగం *" data-en="👤 Gender *" data-hi="👤 लिंग *">👤 లింగం *</label>
                         <div id="gateGenderChips" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
-                        <p style="font-size: 11px; color: #64748b; margin-top: 6px; line-height: 1.5;" data-te="మహిళల మొబైల్ నంబర్ మరియు ఫోటో గోప్యంగా ఉంటాయి — అడ్మిన్ ప్యానెల్‌లో నంబర్ మాస్క్ చేసి, ఫోటో బ్లర్ చేసి చూపిస్తారు; అడ్మిన్ మాత్రమే చూడగలరు." data-en="Ladies' mobile number and photo stay confidential — in the admin panel the number is shown masked and the photo blurred; only the admin can reveal them." data-hi="महिलाओं का मोबाइल नंबर और फ़ोटो गोपनीय रहते हैं — एडमिन पैनल में नंबर मास्क करके और फ़ोटो ब्लर करके दिखाए जाते हैं; सिर्फ़ एडमिन ही देख सकते हैं।">మహిళల మొబైల్ నంబర్ మరియు ఫోటో గోప్యంగా ఉంటాయి — అడ్మిన్ ప్యానెల్‌లో నంబర్ మాస్క్ చేసి, ఫోటో బ్లర్ చేసి చూపిస్తారు; అడ్మిన్ మాత్రమే చూడగలరు.</p>
+                        <p style="font-size: 11px; color: #64748b; margin-top: 6px; line-height: 1.5;" data-te="మహిళల ఫోటో గోప్యంగా ఉంటుంది — అడ్మిన్ ప్యానెల్‌లో ఫోటో బ్లర్ చేసి చూపిస్తారు; అడ్మిన్ మాత్రమే చూడగలరు." data-en="Ladies' photo stays confidential — in the admin panel the photo is shown blurred; only the admin can reveal it." data-hi="महिलाओं की फ़ोटो गोपनीय रहती है — एडमिन पैनल में फ़ोटो ब्लर करके दिखाई जाती है; सिर्फ़ एडमिन ही देख सकते हैं।">మహిళల ఫోటో గోప్యంగా ఉంటుంది — అడ్మిన్ ప్యానెల్‌లో ఫోటో బ్లర్ చేసి చూపిస్తారు; అడ్మిన్ మాత్రమే చూడగలరు.</p>
                     </div>
 
                     <!-- Visitor / parcel photo: REQUIRED before the VERIFIED stamp -->
@@ -1848,7 +1844,7 @@
             <div class="modal-body font-te-body" style="font-size: 13px;">
                 <p><strong data-te="ప్ర: సర్వీస్ ప్రొవైడర్స్ వెరిఫైడ్ అయినవారేనా?" data-en="Q: Are service providers verified?" data-hi="प्र: क्या सर्विस प्रोवाइडर वेरिफ़ाइड हैं?">Q: సర్వీస్ ప్రొవైడర్స్ వెరిఫైడ్ అయినవారేనా?</strong><br><span data-te="జ: ఖచ్చితంగా! ప్రతి ప్రొవైడర్‌కు ఫోటో ఐడీ కార్డ్ మరియు బ్యాక్‌గ్రౌండ్ వెరిఫికేషన్ ఉంటుంది." data-en="A: Absolutely! Every provider carries verified ID and background verification." data-hi="उ: बिल्कुल! हर प्रोवाइडर के पास फ़ोटो आईडी कार्ड और बैकग्राउंड वेरिफ़िकेशन होता है।">A: ఖచ్చితంగా! ప్రతి ప్రొవైడర్‌కు ఫోటో ఐడీ కార్డ్ మరియు బ్యాక్‌గ్రౌండ్ వెరిఫికేషన్ ఉంటుంది.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
-                <p><strong data-te="ప్ర: మహిళల ఫోన్ నంబర్లు భద్రమేనా?" data-en="Q: Are female users' phone numbers secure?" data-hi="प्र: क्या महिलाओं के फ़ोन नंबर सुरक्षित हैं?">Q: మహిళల ఫోన్ నంబర్లు భద్రమేనా?</strong><br><span data-te="జ: పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది, సిబ్బందికి ఫోన్ నంబర్లు కనిపించవు." data-en="A: Full phone masking security is deployed to safeguard user privacy." data-hi="उ: पूरी फ़ोन मास्किंग सुरक्षा है, स्टाफ़ को फ़ोन नंबर दिखाई नहीं देते।">A: పూర్తి మాస్కింగ్ ప్రొటెక్షన్ ఉంటుంది, సిబ్బందికి ఫోన్ నంబర్లు కనిపించవు.</span></p>
+                <p><strong data-te="ప్ర: గేట్ పాస్ కోసం మొబైల్ నంబర్ ఇవ్వాలా?" data-en="Q: Do I need to give a mobile number for the Gate Pass?" data-hi="प्र: गेट पास के लिए मोबाइल नंबर देना होगा?">Q: గేట్ పాస్ కోసం మొబైల్ నంబర్ ఇవ్వాలా?</strong><br><span data-te="జ: అక్కర్లేదు! గేట్ పాస్‌లో మొబైల్ నంబర్ అడగము — ఫ్లాట్ నంబర్, డెలివరీ పార్టనర్, ఫోటో మాత్రమే చాలు." data-en="A: No! The Gate Pass never asks for a mobile number — flat number, delivery partner and photo are all it needs." data-hi="उ: नहीं! गेट पास में मोबाइल नंबर नहीं माँगा जाता — फ़्लैट नंबर, डिलीवरी पार्टनर और फ़ोटो ही काफ़ी हैं।">A: అక్కర్లేదు! గేట్ పాస్‌లో మొబైల్ నంబర్ అడగము — ఫ్లాట్ నంబర్, డెలివరీ పార్టనర్, ఫోటో మాత్రమే చాలు.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
                 <p><strong data-te="ప్ర: AVAILO ఎలా పని చేస్తుంది?" data-en="Q: How does AVAILO work?" data-hi="प्र: AVAILO कैसे काम करता है?">Q: AVAILO ఎలా పని చేస్తుంది?</strong><br><span data-te="జ: 3 దశలు — 1) QR కోడ్ స్కాన్ చేయండి, 2) WhatsAppలో వాయిస్ నోట్ పంపండి, 3) వెరిఫైడ్ ప్రొఫెషనల్ మీ డోర్‌స్టెప్ వద్దకు వస్తారు. యాప్ డౌన్‌లోడ్ అవసరం లేదు." data-en="A: 3 steps — 1) Scan the QR code, 2) Send a voice note on WhatsApp, 3) A verified professional comes to your doorstep. No app download needed." data-hi="उ: 3 चरण — 1) QR कोड स्कैन करें, 2) WhatsApp पर वॉइस नोट भेजें, 3) वेरिफ़ाइड प्रोफ़ेशनल आपके दरवाज़े तक आएँगे। ऐप डाउनलोड की ज़रूरत नहीं।">A: 3 దశలు — 1) QR కోడ్ స్కాన్ చేయండి, 2) WhatsAppలో వాయిస్ నోట్ పంపండి, 3) వెరిఫైడ్ ప్రొఫెషనల్ మీ డోర్‌స్టెప్ వద్దకు వస్తారు. యాప్ డౌన్‌లోడ్ అవసరం లేదు.</span></p>
                 <hr style="margin: 10px 0; border: none; border-top: 1px solid var(--border-light);">
@@ -2452,14 +2448,17 @@
         function normalizeFlat(s) {
             return String(s || '').replace(/^(flat|ఫ్లాట్|फ़्लैट)[\s:.\-]*/i, '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
         }
-        // Pure: newest 'ready' delivery order whose flat matches (null if none).
+        // Pure: newest 'ready' or 'out-for-delivery' delivery order whose
+        // flat matches (null if none). An order that left with the rider
+        // must STILL show here — the guard confirms the pickup when the
+        // rider reaches the gate (rider GPS pilot).
         function findReadyOrderForFlat(orders, flat) {
             const want = normalizeFlat(flat);
             if (!want || !orders || typeof orders !== 'object') return null;
             let best = null;
             Object.keys(orders).forEach(id => {
                 const o = orders[id] || {};
-                if (o.status !== 'ready' || o.mode !== 'delivery') return;
+                if ((o.status !== 'ready' && o.status !== 'out-for-delivery') || o.mode !== 'delivery') return;
                 if (normalizeFlat(o.flat) !== want) return;
                 if (!best || (o.createdAt || 0) >= (best.order.createdAt || 0)) best = { orderId: id, order: o };
             });
@@ -2479,6 +2478,7 @@
         }
         const GATE_CHAIN_STR = {
             readyTitle: { te: '🍽️ ఫుడ్ రెడీ — పికప్‌కి సిద్ధం', en: '🍽️ Food ready — pickup waiting', hi: '🍽️ खाना तैयार है — पिकअप के लिए तैयार' },
+            riderOut: { te: '🛵 రైడర్ బయలుదేరాడు — గేట్‌కు వస్తున్నాడు', en: '🛵 Rider is on the way to the gate', hi: '🛵 राइडर गेट की ओर आ रहा है' },
             flatLabel: { te: 'ఫ్లాట్', en: 'Flat', hi: 'फ़्लैट' },
             confirmBtn: { te: '✅ పికప్ నిర్ధారించు', en: '✅ Confirm pickup', hi: '✅ पिकअप कन्फ़र्म कीजिए' },
             confirmed: { te: '✅ పికప్ నిర్ధారించబడింది — కస్టమర్ ట్రాకర్‌లో "గేట్ దగ్గర ఉంది" అని కనిపిస్తుంది.', en: '✅ Pickup confirmed — the customer tracker now shows "At the gate".', hi: '✅ पिकअप कन्फ़र्म हो गया — कस्टमर ट्रैकर में "गेट पर है" दिखेगा।' },
@@ -2503,6 +2503,7 @@
             }
             card.innerHTML =
                 '<div style="font-size: 14px; font-weight: 800; color: #92400e; margin-bottom: 4px;">' + gateChainText('readyTitle') + '</div>' +
+                (o.status === 'out-for-delivery' ? '<div style="font-size: 13px; font-weight: 800; color: #0369a1; margin-bottom: 4px;">' + gateChainText('riderOut') + '</div>' : '') +
                 '<div style="font-size: 13px; color: #334155; line-height: 1.7;">' + gateChainText('flatLabel') + ' ' + escGateHtml(o.flat || '') + ' · Ref: ' + escGateHtml(ref) + (total ? ' · ' + escGateHtml(total) : '') + '<br>' + escGateHtml(gateOrderSummaryText(o)) + '</div>' +
                 '<button type="button" id="gatePickupBtn" style="margin-top: 10px; width: 100%; background: #16a34a; color: #ffffff; border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 800; cursor: pointer;">' + gateChainText('confirmBtn') + '</button>';
             const btn = document.getElementById('gatePickupBtn');
@@ -2552,13 +2553,15 @@
         // Guard confirms the partner picked the food up at the gate. Only
         // the status + pickup timestamp are written (flat + ref only —
         // no phone, no names). The customer's tracker flips to 'at-gate'.
+        // The rider's live-location link is dropped here too (null deletes
+        // the key) — it is only ever shown while out for delivery.
         function confirmGatePickup(orderId) {
             if (!orderId || !gateDb) return Promise.resolve(false);
             const btn = document.getElementById('gatePickupBtn');
             if (btn) btn.disabled = true;
             let p = null;
             try {
-                p = gateDb.ref(GATE_DINE_ORDERS_PATH + '/' + orderId).update({ status: 'at-gate', pickedUpAt: Date.now() });
+                p = gateDb.ref(GATE_DINE_ORDERS_PATH + '/' + orderId).update({ status: 'at-gate', pickedUpAt: Date.now(), liveLocation: null });
             } catch (e) { p = Promise.reject(e); }
             return Promise.resolve(p).then(function () {
                 gatePickupConfirmed = true;
@@ -2655,8 +2658,7 @@
             try { localStorage.removeItem('availo_apartment'); localStorage.removeItem('availo_gate_last'); localStorage.removeItem('availo_gate_remember'); } catch (e) {}
             const apt = document.getElementById('gateApartment'); if (apt) apt.value = '';
             const flat = document.getElementById('gateFlatNo'); if (flat) flat.value = '';
-            // Mobile + gender are never remembered (privacy, shared phones).
-            const mob = document.getElementById('gateMobile'); if (mob) mob.value = '';
+            // Gender is never remembered (privacy, shared phones).
             gateGender = '';
             const gw = document.getElementById('gateGenderChips'); if (gw) gw.querySelectorAll('button').forEach(c => styleGateGenderChip(c, false));
             const cb = document.getElementById('gateRemember'); if (cb) cb.checked = false;
@@ -2697,26 +2699,19 @@
         }
 
         // Send Gate Pass via WhatsApp — exactly 3 steps: Scan (apartment from
-        // QR), Flat + delivery partner, Photo → stamp. No visitor-name or
-        // vehicle-number field: the delivery partner IS the identifier.
+        // QR), Flat + delivery partner, Photo → stamp. No visitor-name,
+        // vehicle-number or mobile-number field: the delivery partner IS
+        // the identifier.
         function sendGateSecurityPass() {
             const aptInput = document.getElementById('gateApartment');
             const apt = (gateApartmentName || (aptInput ? aptInput.value.trim() : ''));
             const flat = document.getElementById('gateFlatNo').value.trim();
             const otherInput = document.getElementById('gatePartnerOther');
             const partner = gatePartner === 'Other' ? (otherInput ? otherInput.value.trim() : '') : gatePartner;
-            const mobileEl = document.getElementById('gateMobile');
-            const mobile = normalizeIndianMobile(mobileEl ? mobileEl.value : '');
             const warn = document.getElementById('gateWarning');
 
             if (!apt || !flat || !partner) {
                 const msg = currentLang === 'te' ? '⚠️ దయచేసి అపార్ట్‌మెంట్ పేరు, ఫ్లాట్ నంబర్ రాసి, డెలివరీ పార్టనర్ ఎంచుకోండి.' : currentLang === 'hi' ? '⚠️ कृपया अपार्टमेंट का नाम, फ़्लैट नंबर लिखें और डिलीवरी पार्टनर चुनें।' : '⚠️ Please fill the apartment name, flat number and pick the delivery partner.';
-                if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
-                alert(msg);
-                return;
-            }
-            if (!validIndianMobile(mobile)) {
-                const msg = invalidPhoneMsg();
                 if (warn) { warn.textContent = msg; warn.style.display = 'block'; }
                 alert(msg);
                 return;
@@ -2757,10 +2752,11 @@
             const panel = document.getElementById('gateConfirmPanel');
             if (panel) panel.style.display = 'block';
 
-            // Full number + clear photo are stored (Sheet + Drive) so the
-            // admin can see the real data; masking happens only at display
-            // in the admin panel. The stamp is unchanged (partner + flat +
-            // apartment + date).
+            // No mobile number is collected at the gate. The CLEAR photo
+            // is stored (Sheet + Drive) so the admin can verify the visit;
+            // masking happens only at display in the admin panel (old
+            // rows). The stamp is unchanged (partner + flat + apartment
+            // + date).
             const dt = gateDateTimeParts(new Date());
             let photoData = '';
             try {
@@ -2769,12 +2765,12 @@
                 }
             } catch (e) { photoData = ''; }
 
-            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${encodeURIComponent(ref)}%0A*अपार्टमेंट:* ${encodeURIComponent(apt)}%0A*फ़्लैट नंबर:* ${encodeURIComponent(flat)}%0A*डिलीवरी पार्टनर:* ${encodeURIComponent(partner)}%0A*मोबाइल नंबर:* ${encodeURIComponent(mobile)}%0A*लिंग:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*तारीख:* ${encodeURIComponent(dt.date)}%0A*समय:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 फ़ोटो: साइट पर ली गई ✅ वेरिफ़ाई हो गया।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Reference No:* ${encodeURIComponent(ref)}%0A*Apartment:* ${encodeURIComponent(apt)}%0A*Flat No:* ${encodeURIComponent(flat)}%0A*Delivery Partner:* ${encodeURIComponent(partner)}%0A*Mobile Number:* ${encodeURIComponent(mobile)}%0A*Gender:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*Date:* ${encodeURIComponent(dt.date)}%0A*Time:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 Photo: taken on site ✅ Verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${encodeURIComponent(ref)}%0A*అపార్ట్‌మెంట్:* ${encodeURIComponent(apt)}%0A*ఫ్లాట్ నంబర్:* ${encodeURIComponent(flat)}%0A*డెలివరీ పార్టనర్:* ${encodeURIComponent(partner)}%0A*మొబైల్ నంబర్:* ${encodeURIComponent(mobile)}%0A*లింగం:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*తేదీ:* ${encodeURIComponent(dt.date)}%0A*సమయం:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 ఫోటో: సైట్‌లో తీయబడింది ✅ వెరిఫై చేయబడింది.`;
-            // Log to Google Sheets (never blocks WhatsApp). The FULL
-            // mobile number and the CLEAR photo are stored — Code.gs
-            // saves the photo to Drive; masking is display-only in the
-            // admin panel.
-            sendToSheet('GatePass', { apartment: apt, flat: flat, partner: partner, photo: 'captured', ref: ref, mobile: mobile, gender: gateGender, date: dt.date, time: dt.time, photoData: photoData });
+            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${encodeURIComponent(ref)}%0A*अपार्टमेंट:* ${encodeURIComponent(apt)}%0A*फ़्लैट नंबर:* ${encodeURIComponent(flat)}%0A*डिलीवरी पार्टनर:* ${encodeURIComponent(partner)}%0A*लिंग:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*तारीख:* ${encodeURIComponent(dt.date)}%0A*समय:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 फ़ोटो: साइट पर ली गई ✅ वेरिफ़ाई हो गया।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Reference No:* ${encodeURIComponent(ref)}%0A*Apartment:* ${encodeURIComponent(apt)}%0A*Flat No:* ${encodeURIComponent(flat)}%0A*Delivery Partner:* ${encodeURIComponent(partner)}%0A*Gender:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*Date:* ${encodeURIComponent(dt.date)}%0A*Time:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 Photo: taken on site ✅ Verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${encodeURIComponent(ref)}%0A*అపార్ట్‌మెంట్:* ${encodeURIComponent(apt)}%0A*ఫ్లాట్ నంబర్:* ${encodeURIComponent(flat)}%0A*డెలివరీ పార్టనర్:* ${encodeURIComponent(partner)}%0A*లింగం:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*తేదీ:* ${encodeURIComponent(dt.date)}%0A*సమయం:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 ఫోటో: సైట్‌లో తీయబడింది ✅ వెరిఫై చేయబడింది.`;
+            // Log to Google Sheets (never blocks WhatsApp). NO mobile
+            // number is sent — Code.gs saves the photo to Drive and
+            // leaves the Mobile cell blank; masking is display-only in
+            // the admin panel (old rows).
+            sendToSheet('GatePass', { apartment: apt, flat: flat, partner: partner, photo: 'captured', ref: ref, gender: gateGender, date: dt.date, time: dt.time, photoData: photoData });
             window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
         }
 
@@ -3051,7 +3047,6 @@
         initGateFormMemory();
         buildGatePartnerChips();
         buildGateGenderChips();
-        bindPhoneField('gateMobile');
         bindPhoneField('trialPhone');
         bindPhoneField('techPhone');
         bindGateReadyLookup();
