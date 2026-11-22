@@ -301,18 +301,35 @@
             preparing: '👨‍🍳 తయారవుతోంది',
             ready: '✅ రెడీ',
             served: '🍽️ అందించారు',
+            'out-for-delivery': '🛵 రైడర్ బయలుదేరాడు',
             'at-gate': '🛵 గేట్ దగ్గర ఉంది'
         };
         // Next status + the button label that advances to it.
         // 'at-gate' is terminal here: the guard confirmed the pickup at
         // the gate, so the card can only be removed from this display.
-        const DINE_NEXT = {
+        // Delivery orders gain one extra stage (rider GPS pilot): ready ->
+        // out-for-delivery (rider left with the food) -> served (handed
+        // over at the counter) — or 'at-gate' via the guard's pickup
+        // confirmation. Dine-in keeps ready -> served.
+        const DINE_NEXT_DINEIN = {
             received: { status: 'preparing', btn: '👨‍🍳 తయారు మొదలు' },
             preparing: { status: 'ready', btn: '✅ రెడీ అయింది' },
             ready: { status: 'served', btn: '🍽️ టేబుల్‌కు అందించారు' },
             served: null,
             'at-gate': null
         };
+        const DINE_NEXT_DELIVERY = {
+            received: { status: 'preparing', btn: '👨‍🍳 తయారు మొదలు' },
+            preparing: { status: 'ready', btn: '✅ రెడీ అయింది' },
+            ready: { status: 'out-for-delivery', btn: '🛵 రైడర్ బయలుదేరాడు' },
+            'out-for-delivery': { status: 'served', btn: '✅ డెలివరీ పార్ట్‌నర్‌కు ఇచ్చాను' },
+            served: null,
+            'at-gate': null
+        };
+        function dineNextFor(status, isDelivery) {
+            const map = isDelivery ? DINE_NEXT_DELIVERY : DINE_NEXT_DINEIN;
+            return map[status] || null;
+        }
         const dineOrdersEl = document.getElementById('dineOrders');
         const dineEmptyMsg = document.getElementById('dineEmptyMsg');
         let dineHistoryLoaded = false;
@@ -336,9 +353,45 @@
             return '₹' + (Math.round(total * 100) / 100).toFixed(2);
         }
 
-        function advanceDineOrder(orderId, nextStatus) {
+        // Fail-open: any Firebase failure is swallowed, the page keeps working.
+        // Leaving 'out-for-delivery' drops the rider's live-location link —
+        // it is only ever shown while the order is out for delivery.
+        function advanceDineOrder(orderId, nextStatus, currentStatus) {
             if (!db || !orderId || !nextStatus) return;
-            db.ref(DINE_ORDERS_PATH + '/' + orderId).update({ status: nextStatus }).catch(function () {});
+            const patch = { status: nextStatus };
+            if (currentStatus === 'out-for-delivery') patch.liveLocation = null;
+            db.ref(DINE_ORDERS_PATH + '/' + orderId).update(patch).catch(function () {});
+        }
+
+        // Rider GPS pilot (free, WhatsApp live location — NOT continuous
+        // Swiggy-style GPS). The rider shares live location on WhatsApp;
+        // the kitchen pastes that share link here. It is saved on the same
+        // Firebase order node, shown ONLY on that order's tracker screen
+        // while the order is out for delivery, and never stored in the
+        // Sheet. Only https:// links are accepted (real share links are
+        // always https — maps.app.goo.gl / google.com/maps / wa.me).
+        function isLiveLocationUrl(url) {
+            return typeof url === 'string' && url.length > 0 && url.length <= 500 &&
+                /^https:\/\/[^\s"'<>]+$/.test(url);
+        }
+        function riderLocationShareText(orderId) {
+            return 'AVAILO Dine ఆర్డర్ ' + orderId + ' — రైడర్ లైవ్ లొకేషన్ షేర్ చెయ్యండి: WhatsAppలో Attach → Location → Share live location (1 గంట). లింక్ వచ్చాక కిచెన్‌లో అతికించండి.';
+        }
+        function saveRiderLocation(orderId, inputEl, msgEl) {
+            if (!db || !orderId || !inputEl) return;
+            const url = (inputEl.value || '').trim();
+            if (url === '') {
+                // Empty save clears a previously saved link.
+                db.ref(DINE_ORDERS_PATH + '/' + orderId).update({ liveLocation: null }).catch(function () {});
+                if (msgEl) msgEl.textContent = '✅ లింక్ తొలగించబడింది.';
+                return;
+            }
+            if (!isLiveLocationUrl(url)) {
+                if (msgEl) msgEl.textContent = '⚠️ సరైన లింక్ ఇవ్వండి — https:// తో మొదలయ్యే లింక్ మాత్రమే.';
+                return;
+            }
+            db.ref(DINE_ORDERS_PATH + '/' + orderId).update({ liveLocation: url }).catch(function () {});
+            if (msgEl) msgEl.textContent = '✅ లింక్ సేవ్ అయ్యింది — కస్టమర్ ట్రాకర్‌లో కనిపిస్తుంది.';
         }
 
         function removeDineOrder(orderId) {
@@ -358,9 +411,9 @@
             ids.forEach(id => {
                 const d = orders[id] || {};
                 const status = DINE_STATUS_LABEL[d.status] ? d.status : 'received';
-                const next = DINE_NEXT[status];
                 const time = d.createdAt ? new Date(d.createdAt).toLocaleTimeString() : '';
                 const isDelivery = d.mode === 'delivery';
+                const next = dineNextFor(status, isDelivery);
                 const card = document.createElement('div');
                 card.className = 'card dine-card' + (status === 'served' || status === 'at-gate' ? ' served' : '');
                 const venueHtml = isDelivery
@@ -369,16 +422,41 @@
                 let html = '<div class="card-type">' + DINE_STATUS_LABEL[status] + (isDelivery ? ' · 🚚 డెలివరీ' : '') + '</div>' + venueHtml +
                     '<div class="card-body">' + esc(dineOrderItemsText(d)) + '</div>' +
                     '<div class="card-meta">' + esc(dineOrderTotal(d)) + (time ? ' · ' + esc(time) : '') + ' · Ref: ' + esc(id) + '</div>';
-                // A ready delivery order is picked up at the gate by the
-                // guard (gate–kitchen chain) — but if the partner collects
-                // it at the counter instead, the kitchen can still close
-                // it here with the partner-handed label.
-                const nextBtnLabel = next ? ((status === 'ready' && isDelivery) ? '✅ డెలివరీ పార్ట్‌నర్‌కు ఇచ్చాను' : next.btn) : '';
-                if (next) html += '<button class="dine-next-btn" data-next="' + next.status + '">' + nextBtnLabel + '</button>';
+                // A ready delivery order leaves with the rider
+                // (out-for-delivery); the guard confirms the pickup at the
+                // gate (gate–kitchen chain). If the partner collects it at
+                // the counter instead, the kitchen can still close it from
+                // the out-for-delivery card with the partner-handed label.
+                if (next) html += '<button class="dine-next-btn" data-next="' + next.status + '">' + next.btn + '</button>';
                 else html += '<button class="dine-remove-btn">🗑️ తొలగించు</button>';
+                // Rider GPS pilot: while the order is out for delivery, the
+                // kitchen pastes the rider's WhatsApp live-location link
+                // here. It shows only on this order's tracker screen.
+                if (status === 'out-for-delivery' && isDelivery) {
+                    const savedLink = isLiveLocationUrl(d.liveLocation) ? d.liveLocation : '';
+                    const shareHref = 'https://wa.me/?text=' + encodeURIComponent(riderLocationShareText(id));
+                    html += '<div class="rider-loc-row" style="margin-top: 10px; border-top: 1px dashed #cbd5e1; padding-top: 10px;">' +
+                        '<div style="font-size: 12.5px; font-weight: 700; color: #334155; line-height: 1.5; margin-bottom: 6px;">📍 రైడర్ లైవ్ లొకేషన్ లింక్ — WhatsAppలో రైడర్ షేర్ చేసిన లింక్ ఇక్కడ అతికించండి. (ఇది నిరంతర GPS కాదు — రైడర్ ఆపేస్తే కనిపించదు.)</div>' +
+                        '<input type="url" class="rider-loc-input" placeholder="https://maps.app.goo.gl/…" value="' + esc(savedLink) + '" style="width: 100%; box-sizing: border-box; padding: 9px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; margin-bottom: 6px;">' +
+                        '<button class="rider-loc-save-btn" style="background: #16a34a; color: #fff; border: none; border-radius: 8px; padding: 9px 12px; font-size: 13px; font-weight: 800; cursor: pointer;">💾 లింక్ సేవ్ చెయ్యండి</button>' +
+                        (savedLink ? ' <button class="rider-loc-clear-btn" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; border-radius: 8px; padding: 9px 12px; font-size: 13px; font-weight: 800; cursor: pointer;">✕ తొలగించు</button>' : '') +
+                        '<div style="margin-top: 6px;"><a class="rider-loc-share" href="' + esc(shareHref) + '" target="_blank" rel="noopener" style="font-size: 12.5px; font-weight: 700; color: #0369a1;">📲 రైడర్‌కు WhatsAppలో లొకేషన్ షేర్ చెయ్యమని పంపండి</a></div>' +
+                        '<div class="rider-loc-msg" style="font-size: 12.5px; font-weight: 700; color: #166534; margin-top: 6px; line-height: 1.5;"></div>' +
+                        '</div>';
+                }
                 card.innerHTML = html;
                 const nextBtn = card.querySelector('.dine-next-btn');
-                if (nextBtn) nextBtn.addEventListener('click', function () { advanceDineOrder(id, nextBtn.getAttribute('data-next')); });
+                if (nextBtn) nextBtn.addEventListener('click', function () { advanceDineOrder(id, nextBtn.getAttribute('data-next'), status); });
+                const locSaveBtn = card.querySelector('.rider-loc-save-btn');
+                if (locSaveBtn) locSaveBtn.addEventListener('click', function () {
+                    saveRiderLocation(id, card.querySelector('.rider-loc-input'), card.querySelector('.rider-loc-msg'));
+                });
+                const locClearBtn = card.querySelector('.rider-loc-clear-btn');
+                if (locClearBtn) locClearBtn.addEventListener('click', function () {
+                    const inp = card.querySelector('.rider-loc-input');
+                    if (inp) inp.value = '';
+                    saveRiderLocation(id, inp, card.querySelector('.rider-loc-msg'));
+                });
                 const rmBtn = card.querySelector('.dine-remove-btn');
                 if (rmBtn) rmBtn.addEventListener('click', function () { removeDineOrder(id); });
                 dineOrdersEl.appendChild(card);
