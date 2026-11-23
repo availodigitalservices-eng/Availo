@@ -1234,7 +1234,7 @@
             </div>
             <div id="rateFailNote" style="display: none; margin-top: 10px; font-size: 12.5px; color: #f87171;" data-te="సేవ్ కాలేదు — ఇంటర్నెట్ చూసి మళ్ళీ ప్రయత్నించండి" data-en="Could not save — check your internet and try again" data-hi="सहेजा नहीं गया — इंटरनेट देखकर फिर से कोशिश कीजिए">సేవ్ కాలేదు — ఇంటర్నెట్ చూసి మళ్ళీ ప్రయత్నించండి</div>
             <div style="display: flex; gap: 10px; margin-top: 14px;">
-                <button onclick="sendRating()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;" data-te="✅ రివ్యూ పంపండి" data-en="✅ Submit Review" data-hi="✅ समीक्षा भेजिए">✅ రివ్యూ పంపండి</button>
+                <button id="rateSubmitBtn" onclick="sendRating()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;" data-te="✅ రివ్యూ పంపండి" data-en="✅ Submit Review" data-hi="✅ समीक्षा भेजिए">✅ రివ్యూ పంపండి</button>
                 <button onclick="closeRateForm()" style="flex: 1; background: #334155; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="వెనక్కి" data-en="Back" data-hi="वापस">వెనక్కి</button>
             </div>
         </div>
@@ -1318,9 +1318,11 @@
         // must be just the number ("01") — never "Table 01" (19 Nov 2026:
         // the KOT used to read "టేబుల్: Table 01"). A ?table= value that
         // still carries the word "Table" is normalised the same way.
+        // Digits only — a garbage ?table= (e.g. XYZ) must never reach the
+        // KOT or the Firebase record; it falls back to "01" (M-K5).
         // On-screen display is unaffected (it uses tableDisplay()).
-        const tableNumber = (tableParam || "01").replace(/^(table|టేబుల్|टेबल)[\s:.\-]*/i, "");
-        const targetWhatsApp = params.get('desk') || "919966157369";
+        const tableNumber = ((tableParam || "01").replace(/^(table|టేబుల్|टेबल)[\s:.\-]*/i, "").replace(/[^0-9]/g, '') || "01");
+        const targetWhatsApp = ((params.get('desk') || "919966157369").replace(/[^0-9]/g, '') || "919966157369");
 
         // On-screen venue names follow the selected language (defaults only;
         // a ?hotel= / ?table= value passed in is a proper noun and is kept as-is).
@@ -1484,6 +1486,9 @@
             try { localStorage.setItem(LOYALTY_STAMPS_KEY, String(Math.max(0, Math.floor(Number(n) || 0)))); } catch (e) {}
         }
         function loyaltyAddStamp() {
+            // No reward configured → no stamps accrue: a regular must not
+            // instantly hold a full card if a reward is configured later (M-A4).
+            if (!loyaltyConfigured()) return loyaltyStamps();
             const n = loyaltyStamps() + 1;
             loyaltySetStamps(n);
             renderLoyalty();
@@ -2736,6 +2741,10 @@
             if (!item) return;
             rateItemId = itemId;
             rateStars = 0;
+            // Re-arm the submit button (a previous successful submit leaves
+            // it disabled; see sendRating, M-D5).
+            const submitBtn = document.getElementById('rateSubmitBtn');
+            if (submitBtn) submitBtn.disabled = false;
             const nameEl = document.getElementById('rateDishName');
             if (nameEl) nameEl.textContent = itemName(item);
             const pickNote = document.getElementById('ratePickNote');
@@ -2767,6 +2776,12 @@
                 if (pickNote) pickNote.style.display = 'block';
                 return false;
             }
+            // Double-tap guard: while the write is in flight the button is
+            // disabled, and a second sendRating() call bails out — one tap
+            // must never rate twice (M-D5).
+            const submitBtn = document.getElementById('rateSubmitBtn');
+            if (submitBtn && submitBtn.disabled) return false;
+            if (submitBtn) submitBtn.disabled = true;
             const textEl = document.getElementById('rateCommentInput');
             const nameEl = document.getElementById('rateNameInput');
             const ok = await submitRating(rateItemId, rateStars, textEl ? textEl.value : '', nameEl ? nameEl.value : '');
@@ -2775,6 +2790,7 @@
                 speakGentVoice(t('rateThanks'));
                 return true;
             }
+            if (submitBtn) submitBtn.disabled = false;
             const failNote = document.getElementById('rateFailNote');
             if (failNote) failNote.style.display = 'block';
             return false;
@@ -3126,7 +3142,7 @@
                 return;
             }
 
-            const chefNote = document.getElementById('chefNoteInput').value.trim();
+            const el = document.getElementById('chefNoteInput'); const chefNote = el ? el.value.trim() : '';
             const noteStr = chefNote ? `%0A*చెఫ్ సూచన:* ${encodeURIComponent(chefNote)}` : "";
 
             const itemsStr = orderLines.join('%0A');
@@ -3215,7 +3231,7 @@
         let trackerListenerRef = null;
         let trackerSuppressAnnounce = false;
 
-                function makeDineOrderId() {
+        function makeDineOrderId() {
             const d = new Date();
             const p = n => String(n).padStart(2, '0');
             // 23 Nov 2026: the bare timestamp (1 s resolution, no random

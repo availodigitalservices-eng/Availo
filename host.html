@@ -445,7 +445,7 @@
         const params = new URLSearchParams(window.location.search);
         const hotelName = params.get('hotel') || "AVAILO DINE";
         const tableNo = params.get('table') || "Table 01";
-        const kitchenWa = params.get('desk') || "919966157369";
+        const kitchenWa = ((params.get('desk') || "919966157369").replace(/[^0-9]/g, '') || "919966157369");
 
         // Table number without the word "Table" so the label word itself can switch language.
         const tableNum = tableNo.replace(/^\s*table\s*/i, '').trim() || tableNo;

@@ -232,7 +232,10 @@
 
         // Clear all: deletes every order/refill from Firebase too, so an
         // acknowledged order never comes back on refresh or another device.
+        // One tap wipes the kitchen's whole working list with no undo, so
+        // ask first (M-K1).
         document.getElementById('clearBtn').addEventListener('click', function () {
+            if (!confirm('అన్ని ఆర్డర్లు, రీఫిల్‌లు తొలగించాలా? తొలగించినవి తిరిగి రావు.')) return;
             if (db) {
                 db.ref('availo-kitchen-v1/orders').remove().catch(function () {});
                 db.ref('availo-kitchen-v1/refills').remove().catch(function () {});
@@ -468,9 +471,26 @@
             db.ref(DINE_ORDERS_PATH).on('value', function (snap) {
                 const orders = snap.val() || {};
                 if (!dineHistoryLoaded) {
-                    // First snapshot is history: show silently, mark all seen.
-                    Object.keys(orders).forEach(id => seenDineOrders.add(id));
+                    // First snapshot is history: show silently, mark all
+                    // seen — except orders that arrived during the page
+                    // (re)load. A 'received' order created within the last
+                    // 60 s gets ONE buzz + ONE summary announcement for
+                    // the whole batch (a 15-order rush is still 1 buzz +
+                    // 1 announcement, never one per order).
+                    let freshCount = 0;
+                    Object.keys(orders).forEach(id => {
+                        seenDineOrders.add(id);
+                        const d = orders[id] || {};
+                        const age = d.createdAt ? Date.now() - d.createdAt : -1;
+                        if (d.status === 'received' && age >= 0 && age <= 60000) freshCount++;
+                    });
                     dineHistoryLoaded = true;
+                    if (freshCount && soundOn) {
+                        buzzTimes(3);
+                        speakTelugu(freshCount === 1
+                            ? 'కొత్త ఆర్డర్ వచ్చింది — కిచెన్ స్క్రీన్‌లో చూడండి'
+                            : freshCount + ' కొత్త ఆర్డర్లు వచ్చాయి — కిచెన్ స్క్రీన్‌లో చూడండి');
+                    }
                 } else {
                     // New orders only: buzz + announce once each.
                     Object.keys(orders).forEach(id => {

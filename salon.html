@@ -301,7 +301,7 @@
             <div class="warn-line" id="salonWarnLine"></div>
             <div class="confirm-line" id="salonConfirmLine"></div>
 
-            <button class="cta-btn" onclick="submitSalonBooking()" data-te="💬 WhatsApp లో బుక్ చేసుకోండి" data-en="💬 Book on WhatsApp" data-hi="💬 WhatsApp पर बुक करें">💬 WhatsApp లో బుక్ చేసుకోండి</button>
+            <button class="cta-btn" id="salonBookBtn" onclick="submitSalonBooking()" data-te="💬 WhatsApp లో బుక్ చేసుకోండి" data-en="💬 Book on WhatsApp" data-hi="💬 WhatsApp पर बुक करें">💬 WhatsApp లో బుక్ చేసుకోండి</button>
         </div>
 
         <div class="block-card">
@@ -360,7 +360,13 @@
             if (cl) cl.style.display = 'none';
         }
 
+        // One booking per submit (audit M-D3, Trial pattern): a double-tap
+        // must not log two Sheet rows / open two WhatsApp chats. The flag
+        // stays set after a successful booking — reload the page to book
+        // another slot. It is cleared again only if the send itself fails.
+        let salonBookingSubmitted = false;
         function submitSalonBooking() {
+            if (salonBookingSubmitted) return;
             const name = document.getElementById('salonName').value.trim();
             const phone = document.getElementById('salonPhone').value.trim();
             const serviceSel = document.getElementById('salonService');
@@ -384,6 +390,10 @@
             const wl = document.getElementById('salonWarnLine');
             if (wl) wl.style.display = 'none';
 
+            salonBookingSubmitted = true;
+            const bookBtn = document.getElementById('salonBookBtn');
+            if (bookBtn) { bookBtn.disabled = true; bookBtn.style.opacity = '0.6'; }
+
             const ref = availoRef();
             const cl = document.getElementById('salonConfirmLine');
             if (cl) {
@@ -394,8 +404,15 @@
             const dateTime = [date, timeVal].filter(Boolean).join(' ');
             const msg = currentLang === 'hi' ? `*AVAILO सैलून बुकिंग*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${encodeURIComponent(ref)}%0A*नाम:* ${encodeURIComponent(name)}%0A*मोबाइल:* ${encodeURIComponent(phone)}%0A*सर्विस:* ${encodeURIComponent(serviceLabel)}%0A*तारीख़:* ${encodeURIComponent(date || '—')}%0A*समय:* ${encodeURIComponent(timeLabel || '—')}%0A*इलाका:* ${encodeURIComponent(area || '—')}%0A------------------------------%0Aसैलून स्लॉट बुक करना है।` : currentLang === 'en' ? `*AVAILO Salon Booking*%0A------------------------------%0A*Reference No:* ${encodeURIComponent(ref)}%0A*Name:* ${encodeURIComponent(name)}%0A*Mobile:* ${encodeURIComponent(phone)}%0A*Service:* ${encodeURIComponent(serviceLabel)}%0A*Date:* ${encodeURIComponent(date || '—')}%0A*Time:* ${encodeURIComponent(timeLabel || '—')}%0A*Area:* ${encodeURIComponent(area || '—')}%0A------------------------------%0AI want to book a salon slot.` : `*AVAILO సెలూన్ బుకింగ్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${encodeURIComponent(ref)}%0A*పేరు:* ${encodeURIComponent(name)}%0A*మొబైల్:* ${encodeURIComponent(phone)}%0A*సర్వీస్:* ${encodeURIComponent(serviceLabel)}%0A*తేదీ:* ${encodeURIComponent(date || '—')}%0A*సమయం:* ${encodeURIComponent(timeLabel || '—')}%0A*ప్రాంతం:* ${encodeURIComponent(area || '—')}%0A------------------------------%0Aసెలూన్ స్లాట్ బుక్ చేయాలి.`;
             // Log to Google Sheets (never blocks WhatsApp).
-            sendToSheet('Salon', { ref: ref, name: name, phone: phone, service: service, datetime: dateTime, area: area, lang: currentLang });
-            window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
+            try {
+                sendToSheet('Salon', { ref: ref, name: name, phone: phone, service: service, datetime: dateTime, area: area, lang: currentLang });
+                window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
+            } catch (e) {
+                // Send failed: let the customer try again.
+                salonBookingSubmitted = false;
+                if (bookBtn) { bookBtn.disabled = false; bookBtn.style.opacity = ''; }
+                showSalonWarn(currentLang === 'te' ? '⚠️ బుకింగ్ పంపలేకపోయాం — మళ్ళీ ప్రయత్నించండి.' : currentLang === 'hi' ? '⚠️ बुकिंग नहीं भेज पाए — फिर से कोशिश करें।' : '⚠️ Could not send the booking — please try again.');
+            }
         }
 
         // ---- Salon live queue (feature 7 of 8) ----
@@ -621,6 +638,9 @@ apiKey: "AIzaSyCbLfAb7tDu7vdr73oEjl414BjGBdlGw-Q",
                 try { localStorage.removeItem(SALON_QUEUE_STORE_KEY); } catch (e) {}
                 card.style.display = 'none';
                 if (joinBox) joinBox.style.display = 'block';
+                // Removed by staff after a finished join: allow joining again.
+                const joinBtn = document.getElementById('queueJoinBtn');
+                if (joinBtn) joinBtn.disabled = false;
                 return;
             }
             if (joinBox) joinBox.style.display = 'none';
@@ -632,9 +652,21 @@ apiKey: "AIzaSyCbLfAb7tDu7vdr73oEjl414BjGBdlGw-Q",
             textEl.textContent = msg;
         }
 
+        // Double-tap guard (audit M-D2): one join at a time. A second tap
+        // while the counter transaction is in flight is ignored, and the
+        // button stays disabled until the join fails. On success the join
+        // box hides, so the button stays disabled; it is re-enabled in
+        // renderMySalonQueue if the customer is later removed (gone).
+        let salonQueueJoining = false;
         async function joinSalonQueue() {
+            if (salonQueueJoining) return;
+            salonQueueJoining = true;
+            const joinBtn = document.getElementById('queueJoinBtn');
+            if (joinBtn) joinBtn.disabled = true;
             const warnEl = document.getElementById('queueWarnLine');
             function fail() {
+                salonQueueJoining = false;
+                if (joinBtn) joinBtn.disabled = false;
                 if (warnEl) { warnEl.textContent = sq('joinFail'); warnEl.style.display = 'block'; }
             }
             try {
@@ -657,6 +689,7 @@ apiKey: "AIzaSyCbLfAb7tDu7vdr73oEjl414BjGBdlGw-Q",
                 await ref.set(rec);
                 try { localStorage.setItem(SALON_QUEUE_STORE_KEY, JSON.stringify({ queueId: ref.key, token: token })); } catch (e) {}
                 if (warnEl) warnEl.style.display = 'none';
+                salonQueueJoining = false;
                 renderSalonQueue();
             } catch (e) { fail(); }
         }

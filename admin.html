@@ -529,6 +529,10 @@
         ];
 
         const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1QPWpoi9flbaetpTckqAAaeJsAwBhovzetCEabAIWkIk/edit';
+        // Read token for the Apps Script doGet (B1, 23 Nov 2026): the /exec
+        // URL is public, so reads need this token. Keep it ONLY here and
+        // in sheets-apps-script/Code.gs — never in the public site JS.
+        const ADMIN_READ_TOKEN = 'fce7d355f2ada8f515653a33a408b281';
         const ADMIN_DATA = {};   // form -> { headers: [], rows: [[]] }
         let activeForm = 'GatePass';
         let lastUpdated = null;
@@ -552,7 +556,7 @@
         }
 
         function fetchForm(form) {
-            const url = sheetsBaseUrl() + '?form=' + encodeURIComponent(form);
+            const url = sheetsBaseUrl() + '?form=' + encodeURIComponent(form) + '&token=' + ADMIN_READ_TOKEN;
             return fetch(url).then(function (res) { return res.json(); }).then(function (data) {
                 if (!data || !data.ok) throw new Error((data && data.error) || 'bad response');
                 ADMIN_DATA[form] = { headers: data.headers || [], rows: data.rows || [] };
@@ -651,8 +655,10 @@
         // admin can see the real data. In this panel only, Female GatePass
         // rows show the number masked and the photo thumbnail blurred, with
         // a per-row reveal. Male rows are shown as-is (clear thumbnail,
-        // full number). Masking keys off the Gender column; with no Gender
-        // column there is no masking.
+        // full number). Gender-blank rows default to MASKED (same as
+        // Female, 23 Nov 2026) — an unknown gender is never shown as-is.
+        // Masking keys off the Gender column; with no Gender column there
+        // is no masking.
         // Mobile mask: first 2 digits + ****** + last 2 digits (98******19).
         function maskMobileNumber(phone) {
             const d = (phone || '').replace(/\D/g, '');
@@ -698,10 +704,11 @@
             });
             const q = (document.getElementById('searchInput').value || '').toLowerCase();
             let shown = 0;
-            // GatePass display masking: Female rows show the mobile masked
-            // and the photo as a blurred thumbnail, each with a per-row
-            // reveal. Keyed off the Gender column; no Gender column means
-            // no masking. Other tabs are rendered exactly as before.
+            // GatePass display masking: Female and gender-blank rows show
+            // the mobile masked and the photo as a blurred thumbnail, each
+            // with a per-row reveal. Keyed off the Gender column; no Gender
+            // column means no masking. Other tabs are rendered exactly as
+            // before.
             const isGatePass = (activeForm === 'GatePass');
             const genderIdx = d.headers.indexOf('Gender');
             const mobileIdx = d.headers.indexOf('Mobile');
@@ -711,12 +718,12 @@
                     const hay = row.map(function (c) { return String(c == null ? '' : c); }).join(' ').toLowerCase();
                     if (hay.indexOf(q) === -1) return;
                 }
-                const isFemale = isGatePass && genderIdx >= 0 && String(row[genderIdx] || '') === 'Female';
+                const isMasked = isGatePass && genderIdx >= 0 && String(row[genderIdx] || '') !== 'Male';
                 const tr = document.createElement('tr');
                 row.forEach(function (cell, ci) {
                     const td = document.createElement('td');
                     const val = cell == null ? '' : String(cell);
-                    if (isFemale && ci === mobileIdx && val) {
+                    if (isMasked && ci === mobileIdx && val) {
                         // Masked number + per-row reveal (admin only).
                         const span = document.createElement('span');
                         span.textContent = maskMobileNumber(val);
@@ -732,7 +739,7 @@
                         };
                         td.appendChild(span);
                         td.appendChild(btn);
-                    } else if (isFemale && ci === photoIdx && val) {
+                    } else if (isMasked && ci === photoIdx && val) {
                         // Blurred thumbnail + per-row reveal; the thumbnail
                         // links to the full Drive file. An unparseable URL
                         // falls back to a plain-text link.
@@ -931,7 +938,8 @@
                 colRef: { te: 'రిఫ్', en: 'Ref', hi: 'रेफ़' },
                 colHistory: { te: 'ఈ ఫ్లాట్ చరిత్ర', en: 'Flat history', hi: 'फ़्लैट इतिहास' },
                 perPartner: { te: 'పార్టనర్ వారీగా', en: 'By partner', hi: 'पार्टनर के अनुसार' },
-                fullDetailsPdf: { te: 'పూర్తి వివరాలు PDFలో ఉన్నాయి.', en: 'Full details are in the PDF.', hi: 'पूरी जानकारी PDF में है।' }
+                fullDetailsPdf: { te: 'పూర్తి వివరాలు PDFలో ఉన్నాయి.', en: 'Full details are in the PDF.', hi: 'पूरी जानकारी PDF में है।' },
+                manualAttach: { te: 'WhatsAppలో పంపిన తర్వాత PDFని మాన్యువల్‌గా అటాచ్ చేయండి.', en: 'After sending on WhatsApp, attach the PDF manually.', hi: 'WhatsApp पर भेजने के बाद PDF को मैन्युअल रूप से अटैच करें।' }
             };
             const row = T[key] || {};
             return row[currentLang] || row.te || key;
@@ -954,6 +962,9 @@
                 if (f) lines.push('• ' + f.apartment + ' ' + f.flat + ' — ' + flatHistoryLine(f, isoDate));
             });
             lines.push(gpT('fullDetailsPdf'));
+            // wa.me carries text only — the PDF itself is never attached
+            // by WhatsApp, so say so in the message (M-G6, 23 Nov 2026).
+            lines.push(gpT('manualAttach'));
             return lines.join('\n');
         }
         function buildGatePassReport() {
@@ -998,19 +1009,21 @@
                     '<th>' + escHtml(gpT('colHistory')) + '</th>' +
                     '</tr></thead><tbody>';
                 entries.forEach(function (e) {
-                    const isFemale = e.gender === 'Female';
+                    // Gender-blank rows default to masked, same as Female
+                    // (23 Nov 2026); only Male rows show as-is.
+                    const isMasked = e.gender !== 'Male';
                     const thumb = e.photo ? driveThumbnailUrl(e.photo) : null;
                     const f = firstSeen[e.apartment + '|' + e.flat];
-                    // Mobile: Female masked, Male as-is; '—' when the
-                    // number was never captured for this row.
-                    const mobileCell = e.mobile ? (isFemale ? maskMobileNumber(e.mobile) : e.mobile) : '—';
+                    // Mobile: Female / gender-blank masked, Male as-is;
+                    // '—' when the number was never captured for this row.
+                    const mobileCell = e.mobile ? (isMasked ? maskMobileNumber(e.mobile) : e.mobile) : '—';
                     html += '<tr><td>' + escHtml(e.time) + '</td>' +
                         '<td>' + escHtml(e.flat) + '</td>' +
                         '<td>' + escHtml(e.apartment) + '</td>' +
                         '<td>' + escHtml(e.partner) + '</td>' +
                         '<td>' + escHtml(mobileCell) + '</td><td>';
                     if (thumb) {
-                        html += '<a href="' + escHtml(e.photo) + '" target="_blank" rel="noopener"><img src="' + escHtml(thumb) + '" alt="" class="gate-photo-thumb' + (isFemale ? ' gate-photo-blurred' : '') + '"></a>';
+                        html += '<a href="' + escHtml(e.photo) + '" target="_blank" rel="noopener"><img src="' + escHtml(thumb) + '" alt="" class="gate-photo-thumb' + (isMasked ? ' gate-photo-blurred' : '') + '"></a>';
                     } else if (e.photo) {
                         html += '<a href="' + escHtml(e.photo) + '" target="_blank" rel="noopener">' + escHtml(e.photo) + '</a>';
                     }

@@ -48,17 +48,19 @@ function availoSheetSleep(ms) {
     return new Promise(function (resolve) { setTimeout(resolve, ms); });
 }
 
-// One POST attempt. keepalive caps the body at ~64 KB — a Gate Pass photo
-// is bigger, so it is dropped whenever a photo is attached (the page stays
-// open while WhatsApp opens in a new tab, so the POST still lands).
+// One POST attempt. keepalive caps the body at ~64 KB, so it is kept
+// whenever the WHOLE serialised payload fits (small or no photo) — the
+// POST then survives the tab closing. A big Gate Pass photo exceeds the
+// cap, so keepalive is dropped for it; the page stays open while
+// WhatsApp opens in a new tab, so the POST still lands in practice.
 function availoSheetPost(payload) {
-    var hasPhoto = !!(payload.photoData && payload.photoData.length > 40000);
+    var body = JSON.stringify(payload);
     return fetch(AVAILO_SHEETS_URL, {
         method: 'POST',
         mode: 'no-cors',
-        keepalive: !hasPhoto,
+        keepalive: body.length < 60000,
         headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload)
+        body: body
     });
 }
 

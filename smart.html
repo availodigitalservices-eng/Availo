@@ -563,7 +563,7 @@
         // only for the on-screen text below.
         const hotelName = hotelParam || "అమరావతి గ్రాండ్";
         const tableNumber = tableParam || "Table 01";
-        const targetWhatsApp = params.get('desk') || "919966157369";
+        const targetWhatsApp = ((params.get('desk') || "919966157369").replace(/[^0-9]/g, '') || "919966157369");
 
         // On-screen venue names follow the selected language (defaults only;
         // a ?hotel= / ?table= value passed in is a proper noun and is kept as-is).

@@ -149,6 +149,10 @@
         <div class="card">
             <div class="card-head"><span data-te="📅 వారపు రిపోర్ట్" data-en="📅 Weekly report" data-hi="📅 साप्ताहिक रिपोर्ट">📅 వారపు రిపోర్ట్</span> <span class="range-tag" id="weeklyRangeTag"></span></div>
             <div id="weeklySection"><div class="empty-hint">డేటా లోడ్ అవుతోంది…</div></div>
+            <div class="report-btns">
+                <a id="waShareWeeklyBtn" class="share-btn" href="#" target="_blank" rel="noopener"><span data-te="📤 WhatsAppలో పంపండి" data-en="📤 Send on WhatsApp" data-hi="📤 WhatsApp पर भेजें">📤 WhatsAppలో పంపండి</span></a>
+                <button class="print-btn" type="button" onclick="window.print()"><span data-te="🖨️ ప్రింట్" data-en="🖨️ Print" data-hi="🖨️ प्रिंट">🖨️ ప్రింట్</span></button>
+            </div>
             <div class="availo-only"><span data-te="AVAILO ద్వారా వచ్చిన ఆర్డర్లు మాత్రమే — కౌంటర్ / వాక్-ఇన్ అమ్మకాలు రెస్టారెంట్ సొంత బిల్లింగ్‌లో ఉంటాయి, ఇక్కడ కనిపించవు." data-en="AVAILO orders only — counter / walk-in sales live in the restaurant’s own billing system and are not shown here." data-hi="सिर्फ AVAILO ऑर्डर — काउंटर / वॉक-इन बिक्री रेस्टोरेंट की अपनी बिलिंग में होती है, यहाँ नहीं दिखती।">AVAILO ద్వారా వచ్చిన ఆర్డర్లు మాత్రమే — కౌంటర్ / వాక్-ఇన్ అమ్మకాలు రెస్టారెంట్ సొంత బిల్లింగ్‌లో ఉంటాయి, ఇక్కడ కనిపించవు.</span></div>
         </div>
 
@@ -578,7 +582,7 @@
                 revenue: computeRevenue(ranged),
                 top: topDishes(ranged, 5),
                 ratings: computeRatings(ratingsMap),
-                reviewCount: asArray(reviews).length,
+                reviewCount: asArray(reviews).filter(function (r) { return !r || !r.hidden; }).length,
                 coupons: computeCouponStats(ranged),
                 bookings: computeBookingStats(rangedBookings),
                 peak: peakHours(ranged),
@@ -712,6 +716,22 @@
             lines.push('• ' + t('bookings') + ': ' + d.bookings);
             if (d.rating) lines.push('• ' + t('avgRating') + ': ★ ' + d.rating.avg.toFixed(1) + ' (' + (d.rating.scope === 'today' ? t('rangeToday') : t('allTime')) + ' · ' + d.rating.count + ' ' + t('reviewsWord') + ')');
             else lines.push('• ' + t('avgRating') + ': —');
+            return lines.join('\n');
+        }
+        // Prefilled WhatsApp text for the weekly report (current
+        // language) — same shape as whatsappDailyText: totals first,
+        // then one line per day. An empty week still shares honestly
+        // ("0 orders", ₹0.00 every day), never a made-up figure.
+        function whatsappWeeklyText(w) {
+            const lines = [];
+            const range = w.days.length ? w.days[0].label + ' – ' + w.days[w.days.length - 1].label : '';
+            lines.push('AVAILO Dine — ' + t('weeklyReport') + ' (' + range + ')');
+            lines.push(t('availoOnlyShort'));
+            lines.push('• ' + t('totalOrders') + ': ' + w.totalOrders);
+            lines.push('• ' + t('totalRevenue') + ': ' + fmtINR(w.totalRevenue));
+            w.days.forEach(function (day) {
+                lines.push('• ' + day.label + ': ' + day.orders + ' ' + t('dayOrders') + ' · ' + fmtINR(day.revenue));
+            });
             return lines.join('\n');
         }
         function reportRow(label, valueHtml) {
@@ -917,6 +937,8 @@
                     wrEl.innerHTML = html;
                 }
             }
+            const waWeeklyBtn = document.getElementById('waShareWeeklyBtn');
+            if (waWeeklyBtn) waWeeklyBtn.href = 'https://wa.me/?text=' + encodeURIComponent(whatsappWeeklyText(d.weekly));
         }
 
         // ---- Firebase listeners (fail-open, same pattern as dine-owner.html)
@@ -928,6 +950,9 @@
                     el.textContent = on ? t('connOk') : t('connBad');
                     el.className = 'conn ' + (on ? 'ok' : 'bad');
                 }
+                // Offline: no data will arrive, so show the empty states
+                // instead of leaving every section stuck on "…" forever.
+                if (!on) { analyticsLoaded = true; renderDashboard(); }
             });
             db.ref(DINE_ORDERS_PATH).on('value', function (snap) {
                 const val = snap.val() || {};
@@ -938,12 +963,12 @@
                 }).sort(function (a, b) { return (b.createdAt - a.createdAt) || String(b.id).localeCompare(String(a.id)); });
                 analyticsLoaded = true;
                 renderDashboard();
-            }, function () { /* read failed: keep the old data */ });
+            }, function () { /* read failed: show the empty states instead of "…" forever */ analyticsLoaded = true; renderDashboard(); });
             db.ref(RATINGS_PATH).on('value', function (snap) {
                 analyticsRatings = snap.val() || {};
                 analyticsLoaded = true;
                 renderDashboard();
-            }, function () { /* read failed: keep the old data */ });
+            }, function () { /* read failed: show the empty states instead of "…" forever */ analyticsLoaded = true; renderDashboard(); });
             db.ref(REVIEWS_PATH).on('value', function (snap) {
                 const val = snap.val() || {};
                 analyticsReviews = Object.keys(val).map(function (id) {
@@ -952,7 +977,7 @@
                 });
                 analyticsLoaded = true;
                 renderDashboard();
-            }, function () { /* read failed: keep the old data */ });
+            }, function () { /* read failed: show the empty states instead of "…" forever */ analyticsLoaded = true; renderDashboard(); });
             db.ref(TABLE_BOOKINGS_PATH).on('value', function (snap) {
                 const val = snap.val() || {};
                 analyticsBookings = Object.keys(val).map(function (id) {
@@ -962,7 +987,7 @@
                 }).sort(function (a, b) { return (b.createdAt - a.createdAt) || String(b.id).localeCompare(String(a.id)); });
                 analyticsLoaded = true;
                 renderDashboard();
-            }, function () { /* read failed: keep the old data */ });
+            }, function () { /* read failed: show the empty states instead of "…" forever */ analyticsLoaded = true; renderDashboard(); });
         } else {
             const el = document.getElementById('connStatus');
             if (el) { el.textContent = t('connNoFirebase'); el.className = 'conn bad'; }

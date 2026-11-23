@@ -1116,7 +1116,7 @@
                     </label>
                     <button type="button" onclick="clearGateMemory()" style="background: none; border: none; color: #dc2626; font-size: 12px; font-weight: 700; cursor: pointer; padding: 0; margin-bottom: 12px;" data-te="🗑️ సేవ్ చేసిన వివరాలు తొలగించండి" data-en="🗑️ Clear saved details" data-hi="🗑️ सेव किया गया विवरण हटाएँ">🗑️ సేవ్ చేసిన వివరాలు తొలగించండి</button>
 
-                    <button onclick="sendGateSecurityPass()" style="width: 100%; background: #16a34a; color: #ffffff; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);" data-te="✅ ఫోటోతో వెరిఫై చేసి పాస్ పంపండి" data-en="✅ Verify with Photo & Send Pass" data-hi="✅ फ़ोटो से वेरिफ़ाई करके पास भेजें">
+                    <button id="gateSubmitBtn" onclick="sendGateSecurityPass()" style="width: 100%; background: #16a34a; color: #ffffff; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);" data-te="✅ ఫోటోతో వెరిఫై చేసి పాస్ పంపండి" data-en="✅ Verify with Photo & Send Pass" data-hi="✅ फ़ोटो से वेरिफ़ाई करके पास भेजें">
                         <span>📷</span> ✅ ఫోటోతో వెరిఫై చేసి పాస్ పంపండి
                     </button>
 
@@ -1138,6 +1138,7 @@
                         <button onclick="downloadGateStamp()" style="background: #16a34a; color: #ffffff; border: none; border-radius: 8px; padding: 12px 18px; font-size: 14px; font-weight: 800; cursor: pointer;" data-te="⬇️ స్టాంప్ డౌన్‌లోడ్ చేయండి" data-en="⬇️ Download Stamp" data-hi="⬇️ स्टैम्प डाउनलोड करें">⬇️ స్టాంప్ డౌన్‌లోడ్ చేయండి</button>
                     </div>
                     <p style="font-size: 12px; color: #475569; margin-top: 8px;" data-te="దీన్ని WhatsAppలో కస్టమర్‌కి పంపండి" data-en="Send this to the customer on WhatsApp" data-hi="इसे WhatsApp पर कस्टमर को भेजें">దీన్ని WhatsAppలో కస్టమర్‌కి పంపండి</p>
+                    <p style="font-size: 12.5px; margin-top: 6px;"><a id="gateWaRetryLink" href="#" onclick="retryGateWhatsApp(); return false;" style="color: #16a34a; font-weight: 700;" data-te="WhatsApp తెరవలేదా? ఇక్కడ నొక్కి మళ్ళీ ప్రయత్నించండి" data-en="WhatsApp didn't open? Tap here to try again" data-hi="WhatsApp नहीं खुला? फिर से कोशिश के लिए यहाँ टैप करें">WhatsApp తెరవలేదా? ఇక్కడ నొక్కి మళ్ళీ ప్రయత్నించండి</a></p>
                 </div>
 
                 <div style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; cursor: pointer;" onclick="openTrialModal('Apartments (Smart Gate &amp; Care)')">
@@ -1244,7 +1245,7 @@
         <!-- Rate Card — Home Services starting prices (data: rates.js) -->
         <section id="rate-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px; margin-bottom: 18px;">
             <h2 style="font-size: 16px; font-weight: 800; color: var(--brand-navy); margin-bottom: 6px;" data-te="💰 హోమ్ సర్వీస్ రేట్లు" data-en="💰 Home Service Rates" data-hi="💰 होम सर्विस रेट">💰 హోమ్ సర్వీస్ రేట్లు</h2>
-            <p style="font-size: 12.5px; color: #64748b; margin-bottom: 12px; line-height: 1.6;" data-te="ప్రారంభ ధరలు — పని పరిధిని బట్టి తుది ధర మారవచ్చు. సర్వీస్‌కు ముందు ధర WhatsAppలో నిర్ధారించి చెప్తాం." data-en="Starting prices — the final price may vary by the scope of work. We confirm the price on WhatsApp before the service." data-hi="शुरुआती कीमतें — काम के दायरे के हिसाब से अंतिम कीमत बदल सकती है। सेवा से पहले कीमत WhatsApp पर पक्की करके बताएँगे।">ప్రారంభ ధరలు — పని పరిధిని బట్టి తుది ధర మారవచ్చు. సర్వీస్‌కు ముందు ధర WhatsAppలో నిర్ధారించి చెప్తాం.</p>
+            <p style="font-size: 12.5px; color: #64748b; margin-bottom: 12px; line-height: 1.6;" data-te="ధరలు త్వరలో వస్తాయి — WhatsAppలో అడగండి" data-en="Prices coming soon — ask on WhatsApp" data-hi="कीमतें जल्द आ रही हैं — WhatsApp पर पूछें">ధరలు త్వరలో వస్తాయి — WhatsAppలో అడగండి</p>
             <div id="rateCardBody"></div>
             <div style="margin-top: 12px; text-align: center;">
                 <a onclick="waLink('హలో AVAILO, సర్వీస్ ధర తెలుసుకోవాలి', 'Hi AVAILO, I want to know the service price', 'नमस्ते AVAILO, मुझे सर्विस की कीमत जाननी है')" style="cursor: pointer; display: inline-block; background: var(--call-green); color: #ffffff; padding: 11px 18px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none;" data-te="💬 WhatsAppలో ధర అడగండి" data-en="💬 Ask Price on WhatsApp" data-hi="💬 WhatsApp पर कीमत पूछें">💬 WhatsAppలో ధర అడగండి</a>
@@ -1767,7 +1768,7 @@
                     <label style="font-size: 12px; font-weight: 600;" data-te="ముఖ్యమైన అవసరాలు" data-en="Primary Needs" data-hi="मुख्य ज़रूरतें">ముఖ్యమైన అవసరాలు</label>
                     <input type="text" id="nriNeeds" data-ph-te="నెలవారీ మందులు, ఆరోగ్య పరీక్షలు" data-ph-en="Monthly Medicines, Health Checkups" data-ph-hi="मासिक दवाइयाँ, स्वास्थ्य जाँच" placeholder="Monthly Medicines, Health Checkups" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
                 </div>
-                <button onclick="submitNRIApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో అప్లికేషన్ పంపండి" data-en="💬 Submit on WhatsApp" data-hi="💬 WhatsApp पर आवेदन भेजें">💬 WhatsApp లో అప్లికేషన్ పంపండి</button>
+                <button id="nriSubmitBtn" onclick="submitNRIApplication()" style="width: 100%; background: var(--call-green); color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer;" data-te="💬 WhatsApp లో అప్లికేషన్ పంపండి" data-en="💬 Submit on WhatsApp" data-hi="💬 WhatsApp पर आवेदन भेजें">💬 WhatsApp లో అప్లికేషన్ పంపండి</button>
                 <div id="nriWarnLine" style="display: none; background: #fef2f2; border: 1.5px solid #dc2626; color: #b91c1c; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
                 <div id="nriConfirmLine" style="display: none; background: #f0fdf4; border: 1.5px solid #16a34a; color: #166534; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
             </div>
@@ -1996,6 +1997,7 @@
             if (!el) return;
             if (id === 'trialApplyModal') resetTrialForm();
             if (id === 'technicianApplyModal') resetTechnicianForm();
+            if (id === 'nriApplyModal') resetNRIForm();
             const wasActive = document.querySelectorAll('.modal-overlay.active').length;
             el.classList.add('active');
             if (!availoModalPushed && wasActive === 0) {
@@ -2016,6 +2018,7 @@
         function closeModal(id) {
             if (id === 'trialApplyModal') resetTrialForm();
             if (id === 'technicianApplyModal') resetTechnicianForm();
+            if (id === 'nriApplyModal') resetNRIForm();
             const el = document.getElementById(id);
             if (el) el.classList.remove('active');
             if (!document.querySelector('.modal-overlay.active')) {
@@ -2135,7 +2138,7 @@
             const pill = document.querySelector('.mayura-voice-pill');
             if (!promptEl) return;
             if (on) {
-                promptEl.innerHTML = currentLang === 'te' ? '🎙️ మయూర మాట్లాడుతోంది…' : currentLang === 'hi' ? '🎙️ मयूरा बोल रही है…' : '🎙️ Mayura is speaking…';
+                promptEl.innerHTML = currentLang === 'te' ? '🔊 మయూర మాట్లాడుతోంది…' : currentLang === 'hi' ? '🔊 मयूरा बोल रही है…' : '🔊 Mayura is speaking…';
                 // Reflow-restart the pulse animation so every tap visibly re-triggers it.
                 if (core) { core.classList.remove('speaking'); void core.offsetWidth; core.classList.add('speaking'); }
                 if (pill) { pill.classList.remove('speaking'); void pill.offsetWidth; pill.classList.add('speaking'); }
@@ -2252,34 +2255,6 @@
             const ok = document.getElementById('mayuraListenLine');
             if (ok) ok.style.display = 'none';
         }
-        function mayuraListen() {
-            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const errEl = document.getElementById('mayuraErrorLine');
-            if (errEl) errEl.style.display = 'none';
-            if (!SpeechRec) {
-                mayuraShowError(currentLang === 'te' ? 'ఈ బ్రౌజర్‌లో వాయిస్ పనిచేయదు — Chrome / Androidలో ప్రయత్నించండి, లేదా కింద టైప్ చేసి పంపండి.' : currentLang === 'hi' ? 'इस ब्राउज़र में वॉइस नहीं चलती — Chrome / Android पर कोशिश करें, या नीचे टाइप करके भेजें।' : 'Voice does not work in this browser — try Chrome / Android, or type below and send.');
-                return;
-            }
-            const rec = new SpeechRec();
-            rec.lang = mayuraGreeting().lang;
-            rec.interimResults = false;
-            rec.maxAlternatives = 1;
-            const listenEl = document.getElementById('mayuraListenLine');
-            if (listenEl) { listenEl.textContent = currentLang === 'te' ? '🎙️ వింటున్నాను… మాట్లాడండి' : currentLang === 'hi' ? '🎙️ सुन रही हूँ… बोलिए' : '🎙️ Listening… please speak'; listenEl.style.display = 'block'; }
-            rec.onresult = (e) => {
-                const spoken = e.results[0][0].transcript;
-                if (listenEl) listenEl.textContent = (currentLang === 'te' ? 'మీరు చెప్పింది: ' : currentLang === 'hi' ? 'आपने कहा: ' : 'You said: ') + '“' + spoken + '”';
-                window._mayuraSpoken = spoken;
-            };
-            rec.onerror = (ev) => {
-                const why = ev && ev.error;
-                mayuraShowError(why === 'not-allowed'
-                    ? (currentLang === 'te' ? 'మైక్ అనుమతి ఇవ్వలేదు — బ్రౌజర్ సెట్టింగ్స్‌లో మైక్ అనుమతించండి, లేదా టైప్ చేసి పంపండి.' : currentLang === 'hi' ? 'माइक की अनुमति नहीं मिली — ब्राउज़र सेटिंग्स में माइक की अनुमति दें, या टाइप करके भेजें।' : 'Microphone permission was not given — allow the mic in browser settings, or type and send instead.')
-                    : (currentLang === 'te' ? 'వాయిస్ వినలేకపోయాను — మళ్ళీ ప్రయత్నించండి లేదా టైప్ చేసి పంపండి.' : currentLang === 'hi' ? 'वॉइस सुन नहीं पाई — फिर से कोशिश करें या टाइप करके भेजें।' : 'Could not hear the voice — try again, or type and send.'));
-            };
-            rec.onend = () => { if (listenEl && !window._mayuraSpoken) listenEl.style.display = 'none'; };
-            try { rec.start(); } catch (e) { mayuraShowError(currentLang === 'te' ? 'వాయిస్ మొదలుకాలేదు — టైప్ చేసి పంపండి.' : currentLang === 'hi' ? 'वॉइस शुरू नहीं हुई — टाइप करके भेजें।' : 'Voice did not start — please type and send.'); }
-        }
         function mayuraSendText() {
             const input = document.getElementById('mayuraTextInput');
             const typed = (input && input.value.trim()) || '';
@@ -2319,9 +2294,13 @@
         // green double border + dashed inner border, VERIFIED & SAVED, apartment,
         // DD-MMM-YYYY + GRANTED, Powered by AVAILO below the stamp).
         const STAMP_GREEN = '#00703c';
+        // Stamp date in IST (Asia/Kolkata) — the Sheet's date column is IST
+        // too, so a pass stamped near midnight must not show yesterday.
         function stampDateStr(d) {
             const M = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-            return String(d.getDate()).padStart(2, '0') + '-' + M[d.getMonth()] + '-' + d.getFullYear();
+            const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'numeric', year: 'numeric' }).formatToParts(d || new Date());
+            const part = (t) => { const p = parts.find(x => x.type === t); return p ? p.value : ''; };
+            return part('day') + '-' + M[Number(part('month')) - 1] + '-' + part('year');
         }
         function drawGateStamp(canvas, apartmentName, partnerName, flatNo) {
             if (!canvas) return;
@@ -2632,6 +2611,11 @@
                 return;
             }
             gatePhotoAttached = true;
+            // New photo = a new pass: lift the double-tap guard so the next
+            // visitor can submit (the flag is per-pass, not per page load).
+            gatePassSubmitted = false;
+            const gateBtn = document.getElementById('gateSubmitBtn');
+            if (gateBtn) { gateBtn.disabled = false; gateBtn.style.opacity = ''; }
             if (gatePhotoObjectUrl) URL.revokeObjectURL(gatePhotoObjectUrl);
             gatePhotoObjectUrl = URL.createObjectURL(file);
             const thumb = document.getElementById('gatePhotoThumb');
@@ -2650,6 +2634,9 @@
         function clearGatePhoto() {
             gatePhotoAttached = false;
             gatePhotoImg = null;
+            gatePassSubmitted = false;
+            const gateBtn = document.getElementById('gateSubmitBtn');
+            if (gateBtn) { gateBtn.disabled = false; gateBtn.style.opacity = ''; }
             if (gatePhotoObjectUrl) { URL.revokeObjectURL(gatePhotoObjectUrl); gatePhotoObjectUrl = null; }
             const prev = document.getElementById('gatePhotoPreview');
             if (prev) prev.style.display = 'none';
@@ -2702,7 +2689,13 @@
         // QR), Flat + delivery partner, Photo → stamp. No visitor-name,
         // vehicle-number or mobile-number field: the delivery partner IS
         // the identifier.
+        // Double-tap guard (same Trial/Technician pattern): one submit only
+        // until a new photo is attached. gateWaUrl keeps the exact WhatsApp
+        // message for the "didn't open?" retry link in the confirm panel.
+        let gatePassSubmitted = false;
+        let gateWaUrl = '';
         function sendGateSecurityPass() {
+            if (gatePassSubmitted) return false;
             const aptInput = document.getElementById('gateApartment');
             const apt = (gateApartmentName || (aptInput ? aptInput.value.trim() : ''));
             const flat = document.getElementById('gateFlatNo').value.trim();
@@ -2731,6 +2724,9 @@
                 return;
             }
             if (warn) warn.style.display = 'none';
+            gatePassSubmitted = true;
+            const gateBtn = document.getElementById('gateSubmitBtn');
+            if (gateBtn) { gateBtn.disabled = true; gateBtn.style.opacity = '0.6'; }
             // Save apartment + flat ONLY if the user opted in on this phone.
             const remember = document.getElementById('gateRemember');
             try {
@@ -2765,13 +2761,29 @@
                 }
             } catch (e) { photoData = ''; }
 
-            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${encodeURIComponent(ref)}%0A*अपार्टमेंट:* ${encodeURIComponent(apt)}%0A*फ़्लैट नंबर:* ${encodeURIComponent(flat)}%0A*डिलीवरी पार्टनर:* ${encodeURIComponent(partner)}%0A*लिंग:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*तारीख:* ${encodeURIComponent(dt.date)}%0A*समय:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 फ़ोटो: साइट पर ली गई ✅ वेरिफ़ाई हो गया।` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Reference No:* ${encodeURIComponent(ref)}%0A*Apartment:* ${encodeURIComponent(apt)}%0A*Flat No:* ${encodeURIComponent(flat)}%0A*Delivery Partner:* ${encodeURIComponent(partner)}%0A*Gender:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*Date:* ${encodeURIComponent(dt.date)}%0A*Time:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 Photo: taken on site ✅ Verified.` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${encodeURIComponent(ref)}%0A*అపార్ట్‌మెంట్:* ${encodeURIComponent(apt)}%0A*ఫ్లాట్ నంబర్:* ${encodeURIComponent(flat)}%0A*డెలివరీ పార్టనర్:* ${encodeURIComponent(partner)}%0A*లింగం:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*తేదీ:* ${encodeURIComponent(dt.date)}%0A*సమయం:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A📸 ఫోటో: సైట్‌లో తీయబడింది ✅ వెరిఫై చేయబడింది.`;
+            // Photo line: claim "verified" ONLY when a photo actually made
+            // it through (photoData non-empty). A failed resize must never
+            // tell Availo the photo was verified — ask for a retake instead.
+            const photoLine = photoData
+                ? (currentLang === 'hi' ? '📸 फ़ोटो: साइट पर ली गई ✅ वेरिफ़ाई हो गया।' : currentLang === 'en' ? '📸 Photo: taken on site ✅ Verified.' : '📸 ఫోటో: సైట్‌లో తీయబడింది ✅ వెరిఫై చేయబడింది.')
+                : (currentLang === 'hi' ? '📸 फ़ोटो: सही से नहीं आई — कृपया फिर से फ़ोटो लें।' : currentLang === 'en' ? '📸 Photo: did not come through — please retake the photo.' : '📸 ఫోటో: సరిగా రాలేదు — దయచేసి మళ్ళీ ఫోటో తీయండి.');
+            const msg = currentLang === 'hi' ? `*AVAILO गेट - डिजिटल एंट्री पास*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${encodeURIComponent(ref)}%0A*अपार्टमेंट:* ${encodeURIComponent(apt)}%0A*फ़्लैट नंबर:* ${encodeURIComponent(flat)}%0A*डिलीवरी पार्टनर:* ${encodeURIComponent(partner)}%0A*लिंग:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*तारीख:* ${encodeURIComponent(dt.date)}%0A*समय:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A${photoLine}` : currentLang === 'en' ? `*AVAILO GATE - Digital Entry Pass*%0A------------------------------%0A*Reference No:* ${encodeURIComponent(ref)}%0A*Apartment:* ${encodeURIComponent(apt)}%0A*Flat No:* ${encodeURIComponent(flat)}%0A*Delivery Partner:* ${encodeURIComponent(partner)}%0A*Gender:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*Date:* ${encodeURIComponent(dt.date)}%0A*Time:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A${photoLine}` : `*AVAILO గేట్ - డిజిటల్ ఎంట్రీ పాస్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${encodeURIComponent(ref)}%0A*అపార్ట్‌మెంట్:* ${encodeURIComponent(apt)}%0A*ఫ్లాట్ నంబర్:* ${encodeURIComponent(flat)}%0A*డెలివరీ పార్టనర్:* ${encodeURIComponent(partner)}%0A*లింగం:* ${encodeURIComponent(gateGenderLabel(gateGender))}%0A*తేదీ:* ${encodeURIComponent(dt.date)}%0A*సమయం:* ${encodeURIComponent(dt.time)}%0A------------------------------%0A${photoLine}`;
             // Log to Google Sheets (never blocks WhatsApp). NO mobile
             // number is sent — Code.gs saves the photo to Drive and
             // leaves the Mobile cell blank; masking is display-only in
             // the admin panel (old rows).
             sendToSheet('GatePass', { apartment: apt, flat: flat, partner: partner, photo: 'captured', ref: ref, gender: gateGender, date: dt.date, time: dt.time, photoData: photoData });
-            window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
+            gateWaUrl = 'https://wa.me/919966157369?text=' + msg;
+            const retryLink = document.getElementById('gateWaRetryLink');
+            if (retryLink) retryLink.href = gateWaUrl;
+            window.open(gateWaUrl, '_blank', 'noopener');
+        }
+
+        // WhatsApp didn't open (popup blocked)? One tap re-opens the exact
+        // same message — no new ref, no second Sheet row.
+        function retryGateWhatsApp() {
+            if (gateWaUrl) window.open(gateWaUrl, '_blank', 'noopener');
+            return false;
         }
 
         // Submit Trial / Subscription Application — inline validation + visible
@@ -3018,8 +3030,23 @@
             availoModalSwap = false;
         }
 
+        // NRI form reset (same Trial/Technician pattern): clears the
+        // double-submit flag + button on open/close, and wipes the previous
+        // applicant's details off a shared phone. The plan select is NOT
+        // reset here — selectNRIPlan() sets it before openModal().
+        let nriSubmitted = false;
+        function resetNRIForm() {
+            nriSubmitted = false;
+            const btn = document.getElementById('nriSubmitBtn');
+            if (btn) { btn.disabled = false; btn.style.opacity = ''; }
+            ['nriClientName', 'nriClientPhone', 'nriParentsName', 'nriAddress', 'nriNeeds'].forEach(function (id) { const el = document.getElementById(id); if (el) el.value = ''; });
+            hideFormWarn('nriWarnLine');
+            const cl = document.getElementById('nriConfirmLine'); if (cl) cl.style.display = 'none';
+        }
+
         // Submit NRI Application — inline validation + visible confirmation.
         function submitNRIApplication() {
+            if (nriSubmitted) return false;
             const plan = document.getElementById('nriPlanSelected').value;
             const clientName = document.getElementById('nriClientName').value.trim();
             const clientPhone = document.getElementById('nriClientPhone').value.trim();
@@ -3034,6 +3061,9 @@
                 return showFormWarn('nriWarnLine', currentLang === 'te' ? '⚠️ సరైన మొబైల్ నంబర్ ఇవ్వండి (కనీసం 10 అంకెలు).' : currentLang === 'hi' ? '⚠️ कृपया सही मोबाइल नंबर दें (कम से कम 10 अंक)।' : '⚠️ Please enter a valid mobile number (at least 10 digits).');
             }
             hideFormWarn('nriWarnLine');
+            nriSubmitted = true;
+            const nriBtn = document.getElementById('nriSubmitBtn');
+            if (nriBtn) { nriBtn.disabled = true; nriBtn.style.opacity = '0.6'; }
 
             const ref = availoRef();
             const cl = document.getElementById('nriConfirmLine');
@@ -3041,8 +3071,14 @@
 
             const msg = currentLang === 'hi' ? `*AVAILO NRI माता-पिता की देखभाल आवेदन*%0A------------------------------%0A*रेफ़रेंस नंबर:* ${encodeURIComponent(ref)}%0A*प्लान:* ${encodeURIComponent(plan)}%0A*प्रायोजक:* ${encodeURIComponent(clientName)}%0A*WhatsApp:* ${encodeURIComponent(clientPhone)}%0A*माता-पिता का नाम:* ${encodeURIComponent(parentsName)}%0A*पता:* ${encodeURIComponent(address)}%0A*ज़रूरतें:* ${encodeURIComponent(needs)}%0A------------------------------%0Aएक्टिवेशन के लिए कनेक्ट हो रहा है।` : currentLang === 'en' ? `*AVAILO NRI Parents Care Application*%0A------------------------------%0A*Reference No:* ${encodeURIComponent(ref)}%0A*Plan:* ${encodeURIComponent(plan)}%0A*Sponsor:* ${encodeURIComponent(clientName)}%0A*WhatsApp:* ${encodeURIComponent(clientPhone)}%0A*Parents Name:* ${encodeURIComponent(parentsName)}%0A*Address:* ${encodeURIComponent(address)}%0A*Needs:* ${encodeURIComponent(needs)}%0A------------------------------%0AConnecting for Activation.` : `*AVAILO NRI తల్లిదండ్రుల సంరక్షణ అప్లికేషన్*%0A------------------------------%0A*రిఫరెన్స్ నంబర్:* ${encodeURIComponent(ref)}%0A*ప్లాన్:* ${encodeURIComponent(plan)}%0A*స్పాన్సర్:* ${encodeURIComponent(clientName)}%0A*WhatsApp:* ${encodeURIComponent(clientPhone)}%0A*తల్లిదండ్రుల పేరు:* ${encodeURIComponent(parentsName)}%0A*చిరునామా:* ${encodeURIComponent(address)}%0A*అవసరాలు:* ${encodeURIComponent(needs)}%0A------------------------------%0Aయాక్టివేషన్ కోసం కనెక్ట్ అవుతోంది.`;
             // Log to Google Sheets (never blocks WhatsApp).
-            sendToSheet('NRI', { plan: plan, sponsor: clientName, phone: clientPhone, parentsName: parentsName, address: address, needs: needs, ref: ref });
-            window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
+            try {
+                sendToSheet('NRI', { plan: plan, sponsor: clientName, phone: clientPhone, parentsName: parentsName, address: address, needs: needs, ref: ref });
+                window.open(`https://wa.me/919966157369?text=${msg}`, '_blank', 'noopener');
+            } catch (e) {
+                // Sending failed — lift the guard so the user can retry.
+                nriSubmitted = false;
+                if (nriBtn) { nriBtn.disabled = false; nriBtn.style.opacity = ''; }
+            }
         }
         initGateFormMemory();
         buildGatePartnerChips();
