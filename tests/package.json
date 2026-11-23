@@ -1,10 +1,10 @@
 {
   "name": "tests",
   "version": "1.0.0",
-  "description": "jsdom DOM tests for the Availo site (Mayura panel: voice removed 18 Nov 2026; male-voice selection retained for restoration)",
+  "description": "jsdom DOM tests for the Availo site (Mayura panel voice restored 19 Nov 2026: deep, serious male voice on tap; mic still not restored)",
   "main": "index.js",
   "scripts": {
-    "test": "node mayura-voice.test.js && node mayura-no-voice.test.js && node whatsapp-encode.test.js && node gatepass-privacy.test.js"
+    "test": "node mayura-voice.test.js && node mayura-voice-restored.test.js && node whatsapp-encode.test.js && node gatepass-privacy.test.js && node gatepass-pdf-report.test.js && node dine-menu.test.js && node dine-owner.test.js && node dine-voice-tracker.test.js && node dine-order-id.test.js && node gate-kitchen-chain.test.js && node dine-rider-gps-pilot.test.js && node dine-upi-payment.test.js && node dine-table-booking.test.js && node dine-ratings-reviews.test.js && node dine-coupons-loyalty.test.js && node dine-analytics.test.js && node salon-live-queue.test.js && node prune-archive.test.js && node hardening-visibility.test.js && node hardening-sheet-retry.test.js && node city-location.test.js && node b1-read-token.test.js && node index-audit-fixes.test.js && node dine-audit-fixes.test.js && node salon-audit-fixes.test.js && node kitchen-audit-fixes.test.js && node analytics-audit-fixes.test.js"
   },
   "keywords": [],
   "author": "",

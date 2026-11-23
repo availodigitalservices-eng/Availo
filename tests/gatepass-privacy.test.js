@@ -125,15 +125,15 @@ function waText(url) {
     return { params: [...u.searchParams.keys()], text: u.searchParams.get('text') };
 }
 
-// Fill the Gate Pass form (apartment, flat, partner chip, mobile, gender
-// chip, photo) then call submit. Gender may be null (not picked).
-function fillGate(doc, window, { apt = 'Sri Sai Heights', flat = '302', partner = 'Swiggy', mobile = '9966157369', gender = null, photo = true }) {
+// Fill the Gate Pass form (apartment, flat, partner chip, gender chip,
+// photo) then call submit. No mobile number is asked at the gate.
+// Gender may be null (not picked).
+function fillGate(doc, window, { apt = 'Sri Sai Heights', flat = '302', partner = 'Swiggy', gender = null, photo = true }) {
     doc.getElementById('gateApartment').value = apt;
     doc.getElementById('gateFlatNo').value = flat;
     const chip = [...doc.querySelectorAll('#gatePartnerChips button')].find(b => b.getAttribute('data-value') === partner);
     assert.ok(chip, 'partner chip ' + partner + ' must exist');
     chip.click();
-    doc.getElementById('gateMobile').value = mobile;
     if (gender) {
         const g = [...doc.querySelectorAll('#gateGenderChips button')].find(b => b.getAttribute('data-value') === gender);
         assert.ok(g, 'gender chip ' + gender + ' must exist');
@@ -166,17 +166,18 @@ test('gender chips exist (Male/Female) with NO default selected', () => {
     try {
         const chips = [...document.querySelectorAll('#gateGenderChips button')];
         assert.deepEqual(chips.map(c => c.getAttribute('data-value')), ['Male', 'Female']);
-        assert.ok(document.getElementById('gateMobile'), 'mobile input must exist');
+        assert.equal(document.getElementById('gateMobile'), null, 'no mobile input at the gate — the user said no mobile number');
         // No chip pre-selected: submitting with everything else valid must
         // still be blocked (see the gender-required test below).
         assert.equal(chips.filter(c => c.style.background === 'rgb(79, 70, 229)' || c.style.background === '#4f46e5').length, 0);
     } finally { window.close(); }
 });
 
-// --- Female end-to-end: FULL number + CLEAR photo stored -----------------------
-// (corrected design: storage is full; masking is display-only in the panel)
+// --- Female end-to-end: NO mobile collected, CLEAR photo stored ----------
+// (user correction 22 Nov 2026: no mobile number is asked at the gate;
+// masking is display-only in the admin panel, for old rows)
 
-test('female: Sheet + WhatsApp get the FULL number and a CLEAR photo', () => {
+test('female: NO mobile collected — Sheet payload has no mobile key, WhatsApp has no number; photo stored CLEAR', () => {
     const { window, document, opened, sheetCalls, ctxs } = loadPage();
     try {
         fillGate(document, window, { gender: 'Female' });
@@ -185,18 +186,19 @@ test('female: Sheet + WhatsApp get the FULL number and a CLEAR photo', () => {
         assert.equal(sheetCalls.length, 1, 'one Sheet log must happen');
         const payload = sheetCalls[0][1];
         assert.equal(sheetCalls[0][0], 'GatePass');
-        assert.equal(payload.mobile, '9966157369', 'female number must be STORED in full so the admin can see it');
+        assert.ok(!('mobile' in payload), 'no mobile key in the Sheet payload — the gate pass never asks for a number');
         assert.equal(payload.gender, 'Female');
         assert.match(payload.date, /^\d{2}\/\d{2}\/\d{4}$/, 'date column present');
         assert.match(payload.time, /^\d{2}:\d{2}:\d{2}$/, 'time column present');
         assert.equal(payload.photo, 'captured');
         assert.equal(payload.photoData, 'data:image/jpeg;base64,FAKEJPEGDATA', 'resized photo data URL must be sent');
         assert.match(payload.ref, /AV-\d{8}-\d{4}/);
-        assert.ok(JSON.stringify(payload).includes('9966157369'), 'the full number must be in the Sheet payload');
-        // WhatsApp goes to Availo's own number (the admin): full number.
+        assert.ok(!JSON.stringify(payload).includes('9966157369'), 'no number anywhere in the Sheet payload');
+        // WhatsApp goes to Availo's own number (the admin): no number asked.
         const { params, text } = waText(opened[0]);
         assert.deepEqual(params, ['text']);
-        assert.ok(text.includes('9966157369'), 'WhatsApp must show the FULL number for female');
+        assert.ok(!text.includes('9966157369'), 'WhatsApp must NOT show any number');
+        assert.ok(!text.includes('మొబైల్'), 'WhatsApp must have no mobile line');
         assert.ok(text.includes('స్త్రీ'), 'WhatsApp must include the gender');
         assert.ok(text.includes(payload.date) && text.includes(payload.time), 'WhatsApp must include date + time');
         // Clear photo: the photo canvas drew with NO blur at storage.
@@ -207,9 +209,9 @@ test('female: Sheet + WhatsApp get the FULL number and a CLEAR photo', () => {
     } finally { window.close(); }
 });
 
-// --- Male end-to-end: full number + clear photo ------------------------------
+// --- Male end-to-end: NO mobile collected, clear photo ---------------------
 
-test('male: Sheet + WhatsApp get the FULL number and a clear photo', () => {
+test('male: NO mobile collected — Sheet payload has no mobile key, WhatsApp has no number; photo clear', () => {
     const { window, document, opened, sheetCalls, ctxs } = loadPage();
     try {
         fillGate(document, window, { gender: 'Male' });
@@ -217,17 +219,19 @@ test('male: Sheet + WhatsApp get the FULL number and a clear photo', () => {
         assert.equal(opened.length, 1);
         assert.equal(sheetCalls.length, 1);
         const payload = sheetCalls[0][1];
-        assert.equal(payload.mobile, '9966157369', 'male number must be stored in full');
+        assert.ok(!('mobile' in payload), 'no mobile key in the Sheet payload');
         assert.equal(payload.gender, 'Male');
         assert.equal(payload.photoData, 'data:image/jpeg;base64,FAKEJPEGDATA');
         const { text } = waText(opened[0]);
-        assert.ok(text.includes('9966157369'), 'WhatsApp must show the full number for male');
+        assert.ok(!text.includes('9966157369'), 'WhatsApp must NOT show any number');
+        assert.ok(!text.includes('మొబైల్'), 'WhatsApp must have no mobile line');
         assert.ok(text.includes('పురుషుడు'), 'WhatsApp must include the gender');
         assert.equal(ctxs[1].ctx.drawImageCalls[0].filterAtDraw, 'none', 'male photo must NOT be blurred');
     } finally { window.close(); }
 });
 
-// --- Validation: phone + gender + photo required ------------------------------
+// --- Validation: gender + photo required (NO mobile — the gate pass never
+// asks for a number, so there is no phone validation at the gate) -----------
 
 test('gender required: submit blocked when no gender is picked', () => {
     const { window, document, opened, sheetCalls, alerts } = loadPage();
@@ -240,45 +244,18 @@ test('gender required: submit blocked when no gender is picked', () => {
     } finally { window.close(); }
 });
 
-test('phone: spaces stripped, valid 10-digit number passes', () => {
+test('no mobile: submit succeeds with no mobile asked anywhere', () => {
     const { window, document, opened, sheetCalls } = loadPage();
     try {
-        fillGate(document, window, { gender: 'Male', mobile: '99661 57369' });
+        assert.equal(document.getElementById('gateMobile'), null, 'no mobile input in the form');
+        fillGate(document, window, { gender: 'Male' });
         window.sendGateSecurityPass();
-        assert.equal(opened.length, 1);
-        assert.equal(sheetCalls[0][1].mobile, '9966157369', 'spaces must be stripped before saving');
-    } finally { window.close(); }
-});
-
-test('phone: letters in the number are rejected', () => {
-    const { window, document, opened, sheetCalls } = loadPage();
-    try {
-        fillGate(document, window, { gender: 'Male', mobile: '99a99 99999' });
-        window.sendGateSecurityPass();
-        assert.equal(opened.length, 0, 'letters must block the submit');
-        assert.equal(sheetCalls.length, 0);
-    } finally { window.close(); }
-});
-
-test('phone: short number and 5-starting number are rejected', () => {
-    for (const bad of ['99999', '5123456789']) {
-        const { window, document, opened, sheetCalls } = loadPage();
-        try {
-            fillGate(document, window, { gender: 'Male', mobile: bad });
-            window.sendGateSecurityPass();
-            assert.equal(opened.length, 0, bad + ' must block the submit');
-            assert.equal(sheetCalls.length, 0);
-        } finally { window.close(); }
-    }
-});
-
-test('phone: empty mobile blocks the submit', () => {
-    const { window, document, opened, sheetCalls } = loadPage();
-    try {
-        fillGate(document, window, { gender: 'Male', mobile: '' });
-        window.sendGateSecurityPass();
-        assert.equal(opened.length, 0);
-        assert.equal(sheetCalls.length, 0);
+        assert.equal(opened.length, 1, 'pass must go through with no mobile');
+        assert.equal(sheetCalls.length, 1, 'Sheet log must happen with no mobile');
+        assert.ok(!('mobile' in sheetCalls[0][1]), 'Sheet payload must carry no mobile key');
+        const { text } = waText(opened[0]);
+        assert.ok(!text.includes('మొబైల్'), 'WhatsApp text must have no mobile line');
+        assert.ok(opened[0].startsWith('https://wa.me/919966157369?text='), 'WhatsApp still goes to Availo');
     } finally { window.close(); }
 });
 
@@ -442,14 +419,26 @@ function loadDb() {
     return { window: dom.window, calls };
 }
 
-test('sendToSheet drops keepalive when a photo is attached (64KB cap)', () => {
+test('sendToSheet drops keepalive when the whole payload exceeds the ~64KB cap', () => {
     const { window, calls } = loadDb();
     try {
+        window.sendToSheet('GatePass', { ref: 'AV-20261118-0001', photoData: 'data:image/jpeg;base64,' + 'A'.repeat(70000) });
+        assert.equal(calls.length, 1);
+        assert.equal(calls[0].opts.keepalive, false, 'keepalive must be off for a >60KB total body');
+        const body = JSON.parse(calls[0].opts.body);
+        assert.equal(body.photoData.length, 70000 + 23);
+    } finally { window.close(); }
+});
+
+test('sendToSheet keeps keepalive for a mid-size photo that fits under the cap (M-G5)', () => {
+    const { window, calls } = loadDb();
+    try {
+        // ~50KB total payload: fits under the ~64KB keepalive cap, so the
+        // POST survives the tab closing (old code dropped keepalive for
+        // any photo over 40KB).
         window.sendToSheet('GatePass', { ref: 'AV-20261118-0001', photoData: 'data:image/jpeg;base64,' + 'A'.repeat(50000) });
         assert.equal(calls.length, 1);
-        assert.equal(calls[0].opts.keepalive, false, 'keepalive must be off for a >64KB photo body');
-        const body = JSON.parse(calls[0].opts.body);
-        assert.equal(body.photoData.length, 50000 + 23);
+        assert.equal(calls[0].opts.keepalive, true, 'keepalive must stay on while the whole body fits');
     } finally { window.close(); }
 });
 
@@ -459,6 +448,25 @@ test('sendToSheet keeps keepalive for small payloads', () => {
         window.sendToSheet('GatePass', { ref: 'AV-20261118-0001', mobile: '9966157369' });
         assert.equal(calls.length, 1);
         assert.equal(calls[0].opts.keepalive, true);
+    } finally { window.close(); }
+});
+
+// Owner rule (23 Nov 2026): the visitor-facing Gate Pass form must NEVER
+// mention the admin panel or who can see the data — storage/display details
+// are not the visitor's business. Women get only the safety assurance;
+// the photo note only says the photo stays confidential. (Admin-side
+// masking in admin.html itself is unchanged and still tested above.)
+test('gate form notes never mention the admin panel; women get only the safety assurance', () => {
+    const { window, document } = loadPage();
+    try {
+        const section = document.getElementById('gate-section');
+        assert.ok(section, 'gate section must exist');
+        const html = section.innerHTML;
+        assert.ok(!html.includes('అడ్మిన్'), 'gate form must not mention the admin panel (Telugu)');
+        assert.ok(!/admin panel/i.test(html), 'gate form must not mention the admin panel (English)');
+        assert.ok(!/एडमिन/i.test(html), 'gate form must not mention the admin panel (Hindi)');
+        assert.ok(html.includes('మహిళలకు భద్రత సౌకర్యం కలదు'), 'gender note must carry the women-safety assurance');
+        assert.ok(html.includes('మీ ఫోటో గోప్యంగా ఉంటుంది'), 'photo note must say the photo stays confidential');
     } finally { window.close(); }
 });
 
