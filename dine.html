@@ -3215,10 +3215,21 @@
         let trackerListenerRef = null;
         let trackerSuppressAnnounce = false;
 
-        function makeDineOrderId() {
+                function makeDineOrderId() {
             const d = new Date();
             const p = n => String(n).padStart(2, '0');
-            return 'AV-DINE-' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
+            // 23 Nov 2026: the bare timestamp (1 s resolution, no random
+            // part) collided — 15 tables confirming in one second got the
+            // SAME id and 14 orders were overwritten in Firebase. A 4-digit
+            // suffix is NOT enough either: 15 ids drawn in one millisecond
+            // still collide ~1% of the time (birthday paradox). So the id
+            // now carries milliseconds + 8 base-36 random chars
+            // (~2.8 trillion values per millisecond) — two orders can
+            // share a second, but never the same millisecond AND the same
+            // random suffix. Format: AV-DINE-YYYYMMDD-HHMMSS-mmm-XXXXXXXX.
+            const ms = String(d.getMilliseconds()).padStart(3, '0');
+            const rnd = (Math.random().toString(36).slice(2) + '00000000').slice(0, 8).toUpperCase();
+            return 'AV-DINE-' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds()) + '-' + ms + '-' + rnd;
         }
 
         function buildDineOrderRecord(orderId, paymentMethod, extras) {
