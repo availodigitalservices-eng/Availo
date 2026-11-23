@@ -15,7 +15,15 @@
 // needs the Drive scope: on the next deploy Google asks to authorise
 // Drive access. Files stay private to the owner (no public link) — the
 // admin opens them while signed in as the Availo account.
+// v5 (23 Nov 2026): doGet reads now need ?token=<READ_TOKEN> (B1 — the
+// /exec URL is public in availo-db.js, so an open read leaked every
+// visitor's mobile number + photo link). The token lives ONLY in this
+// file and in admin.html (fetchForm); doPost writes need no token.
 // Re-deploy the SAME way (new version, same deployment, same /exec URL).
+
+// Read token for doGet — keep this ONLY here and in admin.html, never in
+// the public site JS (availo-db.js, index.html, ...).
+var READ_TOKEN = 'fce7d355f2ada8f515653a33a408b281';
 
 // One tab per form type. First column (Timestamp) is filled by the server.
 var SHEETS = {
@@ -44,11 +52,17 @@ var FIELDS = {
   Cube:        ['ref', 'message', 'lang']
 };
 
-// GET — no params: status. ?form=<TabName>: that tab's rows as JSON
-// { ok, form, headers, rows } — rows newest first, capped at 500.
-// Used by admin.html (same web app, same /exec URL). Reads only.
+// GET — no params: status. ?form=<TabName>&token=<READ_TOKEN>: that tab's
+// rows as JSON { ok, form, headers, rows } — rows newest first, capped
+// at 500. Used by admin.html (same web app, same /exec URL). Reads only.
+// A read without the matching token returns { ok: false, error:
+// 'unauthorized' } and NO rows (B1, 23 Nov 2026).
 function doGet(e) {
   try {
+    var token = (e && e.parameter && e.parameter.token) || '';
+    if (token !== READ_TOKEN) {
+      return jsonOut({ ok: false, error: 'unauthorized' });
+    }
     var form = (e && e.parameter && e.parameter.form) || '';
     if (!form) {
       return jsonOut({ ok: true, service: 'AVAILO Database', version: 4 });
@@ -134,10 +148,12 @@ function jsonOut(obj) {
 
 // v4 (18 Nov 2026): Gate Pass photo storage.
 // The site sends the photo as a base64 data URL (already resized to max
-// 800px, already blurred when Gender is Female — the raw image never
-// leaves the phone). The file is saved in the owner's Drive and its link
-// goes in the Photo column. Files stay private (no public sharing) — the
-// admin opens them while signed in as the Availo account.
+// 800px). The photo is stored CLEAR in the owner's Drive — it is NOT
+// blurred at storage; blurring happens only at DISPLAY in admin.html
+// (Female / gender-blank rows show a blurred thumbnail there). The file
+// is saved in the owner's Drive and its link goes in the Photo column.
+// Files stay private (no public sharing) — the admin opens them while
+// signed in as the Availo account.
 // DriveApp needs the Drive scope: on the next deploy Google asks to
 // authorise Drive access (one extra consent screen, same deployment).
 function getGatePhotoFolder_() {
