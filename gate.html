@@ -40,6 +40,10 @@
       .availo-top-btn { transition: none; }
     }
   </style>
+  <!-- No-JS safety net (25 Nov 2026): .availo-reveal starts at opacity: 0
+       and only the IntersectionObserver JS reveals it. With JS disabled
+       (or the script blocked) sections would stay invisible forever. -->
+  <noscript><style>.availo-reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
   <script>
     // RETIRED 19 Nov 2026: the old standalone Gate Pass page (pre-v4) is gone.
     // It submitted incomplete rows to the live Sheet (no mobile, no gender,
