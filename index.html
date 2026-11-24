@@ -969,9 +969,10 @@
         .availo-reveal.in { opacity: 1; transform: translateY(0); }
         /* Back-to-top button (Evargo-style): fixed bottom-right, appears
            after ~400px of scroll; 120ms press scale like other buttons.
-           bottom: 82px clears the fixed bottom bar (~65px) + 16px gap. */
+           bottom: 152px stacks it above the Mayura FAB (bottom 80px +
+           56px tall = top edge 136px) + 16px gap. */
         .availo-top-btn {
-            position: fixed; right: 16px; bottom: 82px; z-index: 1500;
+            position: fixed; right: 16px; bottom: 152px; z-index: 1500;
             width: 44px; height: 44px; border-radius: 50%;
             border: none; background: #071426; color: #ffffff;
             font-size: 20px; line-height: 1; cursor: pointer;
@@ -3585,8 +3586,15 @@
             els.forEach(function (el) { io.observe(el); });
         })();
 
+    </script>
+    <!-- Back-to-top button (Evargo-style, 24 Nov 2026) -->
+    <button type="button" id="availoTopBtn" class="availo-top-btn" aria-label="పైకి వెళ్ళండి">↑</button>
+    <script>
         // Back-to-top button (Evargo-style): appears after ~400px of
         // scroll; tap smooth-scrolls to the top of the page.
+        // This script MUST run after the #availoTopBtn markup above:
+        // getElementById returns null if the button does not exist yet,
+        // and then no scroll listener is ever registered.
         (function () {
             var btn = document.getElementById('availoTopBtn');
             if (!btn) return;
@@ -3601,7 +3609,5 @@
             });
         })();
     </script>
-    <!-- Back-to-top button (Evargo-style, 24 Nov 2026) -->
-    <button type="button" id="availoTopBtn" class="availo-top-btn" aria-label="పైకి వెళ్ళండి">↑</button>
 </body>
 </html>
