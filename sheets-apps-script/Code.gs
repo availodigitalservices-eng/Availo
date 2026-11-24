@@ -20,6 +20,13 @@
 // visitor's mobile number + photo link). The token lives ONLY in this
 // file and in admin.html (fetchForm); doPost writes need no token.
 // Re-deploy the SAME way (new version, same deployment, same /exec URL).
+// v6 (24 Nov 2026): conversational Mayura — doPost { form: 'Mayura',
+// question, lang } calls the Gemini API and returns { ok, answer }.
+// The key lives ONLY in Script Properties (GEMINI_API_KEY) — never in
+// this file, never in the site. No key configured → { ok: false, error:
+// 'no_key' } and the site falls back to its canned answers. Nothing is
+// written to any Sheet for Mayura questions. Re-deploy the SAME way
+// (new version, same deployment, same /exec URL) — this also activates B1.
 
 // Read token for doGet — keep this ONLY here and in admin.html, never in
 // the public site JS (availo-db.js, index.html, ...).
@@ -92,6 +99,11 @@ function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents || '{}');
     var form = data.form;
+    // v6 (24 Nov 2026): conversational Mayura — answered by Gemini, no
+    // Sheet write. Kept BEFORE the SHEETS check (Mayura is not a tab).
+    if (form === 'Mayura') {
+      return jsonOut(mayuraAnswer_(data));
+    }
     if (!SHEETS[form]) {
       return jsonOut({ ok: false, error: 'unknown form: ' + form });
     }
@@ -144,6 +156,58 @@ function doPost(e) {
 function jsonOut(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// v6 (24 Nov 2026): conversational Mayura — free tier (Gemini 3.8 Flash;
+// gemini-2.5-flash is RETIRED — the API returns 404 for it, verified
+// 24 Nov 2026; the API itself recommends gemini-3.8-flash).
+// The visitor's question is sent to Gemini with a guardrail system
+// prompt (AVAILO topics only, never invent prices, never medical/legal
+// advice, never claim to be human, answer in the visitor's language,
+// short). The API key comes ONLY from Script Properties (GEMINI_API_KEY)
+// — set it in the Apps Script editor (Project Settings > Script
+// Properties) with a key created in the AVAILO Google account's AI
+// Studio. The key is sent in the x-goog-api-key header, never in the
+// URL and never in any log. Nothing is written to any Sheet and the
+// question is never stored. Any failure returns ok:false and the site
+// falls back to its canned answers — the visitor always gets an answer.
+function mayuraAnswer_(data) {
+  try {
+    var question = String((data && data.question) || '').trim();
+    var lang = String((data && data.lang) || 'te');
+    if (!question) return { ok: false, error: 'empty question' };
+    if (question.length > 500) question = question.slice(0, 500);
+    if (lang !== 'te' && lang !== 'en' && lang !== 'hi') lang = 'te';
+    var key = PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');
+    if (!key) return { ok: false, error: 'no_key' };
+    var langName = lang === 'hi' ? 'Hindi' : lang === 'en' ? 'English' : 'Telugu';
+    var prompt = 'You are Mayura, the voice assistant of AVAILO Digital Services (Vijayawada and Guntur, India — "Scan and Go, No App"). ' +
+      'Answer ONLY about AVAILO: Dine food ordering (Khaleel Bhai Family Restaurant), gate pass for apartments, home services, salon queue, table booking, and how to contact AVAILO on WhatsApp 9966157369. ' +
+      'Rules: answer in ' + langName + ', in 2-3 short sentences. NEVER invent prices, rates, timings or facts — if a price or rate is asked and you do not know it, say the rates are not fixed yet and to ask on WhatsApp. NEVER give medical or legal advice. NEVER claim to be human — you are Mayura, an AI assistant. NEVER use the word "flash". ' +
+      'If the question is NOT about AVAILO, politely decline in ' + langName + ' and offer WhatsApp 9966157369. ' +
+      'Visitor question: ' + question;
+    var res = UrlFetchApp.fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent', {
+      method: 'post',
+      contentType: 'application/json',
+      muteHttpExceptions: true,
+      headers: { 'x-goog-api-key': key },
+      payload: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.3, maxOutputTokens: 300 }
+      })
+    });
+    var out = JSON.parse(res.getContentText() || '{}');
+    var text = '';
+    var cands = out.candidates || [];
+    if (cands.length && cands[0].content && cands[0].content.parts) {
+      text = cands[0].content.parts.map(function (p) { return p.text || ''; }).join('').trim();
+    }
+    if (!text) return { ok: false, error: 'no_answer' };
+    if (text.length > 600) text = text.slice(0, 600);
+    return { ok: true, answer: text, source: 'ai' };
+  } catch (err) {
+    return { ok: false, error: 'ai_unavailable' };
+  }
 }
 
 // v4 (18 Nov 2026): Gate Pass photo storage.
