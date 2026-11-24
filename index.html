@@ -866,11 +866,13 @@
             gap: 6px;
         }
 
-        /* Side Drawer - Clean Individual Block Links */
-        .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: none; }
-        .drawer-box { position: fixed; top: 0; right: -280px; width: 270px; height: 100%; background: var(--brand-navy); color: #ffffff; z-index: 2001; transition: right 0.3s ease; display: flex; flex-direction: column; padding: 20px 16px; }
-        .drawer-overlay.open { display: block; }
-        .drawer-box.open { right: 0; }
+        /* Side Drawer - Clean Individual Block Links.
+           Slides in from the LEFT (Evargo-style, 24 Nov 2026); the
+           overlay fades in/out over 300ms instead of appearing instantly. */
+        .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 300ms ease, visibility 0s linear 300ms; }
+        .drawer-box { position: fixed; top: 0; left: -85%; width: 80%; max-width: 320px; height: 100%; background: var(--brand-navy); color: #ffffff; z-index: 2001; transition: left 0.3s ease; display: flex; flex-direction: column; padding: 20px 16px; }
+        .drawer-overlay.open { opacity: 1; visibility: visible; transition: opacity 300ms ease, visibility 0s; }
+        .drawer-box.open { left: 0; }
         .drawer-links { list-style: none; margin-top: 18px; display: flex; flex-direction: column; gap: 12px; }
         .drawer-links a, .drawer-links button { 
             color: #ffffff; 
@@ -887,6 +889,19 @@
             cursor: pointer; 
             text-decoration: none; 
         }
+        .drawer-links a.active { color: var(--brand-cyan); }
+        /* Drawer Services submenu (Evargo-style, 24 Nov 2026): tap the
+           row to expand the 4 service links; the chevron cell fills cyan
+           and the chevron flips › → ˅. Items appear together (300ms). */
+        .drawer-submenu-toggle .drawer-submenu-chevron {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0;
+            transition: background-color 200ms ease, color 200ms ease;
+        }
+        .drawer-submenu.open .drawer-submenu-chevron { background: var(--brand-cyan); color: var(--brand-navy); }
+        .drawer-submenu-items { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 300ms ease, opacity 300ms ease; }
+        .drawer-submenu.open .drawer-submenu-items { max-height: 240px; opacity: 1; }
+        .drawer-submenu-items a { padding-left: 14px; font-size: 14px; }
         /* AVAILO tap transitions (24 Nov 2026, Evargo-style, fast — under 200ms).
            Every button tap gets a subtle scale+fade; pages fade in on load.
            Respects prefers-reduced-motion. Existing class-based transitions
@@ -945,6 +960,30 @@
         .availo-carousel-dot.active { background: var(--call-green); width: 22px; border-radius: 5px; }
         @media (min-width: 640px) { .availo-svc-card { flex-basis: calc(50% - 6px); } }
         @media (min-width: 1024px) { .availo-svc-card { flex-basis: calc(25% - 9px); } }
+
+        /* Reveal-on-scroll fade (Evargo-style, faster — 400ms, not ~1s:
+           Evargo's slow fade leaves pages looking blank on load).
+           Sections/cards start hidden and fade in once when they enter
+           view; the 180ms whole-page fade above is untouched. */
+        .availo-reveal { opacity: 0; transform: translateY(8px); transition: opacity 400ms ease, transform 400ms ease; }
+        .availo-reveal.in { opacity: 1; transform: translateY(0); }
+        /* Back-to-top button (Evargo-style): fixed bottom-right, appears
+           after ~400px of scroll; 120ms press scale like other buttons. */
+        .availo-top-btn {
+            position: fixed; right: 16px; bottom: 16px; z-index: 1500;
+            width: 44px; height: 44px; border-radius: 50%;
+            border: none; background: #071426; color: #ffffff;
+            font-size: 20px; line-height: 1; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 200ms ease, visibility 200ms ease, transform 120ms ease;
+        }
+        .availo-top-btn.show { opacity: 1; visibility: visible; pointer-events: auto; }
+        .availo-top-btn:active { transform: scale(0.97); opacity: 0.92; }
+        @media (prefers-reduced-motion: reduce) {
+            .availo-reveal { opacity: 1; transform: none; transition: none; }
+            .availo-top-btn { transition: none; }
+        }
     </style>
 </head>
 <body>
@@ -990,6 +1029,15 @@
             <button style="background: none; border: none; color: #fff; font-size: 22px; cursor: pointer;" onclick="toggleDrawer()">✕</button>
         </div>
         <div class="drawer-links">
+            <div class="drawer-submenu" id="drawerServicesSubmenu">
+                <button type="button" class="drawer-submenu-toggle" id="drawerServicesToggle" aria-expanded="false"><span data-te="సేవలు" data-en="Services" data-hi="सेवाएँ">Services</span> <span class="drawer-submenu-chevron" aria-hidden="true">›</span></button>
+                <div class="drawer-submenu-items" id="drawerServicesItems">
+                    <a href="dine.html" onclick="toggleDrawer();"><span data-te="AVAILO డైన్" data-en="AVAILO Dine" data-hi="AVAILO डाइन">AVAILO Dine</span> <span>›</span></a>
+                    <a href="index.html#services" onclick="toggleDrawer();"><span data-te="AVAILO హోమ్ సర్వీసెస్" data-en="AVAILO Home Services" data-hi="AVAILO होम सर्विसेज़">AVAILO Home Services</span> <span>›</span></a>
+                    <a href="salon.html" onclick="toggleDrawer();"><span data-te="AVAILO సెలూన్" data-en="AVAILO Salon" data-hi="AVAILO सैलून">AVAILO Salon</span> <span>›</span></a>
+                    <a href="gate.html" onclick="toggleDrawer();"><span data-te="AVAILO గేట్ పాస్" data-en="AVAILO Gate Pass" data-hi="AVAILO गेट पास">AVAILO Gate Pass</span> <span>›</span></a>
+                </div>
+            </div>
             <a href="#services" onclick="toggleDrawer();"><span data-te="సేవల విభాగాలు" data-en="Explore Services" data-hi="सेवाएँ देखें">Explore Services</span> <span>›</span></a>
             <button onclick="toggleDrawer(); openTrialModal('');"><span data-te="ట్రయల్ / సబ్స్క్రిప్షన్ అప్లికేషన్" data-en="Trial / Subscription Form" data-hi="ट्रायल / सब्सक्रिप्शन आवेदन">Trial / Subscription Form</span> <span>›</span></button>
             <a href="#nri-section" onclick="toggleDrawer();"><span data-te="NRI తల్లిదండ్రుల సంరక్షణ" data-en="NRI Parents Care" data-hi="NRI माता-पिता की देखभाल">NRI Parents Care</span> <span>›</span></a>
@@ -1014,7 +1062,7 @@
         </div>
 
         <!-- 02 — Hero Mayura Stage Card -->
-        <section class="mayura-stage-card" id="home">
+        <section class="mayura-stage-card availo-reveal" id="home">
             <div class="mayura-voice-pill font-te-title" onclick="speakMayura()">
                 <span>🦚</span> <span id="promptTxt" data-te="టచ్ చేయండి — మయూర అసిస్టెంట్" data-en="Touch — Mayura Assistant" data-hi="टच करें — मयूरा असिस्टेंट">టచ్ చేయండి — మయూర అసిస్టెంట్</span>
             </div>
@@ -1051,7 +1099,7 @@
         </section>
 
         <!-- AVAILO Smart QR Section -->
-        <section class="availo-qr-card">
+        <section class="availo-qr-card availo-reveal">
             <span class="qr-badge font-te-title" data-te="⚡ తక్షణ కనెక్ట్ & బుకింగ్" data-en="⚡ Instant Connect & Booking" data-hi="⚡ तुरंत कनेक्ट और बुकिंग">⚡ తక్షణ కనెక్ట్ & బుకింగ్</span>
             <h3 class="font-te-title" style="font-size: 18px; color: #111827; margin-bottom: 6px;" data-te="📱 స్కాన్ చేయండి – సర్వీస్ పొందండి!" data-en="📱 Scan & Get to Doorstep!" data-hi="📱 स्कैन करें – सर्विस पाएँ!">📱 స్కాన్ చేయండి – సర్వీస్ పొందండి!</h3>
             <p class="font-te-body" style="font-size: 12.5px; color: var(--text-muted);" data-te="హోమ్ సర్వీసెస్, అపార్ట్‌మెంట్ కేర్ & ఇతర సేవలకు కెమెరాతో స్కాన్ చేయండి." data-en="Scan with camera for Home Services, Apartment Care & other services." data-hi="होम सर्विसेज़, अपार्टमेंट केयर और अन्य सेवाओं के लिए कैमरे से स्कैन करें।">హోమ్ సర్వీసెస్, అపార్ట్‌మెంట్ కేర్ & ఇతర సేవలకు కెమెరాతో స్కాన్ చేయండి.</p>
@@ -1079,7 +1127,7 @@
         </section>
 
         <!-- AVAILO GATE PILOT CARD (INTEGRATED) -->
-        <section id="gate-section" style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 16px; overflow: hidden; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.06);">
+        <section class="availo-reveal" id="gate-section" style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 16px; overflow: hidden; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.06);">
             
             <div style="background: linear-gradient(135deg, #071426 0%, #0d223f 100%); color: #ffffff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 10px;">
@@ -1217,7 +1265,7 @@
              Cards are plain links to the existing service pages/flows —
              no new detail pages; Dine ordering, Salon booking and the
              Gate Pass flow stay exactly as they are. -->
-        <section class="availo-popular" id="popular-services">
+        <section class="availo-popular availo-reveal" id="popular-services">
             <div class="availo-popular-head">
                 <div>
                     <h2 class="font-te-title" data-te="మా ప్రముఖ సేవలు" data-en="Our Popular Services" data-hi="हमारी लोकप्रिय सेवाएँ">Our Popular Services</h2>
@@ -1263,7 +1311,7 @@
         </section>
 
         <!-- 03 — Explore Our Services Section -->
-        <section class="section-header" id="services">
+        <section class="section-header availo-reveal" id="services">
             <h2 class="font-te-title" data-te="మా సేవల విభాగాలు" data-en="Explore Our Services" data-hi="हमारी सेवाएँ देखें">Explore Our Services</h2>
             <p class="font-te-body" data-te="అందుబాటులో ఉన్న సేవలు మరియు రాబోయే ప్రాజెక్టుల వివరాలు" data-en="Verified direct services and upcoming digital solutions" data-hi="वेरिफ़ाइड सीधी सेवाएँ और आने वाले डिजिटल समाधान">Verified direct services and upcoming digital solutions</p>
         </section>
@@ -1350,7 +1398,7 @@
         </div>
 
         <!-- Rate Card — Home Services starting prices (data: rates.js) -->
-        <section id="rate-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px; margin-bottom: 18px;">
+        <section class="availo-reveal" id="rate-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px; margin-bottom: 18px;">
             <h2 style="font-size: 16px; font-weight: 800; color: var(--brand-navy); margin-bottom: 6px;" data-te="💰 హోమ్ సర్వీస్ రేట్లు" data-en="💰 Home Service Rates" data-hi="💰 होम सर्विस रेट">💰 హోమ్ సర్వీస్ రేట్లు</h2>
             <p style="font-size: 12.5px; color: #64748b; margin-bottom: 12px; line-height: 1.6;" data-te="ధరలు త్వరలో వస్తాయి — WhatsAppలో అడగండి" data-en="Prices coming soon — ask on WhatsApp" data-hi="कीमतें जल्द आ रही हैं — WhatsApp पर पूछें">ధరలు త్వరలో వస్తాయి — WhatsAppలో అడగండి</p>
             <div id="rateCardBody"></div>
@@ -1360,7 +1408,7 @@
         </section>
 
         <!-- 04 — NRI Parents Care Section -->
-        <section class="nri-banner" id="nri-section">
+        <section class="nri-banner availo-reveal" id="nri-section">
             <h3 class="font-te-title" data-te="తల్లిదండ్రుల సంరక్షణ. మీరు దూరంగా ఉన్నా సరే." data-en="Care for Your Parents. Even When You're Far Away." data-hi="माता-पिता की देखभाल। आप दूर हों तब भी।">Care for Your Parents. Even When You're Far Away.</h3>
             <p class="font-te-body" data-te="విజయవాడ మరియు గుంటూరులో నివసిస్తున్న మీ పెద్దలకు నమ్మకమైన, వ్యక్తిగత సహాయ సేవలు." data-en="Practical assistance for families living away from their parents in Vijayawada and Guntur." data-hi="विजयवाड़ा और गुंटूर में रहने वाले आपके बड़ों के लिए भरोसेमंद, व्यक्तिगत सहायता सेवाएँ।">Practical assistance for families living away from their parents in Vijayawada and Guntur.</p>
 
@@ -1398,7 +1446,7 @@
         </section>
 
         <!-- 05 — Smart Business Solutions -->
-        <section class="business-solutions-card" id="business">
+        <section class="business-solutions-card availo-reveal" id="business">
             <div class="section-header">
                 <h2 class="font-te-title" data-te="వ్యాపార పరిష్కారాలు" data-en="Smart Business Solutions" data-hi="बिज़नेस सॉल्यूशन्स">Smart Business Solutions</h2>
                 <p class="font-te-body" data-te="హోటళ్లు, రెస్టారెంట్లు మరియు స్థానిక సేవా భాగస్వాముల కోసం" data-en="Digital utility tools for hospitality and local service providers" data-hi="होटल, रेस्टोरेंट और स्थानीय सेवा भागीदारों के लिए">Digital utility tools for hospitality and local service providers</p>
@@ -1519,7 +1567,7 @@
         </div>
 
         <!-- 06 — How It Works -->
-        <section class="how-box">
+        <section class="how-box availo-reveal">
             <h3 class="font-te-title" style="font-size: 15.5px; margin-bottom: 14px; color: var(--brand-navy);" data-te="ఎలా పని చేస్తుంది (3 దశలు)" data-en="How It Works (3 Steps)" data-hi="यह कैसे काम करता है (3 चरण)">ఎలా పని చేస్తుంది (3 దశలు)</h3>
             
             <div class="step-item">
@@ -1548,7 +1596,7 @@
         </section>
 
         <!-- Company Profile + Areas -->
-        <section id="company-profile" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px; margin-bottom: 18px;">
+        <section class="availo-reveal" id="company-profile" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px; margin-bottom: 18px;">
             <h2 style="font-size: 16px; font-weight: 800; color: var(--brand-navy); margin-bottom: 10px;" data-te="🏢 కంపెనీ ప్రొఫైల్" data-en="🏢 Company Profile" data-hi="🏢 कंपनी प्रोफ़ाइल">🏢 కంపెనీ ప్రొఫైల్</h2>
             <div style="font-size: 13px; color: #334155; line-height: 1.9;">
                 <p><strong>AVAILO Digital Services</strong> — <span data-te="రిజిస్టర్డ్ MSME సంస్థ" data-en="Registered MSME Entity" data-hi="रजिस्टर्ड MSME संस्था">రిజిస్టర్డ్ MSME సంస్థ</span></p>
@@ -2098,6 +2146,40 @@
             document.getElementById('drawerBox').classList.toggle('open');
             document.getElementById('drawerOverlay').classList.toggle('open');
         }
+
+        // Drawer Services submenu (Evargo-style, 24 Nov 2026): tap the
+        // "సేవలు" row to expand/collapse the 4 service links together
+        // (300ms); the chevron cell fills cyan and flips › → ˅.
+        (function () {
+            var toggle = document.getElementById('drawerServicesToggle');
+            var menu = document.getElementById('drawerServicesSubmenu');
+            if (!toggle || !menu) return;
+            var chev = toggle.querySelector('.drawer-submenu-chevron');
+            toggle.addEventListener('click', function () {
+                var open = menu.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                if (chev) chev.textContent = open ? '˅' : '›';
+            });
+        })();
+
+        // Drawer active link: the tapped link stays cyan until another
+        // link is tapped; on load, the link for the current page is marked.
+        (function () {
+            var links = document.querySelectorAll('.drawer-links a');
+            if (!links.length) return;
+            function mark(link) {
+                links.forEach(function (a) { a.classList.remove('active'); });
+                if (link) link.classList.add('active');
+            }
+            links.forEach(function (a) {
+                a.addEventListener('click', function () { mark(a); });
+            });
+            var here = (window.location.pathname || '').split('/').pop() || 'index.html';
+            links.forEach(function (a) {
+                var href = (a.getAttribute('href') || '').split('#')[0];
+                if (href && href === here) mark(a);
+            });
+        })();
 
         // One history entry per modal-open session: the phone Back button
         // closes the popup instead of leaving the site. Closing via × /
@@ -3402,7 +3484,12 @@
 
         // Our Popular Services carousel (24 Nov 2026, Evargo-style):
         // arrows + dots scroll the track one card at a time; the active
-        // dot follows the scroll position. No auto-advance.
+        // dot follows the scroll position. Auto-advance: every 4 s the
+        // carousel moves to the next card and wraps to the first card.
+        // Pauses while the user interacts (pointer/touch/scroll on the
+        // track, arrow/dot taps) and resumes after 10 s idle; pauses
+        // while the carousel is off-screen; never auto-advances when
+        // prefers-reduced-motion is set.
         (function () {
             var track = document.getElementById('availoServicesCarousel');
             if (!track) return;
@@ -3425,18 +3512,95 @@
                     d.setAttribute('aria-selected', on ? 'true' : 'false');
                 });
             }
+            // A programmatic goTo() smooth-scrolls the track, which fires
+            // scroll events of its own — those must not count as the user
+            // interacting, or auto-advance would pause itself.
+            var suppressScrollPauseUntil = 0;
             function goTo(i) {
                 i = Math.min(cards.length - 1, Math.max(0, i));
+                suppressScrollPauseUntil = Date.now() + 700;
                 track.scrollTo({ left: i * step(), behavior: 'smooth' });
                 setActive(i);
             }
-            if (prevBtn) prevBtn.addEventListener('click', function () { goTo(currentIndex() - 1); });
-            if (nextBtn) nextBtn.addEventListener('click', function () { goTo(currentIndex() + 1); });
+            var AUTO_MS = 4000;
+            var RESUME_MS = 10000;
+            var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+            var autoTimer = null;
+            var resumeTimer = null;
+            var carouselVisible = true;
+            function startAuto() {
+                if (reduceMotion || !carouselVisible || autoTimer !== null) return;
+                autoTimer = setInterval(function () {
+                    goTo((currentIndex() + 1) % cards.length);
+                }, AUTO_MS);
+            }
+            function stopAuto() {
+                if (autoTimer !== null) { clearInterval(autoTimer); autoTimer = null; }
+            }
+            function pauseAuto() {
+                stopAuto();
+                if (resumeTimer !== null) clearTimeout(resumeTimer);
+                resumeTimer = setTimeout(function () { resumeTimer = null; startAuto(); }, RESUME_MS);
+            }
+            if (prevBtn) prevBtn.addEventListener('click', function () { pauseAuto(); goTo(currentIndex() - 1); });
+            if (nextBtn) nextBtn.addEventListener('click', function () { pauseAuto(); goTo(currentIndex() + 1); });
             dots.forEach(function (d) {
-                d.addEventListener('click', function () { goTo(parseInt(d.getAttribute('data-carousel-dot'), 10) || 0); });
+                d.addEventListener('click', function () { pauseAuto(); goTo(parseInt(d.getAttribute('data-carousel-dot'), 10) || 0); });
             });
-            track.addEventListener('scroll', function () { setActive(currentIndex()); }, { passive: true });
+            track.addEventListener('scroll', function () {
+                setActive(currentIndex());
+                if (Date.now() < suppressScrollPauseUntil) return;
+                pauseAuto();
+            }, { passive: true });
+            ['pointerdown', 'touchstart'].forEach(function (ev) {
+                track.addEventListener(ev, pauseAuto, { passive: true });
+            });
+            if ('IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (entries) {
+                    carouselVisible = !!(entries[0] && entries[0].isIntersecting);
+                    if (carouselVisible) startAuto(); else stopAuto();
+                }, { threshold: 0.1 });
+                io.observe(track);
+            } else {
+                startAuto();
+            }
+        })();
+
+        // Reveal-on-scroll (Evargo-style, 24 Nov 2026): sections/cards
+        // fade in once when they enter view (400ms). No IO support or
+        // no .availo-reveal elements → everything shows at once.
+        (function () {
+            var els = document.querySelectorAll('.availo-reveal');
+            if (!els.length) return;
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function (el) { el.classList.add('in'); });
+                return;
+            }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) {
+                    if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+                });
+            }, { threshold: 0.1 });
+            els.forEach(function (el) { io.observe(el); });
+        })();
+
+        // Back-to-top button (Evargo-style): appears after ~400px of
+        // scroll; tap smooth-scrolls to the top of the page.
+        (function () {
+            var btn = document.getElementById('availoTopBtn');
+            if (!btn) return;
+            function onScroll() {
+                var y = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+                btn.classList.toggle('show', y > 400);
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+            btn.addEventListener('click', function () {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         })();
     </script>
+    <!-- Back-to-top button (Evargo-style, 24 Nov 2026) -->
+    <button type="button" id="availoTopBtn" class="availo-top-btn" aria-label="పైకి వెళ్ళండి">↑</button>
 </body>
 </html>

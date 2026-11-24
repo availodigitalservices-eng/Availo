@@ -999,6 +999,30 @@
             button, a.srv-action-btn, .hero-cta-btn, input[type="button"], input[type="submit"] { transition: none; }
             body { animation: none; }
         }
+
+        /* Reveal-on-scroll fade (Evargo-style, faster — 400ms, not ~1s:
+           Evargo's slow fade leaves pages looking blank on load).
+           Sections/cards start hidden and fade in once when they enter
+           view; the 180ms whole-page fade above is untouched. */
+        .availo-reveal { opacity: 0; transform: translateY(8px); transition: opacity 400ms ease, transform 400ms ease; }
+        .availo-reveal.in { opacity: 1; transform: translateY(0); }
+        /* Back-to-top button (Evargo-style): fixed bottom-right, appears
+           after ~400px of scroll; 120ms press scale like other buttons. */
+        .availo-top-btn {
+            position: fixed; right: 16px; bottom: 16px; z-index: 1500;
+            width: 44px; height: 44px; border-radius: 50%;
+            border: none; background: #071426; color: #ffffff;
+            font-size: 20px; line-height: 1; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 200ms ease, visibility 200ms ease, transform 120ms ease;
+        }
+        .availo-top-btn.show { opacity: 1; visibility: visible; pointer-events: auto; }
+        .availo-top-btn:active { transform: scale(0.97); opacity: 0.92; }
+        @media (prefers-reduced-motion: reduce) {
+            .availo-reveal { opacity: 1; transform: none; transition: none; }
+            .availo-top-btn { transition: none; }
+        }
     </style>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -1018,7 +1042,7 @@
     </div>
 
     <!-- 1. AI Voice Concierge Stage -->
-    <div id="voiceStage" class="stage-box">
+    <div id="voiceStage" class="stage-box availo-reveal">
         <div class="top-meta-bar">
             <div class="venue-pill" id="badgeText">AVAILO Dine · Table 01</div>
             <div class="live-clock-pill" id="liveClock">--:--</div>
@@ -1059,7 +1083,7 @@
         <div class="sub-filter-bar" id="subBar"></div>
 
         <!-- Dynamic Menu Items Container -->
-        <div class="items-list" id="menuItemsContainer"></div>
+        <div class="items-list availo-reveal" id="menuItemsContainer"></div>
 
         <!-- Chef Special Instruction -->
         <div class="chef-note-box">
@@ -1067,7 +1091,7 @@
         </div>
 
         <!-- 3. LIVE ORDER PAD + SPLIT BILL CALCULATOR -->
-        <div class="order-book-container">
+        <div class="order-book-container availo-reveal">
             <div class="book-top-clip"></div>
             <div class="book-header">
                 <span data-te="📝 లైవ్ ఆర్డర్ స్లిప్" data-en="📝 LIVE ORDER SLIP (KOT)" data-hi="📝 लाइव ऑर्डर स्लिप">📝 లైవ్ ఆర్డర్ స్లిప్</span>
@@ -1121,7 +1145,7 @@
         <!-- Customer reviews (feature 3 of 8): recent reviews, newest first.
              Starts empty — ratings and reviews appear only when real
              customers submit them; nothing is seeded or invented. -->
-        <div style="margin-top: 18px; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 12px;">
+        <div class="availo-reveal" style="margin-top: 18px; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 12px;">
             <div class="refill-section-title" data-te="⭐ కస్టమర్ రివ్యూలు" data-en="⭐ Customer Reviews" data-hi="⭐ ग्राहक समीक्षाएँ">⭐ కస్టమర్ రివ్యూలు</div>
             <select id="reviewFilterSel" onchange="setReviewFilter(this.value)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #1e293b; color: #fff; font-size: 13.5px; margin-bottom: 10px;">
                 <option value="ALL">అన్ని వంటకాలు</option>
@@ -1130,7 +1154,7 @@
         </div>
         <!-- Loyalty stamps (feature 4 of 8): stamp card on the customer's own
              phone. Hidden entirely until the restaurant sets a reward. -->
-        <div id="loyaltySection" style="display: none; margin-top: 18px; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 12px;">
+        <div id="loyaltySection" class="availo-reveal" style="display: none; margin-top: 18px; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 12px;">
             <div class="refill-section-title" data-te="🎟️ లాయల్టీ స్టాంపులు" data-en="🎟️ Loyalty Stamps" data-hi="🎟️ लॉयल्टी स्टैम्प">🎟️ లాయల్టీ స్టాంపులు</div>
             <div id="loyaltyProgress" style="font-size: 14px; font-weight: 800; color: #fde68a; margin-bottom: 6px;"></div>
             <div id="loyaltyHint" style="font-size: 12.5px; color: #94a3b8; margin-bottom: 8px;"></div>
@@ -3486,6 +3510,43 @@
         renderLoyalty();
         toggleLanguage(currentLang);
         restoreActiveTracker();
+
+        // Reveal-on-scroll (Evargo-style, 24 Nov 2026): sections/cards
+        // fade in once when they enter view (400ms). No IO support or
+        // no .availo-reveal elements → everything shows at once.
+        (function () {
+            var els = document.querySelectorAll('.availo-reveal');
+            if (!els.length) return;
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function (el) { el.classList.add('in'); });
+                return;
+            }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) {
+                    if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+                });
+            }, { threshold: 0.1 });
+            els.forEach(function (el) { io.observe(el); });
+        })();
+
+        // Back-to-top button (Evargo-style): appears after ~400px of
+        // scroll; tap smooth-scrolls to the top of the page.
+        (function () {
+            var btn = document.getElementById('availoTopBtn');
+            if (!btn) return;
+            function onScroll() {
+                var y = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+                btn.classList.toggle('show', y > 400);
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+            btn.addEventListener('click', function () {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        })();
     </script>
+
+    <!-- Back-to-top button (Evargo-style, 24 Nov 2026) -->
+    <button type="button" id="availoTopBtn" class="availo-top-btn" aria-label="పైకి వెళ్ళండి">↑</button>
 </body>
 </html>

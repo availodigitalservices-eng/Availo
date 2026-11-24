@@ -16,6 +16,28 @@
       a { transition: none; }
       body { animation: none; }
     }
+    /* Reveal-on-scroll fade (Evargo-style, faster — 400ms, not ~1s).
+       Content starts hidden and fades in once when it enters view;
+       the 180ms whole-page fade above is untouched. */
+    .availo-reveal { opacity: 0; transform: translateY(8px); transition: opacity 400ms ease, transform 400ms ease; }
+    .availo-reveal.in { opacity: 1; transform: translateY(0); }
+    /* Back-to-top button (Evargo-style): fixed bottom-right, appears
+       after ~400px of scroll; 120ms press scale like other buttons. */
+    .availo-top-btn {
+      position: fixed; right: 16px; bottom: 16px; z-index: 1500;
+      width: 44px; height: 44px; border-radius: 50%;
+      border: none; background: #071426; color: #ffffff;
+      font-size: 20px; line-height: 1; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 200ms ease, visibility 200ms ease, transform 120ms ease;
+    }
+    .availo-top-btn.show { opacity: 1; visibility: visible; pointer-events: auto; }
+    .availo-top-btn:active { transform: scale(0.97); opacity: 0.92; }
+    @media (prefers-reduced-motion: reduce) {
+      .availo-reveal { opacity: 1; transform: none; transition: none; }
+      .availo-top-btn { transition: none; }
+    }
   </style>
   <script>
     // RETIRED 19 Nov 2026: the old standalone Gate Pass page (pre-v4) is gone.
@@ -31,8 +53,43 @@
   </script>
 </head>
 <body style="font-family: system-ui, sans-serif; text-align: center; padding: 60px 20px; color: #0f172a;">
-  <h1 style="font-size: 20px;">AVAILO Gate Pass</h1>
-  <p>Gate Pass ఫారం హోమ్‌పేజీకి మారింది — దయచేసి అక్కడ కొనసాగించండి.</p>
-  <p><a href="index.html#gate-section" style="color: #16a34a; font-weight: 700;">Gate Pass ఫారం తెరవండి →</a></p>
+  <h1 class="availo-reveal" style="font-size: 20px;">AVAILO Gate Pass</h1>
+  <p class="availo-reveal">Gate Pass ఫారం హోమ్‌పేజీకి మారింది — దయచేసి అక్కడ కొనసాగించండి.</p>
+  <p class="availo-reveal"><a href="index.html#gate-section" style="color: #16a34a; font-weight: 700;">Gate Pass ఫారం తెరవండి →</a></p>
+
+  <!-- Back-to-top button (Evargo-style, 24 Nov 2026) -->
+  <button type="button" id="availoTopBtn" class="availo-top-btn" aria-label="పైకి వెళ్ళండి">↑</button>
+  <script>
+    // Reveal-on-scroll + back-to-top (Evargo-style, 24 Nov 2026).
+    // Same behaviour as index/dine/salon. The redirect in <head> fires
+    // first, so this only matters if the redirect is ever removed.
+    (function () {
+      var els = document.querySelectorAll('.availo-reveal');
+      if (!els.length) return;
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.1 });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+    (function () {
+      var btn = document.getElementById('availoTopBtn');
+      if (!btn) return;
+      function onScroll() {
+        var y = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+        btn.classList.toggle('show', y > 400);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
 </body>
 </html>
