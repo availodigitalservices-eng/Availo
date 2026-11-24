@@ -198,6 +198,24 @@
             text-decoration: none;
             margin-top: 14px;
         }
+        /* AVAILO tap transitions (24 Nov 2026, Evargo-style, fast — under 200ms).
+           Every button tap gets a subtle scale+fade; pages fade in on load.
+           Respects prefers-reduced-motion. Existing class-based transitions
+           are untouched: those use class selectors, which outrank this
+           element-level rule. */
+        button, a.srv-action-btn, .hero-cta-btn, input[type="button"], input[type="submit"] {
+            transition: transform 120ms ease, opacity 120ms ease, background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+        }
+        button:active, a.srv-action-btn:active, .hero-cta-btn:active, input[type="button"]:active, input[type="submit"]:active {
+            transform: scale(0.97);
+            opacity: 0.92;
+        }
+        body { animation: availoPageFade 180ms ease-out both; }
+        @keyframes availoPageFade { from { opacity: 0; } to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+            button, a.srv-action-btn, .hero-cta-btn, input[type="button"], input[type="submit"] { transition: none; }
+            body { animation: none; }
+        }
     </style>
 </head>
 <body>

@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AVAILO Gate Pass — AVAILO Digital Services</title>
+  <style>
+    /* AVAILO tap transitions (24 Nov 2026, Evargo-style, fast — under 200ms).
+       The tap link gets a subtle scale+fade; the page fades in on load.
+       Respects prefers-reduced-motion. */
+    a { transition: transform 120ms ease, opacity 120ms ease; }
+    a:active { transform: scale(0.97); opacity: 0.92; }
+    body { animation: availoPageFade 180ms ease-out both; }
+    @keyframes availoPageFade { from { opacity: 0; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      a { transition: none; }
+      body { animation: none; }
+    }
+  </style>
   <script>
     // RETIRED 19 Nov 2026: the old standalone Gate Pass page (pre-v4) is gone.
     // It submitted incomplete rows to the live Sheet (no mobile, no gender,

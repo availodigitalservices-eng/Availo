@@ -887,6 +887,64 @@
             cursor: pointer; 
             text-decoration: none; 
         }
+        /* AVAILO tap transitions (24 Nov 2026, Evargo-style, fast — under 200ms).
+           Every button tap gets a subtle scale+fade; pages fade in on load.
+           Respects prefers-reduced-motion. Existing class-based transitions
+           (e.g. .cat-chip, #page-loader, .drawer-box) are untouched: those
+           use class/ID selectors, which outrank this element-level rule. */
+        button, a.srv-action-btn, .hero-cta-btn, input[type="button"], input[type="submit"] {
+            transition: transform 120ms ease, opacity 120ms ease, background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+        }
+        button:active, a.srv-action-btn:active, .hero-cta-btn:active, input[type="button"]:active, input[type="submit"]:active {
+            transform: scale(0.97);
+            opacity: 0.92;
+        }
+        body { animation: availoPageFade 180ms ease-out both; }
+        @keyframes availoPageFade { from { opacity: 0; } to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+            button, a.srv-action-btn, .hero-cta-btn, input[type="button"], input[type="submit"] { transition: none; }
+            body { animation: none; }
+        }
+
+        /* Our Popular Services carousel (Evargo-style, 24 Nov 2026).
+           One card per view on mobile, two on tablet, four on desktop.
+           Cards are plain links to the existing service pages/flows. */
+        .availo-popular { margin-bottom: 24px; }
+        .availo-popular-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+        .availo-popular-head h2 { font-size: 17px; font-weight: 800; color: var(--brand-navy); margin: 0; }
+        .availo-popular-head p { font-size: 12.5px; color: var(--text-muted); margin: 2px 0 0; }
+        .availo-carousel-nav { display: flex; gap: 8px; flex-shrink: 0; }
+        .availo-carousel-arrow {
+            width: 34px; height: 34px; border-radius: 50%;
+            border: 1px solid #cbd5e1; background: #ffffff; color: var(--brand-navy);
+            font-size: 18px; font-weight: 800; line-height: 1; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .availo-carousel { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+        .availo-carousel::-webkit-scrollbar { display: none; }
+        .availo-svc-card {
+            flex: 0 0 84%; scroll-snap-align: start;
+            background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px;
+            padding: 16px; text-decoration: none; color: inherit; position: relative;
+            display: flex; flex-direction: column; gap: 6px; min-height: 132px;
+            transition: transform 120ms ease, box-shadow 120ms ease;
+        }
+        .availo-svc-card:active { transform: scale(0.98); }
+        .availo-svc-icon { width: 44px; height: 44px; border-radius: 12px; background: #dcfce7; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .availo-svc-title { font-size: 15px; font-weight: 800; color: var(--brand-navy); }
+        .availo-svc-teaser { font-size: 12.5px; color: #475569; line-height: 1.5; }
+        .availo-svc-go {
+            position: absolute; right: 12px; bottom: 12px;
+            width: 32px; height: 32px; border-radius: 50%;
+            background: var(--call-green); color: #ffffff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 800; line-height: 1;
+        }
+        .availo-carousel-dots { display: flex; gap: 6px; justify-content: center; margin-top: 10px; }
+        .availo-carousel-dot { width: 8px; height: 8px; border-radius: 50%; border: none; background: #cbd5e1; padding: 0; cursor: pointer; }
+        .availo-carousel-dot.active { background: var(--call-green); width: 22px; border-radius: 5px; }
+        @media (min-width: 640px) { .availo-svc-card { flex-basis: calc(50% - 6px); } }
+        @media (min-width: 1024px) { .availo-svc-card { flex-basis: calc(25% - 9px); } }
     </style>
 </head>
 <body>
@@ -1152,6 +1210,55 @@
                     <span style="color: var(--brand-navy); font-weight: 800; font-size: 14px;" data-te="కనెక్ట్ ›" data-en="Connect ›" data-hi="कनेक्ट ›">కనెక్ట్ ›</span>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- 02B — Our Popular Services carousel (Evargo-style, 24 Nov 2026).
+             Cards are plain links to the existing service pages/flows —
+             no new detail pages; Dine ordering, Salon booking and the
+             Gate Pass flow stay exactly as they are. -->
+        <section class="availo-popular" id="popular-services">
+            <div class="availo-popular-head">
+                <div>
+                    <h2 class="font-te-title" data-te="మా ప్రముఖ సేవలు" data-en="Our Popular Services" data-hi="हमारी लोकप्रिय सेवाएँ">Our Popular Services</h2>
+                    <p class="font-te-body" data-te="సర్వీసును టచ్ చేసి తెరవండి" data-en="Tap a service to open it" data-hi="सेवा खोलने के लिए टैप करें">Tap a service to open it</p>
+                </div>
+                <div class="availo-carousel-nav">
+                    <button type="button" class="availo-carousel-arrow" data-carousel-prev aria-label="Previous services">‹</button>
+                    <button type="button" class="availo-carousel-arrow" data-carousel-next aria-label="Next services">›</button>
+                </div>
+            </div>
+            <div class="availo-carousel" id="availoServicesCarousel">
+                <a class="availo-svc-card" href="dine.html">
+                    <span class="availo-svc-icon" aria-hidden="true">🍽️</span>
+                    <span class="availo-svc-title font-te-title" data-te="AVAILO డైన్" data-en="AVAILO Dine" data-hi="AVAILO डाइन">AVAILO Dine</span>
+                    <span class="availo-svc-teaser font-te-body" data-te="QR మెనూతో టేబుల్ ఆర్డర్ చేయండి" data-en="Order at your table with a QR menu" data-hi="QR मेनू से टेबल पर ऑर्डर करें">Order at your table with a QR menu</span>
+                    <span class="availo-svc-go" aria-hidden="true">»</span>
+                </a>
+                <a class="availo-svc-card" href="index.html#services">
+                    <span class="availo-svc-icon" aria-hidden="true">🏠</span>
+                    <span class="availo-svc-title font-te-title" data-te="AVAILO హోమ్ సర్వీసెస్" data-en="AVAILO Home Services" data-hi="AVAILO होम सर्विसेज़">AVAILO Home Services</span>
+                    <span class="availo-svc-teaser font-te-body" data-te="ఎలక్ట్రికల్, ప్లంబింగ్, ఏసీ రిపేర్ & గ్రోసరీ డెలివరీ" data-en="Electrical, plumbing, AC repair & grocery delivery" data-hi="इलेक्ट्रिकल, प्लंबिंग, एसी रिपेयर और ग्रोसरी डिलीवरी">Electrical, plumbing, AC repair & grocery delivery</span>
+                    <span class="availo-svc-go" aria-hidden="true">»</span>
+                </a>
+                <a class="availo-svc-card" href="salon.html">
+                    <span class="availo-svc-icon" aria-hidden="true">💇</span>
+                    <span class="availo-svc-title font-te-title" data-te="AVAILO సెలూన్" data-en="AVAILO Salon" data-hi="AVAILO सैलून">AVAILO Salon</span>
+                    <span class="availo-svc-teaser font-te-body" data-te="హెయిర్ కట్, షేవింగ్, ఫేషియల్ — స్లాట్ బుక్ చేసుకోండి" data-en="Hair cut, shaving, facial — book your slot" data-hi="हेयर कट, शेविंग, फेशियल — स्लॉट बुक करें">Hair cut, shaving, facial — book your slot</span>
+                    <span class="availo-svc-go" aria-hidden="true">»</span>
+                </a>
+                <a class="availo-svc-card" href="gate.html">
+                    <span class="availo-svc-icon" aria-hidden="true">🛡️</span>
+                    <span class="availo-svc-title font-te-title" data-te="AVAILO గేట్ పాస్" data-en="AVAILO Gate Pass" data-hi="AVAILO गेट पास">AVAILO Gate Pass</span>
+                    <span class="availo-svc-teaser font-te-body" data-te="స్కాన్ చేసి, ఫ్లాట్ నంబర్‌తో గేట్ పాస్ తీసుకోండి" data-en="Scan and get a gate pass with your flat number" data-hi="स्कैन करें और फ्लैट नंबर से गेट पास लें">Scan and get a gate pass with your flat number</span>
+                    <span class="availo-svc-go" aria-hidden="true">»</span>
+                </a>
+            </div>
+            <div class="availo-carousel-dots">
+                <button type="button" class="availo-carousel-dot active" data-carousel-dot="0" aria-label="Go to service 1"></button>
+                <button type="button" class="availo-carousel-dot" data-carousel-dot="1" aria-label="Go to service 2"></button>
+                <button type="button" class="availo-carousel-dot" data-carousel-dot="2" aria-label="Go to service 3"></button>
+                <button type="button" class="availo-carousel-dot" data-carousel-dot="3" aria-label="Go to service 4"></button>
             </div>
         </section>
 
@@ -1937,6 +2044,11 @@
                     <input type="text" id="mayuraTextInput" data-ph-te="ఇక్కడ టైప్ చేయండి…" data-ph-en="Type here…" data-ph-hi="यहाँ लिखें…" placeholder="ఇక్కడ టైప్ చేయండి…" style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px;">
                     <button onclick="mayuraSendText()" style="background: var(--brand-navy); color: #fff; border: none; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; cursor: pointer;" data-te="పంపండి" data-en="Send" data-hi="भेजें">పంపండి</button>
                 </div>
+
+                <div style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
+                    <button id="mayuraMicBtn" onclick="mayuraStartListening()" style="background: #dc2626; color: #fff; border: none; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;" data-te="🎤 మాట్లాడండి" data-en="🎤 Speak" data-hi="🎤 बोलें">🎤 మాట్లాడండి</button>
+                    <span style="font-size: 12.5px; color: #475569;" data-te="మాట్లాడి అడగండి — మయూర సమాధానం చెబుతుంది." data-en="Ask by voice — Mayura will answer." data-hi="बोलकर पूछें — मयूरा जवाब देगी।">మాట్లాడి అడగండి — మయూర సమాధానం చెబుతుంది.</span>
+                </div>
             </div>
         </div>
     </div>
@@ -2119,9 +2231,13 @@
         // NOTE (19 Nov 2026, owner order): Mayura voice RESTORED — the
         // greeting speaks on panel open in a deep, serious (గంభీరం) male
         // voice (male-voice selection, pitch 0.76, rate 0.95; MP3 fallback
-        // audio/mayura-greeting-{te,en,hi}.mp3). Mic input is still NOT
-        // restored (owner only asked for the speaking voice back).
+        // audio/mayura-greeting-{te,en,hi}.mp3).
         // (18 Nov 2026: voice had been removed by owner order; restored 19 Nov.)
+        // 24 Nov 2026, owner order: conversational Mayura — mic input
+        // restored (mayuraStartListening) + Gemini answers via the Apps
+        // Script proxy (mayuraAsk), same deep voice for spoken answers;
+        // canned answers when the AI is unreachable. Typed questions
+        // still go to WhatsApp via mayuraSendText() (pinned behaviour).
         // Mayura voice warm-up: load the browser's TTS voices once so a tap
         // never fires before any voice is available (desktop Chrome often has
         // no te-IN voice and would otherwise drop the greeting silently).
@@ -2206,24 +2322,8 @@
             const utterance = new SpeechSynthesisUtterance(g.text);
             utterance.lang = g.lang;
             utterance.rate = 0.95;
-            // Male voice first (same pattern as dine.html speakGentVoice /
-            // smart.html speakGentSupervisor): on Android/Chrome the FIRST
-            // te-IN voice varies by device, so picking the first match made
-            // the greeting sound male on some phones and female on others.
-            // Order: same-language male-named voice, then first same-language
-            // voice, then English male, then first English voice.
-            // NOTE: the repo pattern in dine.html/smart.html uses
-            // .includes('male') — that also matches "Female" (Fe+male), so
-            // a female-named voice listed first would be picked as "male".
-            // Here 'male' is matched as a whole word, so "Female" does not
-            // count. (dine.html / smart.html still carry the loose check;
-            // left untouched — index.html only for this fix.)
-            const langPrefix = g.lang.slice(0, 2);
-            const isMaleVoice = x => x.name && /\bmale\b|\bravi\b|\bpradeep\b/i.test(x.name);
-            const v = mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(langPrefix) && isMaleVoice(x))
-                   || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(langPrefix))
-                   || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith('en') && isMaleVoice(x))
-                   || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith('en'));
+            // Male voice first — shared pick, see mayuraPickVoice().
+            const v = mayuraPickVoice(g.lang.slice(0, 2));
             if (v) utterance.voice = v;
             // Same lowered pitch as the male "gent" voice in dine.html /
             // smart.html (0.76) so the greeting reads in a male register.
@@ -2266,6 +2366,218 @@
             if (listenEl) { listenEl.textContent = currentLang === 'te' ? '✓ WhatsAppలో పంపబడింది — మా టీమ్ స్పందిస్తుంది.' : currentLang === 'hi' ? '✓ WhatsApp पर भेजा गया — हमारी टीम जवाब देगी।' : '✓ Sent on WhatsApp — our team will reply.'; listenEl.style.display = 'block'; }
             if (input) input.value = '';
             waLink('నమస్తే AVAILO, ' + typed, 'Hello AVAILO, ' + typed, 'नमस्ते AVAILO, ' + typed);
+        }
+
+        // Conversational Mayura (24 Nov 2026, owner order, zero cost):
+        // mic input + Gemini answer through the Apps Script proxy, with
+        // canned answers when the AI is unreachable. Voice questions are
+        // answered in the panel AND spoken in the same deep male voice
+        // (pitch 0.76, rate 0.95) as the greeting. Typed questions still
+        // go to WhatsApp via mayuraSendText() (pinned behaviour).
+
+        // Shared male-voice pick for the greeting AND for spoken answers
+        // (same pattern as dine.html speakGentVoice / smart.html
+        // speakGentSupervisor): on Android/Chrome the FIRST te-IN voice
+        // varies by device, so picking the first match made Mayura sound
+        // male on some phones and female on others. Order: same-language
+        // male-named voice, then first same-language voice, then English
+        // male, then first English voice.
+        // NOTE: the repo pattern in dine.html/smart.html uses
+        // .includes('male') — that also matches "Female" (Fe+male), so
+        // a female-named voice listed first would be picked as "male".
+        // Here 'male' is matched as a whole word, so "Female" does not
+        // count. (dine.html / smart.html still carry the loose check;
+        // left untouched — index.html only for this fix.)
+        function mayuraPickVoice(langPrefix) {
+            const isMaleVoice = x => x.name && /\bmale\b|\bravi\b|\bpradeep\b/i.test(x.name);
+            return mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(langPrefix) && isMaleVoice(x))
+                || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith(langPrefix))
+                || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith('en') && isMaleVoice(x))
+                || mayuraVoices.find(x => x.lang && x.lang.toLowerCase().startsWith('en'));
+        }
+
+        // Speak any Mayura answer text in the deep, serious male voice.
+        // Never throws; when there is no TTS voice the text stays visible
+        // in the panel (no MP3 — the MP3s are the greeting only).
+        async function speakMayuraText(text, lang) {
+            try {
+                if (!text) return;
+                if (!('speechSynthesis' in window)) return;
+                await waitMayuraVoices();
+                if (!mayuraVoices.length) return;
+                stopMayuraAudio();
+                setMayuraSpeaking(true);
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang === 'hi' ? 'hi-IN' : lang === 'en' ? 'en-IN' : 'te-IN';
+                utterance.rate = 0.95;
+                const v = mayuraPickVoice(utterance.lang.slice(0, 2));
+                if (v) utterance.voice = v;
+                utterance.pitch = 0.76;
+                utterance.onend = () => setMayuraSpeaking(false);
+                utterance.onerror = () => setMayuraSpeaking(false);
+                setTimeout(() => { try { window.speechSynthesis.speak(utterance); } catch (e) { setMayuraSpeaking(false); } }, 150);
+            } catch (e) { setMayuraSpeaking(false); }
+        }
+
+        // Show an answer as text in the panel (the blue box) and hide the
+        // listen/error lines.
+        function mayuraShowAnswer(text) {
+            const panelText = document.getElementById('mayuraPanelText');
+            if (panelText) panelText.textContent = text;
+            const ok = document.getElementById('mayuraListenLine');
+            if (ok) ok.style.display = 'none';
+            const err = document.getElementById('mayuraErrorLine');
+            if (err) err.style.display = 'none';
+        }
+
+        // Canned answers for the common questions, used when the AI proxy
+        // is unreachable or has no key yet. NEVER invent prices, rates,
+        // timings or facts — unknown items point to WhatsApp 9966157369.
+        // Every answer is AVAILO-only; anything else gets the decline.
+        function mayuraCannedAnswer(q, lang) {
+            const t = (q || '').toLowerCase();
+            const L = lang === 'hi' ? 'hi' : lang === 'en' ? 'en' : 'te';
+            const A = {
+                dine: {
+                    te: 'AVAILO Dineలో ఫ్యామిలీ రెస్టారెంట్ మెనూ ఉంది — టేబుల్ QR స్కాన్ చేసి ఆర్డర్ చేయండి, లేదా WhatsAppలో ఆర్డర్ పెట్టండి.',
+                    en: 'AVAILO Dine has the family restaurant menu — scan your table QR to order, or order on WhatsApp.',
+                    hi: 'AVAILO Dine में फैमिली रेस्टोरेंट का मेनू है — टेबल QR स्कैन करके ऑर्डर करें, या WhatsApp पर ऑर्डर करें।'
+                },
+                gate: {
+                    te: 'గేట్ పాస్ కోసం అపార్ట్‌మెంట్ గేట్ దగ్గర QR స్కాన్ చేయండి, ఫ్లాట్ నంబర్ ఇచ్చి, సెల్ఫీ తీసి పంపండి — గార్డుకి WhatsApp వెళ్తుంది.',
+                    en: 'For a gate pass, scan the QR at your apartment gate, enter your flat number and take a selfie — it goes to the guard on WhatsApp.',
+                    hi: 'गेट पास के लिए अपार्टमेंट गेट पर QR स्कैन करें, फ्लैट नंबर दें और सेल्फी भेजें — गार्ड को WhatsApp जाएगा।'
+                },
+                booking: {
+                    te: 'టేబుల్ బుకింగ్ Dine పేజీలో చేయవచ్చు — లేదా WhatsAppలో అడగండి, రెస్టారెంట్ ధృవీకరిస్తుంది.',
+                    en: 'Table booking is on the Dine page — or ask on WhatsApp and the restaurant will confirm.',
+                    hi: 'टेबल बुकिंग Dine पेज पर कर सकते हैं — या WhatsApp पर पूछें, रेस्टोरेंट पुष्टि करेगा।'
+                },
+                salon: {
+                    te: 'సెలూన్ లైవ్ క్యూలో పేరు ఇచ్చి చేరండి — టోకెన్ వస్తుంది, మీ వంతు రాగానే పిలుస్తారు.',
+                    en: 'Join the salon live queue with your name — you get a token and are called when it is your turn.',
+                    hi: 'सैलून लाइव कतार में नाम देकर जुड़ें — टोकन मिलेगा, आपकी बारी आने पर बुलाया जाएगा।'
+                },
+                home: {
+                    te: 'హోమ్ సర్వీసులు — ప్లంబింగ్, ఎలక్ట్రికల్, క్లీనింగ్ లాంటివి — WhatsAppలో బుక్ చేయండి, మా టీమ్ స్పందిస్తుంది.',
+                    en: 'Home services — plumbing, electrical, cleaning and more — book on WhatsApp and our team will respond.',
+                    hi: 'होम सर्विस — प्लंबिंग, इलेक्ट्रिकल, क्लीनिंग आदि — WhatsApp पर बुक करें, हमारी टीम जवाब देगी।'
+                },
+                rates: {
+                    te: 'ధరలు ఇంకా ఖరారు కాలేదు — WhatsAppలో అడగండి, సరైన ధర చెబుతారు.',
+                    en: 'Rates are not fixed yet — please ask on WhatsApp for the right price.',
+                    hi: 'दर अभी तय नहीं हुए हैं — कृपया WhatsApp पर पूछें, सही कीमत बताई जाएगी।'
+                },
+                contact: {
+                    te: 'మమ్మల్ని WhatsAppలో సంప్రదించండి: 9966157369.',
+                    en: 'Reach us on WhatsApp: 9966157369.',
+                    hi: 'WhatsApp पर संपर्क करें: 9966157369।'
+                },
+                about: {
+                    te: 'AVAILO — విజయవాడ, గుంటూరులో స్కాన్ చేసి డోర్‌స్టెప్ సర్వీస్. యాప్ అవసరం లేదు — Dine, హోమ్ సర్వీసులు, సెలూన్, గేట్ పాస్ అన్నీ ఒకే QRతో.',
+                    en: 'AVAILO — scan-and-go doorstep services in Vijayawada and Guntur. No app needed — Dine, home services, salon and gate pass, all with one QR.',
+                    hi: 'AVAILO — विजयवाड़ा और गुंटूर में स्कैन करके डोरस्टेप सर्विस। ऐप की ज़रूरत नहीं — Dine, होम सर्विस, सैलून और गेट पास, एक ही QR से।'
+                },
+                decline: {
+                    te: 'క్షమించండి, నేను AVAILO సర్వీసుల గురించి మాత్రమే చెప్పగలను. ఇంకా ఏదైనా కావాలంటే WhatsAppలో అడగండి: 9966157369.',
+                    en: 'Sorry, I can only help with AVAILO services. For anything else, please ask on WhatsApp: 9966157369.',
+                    hi: 'क्षमा करें, मैं केवल AVAILO सेवाओं के बारे में बता सकती हूँ। कुछ और चाहिए तो WhatsApp पर पूछें: 9966157369।'
+                }
+            };
+            const has = (...words) => words.some(w => t.includes(w));
+            if (has('రేటు', 'రేట్లు', 'ధర', 'ఖర్చు', 'rate', 'price', 'cost', 'दर', 'कीमत')) return A.rates[L];
+            if (has('గేట్', 'gate', 'పాస్', 'pass', 'ఫ్లాట్', 'flat', 'విజిటర్', 'visitor', 'गेट', 'पास')) return A.gate[L];
+            if (has('టేబుల్', 'table', 'బుకింగ్', 'booking', 'రిజర్వ్', 'टेबल', 'बुकिंग')) return A.booking[L];
+            if (has('సెలూన్', 'salon', 'క్యూ', 'queue', 'టోకెన్', 'token', 'హెయిర్', 'hair', 'सैलून', 'कतार')) return A.salon[L];
+            if (has('డైన్', 'dine', 'మెనూ', 'menu', 'ఆహారం', 'భోజనం', 'ఖలీల్', 'ఆర్డర్', 'order', 'తిన', 'खाना', 'मेनू')) return A.dine[L];
+            if (has('హోమ్', 'home', 'ప్లంబర్', 'plumber', 'ఎలక్ట్రీషియన్', 'electrician', 'క్లీనింగ్', 'cleaning', 'సర్వీస్', 'service', 'सर्विस')) return A.home[L];
+            if (has('ఫోన్', 'phone', 'నంబర్', 'number', 'కాల్', 'call', 'కాంటాక్ట్', 'contact', 'మనిషి', 'human', 'संपर्क')) return A.contact[L];
+            if (has('అవైలో', 'availo', 'ఏంటి', 'what', 'ఏమిటి')) return A.about[L];
+            return A.decline[L];
+        }
+
+        // Ask Mayura a question: try the AI proxy first (Apps Script
+        // /exec, same URL as the Sheets logging), fall back to a canned
+        // answer when the AI is unreachable or has no key. The answer is
+        // shown as text AND spoken. Never throws.
+        async function mayuraAsk(question) {
+            const q = (question || '').trim();
+            if (!q) {
+                mayuraShowError(currentLang === 'te' ? 'ముందుగా ఏదైనా అడగండి.' : currentLang === 'hi' ? 'पहले कुछ पूछें।' : 'Ask something first.');
+                return;
+            }
+            const thinking = currentLang === 'te' ? 'ఆలోచిస్తున్నాను…' : currentLang === 'hi' ? 'सोच रही हूँ…' : 'Thinking…';
+            mayuraShowAnswer(thinking);
+            let answer = null;
+            try {
+                const url = (typeof AVAILO_SHEETS_URL !== 'undefined' && AVAILO_SHEETS_URL) ? AVAILO_SHEETS_URL : '';
+                if (url && typeof fetch === 'function') {
+                    const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+                    const timer = ctrl ? setTimeout(() => ctrl.abort(), 20000) : null;
+                    try {
+                        const res = await fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'text/plain' },
+                            body: JSON.stringify({ form: 'Mayura', question: q, lang: currentLang }),
+                            signal: ctrl ? ctrl.signal : undefined
+                        });
+                        if (timer) clearTimeout(timer);
+                        const data = await res.json();
+                        if (data && data.ok && data.answer) answer = String(data.answer);
+                    } catch (e) {
+                        if (timer) clearTimeout(timer);
+                        answer = null; // AI unreachable — canned fallback below
+                    }
+                }
+            } catch (e) { answer = null; }
+            if (!answer) answer = mayuraCannedAnswer(q, currentLang);
+            mayuraShowAnswer(answer);
+            speakMayuraText(answer, currentLang);
+        }
+
+        // Mic input (24 Nov 2026, owner order): listen in the panel
+        // language (te-IN / hi-IN / en-IN) and send the heard question to
+        // mayuraAsk(). Browsers without SpeechRecognition get a typed
+        // fallback message instead of silence.
+        let mayuraListening = false;
+        let mayuraRecognition = null;
+        function mayuraStartListening() {
+            const btn = document.getElementById('mayuraMicBtn');
+            if (mayuraListening) { try { if (mayuraRecognition) mayuraRecognition.stop(); } catch (e) {} return; }
+            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SR) {
+                mayuraShowError(currentLang === 'te' ? 'ఈ ఫోన్‌లో మైక్ వాయిస్ సపోర్ట్ లేదు — టైప్ చేసి పంపండి.' : currentLang === 'hi' ? 'इस फ़ोन में माइक वॉइस सपोर्ट नहीं है — टाइप करके भेजें।' : 'This phone has no mic voice support — please type instead.');
+                return;
+            }
+            try {
+                const rec = new SR();
+                mayuraRecognition = rec;
+                rec.lang = currentLang === 'hi' ? 'hi-IN' : currentLang === 'en' ? 'en-IN' : 'te-IN';
+                rec.interimResults = false;
+                rec.maxAlternatives = 1;
+                rec.continuous = false;
+                mayuraListening = true;
+                if (btn) { btn.textContent = '🔊 ' + (currentLang === 'te' ? 'వింటున్నాను…' : currentLang === 'hi' ? 'सुन रही हूँ…' : 'Listening…'); btn.disabled = true; }
+                const done = () => {
+                    mayuraListening = false;
+                    if (btn) { btn.disabled = false; const label = btn.getAttribute('data-' + currentLang); if (label) btn.innerHTML = label; }
+                };
+                rec.onresult = (ev) => {
+                    const heard = ev && ev.results && ev.results[0] && ev.results[0][0] ? ev.results[0][0].transcript : '';
+                    done();
+                    if (heard && heard.trim()) mayuraAsk(heard.trim());
+                    else mayuraShowError(currentLang === 'te' ? 'వినలేకపోయాను — మళ్ళీ ప్రయత్నించండి లేదా టైప్ చేయండి.' : currentLang === 'hi' ? 'सुन नहीं पाई — फिर से कोशिश करें या टाइप करें।' : 'Could not hear you — please try again or type.');
+                };
+                rec.onerror = () => {
+                    done();
+                    mayuraShowError(currentLang === 'te' ? 'వినలేకపోయాను — మళ్ళీ ప్రయత్నించండి లేదా టైప్ చేయండి.' : currentLang === 'hi' ? 'सुन नहीं पाई — फिर से कोशिश करें या टाइप करें।' : 'Could not hear you — please try again or type.');
+                };
+                rec.onend = () => { if (mayuraListening) done(); };
+                rec.start();
+            } catch (e) {
+                mayuraListening = false;
+                mayuraShowError(currentLang === 'te' ? 'మైక్ మొదలు కాలేదు — టైప్ చేసి పంపండి.' : currentLang === 'hi' ? 'माइक शुरू नहीं हुआ — टाइप करके भेजें।' : 'Mic did not start — please type instead.');
+            }
         }
 
         // Open WhatsApp with a message in the selected site language.
@@ -3087,6 +3399,44 @@
         bindPhoneField('techPhone');
         bindGateReadyLookup();
         applyLanguage();
+
+        // Our Popular Services carousel (24 Nov 2026, Evargo-style):
+        // arrows + dots scroll the track one card at a time; the active
+        // dot follows the scroll position. No auto-advance.
+        (function () {
+            var track = document.getElementById('availoServicesCarousel');
+            if (!track) return;
+            var cards = track.querySelectorAll('.availo-svc-card');
+            var dots = document.querySelectorAll('[data-carousel-dot]');
+            var prevBtn = document.querySelector('[data-carousel-prev]');
+            var nextBtn = document.querySelector('[data-carousel-next]');
+            if (!cards.length) return;
+            function step() {
+                var c = cards[0];
+                return c ? c.getBoundingClientRect().width + 12 : 300;
+            }
+            function currentIndex() {
+                return Math.min(cards.length - 1, Math.max(0, Math.round(track.scrollLeft / step())));
+            }
+            function setActive(i) {
+                dots.forEach(function (d, j) {
+                    var on = j === i;
+                    d.classList.toggle('active', on);
+                    d.setAttribute('aria-selected', on ? 'true' : 'false');
+                });
+            }
+            function goTo(i) {
+                i = Math.min(cards.length - 1, Math.max(0, i));
+                track.scrollTo({ left: i * step(), behavior: 'smooth' });
+                setActive(i);
+            }
+            if (prevBtn) prevBtn.addEventListener('click', function () { goTo(currentIndex() - 1); });
+            if (nextBtn) nextBtn.addEventListener('click', function () { goTo(currentIndex() + 1); });
+            dots.forEach(function (d) {
+                d.addEventListener('click', function () { goTo(parseInt(d.getAttribute('data-carousel-dot'), 10) || 0); });
+            });
+            track.addEventListener('scroll', function () { setActive(currentIndex()); }, { passive: true });
+        })();
     </script>
 </body>
 </html>
