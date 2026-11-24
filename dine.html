@@ -1025,6 +1025,10 @@
             .availo-top-btn { transition: none; }
         }
     </style>
+    <!-- No-JS safety net (25 Nov 2026): .availo-reveal starts at opacity: 0
+         and only the IntersectionObserver JS reveals it. With JS disabled
+         (or the script blocked) sections would stay invisible forever. -->
+    <noscript><style>.availo-reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 </head>
@@ -1084,7 +1088,12 @@
         <div class="sub-filter-bar" id="subBar"></div>
 
         <!-- Dynamic Menu Items Container -->
-        <div class="items-list availo-reveal" id="menuItemsContainer"></div>
+        <!-- NOTE (25 Nov 2026): NO availo-reveal on this container. It holds
+             all 284 items in the All view (~14,000px+ tall), so it can never
+             reach the reveal observer's 0.1 threshold and would stay
+             invisible (opacity: 0) until a category tap re-renders it
+             shorter. Menu items must always be visible. -->
+        <div class="items-list" id="menuItemsContainer"></div>
 
         <!-- Chef Special Instruction -->
         <div class="chef-note-box">
