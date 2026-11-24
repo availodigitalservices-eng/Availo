@@ -22,9 +22,10 @@
     .availo-reveal { opacity: 0; transform: translateY(8px); transition: opacity 400ms ease, transform 400ms ease; }
     .availo-reveal.in { opacity: 1; transform: translateY(0); }
     /* Back-to-top button (Evargo-style): fixed bottom-right, appears
-       after ~400px of scroll; 120ms press scale like other buttons. */
+       after ~400px of scroll; 120ms press scale like other buttons.
+       bottom: 82px clears the fixed bottom bar (~65px) + 16px gap. */
     .availo-top-btn {
-      position: fixed; right: 16px; bottom: 16px; z-index: 1500;
+      position: fixed; right: 16px; bottom: 82px; z-index: 1500;
       width: 44px; height: 44px; border-radius: 50%;
       border: none; background: #071426; color: #ffffff;
       font-size: 20px; line-height: 1; cursor: pointer;
