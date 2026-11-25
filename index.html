@@ -2533,10 +2533,156 @@
         // is unreachable or has no key yet. NEVER invent prices, rates,
         // timings or facts — unknown items point to WhatsApp 9966157369.
         // Every answer is AVAILO-only; anything else gets the decline.
-        function mayuraCannedAnswer(q, lang) {
+        // ---- Mayura live hotel data (25 Nov 2026, hotel voice flow) ----
+        // GAP 1: today's special — the owner sets it each morning on
+        // dine-owner.html under dineSpecial/khaleel/{YYYY-MM-DD}.
+        // GAP 2: most-ordered dish today — aggregated LIVE from the dine
+        // orders under dineOrders/khaleel (the same records the kitchen
+        // screen reads). Both are read over the public RTDB REST API (no
+        // key; the availo-kitchen-v1 node is open for read) ONLY when the
+        // question is about the special or the most-ordered dish — every
+        // other question skips the extra reads entirely. When the read
+        // fails, or there is nothing for today, Mayura says so — it NEVER
+        // invents a dish or a count.
+        const MAYURA_RTDB_BASE = 'https://availo-kitchen-default-rtdb.asia-southeast1.firebasedatabase.app';
+        const MAYURA_SPECIAL_PATH = 'availo-kitchen-v1/dineSpecial/khaleel';
+        const MAYURA_ORDERS_PATH = 'availo-kitchen-v1/dineOrders/khaleel';
+        function mayuraTodayKey(d) {
+            const x = d || new Date();
+            const p = function (n) { return String(n).padStart(2, '0'); };
+            return x.getFullYear() + '-' + p(x.getMonth() + 1) + '-' + p(x.getDate());
+        }
+        function mayuraTodayStartMs(nowMs) {
+            const x = new Date(nowMs || Date.now());
+            x.setHours(0, 0, 0, 0);
+            return x.getTime();
+        }
+        function mayuraCleanText(v, max) {
+            if (typeof v !== 'string') return '';
+            return v.trim().slice(0, max || 100);
+        }
+        // getPopularToday: top dishes from TODAY's orders, ranked by
+        // plates (qty) desc, then revenue desc, then name — the same
+        // ranking as analytics.html topDishes. orders may be an RTDB
+        // map (snapshot) or an array. Returns at most 5 entries:
+        // [{id, name, qty, revenue}]. Orders before today's local
+        // midnight are ignored; records without items are skipped.
+        function getPopularToday(orders, nowMs) {
+            const list = !orders ? [] : Array.isArray(orders) ? orders : Object.keys(orders).map(function (k) { return orders[k]; });
+            const start = mayuraTodayStartMs(nowMs);
+            const byId = {};
+            list.forEach(function (o) {
+                if (!o || typeof o !== 'object') return;
+                if (typeof o.createdAt === 'number' && o.createdAt < start) return;
+                (o.items || []).forEach(function (it) {
+                    if (!it || !it.id || !it.name) return;
+                    const qty = Number(it.qty) || 0;
+                    if (qty <= 0) return;
+                    const price = Number(it.price) || 0;
+                    if (!byId[it.id]) byId[it.id] = { id: it.id, name: String(it.name), qty: 0, revenue: 0 };
+                    byId[it.id].qty += qty;
+                    byId[it.id].revenue += qty * price;
+                });
+            });
+            return Object.keys(byId).map(function (k) { return byId[k]; }).sort(function (a, b) {
+                return (b.qty - a.qty) || (b.revenue - a.revenue) || String(a.name).localeCompare(String(b.name));
+            }).slice(0, 5);
+        }
+        function mayuraLiveKeywords(q) {
+            const t = (q || '').toLowerCase();
+            const special = ['స్పెషల్', 'స్పెశల్', 'special', 'स्पेशल'];
+            // "Most" alone is too broad (e.g. "ధర ఎక్కువా?" is a rates
+            // question, not a popular-dish question), so 'ఎక్కువ' only
+            // counts with an order/eating word next to it.
+            const popularWords = ['పాపులర్', 'popular', 'most ordered', 'most-ordered', 'ఎక్కువమంది', 'ज्यादा', 'लोकप्रिय'];
+            const popular = popularWords.some(function (w) { return t.indexOf(w) !== -1; }) ||
+                (t.indexOf('ఎక్కువ') !== -1 && ['ఆర్డర్', 'ఆర్డర్లు', 'ఆర్డర్ల', 'తింటు', 'తిన్న', 'తినే', 'అమ్ముడు', 'అమ్ముడవుతు'].some(function (w) { return t.indexOf(w) !== -1; }));
+            return {
+                special: special.some(function (w) { return t.indexOf(w) !== -1; }),
+                popular: popular
+            };
+        }
+        // One RTDB REST read. Returns {ok:true, data} on a successful
+        // read (data is null when the node has no record), or {ok:false}
+        // when the read fails — so a failed read is never mistaken for
+        // "nothing set today".
+        async function mayuraFetchJson(url) {
+            try {
+                if (typeof fetch !== 'function') return { ok: false };
+                const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+                const timer = ctrl ? setTimeout(function () { try { ctrl.abort(); } catch (e) {} }, 4000) : null;
+                try {
+                    const res = await fetch(url, { method: 'GET', signal: ctrl ? ctrl.signal : undefined });
+                    if (timer) clearTimeout(timer);
+                    if (!res || res.ok === false) return { ok: false };
+                    if (typeof res.json !== 'function') return { ok: false };
+                    return { ok: true, data: await res.json() };
+                } catch (e) { if (timer) clearTimeout(timer); return { ok: false }; }
+            } catch (e) { return { ok: false }; }
+        }
+        // Returns {fetched, special, popular}. fetched:false means the
+        // live read was skipped (question is not about the special or
+        // the most-ordered dish) or failed — callers must say so, never
+        // invent. special is {dish, note} or null; popular is the
+        // getPopularToday() list (empty when no orders yet today).
+        async function fetchMayuraLiveContext(q) {
+            const kw = mayuraLiveKeywords(q);
+            const out = { fetched: false, special: null, popular: [] };
+            if (!kw.special && !kw.popular) return out;
+            try {
+                if (kw.special) {
+                    const r = await mayuraFetchJson(MAYURA_RTDB_BASE + '/' + MAYURA_SPECIAL_PATH + '/' + mayuraTodayKey() + '.json');
+                    if (!r.ok) return { fetched: false, special: null, popular: [] };
+                    const dish = r.data ? mayuraCleanText(r.data.dish, 100) : '';
+                    if (dish) out.special = { dish: dish, note: mayuraCleanText(r.data.note, 140) };
+                }
+                if (kw.popular) {
+                    const r = await mayuraFetchJson(MAYURA_RTDB_BASE + '/' + MAYURA_ORDERS_PATH + '.json');
+                    if (!r.ok) return { fetched: false, special: null, popular: [] };
+                    out.popular = getPopularToday(r.data, Date.now());
+                }
+                out.fetched = true;
+            } catch (e) { out.fetched = false; }
+            return out;
+        }
+
+        // live (optional, from fetchMayuraLiveContext): {fetched, special,
+        // popular}. The special/popular branches answer ONLY from it — a
+        // missing or failed read is answered honestly, never invented.
+        function mayuraCannedAnswer(q, lang, live) {
             const t = (q || '').toLowerCase();
             const L = lang === 'hi' ? 'hi' : lang === 'en' ? 'en' : 'te';
             const A = {
+                specialSet: {
+                    te: 'ఈరోజు స్పెషల్: {dish}{note}',
+                    en: 'Today\'s special: {dish}{note}',
+                    hi: 'आज का स्पेशल: {dish}{note}'
+                },
+                specialNone: {
+                    te: 'ఈరోజు స్పెషల్ ఇంకా పెట్టలేదు — రెస్టారెంట్ సెట్ చేస్తే మెనూలో కనిపిస్తుంది. WhatsAppలో అడగండి: 9966157369.',
+                    en: 'No special has been set for today yet — it will show on the menu once the restaurant sets it. Ask on WhatsApp: 9966157369.',
+                    hi: 'आज का स्पेशल अभी तय नहीं हुआ है — रेस्टोरेंट के तय करते ही मेनू में दिखेगा। WhatsApp पर पूछें: 9966157369।'
+                },
+                specialUnknown: {
+                    te: 'ఈరోజు స్పెషల్ ఏంటో ఇప్పుడు చూడలేకపోయాను — WhatsAppలో అడగండి: 9966157369.',
+                    en: 'I could not check today\'s special right now — please ask on WhatsApp: 9966157369.',
+                    hi: 'आज का स्पेशल अभी देख नहीं पाई — कृपया WhatsApp पर पूछें: 9966157369।'
+                },
+                popularSet: {
+                    te: 'ఈరోజు ఎక్కువగా ఆర్డర్ అవుతున్నది: {dishes}.',
+                    en: 'Most ordered today: {dishes}.',
+                    hi: 'आज सबसे ज़्यादा ऑर्डर हो रहा है: {dishes}।'
+                },
+                popularNone: {
+                    te: 'ఈరోజు ఇంకా ఏ ఆర్డర్ రాలేదు — మొదటి ఆర్డర్ మీదే పెట్టండి!',
+                    en: 'No orders have come in yet today — yours can be the first!',
+                    hi: 'आज अभी तक कोई ऑर्डर नहीं आया है — पहला ऑर्डर आप ही का हो सकता है!'
+                },
+                popularUnknown: {
+                    te: 'ఈరోజు ఎక్కువగా ఏది ఆర్డర్ అవుతుందో ఇప్పుడు చూడలేకపోయాను — WhatsAppలో అడగండి: 9966157369.',
+                    en: 'I could not check what is most ordered today — please ask on WhatsApp: 9966157369.',
+                    hi: 'आज सबसे ज़्यादा क्या ऑर्डर हो रहा है, अभी देख नहीं पाई — कृपया WhatsApp पर पूछें: 9966157369।'
+                },
                 dine: {
                     te: 'AVAILO Dineలో ఫ్యామిలీ రెస్టారెంట్ మెనూ ఉంది — టేబుల్ QR స్కాన్ చేసి ఆర్డర్ చేయండి, లేదా WhatsAppలో ఆర్డర్ పెట్టండి.',
                     en: 'AVAILO Dine has the family restaurant menu — scan your table QR to order, or order on WhatsApp.',
@@ -2584,6 +2730,30 @@
                 }
             };
             const has = (...words) => words.some(w => t.includes(w));
+            // Today's special / most-ordered (25 Nov 2026): these branches
+            // answer ONLY from the live read passed in as `live`. No live
+            // read (or a failed one) is answered honestly — never invented.
+            // They run before the generic branches so a question like
+            // "స్పెషల్ ధర ఎంత?" is answered with the special, not the rates.
+            const kw = mayuraLiveKeywords(q);
+            if (kw.special || kw.popular) {
+                const specialText = () => {
+                    if (!live || !live.fetched) return A.specialUnknown[L];
+                    if (live.special) return A.specialSet[L]
+                        .replace('{dish}', live.special.dish)
+                        .replace('{note}', live.special.note ? ' — ' + live.special.note : '');
+                    return A.specialNone[L];
+                };
+                const popularText = () => {
+                    if (!live || !live.fetched) return A.popularUnknown[L];
+                    if (live.popular && live.popular.length) return A.popularSet[L].replace('{dishes}',
+                        live.popular.slice(0, 3).map(function (d) { return d.name + ' (' + d.qty + ')'; }).join(', '));
+                    return A.popularNone[L];
+                };
+                if (kw.special && kw.popular) return specialText() + ' ' + popularText();
+                if (kw.special) return specialText();
+                return popularText();
+            }
             if (has('రేటు', 'రేట్లు', 'ధర', 'ఖర్చు', 'rate', 'price', 'cost', 'दर', 'कीमत')) return A.rates[L];
             if (has('గేట్', 'gate', 'పాస్', 'pass', 'ఫ్లాట్', 'flat', 'విజిటర్', 'visitor', 'गेट', 'पास')) return A.gate[L];
             if (has('టేబుల్', 'table', 'బుకింగ్', 'booking', 'రిజర్వ్', 'टेबल', 'बुकिंग')) return A.booking[L];
@@ -2629,6 +2799,14 @@
             const thinking = currentLang === 'te' ? 'ఆలోచిస్తున్నాను…' : currentLang === 'hi' ? 'सोच रही हूँ…' : 'Thinking…';
             mayuraAddChat('user', q);
             mayuraShowAnswer(thinking);
+            // Live hotel data first (25 Nov 2026): when the question is
+            // about today's special or the most-ordered dish, read the
+            // live RTDB values so BOTH the AI proxy and the canned
+            // fallback answer from real data. Other questions skip the
+            // read entirely (fetchMayuraLiveContext returns unfetched).
+            // Never throws — a failed read just means "could not check".
+            let live = { fetched: false, special: null, popular: [] };
+            try { live = await fetchMayuraLiveContext(q); } catch (e) { live = { fetched: false, special: null, popular: [] }; }
             let answer = null;
             try {
                 const url = (typeof AVAILO_SHEETS_URL !== 'undefined' && AVAILO_SHEETS_URL) ? AVAILO_SHEETS_URL : '';
@@ -2639,7 +2817,7 @@
                         const res = await fetch(url, {
                             method: 'POST',
                             headers: { 'Content-Type': 'text/plain' },
-                            body: JSON.stringify({ form: 'Mayura', question: q, lang: currentLang }),
+                            body: JSON.stringify({ form: 'Mayura', question: q, lang: currentLang, live: live }),
                             signal: ctrl ? ctrl.signal : undefined
                         });
                         if (timer) clearTimeout(timer);
@@ -2651,7 +2829,7 @@
                     }
                 }
             } catch (e) { answer = null; }
-            if (!answer) answer = mayuraCannedAnswer(q, currentLang);
+            if (!answer) answer = mayuraCannedAnswer(q, currentLang, live);
             mayuraShowAnswer(answer);
             mayuraAddChat('mayura', answer);
             speakMayuraText(answer, currentLang);
