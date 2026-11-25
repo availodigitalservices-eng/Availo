@@ -1075,6 +1075,15 @@
         <!-- Main Categories -->
         <div class="cat-scroll" id="categoryTabs"><!-- Category chips are built by buildCategoryChips() from the menu data. --></div>
 
+        <!-- Today's special (25 Nov 2026): set each morning on
+             dine-owner.html; read live from Firebase. Hidden when no
+             special is set today — never a guessed dish. -->
+        <div id="todaySpecialBanner" style="display:none; margin:10px 0 4px; padding:10px 12px; border-radius:10px; background:linear-gradient(90deg, rgba(221,182,93,0.18), rgba(32,221,224,0.10)); border:1px solid rgba(221,182,93,0.55); font-size:14px; line-height:1.6; color:#fef3c7;">
+            <span data-te="⭐ ఈరోజు స్పెషల్:" data-en="⭐ Today's special:" data-hi="⭐ आज का स्पेशल:">⭐ ఈరోజు స్పెషల్:</span>
+            <b id="todaySpecialDish"></b>
+            <span id="todaySpecialNote" style="color:#e2e8f0;"></span>
+        </div>
+
         <!-- Live search (filters by item name in the current language) -->
         <div class="search-row">
             <input type="text" id="searchInput" class="search-input" placeholder="🔍 ఐటమ్ వెతకండి..." data-te-ph="🔍 ఐటమ్ వెతకండి..." data-en-ph="🔍 Search item..." data-hi-ph="🔍 आइटम खोजिए..." oninput="onSearchInput(this.value)">
@@ -1214,14 +1223,14 @@
                 <div id="couponMsg" style="display: none; margin-top: 6px; font-size: 12.5px;"></div>
                 <div id="couponAppliedLine" style="display: none; margin-top: 6px; font-size: 13px; font-weight: 700; color: #4ade80;"></div>
             </div>
-            <!-- Payment method: Cash (default) or UPI (only when the restaurant's UPI ID is configured) -->
+            <!-- Payment method: Cash (default) or UPI (only when AVAILO's UPI ID is configured — the payee is AVAILO, never the restaurant) -->
             <div style="margin-bottom: 12px;">
                 <div style="font-size: 13px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px;" data-te="చెల్లింపు విధానం:" data-en="Payment method:" data-hi="भुगतान का तरीका:">చెల్లింపు విధానం:</div>
                 <div class="mode-btns" style="margin-bottom: 0;">
                     <button type="button" id="payCashBtn" class="mode-btn active" onclick="setPaymentMethod('cash')" data-te="💵 నగదు" data-en="💵 Cash" data-hi="💵 नकद">💵 నగదు</button>
                     <button type="button" id="payUpiBtn" class="mode-btn" onclick="setPaymentMethod('upi')" data-te="📱 UPI ద్వారా" data-en="📱 Via UPI" data-hi="📱 UPI से">📱 UPI ద్వారా</button>
                 </div>
-                <div id="payUpiNote" style="display: none; margin-top: 6px; font-size: 12.5px; color: #fbbf24;" data-te="UPI ID సెట్ చేయలేదు — రెస్టారెంట్‌ను అడగండి" data-en="UPI ID not set — please ask the restaurant" data-hi="UPI ID सेट नहीं है — कृपया रेस्टोरेंट से पूछें">UPI ID సెట్ చేయలేదు — రెస్టారెంట్‌ను అడగండి</div>
+                <div id="payUpiNote" style="display: none; margin-top: 6px; font-size: 12.5px; color: #fbbf24;" data-te="UPI ID సెట్ చేయలేదు — AVAILO UPI ID కోసం WhatsAppలో అడగండి" data-en="UPI ID not set — please ask AVAILO on WhatsApp" data-hi="UPI ID सेट नहीं है — कृपया AVAILO से WhatsApp पर पूछें">UPI ID సెట్ చేయలేదు — AVAILO UPI ID కోసం WhatsAppలో అడగండి</div>
             </div>
             <div style="display: flex; gap: 10px;">
                 <button id="confirmOrderBtn" onclick="confirmOrderSend()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;" data-te="✅ నిర్ధారించి పంపండి" data-en="✅ Confirm &amp; Send" data-hi="✅ कन्फ़र्म करके भेजिए">✅ నిర్ధారించి పంపండి</button>
@@ -1353,6 +1362,41 @@
             } catch (e) { /* fail-open */ }
         }
 
+        // ---- Today's special (25 Nov 2026, hotel voice flow GAP 1) ----
+        // Same Firebase node the owner page writes:
+        // availo-kitchen-v1/dineSpecial/khaleel/{YYYY-MM-DD}
+        //   {dish, note, updatedAt}. Live listener — the banner appears
+        // the moment the owner saves, and hides when there is no special
+        // for today. Fail-open: no record / no Firebase = hidden banner.
+        // Dish and note are set with textContent, never innerHTML, so
+        // owner-typed text can never inject markup.
+        const DINE_SPECIAL_PATH = 'availo-kitchen-v1/dineSpecial/khaleel';
+        function dineTodayKey(d) {
+            const x = d || new Date();
+            const p = function (n) { return String(n).padStart(2, '0'); };
+            return x.getFullYear() + '-' + p(x.getMonth() + 1) + '-' + p(x.getDate());
+        }
+        function renderTodaySpecial(special) {
+            const banner = document.getElementById('todaySpecialBanner');
+            if (!banner) return;
+            const dish = (special && typeof special.dish === 'string') ? special.dish.trim() : '';
+            if (!dish) { banner.style.display = 'none'; return; }
+            const dishEl = document.getElementById('todaySpecialDish');
+            const noteEl = document.getElementById('todaySpecialNote');
+            if (dishEl) dishEl.textContent = dish.slice(0, 100);
+            if (noteEl) noteEl.textContent = (special.note && typeof special.note === 'string' && special.note.trim())
+                ? (' — ' + special.note.trim().slice(0, 140)) : '';
+            banner.style.display = 'block';
+        }
+        function initTodaySpecial() {
+            try {
+                if (!kitchenDb) return; // offline / SDK missing: fail-open, banner stays hidden
+                kitchenDb.ref(DINE_SPECIAL_PATH + '/' + dineTodayKey()).on('value', function (snap) {
+                    renderTodaySpecial(snap.val());
+                }, function () { /* read failed: fail-open, banner stays hidden */ });
+            } catch (e) { /* fail-open */ }
+        }
+
         function pushKitchenEvent(node, payload) {
             try {
                 if (!kitchenDb) return;
@@ -1381,15 +1425,18 @@
         const HOTEL_DISPLAY = { te: "AVAILO Dine", en: "AVAILO Dine", hi: "AVAILO Dine" };
         const TABLE_DISPLAY = { te: "టేబుల్ 01", en: "Table 01", hi: "टेबल 01" };
 
-        // ---- Restaurant UPI payment (free UPI intent links — no gateway) ----
-        // The restaurant's UPI ID is NOT on file: HOTEL_UPI_ID stays EMPTY
-        // until the restaurant gives it. While empty, the UPI option is
-        // disabled in the confirm overlay and orders fall back to Cash —
-        // never invent a UPI ID, phone number, or payee name.
+        // ---- UPI payment (free UPI intent links — no gateway) ----
+        // Payee is AVAILO (owner decision 25 Nov 2026): HOTEL_UPI_ID stays
+        // EMPTY until the user shares AVAILO's own UPI ID. NEVER set the
+        // restaurant's UPI ID here — 'Khaleel Bhai Family Restaurant' is
+        // not the payee.
+        // While empty, the UPI option is disabled in the confirm overlay
+        // and orders fall back to Cash — never invent a UPI ID, phone
+        // number, or payee name.
         // `let` (not const) so tests and a future per-restaurant loader can
         // set these without editing the page.
-        let HOTEL_UPI_ID = '';   // e.g. 'khaleelbhai@okhdfcbank' — ask the restaurant
-        let HOTEL_UPI_NAME = ''; // e.g. 'Khaleel Bhai Family Restaurant'
+        let HOTEL_UPI_ID = '';   // e.g. 'availo@okhdfcbank' — AVAILO's own UPI ID (awaited from the user)
+        let HOTEL_UPI_NAME = ''; // e.g. 'AVAILO Digital Services'
 
         // UPI intent link: upi://pay?pa=<id>&pn=<name>&am=<2-decimals>&cu=INR&tn=<order-ref>
         // Pure helpers (tested in tests/dine-upi-payment.test.js).
@@ -1825,7 +1872,7 @@
         }
 
         // ---- Payment method (confirm overlay): Cash default, UPI only when
-        // the restaurant's UPI ID is configured. The choice is re-resolved
+        // AVAILO's UPI ID is configured (payee: AVAILO, 25 Nov 2026). The choice is re-resolved
         // at confirm time, so a stale 'upi' can never slip through.
         let selectedPaymentMethod = 'cash';
         let pendingOrderTotal = 0;
@@ -2353,7 +2400,7 @@
             payMethodTitle: { te: "చెల్లింపు విధానం:", en: "Payment method:", hi: "भुगतान का तरीका:" },
             payCash: { te: "💵 నగదు", en: "💵 Cash", hi: "💵 नकद" },
             payUpi: { te: "📱 UPI ద్వారా", en: "📱 Via UPI", hi: "📱 UPI से" },
-            payUpiNotSet: { te: "UPI ID సెట్ చేయలేదు — రెస్టారెంట్‌ను అడగండి", en: "UPI ID not set — please ask the restaurant", hi: "UPI ID सेट नहीं है — कृपया रेस्टोरेंट से पूछें" },
+            payUpiNotSet: { te: "UPI ID సెట్ చేయలేదు — AVAILO UPI ID కోసం WhatsAppలో అడగండి", en: "UPI ID not set — please ask AVAILO on WhatsApp", hi: "UPI ID सेट नहीं है — कृपया AVAILO से WhatsApp पर पूछें" },
             payUpiButton: { te: "💳 {amount} UPI ద్వారా చెల్లించండి", en: "💳 Pay {amount} via UPI", hi: "💳 {amount} UPI से भुगतान करें" },
             couponTitle: { te: "🎟️ కూపన్ కోడ్ (ఉంటే):", en: "🎟️ Coupon code (if any):", hi: "🎟️ कूपन कोड (अगर हो):" },
             couponApply: { te: "వర్తింపజేయండి", en: "Apply", hi: "लागू कीजिए" },
@@ -3515,6 +3562,7 @@
         // live (fail-open: no Firebase = show everything).
         buildCategoryChips();
         initAvailability();
+        initTodaySpecial();
         initRatings();
         renderReviews();
         renderLoyalty();
