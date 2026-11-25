@@ -2812,7 +2812,11 @@
                 const url = (typeof AVAILO_SHEETS_URL !== 'undefined' && AVAILO_SHEETS_URL) ? AVAILO_SHEETS_URL : '';
                 if (url && typeof fetch === 'function') {
                     const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
-                    const timer = ctrl ? setTimeout(() => ctrl.abort(), 20000) : null;
+                    // Proxy timeout is 5 s (25 Nov 2026 lag fix): Gemini
+                    // is overloaded and the proxy can be slow to answer
+                    // ai_unavailable, so the ready-made canned answer
+                    // must not wait more than 5 s.
+                    const timer = ctrl ? setTimeout(() => ctrl.abort(), 5000) : null;
                     try {
                         const res = await fetch(url, {
                             method: 'POST',
