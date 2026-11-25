@@ -45,6 +45,15 @@
         .avail-btn.off { background: rgba(239, 68, 68, 0.15); border-color: #ef4444; color: #f87171; }
         .avail-btn:disabled { opacity: 0.5; cursor: wait; }
         .empty-hint { color: #94a3b8; font-size: 13px; text-align: center; padding: 22px 0; font-style: italic; }
+        .special-box { margin-top: 14px; background: #071530; border: 1px solid rgba(221,182,93,0.55); border-radius: 12px; padding: 12px 14px; }
+        .special-box h2 { font-size: 15px; color: #DDB65D; margin-bottom: 4px; }
+        .special-current { font-size: 13px; color: #e2e8f0; margin-bottom: 10px; line-height: 1.6; }
+        .special-input { width: 100%; box-sizing: border-box; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #1e293b; color: #fff; font-size: 14px; font-family: 'Ramabhadra', sans-serif; margin-bottom: 8px; }
+        .special-row { display: flex; gap: 8px; }
+        .special-btn { flex: 1; padding: 10px; border-radius: 8px; border: none; font-weight: 800; font-size: 13.5px; cursor: pointer; font-family: 'Ramabhadra', sans-serif; }
+        .special-btn.save { background: #22c55e; color: #fff; }
+        .special-btn.clear { background: #334155; color: #fff; flex: 0 0 auto; }
+        .special-msg { font-size: 12.5px; margin-top: 8px; min-height: 16px; }
         .note { margin-top: 18px; background: #071530; border: 1px solid rgba(0,229,255,0.35); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: #cbd5e1; line-height: 1.7; }
         .footer { text-align: center; color: #64748b; font-size: 12px; margin-top: 18px; line-height: 1.9; }
         .footer a { color: #DDB65D; font-weight: 700; text-decoration: none; }
@@ -56,6 +65,22 @@
         <div class="sub">AVAILO Dine<br>ఐటమ్ అందుబాటు (sold-out) నియంత్రణ — కస్టమర్ మెనూలో వెంటనే అప్డేట్ అవుతుంది</div>
         <div class="conn" id="connStatus">⏳ కనెక్ట్ అవుతోంది…</div>
         <div class="summary" id="summaryLine">మెనూ లోడ్ అవుతోంది…</div>
+        <!-- Today's special (25 Nov 2026, hotel voice flow GAP 1): the
+             owner sets ONE special per day (dish + optional note). It is
+             saved under dineSpecial/khaleel/{YYYY-MM-DD} and shows live
+             on the customer menu (dine.html) and in Mayura's answers.
+             No record for today = "no special today" — never invented. -->
+        <div class="special-box">
+            <h2>⭐ ఈరోజు స్పెషల్</h2>
+            <div class="special-current" id="specialCurrent">ఈరోజు స్పెషల్ ఇంకా పెట్టలేదు.</div>
+            <input type="text" id="specialDishInput" class="special-input" maxlength="100" placeholder="వంట పేరు — ఉదా: చికెన్ దమ్ బిర్యానీ">
+            <input type="text" id="specialNoteInput" class="special-input" maxlength="140" placeholder="చిన్న వివరం (ఐచ్ఛికం) — ఉదా: ఈరోజు మాత్రమే, మధ్యాహ్నం 2 గంటల వరకు">
+            <div class="special-row">
+                <button type="button" class="special-btn save" onclick="saveTodaySpecial()">✅ స్పెషల్ సేవ్ చేయండి</button>
+                <button type="button" class="special-btn clear" onclick="clearTodaySpecial()">తొలగించు</button>
+            </div>
+            <div class="special-msg" id="specialMsg"></div>
+        </div>
         <div class="search-row">
             <input type="text" id="searchInput" class="search-input" placeholder="🔍 ఐటమ్ వెతకండి..." oninput="onOwnerSearch(this.value)">
         </div>
@@ -114,6 +139,13 @@
         //   the coupon-redemptions view below reads only orders that
         //   actually used a coupon.
         const DINE_ORDERS_PATH = 'availo-kitchen-v1/dineOrders/khaleel';
+        // Today's special (25 Nov 2026, hotel voice flow GAP 1): the
+        // owner sets it here each morning; the customer menu (dine.html)
+        // and Mayura read the same node.
+        //   availo-kitchen-v1/dineSpecial/khaleel/{YYYY-MM-DD}
+        //   {dish, note, updatedAt} — one record per day; no record for
+        //   today means "no special today", never a guessed dish.
+        const DINE_SPECIAL_PATH = 'availo-kitchen-v1/dineSpecial/khaleel';
 
         // ---- The menu (identical data to dine.html — same ids, names, prices) ----
         // AVAILO Dine — full menu, exactly as on the
@@ -534,6 +566,64 @@
             } catch (e) { done(); }
         }
 
+        // ---- Today's special (25 Nov 2026, hotel voice flow GAP 1) ----
+        // One record per day under DINE_SPECIAL_PATH/{YYYY-MM-DD}.
+        // The owner types the dish (+ optional note) and saves; the
+        // customer menu and Mayura read the same node live. Clearing
+        // removes today's record, so the menu shows "no special today".
+        let todaySpecial = null;
+        function ownerTodayKey(d) {
+            const x = d || new Date();
+            const p = function (n) { return String(n).padStart(2, '0'); };
+            return x.getFullYear() + '-' + p(x.getMonth() + 1) + '-' + p(x.getDate());
+        }
+        function renderTodaySpecial() {
+            const cur = document.getElementById('specialCurrent');
+            if (cur) {
+                cur.textContent = (todaySpecial && todaySpecial.dish)
+                    ? ('⭐ ఈరోజు స్పెషల్: ' + todaySpecial.dish + (todaySpecial.note ? ' — ' + todaySpecial.note : ''))
+                    : 'ఈరోజు స్పెషల్ ఇంకా పెట్టలేదు.';
+            }
+            // Prefill the inputs from the live record — but never clobber
+            // what the owner is typing right now.
+            const dish = document.getElementById('specialDishInput');
+            const note = document.getElementById('specialNoteInput');
+            if (dish && document.activeElement !== dish) dish.value = (todaySpecial && todaySpecial.dish) ? todaySpecial.dish : '';
+            if (note && document.activeElement !== note) note.value = (todaySpecial && todaySpecial.note) ? todaySpecial.note : '';
+        }
+        function specialMsg(text, color) {
+            const m = document.getElementById('specialMsg');
+            if (m) { m.textContent = text; m.style.color = color || '#94a3b8'; }
+        }
+        function saveTodaySpecial() {
+            const dishEl = document.getElementById('specialDishInput');
+            const noteEl = document.getElementById('specialNoteInput');
+            const dish = dishEl ? dishEl.value.trim() : '';
+            const note = noteEl ? noteEl.value.trim() : '';
+            if (!dish) { specialMsg('ముందుగా వంట పేరు రాయండి.', '#f87171'); return; }
+            if (!db) { specialMsg('Firebase కనెక్ట్ కాలేదు — ఇంటర్నెట్ చూసి రిఫ్రెష్ చేయండి.', '#f87171'); return; }
+            specialMsg('సేవ్ చేస్తున్నాను…', '#94a3b8');
+            try {
+                db.ref(DINE_SPECIAL_PATH + '/' + ownerTodayKey()).set({
+                    dish: dish.slice(0, 100), note: note.slice(0, 140), updatedAt: Date.now()
+                }).then(function () {
+                    specialMsg('✅ సేవ్ అయ్యింది — కస్టమర్ మెనూలో వెంటనే కనిపిస్తుంది.', '#4ade80');
+                }, function () {
+                    specialMsg('❌ సేవ్ కాలేదు — ఇంటర్నెట్ చూసి మళ్ళీ ప్రయత్నించండి.', '#f87171');
+                });
+            } catch (e) { specialMsg('❌ సేవ్ కాలేదు — మళ్ళీ ప్రయత్నించండి.', '#f87171'); }
+        }
+        function clearTodaySpecial() {
+            if (!db) { specialMsg('Firebase కనెక్ట్ కాలేదు — ఇంటర్నెట్ చూసి రిఫ్రెష్ చేయండి.', '#f87171'); return; }
+            try {
+                db.ref(DINE_SPECIAL_PATH + '/' + ownerTodayKey()).remove().then(function () {
+                    specialMsg('తొలగించాను — ఈరోజు స్పెషల్ లేదు.', '#94a3b8');
+                }, function () {
+                    specialMsg('❌ తొలగించలేకపోయాను — మళ్ళీ ప్రయత్నించండి.', '#f87171');
+                });
+            } catch (e) { /* fail-open */ }
+        }
+
         // ---- Customer reviews (feature 3 of 8) ----
         // Newest first. Hidden reviews are dimmed and marked so the owner
         // can bring them back; the customer menu never shows them.
@@ -635,6 +725,15 @@
                 .sort(function (a, b) { return (b.createdAt - a.createdAt) || String(b.id).localeCompare(String(a.id)); });
                 renderOwnerCoupons();
             }, function () { /* read failed: keep the old list */ });
+            // Today's special (25 Nov 2026, GAP 1): live listener on
+            // today's node only — the owner sees what customers see.
+            db.ref(DINE_SPECIAL_PATH + '/' + ownerTodayKey()).on('value', function (snap) {
+                const val = snap.val() || null;
+                todaySpecial = (val && typeof val.dish === 'string' && val.dish.trim())
+                    ? { dish: val.dish.trim().slice(0, 100), note: (typeof val.note === 'string' ? val.note.trim().slice(0, 140) : '') }
+                    : null;
+                renderTodaySpecial();
+            }, function () { /* read failed: keep the old display */ });
         } else {
             const el = document.getElementById('connStatus');
             if (el) { el.textContent = '🔴 Firebase లోడ్ కాలేదు — ఇంటర్నెట్ చూసి రిఫ్రెష్ చేయండి'; el.className = 'conn bad'; }
@@ -643,6 +742,7 @@
         renderOwnerList();
         renderOwnerReviews();
         renderOwnerCoupons();
+        renderTodaySpecial();
     </script>
 </body>
 </html>
