@@ -464,9 +464,9 @@
         <div class="items-list">
             <div class="dish-row">
                 <div>
-                    <div class="dish-title" data-te="స్పెషల్ వెజ్ బిర్యానీ" data-en="Special Veg Biryani" data-hi="स्पेशल वेज बिरयानी">స్పెషల్ వెజ్ బిర్యానీ</div>
+                    <div class="dish-title" data-te="వెజ్ బిర్యానీ" data-en="Veg Biryani" data-hi="वेज बिरयानी">వెజ్ బిర్యానీ</div>
                     <div class="dish-desc" data-te="మిర్చి కా సాలన్ &amp; రైతా" data-en="Mirchi ka salan &amp; raita" data-hi="मिर्ची का सालन और रायता">మిర్చి కా సాలన్ &amp; రైతా</div>
-                    <span class="dish-cost">₹220</span>
+                    <span class="dish-cost">₹351.43</span>
                 </div>
                 <div class="qty-box">
                     <button class="qty-btn" onclick="modifyItem('vegBiryani', -1)">-</button>
@@ -477,22 +477,22 @@
 
             <div class="dish-row">
                 <div>
-                    <div class="dish-title" data-te="పన్నీర్ బట్టర్ మసాలా" data-en="Paneer Butter Masala" data-hi="पनीर बटर मसाला">పన్నీర్ బట్టర్ మసాలా</div>
+                    <div class="dish-title" data-te="స్పెషల్ చికెన్ బిర్యానీ" data-en="Sp.chicken Biryani" data-hi="स्पेशल चिकन बिरयानी">స్పెషల్ చికెన్ బిర్యానీ</div>
                     <div class="dish-desc" data-te="జీడిపప్పు రిచ్ గ్రేవీ" data-en="Rich cashew gravy" data-hi="काजू की रिच ग्रेवी">జీడిపప్పు రిచ్ గ్రేవీ</div>
-                    <span class="dish-cost">₹180</span>
+                    <span class="dish-cost">₹408.57</span>
                 </div>
                 <div class="qty-box">
-                    <button class="qty-btn" onclick="modifyItem('paneerButter', -1)">-</button>
-                    <span class="qty-val" id="qty_paneerButter">0</span>
-                    <button class="qty-btn" onclick="modifyItem('paneerButter', 1)">+</button>
+                    <button class="qty-btn" onclick="modifyItem('chickenBiryani', -1)">-</button>
+                    <span class="qty-val" id="qty_chickenBiryani">0</span>
+                    <button class="qty-btn" onclick="modifyItem('chickenBiryani', 1)">+</button>
                 </div>
             </div>
 
             <div class="dish-row">
                 <div>
-                    <div class="dish-title" data-te="బట్టర్ నాన్ (2 ముక్కలు)" data-en="Butter Naan (2 Pcs)" data-hi="बटर नान (2 पीस)">బట్టర్ నాన్ (2 ముక్కలు)</div>
+                    <div class="dish-title" data-te="బట్టర్ నాన్" data-en="Butter Naan" data-hi="बटर नान">బట్టర్ నాన్</div>
                     <div class="dish-desc" data-te="తాజా రోటీ బ్రెడ్" data-en="Fresh roti bread" data-hi="ताज़ा रोटी ब्रेड">తాజా రోటీ బ్రెడ్</div>
-                    <span class="dish-cost">₹60</span>
+                    <span class="dish-cost">₹113.33</span>
                 </div>
                 <div class="qty-box">
                     <button class="qty-btn" onclick="modifyItem('butterNaan', -1)">-</button>
@@ -503,14 +503,14 @@
 
             <div class="dish-row">
                 <div>
-                    <div class="dish-title" data-te="మినరల్ వాటర్ (1 లీటర్)" data-en="Mineral Water (1L)" data-hi="मिनरल वॉटर (1 लीटर)">మినరల్ వాటర్ (1 లీటర్)</div>
-                    <div class="dish-desc" data-te="కూల్డ్ వాటర్ బాటిల్" data-en="Chilled water bottle" data-hi="ठंडी पानी की बोतल">కూల్డ్ వాటర్ బాటిల్</div>
-                    <span class="dish-cost">₹25</span>
+                    <div class="dish-title" data-te="బట్టర్ మిల్క్" data-en="Butter Milk" data-hi="बटर मिल्क">బట్టర్ మిల్క్</div>
+                    <div class="dish-desc" data-te="చల్లని మజ్జిగ" data-en="Chilled buttermilk" data-hi="ठंडी छाछ">చల్లని మజ్జిగ</div>
+                    <span class="dish-cost">₹56.19</span>
                 </div>
                 <div class="qty-box">
-                    <button class="qty-btn" onclick="modifyItem('waterBottle', -1)">-</button>
-                    <span class="qty-val" id="qty_waterBottle">0</span>
-                    <button class="qty-btn" onclick="modifyItem('waterBottle', 1)">+</button>
+                    <button class="qty-btn" onclick="modifyItem('butterMilk', -1)">-</button>
+                    <span class="qty-val" id="qty_butterMilk">0</span>
+                    <button class="qty-btn" onclick="modifyItem('butterMilk', 1)">+</button>
                 </div>
             </div>
         </div>
@@ -702,10 +702,10 @@
         }
 
         const menuData = {
-            vegBiryani: { name: { te: "స్పెషల్ వెజ్ బిర్యానీ", en: "Special Veg Biryani", hi: "स्पेशल वेज बिरयानी" }, price: 220, count: 0 },
-            paneerButter: { name: { te: "పన్నీర్ బట్టర్ మసాలా", en: "Paneer Butter Masala", hi: "पनीर बटर मसाला" }, price: 180, count: 0 },
-            butterNaan: { name: { te: "బట్టర్ నాన్ (2 ముక్కలు)", en: "Butter Naan (2 Pcs)", hi: "बटर नान (2 पीस)" }, price: 60, count: 0 },
-            waterBottle: { name: { te: "మినరల్ వాటర్ (1 లీటర్)", en: "Mineral Water (1L)", hi: "मिनरल वॉटर (1 लीटर)" }, price: 25, count: 0 }
+            vegBiryani: { name: { te: "వెజ్ బిర్యానీ", en: "Veg Biryani", hi: "वेज बिरयानी" }, price: 351.43, count: 0 },
+            chickenBiryani: { name: { te: "స్పెషల్ చికెన్ బిర్యానీ", en: "Sp.chicken Biryani", hi: "स्पेशल चिकन बिरयानी" }, price: 408.57, count: 0 },
+            butterNaan: { name: { te: "బట్టర్ నాన్", en: "Butter Naan", hi: "बटर नान" }, price: 113.33, count: 0 },
+            butterMilk: { name: { te: "బట్టర్ మిల్క్", en: "Butter Milk", hi: "बटर मिल्क" }, price: 56.19, count: 0 }
         };
 
         function speakGentSupervisor(text, mode = "") {
