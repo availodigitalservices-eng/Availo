@@ -2713,6 +2713,11 @@
                     en: 'Rates are not fixed yet — please ask on WhatsApp for the right price.',
                     hi: 'दर अभी तय नहीं हुए हैं — कृपया WhatsApp पर पूछें, सही कीमत बताई जाएगी।'
                 },
+        nri: {
+            te: 'NRI తల్లిదండ్రుల సంరక్షణ ప్లాన్లు: AVAILO కేర్ ₹2,499/నెల, AVAILO ప్లస్ ₹4,999/నెల, AVAILO ఎలైట్ ₹9,999/నెల. అప్లికేషన్ కోసం WhatsAppలో సంప్రదించండి: 9966157369.',
+            en: 'NRI parents care plans: AVAILO Care ₹2,499/month, AVAILO Plus ₹4,999/month, AVAILO Elite ₹9,999/month. To apply, reach us on WhatsApp: 9966157369.',
+            hi: 'NRI माता-पिता देखभाल योजनाएँ: AVAILO केयर ₹2,499/माह, AVAILO प्लस ₹4,999/माह, AVAILO एलीट ₹9,999/माह। आवेदन के लिए WhatsApp पर संपर्क करें: 9966157369।'
+        },
                 contact: {
                     te: 'మమ్మల్ని WhatsAppలో సంప్రదించండి: 9966157369.',
                     en: 'Reach us on WhatsApp: 9966157369.',
@@ -2754,6 +2759,7 @@
                 if (kw.special) return specialText();
                 return popularText();
             }
+            if (has('nri', 'ఎన్ఆర్ఐ', 'తల్లిదండ్రుల', 'parents', 'माता-पिता')) return A.nri[L];
             if (has('రేటు', 'రేట్లు', 'ధర', 'ఖర్చు', 'rate', 'price', 'cost', 'दर', 'कीमत')) return A.rates[L];
             if (has('గేట్', 'gate', 'పాస్', 'pass', 'ఫ్లాట్', 'flat', 'విజిటర్', 'visitor', 'गेट', 'पास')) return A.gate[L];
             if (has('టేబుల్', 'table', 'బుకింగ్', 'booking', 'రిజర్వ్', 'टेबल', 'बुकिंग')) return A.booking[L];
