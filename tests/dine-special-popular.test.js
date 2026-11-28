@@ -444,6 +444,122 @@ test('dineTodayKey: returns local YYYY-MM-DD for a given date', () => {
 });
 
 // ---------------------------------------------------------------------------
+// Part B2 — dine.html, 28 Nov 2026: ad slot, spice level, most-ordered
+// today banner. (loadDinePage from Part B; kitchenDb is null here, so
+// the live listeners fail open and both banners stay hidden.)
+// ---------------------------------------------------------------------------
+
+test('dine ad slot: placeholder only — no advertiser, brand, or price', () => {
+    const { window, document } = loadDinePage();
+    try {
+        const slot = document.getElementById('dineAdSlot');
+        assert.ok(slot, 'ad slot element must exist');
+        assert.ok(slot.textContent.includes('మీ యాడ్ ఇక్కడ'), 'placeholder text: ' + slot.textContent);
+        // The page loads in Telugu, so the English line lives in the
+        // data-en attribute until the language is switched.
+        assert.equal(slot.querySelector('span').getAttribute('data-en'), '📢 Your ad here', 'English placeholder on the data-en attribute');
+        assert.ok(!slot.textContent.includes('₹'), 'no price in the placeholder');
+        // The slot sits at the top of the menu container, directly under
+        // the header that carries the restaurant name.
+        const container = document.getElementById('mainContainer');
+        assert.ok(container, 'mainContainer must exist');
+        assert.equal(container.children[0].id, 'dineAdSlot', 'ad slot is the first child of the menu container');
+    } finally { window.close(); }
+});
+
+test('spice: Normal is the default; picking a level updates state + active pill', () => {
+    const { window, document } = loadDinePage();
+    try {
+        assert.equal(window.getSpiceLevel(), 'normal', 'default is Normal');
+        assert.ok(document.getElementById('spiceNormalBtn').classList.contains('active'), 'Normal pill starts active');
+        assert.ok(!document.getElementById('spiceHeavyBtn').classList.contains('active'), 'Heavy pill starts inactive');
+        window.setSpiceLevel('heavy');
+        assert.equal(window.getSpiceLevel(), 'heavy', 'picked level sticks');
+        assert.ok(document.getElementById('spiceHeavyBtn').classList.contains('active'), 'Heavy pill becomes active');
+        assert.ok(!document.getElementById('spiceNormalBtn').classList.contains('active'), 'Normal pill loses active');
+        window.setSpiceLevel('bogus');
+        assert.equal(window.getSpiceLevel(), 'normal', 'an unknown level falls back to Normal');
+    } finally { window.close(); }
+});
+
+test('spice: withSpiceLine inserts the Telugu label before the time line', () => {
+    const { window } = loadDinePage();
+    try {
+        const msg = 'HEAD%0A*సమయం:* 10:00';
+        const out = window.withSpiceLine(msg, 'spicy');
+        assert.ok(out.includes('*కారం స్థాయి:*'), 'spice line present: ' + out);
+        assert.ok(out.includes(encodeURIComponent('స్పైసీ')), 'Telugu label, URL-encoded: ' + out);
+        assert.ok(out.indexOf('*కారం స్థాయి:*') < out.indexOf('*సమయం:*'), 'spice line goes before the time line');
+        assert.ok(out.endsWith('%0A*సమయం:* 10:00'), 'the rest of the message is untouched');
+        const noMarker = window.withSpiceLine('HEAD', 'medium');
+        assert.ok(noMarker.includes('*కారం స్థాయి:*'), 'appends when the time marker is missing');
+        assert.ok(noMarker.includes(encodeURIComponent('మీడియం స్పైసీ')), 'medium label: ' + noMarker);
+    } finally { window.close(); }
+});
+
+test('spice: order record carries spiceLevel — Normal by default, chosen level when picked', () => {
+    const { window } = loadDinePage();
+    try {
+        const def = window.buildDineOrderRecord('AV-TEST-1', 'cash', {});
+        assert.equal(def.spiceLevel, 'normal', 'default Normal when nothing is picked');
+        const picked = window.buildDineOrderRecord('AV-TEST-2', 'cash', { spiceLevel: 'heavy' });
+        assert.equal(picked.spiceLevel, 'heavy', 'picked level rides on the record');
+        const bad = window.buildDineOrderRecord('AV-TEST-3', 'cash', { spiceLevel: 'extra-hot' });
+        assert.equal(bad.spiceLevel, 'normal', 'an unknown level never reaches the record');
+    } finally { window.close(); }
+});
+
+test('most ordered: banner hidden by default, shows the top dish, hides when there are no orders', () => {
+    const { window, document } = loadDinePage();
+    try {
+        const banner = document.getElementById('mostOrderedBanner');
+        assert.ok(banner, 'banner element must exist');
+        assert.equal(banner.style.display, 'none', 'hidden when there are no orders today');
+        window.renderMostOrderedToday([{ id: 'biryani', name: 'చికెన్ బిర్యానీ', qty: 5, revenue: 1200 }]);
+        assert.equal(banner.style.display, 'block', 'shown once a top dish is counted');
+        assert.equal(document.getElementById('mostOrderedDish').textContent, 'చికెన్ బిర్యానీ');
+        window.renderMostOrderedToday([]);
+        assert.equal(banner.style.display, 'none', 'hidden again with no orders');
+        window.renderMostOrderedToday(null);
+        assert.equal(banner.style.display, 'none', 'hidden for a null snapshot (read failed)');
+    } finally { window.close(); }
+});
+
+test('most ordered: dish text is shown literally, never injected as HTML', () => {
+    const { window, document } = loadDinePage();
+    try {
+        window.renderMostOrderedToday([{ id: 'x', name: '<img src=x onerror=alert(1)>', qty: 1, revenue: 10 }]);
+        const banner = document.getElementById('mostOrderedBanner');
+        assert.equal(banner.style.display, 'block');
+        assert.equal(banner.querySelectorAll('img').length, 0, 'no img element may be created from a dish name');
+        assert.ok(document.getElementById('mostOrderedDish').textContent.includes('<img'), 'dish shown literally as text');
+    } finally { window.close(); }
+});
+
+test('most ordered: ranks by plates desc, revenue tiebreak, ignores yesterday, empty input, string items', () => {
+    const { window } = loadDinePage();
+    try {
+        const now = Date.now();
+        const orders = {
+            'AV-1': { items: [{ id: 'a', name: 'బిర్యానీ', qty: 2, price: 100 }], createdAt: now },
+            'AV-2': { items: [{ id: 'b', name: 'దోస', qty: 2, price: 200 }, { id: 'a', name: 'బిర్యానీ', qty: 1, price: 100 }], createdAt: now },
+            'AV-OLD': { items: [{ id: 'dosa', name: 'మసాలా దోస', qty: 9, price: 90 }], createdAt: now - 26 * 3600 * 1000 },
+            'AV-EMPTY': { items: [], createdAt: now },
+            'AV-NOITEMS': { createdAt: now },
+            'AV-STR': { items: 'Chicken 65 x 2 = ₹200', createdAt: now },
+        };
+        const top = window.getPopularToday(orders, now);
+        assert.equal(top.length, 2, 'only today\'s orders with items count');
+        assert.equal(top[0].id, 'a', 'biryani 3 plates first');
+        assert.equal(top[0].qty, 3);
+        assert.equal(top[1].id, 'b', 'dosa beats nothing else at 2 plates');
+        assert.equal(window.getPopularToday(null, now).length, 0);
+        assert.equal(window.getPopularToday({}, now).length, 0);
+        assert.equal(window.getPopularToday([], now).length, 0);
+    } finally { window.close(); }
+});
+
+// ---------------------------------------------------------------------------
 // Part C — dine-owner.html: setting / clearing today's special.
 // ---------------------------------------------------------------------------
 function loadOwnerPage(opts) {
