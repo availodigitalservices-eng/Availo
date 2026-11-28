@@ -844,6 +844,21 @@
             line-height: 1.1;
         }
 
+        /* Cooking animation (28 Nov 2026): inline-SVG pot with rising
+           steam, shown ONLY while the kitchen is actually cooking
+           (status 'preparing'). No external image, no new files. */
+        .cook-anim { width: 96px; height: 74px; margin: 2px auto 2px; display: block; }
+        .cook-anim .steam { fill: none; stroke: #e2e8f0; stroke-width: 3; stroke-linecap: round; opacity: 0; animation: steamRise 2.2s ease-in-out infinite; }
+        .cook-anim .steam.s2 { animation-delay: 0.7s; }
+        .cook-anim .steam.s3 { animation-delay: 1.4s; }
+        @keyframes steamRise { 0% { opacity: 0; transform: translateY(6px); } 35% { opacity: 0.9; } 100% { opacity: 0; transform: translateY(-8px); } }
+        .cook-anim .pot { animation: potBob 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+        @keyframes potBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+        @media (prefers-reduced-motion: reduce) {
+            .cook-anim .steam, .cook-anim .pot { animation: none; }
+            .cook-anim .steam { opacity: 0.7; }
+        }
+
         .progress-track {
             width: 100%;
             height: 8px;
@@ -1224,7 +1239,6 @@
         </div>
         <div data-te="AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు" data-en="AVAILO Digital Services · Vijayawada &amp; Guntur" data-hi="AVAILO डिजिटल सर्विसेज़ · विजयवाड़ा और गुंटूर">AVAILO డిజిటల్ సర్వీసెస్ · విజయవాడ &amp; గుంటూరు</div>
         <div style="margin-top: 6px; font-size: 11px;"><a href="privacy.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="గోప్యతా విధానం" data-en="Privacy Policy" data-hi="गोपनीयता नीति">గోప్యతా విధానం</a> &nbsp;·&nbsp; <a href="terms.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="నిబంధనలు" data-en="Terms" data-hi="नियम">నిబంధనలు</a></div>
-        <div style="margin-top: 6px; font-size: 11px;"><a href="smart.html" style="color: var(--brand-gold); font-weight: 700; text-decoration: none;" data-te="🖥️ సూపర్‌వైజర్ డాష్‌బోర్డ్" data-en="🖥️ Supervisor Dashboard" data-hi="🖥️ सुपरवाइज़र डैशबोर्ड">🖥️ సూపర్‌వైజర్ డాష్‌బోర్డ్</a></div>
     </footer>
 
     <!-- Order confirmation overlay -->
@@ -2564,6 +2578,11 @@
             thankYouSpeak: { te: "థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. మధ్యలో ఉల్లిపాయలు, నిమ్మకాయ, పెరుగు లేదా ఏసీ అడ్జస్ట్‌మెంట్ కోసం కింద బటన్లు వాడుకోండి సర్.", en: "Thank you, sir! Your order has gone to the kitchen. It will reach your table hot in fifteen minutes. Meanwhile, use the buttons below for onions, lemon, curd or AC adjustment, sir.", hi: "धन्यवाद सर! आपका ऑर्डर किचन चला गया है। पंद्रह मिनट में गरमागरम आपकी टेबल पर आ जाएगा। बीच में प्याज़, नींबू, दही या एसी के लिए नीचे दिए गए बटन इस्तेमाल कीजिए सर।" },
             trackerTitle: { te: "లైవ్ ఆర్డర్ ట్రాకర్", en: "LIVE ORDER TRACKER", hi: "लाइव ऑर्डर ट्रैकर" },
             trackerEtaLabel: { te: "అంచనా సమయం", en: "Estimated time", hi: "अनुमानित समय" },
+            // Confirmation-gated ETA (28 Nov 2026): while the order is only
+            // 'received', the restaurant has not confirmed yet — show this
+            // waiting line instead of any timer.
+            trackerWaitingConfirm: { te: "⏳ రెస్టారెంట్ ఆర్డర్ చూస్తోంది — కన్ఫర్మ్ కాగానే టైమర్ కనిపిస్తుంది", en: "⏳ The restaurant is reviewing your order — the timer will appear once confirmed", hi: "⏳ रेस्टोरेंट आपका ऑर्डर देख रहा है — कन्फ़र्म होते ही टाइमर दिखेगा" },
+            trackerCookingNow: { te: "🍳 ఇప్పుడు వండుతున్నారు…", en: "🍳 Cooking now…", hi: "🍳 अभी पकाया जा रहा है…" },
             reviewsTitle: { te: "⭐ కస్టమర్ రివ్యూలు", en: "⭐ Customer Reviews", hi: "⭐ ग्राहक समीक्षाएँ" },
             reviewsWord: { te: "రివ్యూలు", en: "reviews", hi: "समीक्षाएँ" },
             rateDishBtn: { te: "⭐ రేట్ చేయండి", en: "⭐ Rate this dish", hi: "⭐ रेट कीजिए" },
@@ -3520,8 +3539,8 @@
             } catch (e) { return false; }
         }
 
-        function saveActiveOrder(orderId, billInfo, mode, placedAt) {
-            try { localStorage.setItem(ACTIVE_ORDER_KEY, JSON.stringify({ orderId, billInfo, mode: mode || 'dine-in', placedAt: placedAt || Date.now() })); } catch (e) {}
+        function saveActiveOrder(orderId, billInfo, mode, placedAt, confirmedAt) {
+            try { localStorage.setItem(ACTIVE_ORDER_KEY, JSON.stringify({ orderId, billInfo, mode: mode || 'dine-in', placedAt: placedAt || Date.now(), confirmedAt: confirmedAt || null })); } catch (e) {}
         }
 
         function clearActiveOrder() {
@@ -3542,9 +3561,20 @@
                 trackerListenerRef.on('value', function (snap) {
                     const rec = snap.val();
                     if (rec && rec.status && (TRACKER_STAGES_DINEIN.indexOf(rec.status) !== -1 || TRACKER_STAGES_DELIVERY.indexOf(rec.status) !== -1)) {
+                        const firstSnap = trackerSuppressAnnounce;
                         const announce = !trackerSuppressAnnounce;
                         trackerSuppressAnnounce = false;
                         if (rec.mode && rec.mode !== trackerState.mode) setTrackerMode(rec.mode);
+                        // Restore fallback (28 Nov 2026): on the FIRST
+                        // snapshot the saved order may already be past
+                        // 'received' — confirmed before this change, so
+                        // no confirmedAt was ever saved. We cannot know
+                        // when the kitchen confirmed it, so count its
+                        // timer from placedAt (not "now").
+                        if (firstSnap && !trackerState.confirmedAt && rec.status !== 'received') {
+                            trackerState.confirmedAt = trackerState.placedAt || Date.now();
+                            saveActiveOrder(trackerState.orderId, trackerState.billInfo, trackerState.mode, trackerState.placedAt, trackerState.confirmedAt);
+                        }
                         updateTrackerStatus(rec.status, announce, rec.liveLocation);
                     }
                 }, function () { /* read failed: keep the last known status */ });
@@ -3562,9 +3592,21 @@
             trackerState.status = status;
             if (liveLocation !== undefined) trackerState.liveLocation = liveLocation || '';
             renderTrackerSteps();
+            // Confirmation (28 Nov 2026): the FIRST move past 'received'
+            // is the restaurant's confirmation — the kitchen taps
+            // "👨‍🍳 తయారు మొదలు" on kitchen.html, which sets status
+            // 'preparing'. Stamp confirmedAt once and persist it, so the
+            // 15-minute cooking countdown starts HERE, not at order time.
+            // (Any later status also implies confirmation, in case a step
+            // was skipped — confirmedAt is then stamped at that moment.)
+            if (status !== 'received' && !trackerState.confirmedAt) {
+                trackerState.confirmedAt = Date.now();
+                saveActiveOrder(trackerState.orderId, trackerState.billInfo, trackerState.mode, trackerState.placedAt, trackerState.confirmedAt);
+            }
             // Once the food is ready / served / at the gate, the ETA
             // countdown has done its job — freeze it.
             if (status === 'ready' || status === 'served' || status === 'at-gate') stopTrackerEta();
+            renderTrackerEtaState();
             if (announce !== false && status === 'ready' && prev !== 'ready') speakGentVoice(t('trackerReadySpeak'));
             if (announce !== false && status === 'out-for-delivery' && prev !== 'out-for-delivery') speakGentVoice(t('trackerOutForDeliverySpeak'));
             if (announce !== false && status === 'at-gate' && prev !== 'at-gate') speakGentVoice(t('trackerAtGateSpeak'));
@@ -3615,18 +3657,48 @@
             renderRiderLocationBox();
         }
 
-        // Tracker ETA countdown (28 Nov 2026): the order tracker shows a
-        // countdown from the moment the order is placed. SAMPLE ONLY — 15
-        // minutes is a placeholder. When a real restaurant is onboarded,
-        // ask them how long an order takes and set their time here
-        // (per-restaurant ETA replaces this default). The countdown
-        // survives a page refresh: placedAt is saved with the active order.
+        // Tracker ETA countdown (28 Nov 2026, confirmation-gated): the
+        // timer does NOT start when the order is placed. Status 'received'
+        // only means the order reached the kitchen; the restaurant
+        // confirms by tapping "👨‍🍳 తయారు మొదలు" on kitchen.html, which
+        // sets status 'preparing' — confirmedAt is stamped then, and the
+        // 15-minute countdown runs from confirmedAt, NOT from placedAt.
+        // SAMPLE ONLY — 15 minutes is a placeholder. When a real
+        // restaurant is onboarded, ask them how long an order takes and
+        // set their time here (per-restaurant ETA replaces this default).
+        // The countdown survives a page refresh: confirmedAt is saved
+        // with the active order; an old saved order without confirmedAt
+        // falls back to placedAt so the timer still works.
         const TRACKER_ETA_MINUTES = 15;
         let trackerEtaInterval = null;
 
+        function trackerEtaBaseMs() {
+            if (!trackerState) return Date.now();
+            return trackerState.confirmedAt || trackerState.placedAt || Date.now();
+        }
+
         function trackerEtaRemainingSec() {
-            if (!trackerState || !trackerState.placedAt) return TRACKER_ETA_MINUTES * 60;
-            return Math.max(0, TRACKER_ETA_MINUTES * 60 - Math.floor((Date.now() - trackerState.placedAt) / 1000));
+            if (!trackerState) return TRACKER_ETA_MINUTES * 60;
+            return Math.max(0, TRACKER_ETA_MINUTES * 60 - Math.floor((Date.now() - trackerEtaBaseMs()) / 1000));
+        }
+
+        // Show/hide the waiting line vs the cooking animation + ETA card:
+        // 'received' -> waiting line only (no timer — not confirmed yet).
+        // 'preparing' -> cooking animation + timer running from confirmedAt.
+        // 'ready'/'served'/'at-gate'/'out-for-delivery' -> timer frozen,
+        // cooking animation hidden (food is done cooking).
+        function renderTrackerEtaState() {
+            const waitingEl = document.getElementById('trackerWaitingLine');
+            const etaWrap = document.getElementById('trackerEtaWrap');
+            const animEl = document.getElementById('trackerCookAnim');
+            if (!trackerState || !waitingEl || !etaWrap) return;
+            const confirmed = !!trackerState.confirmedAt;
+            const done = trackerState.status === 'ready' || trackerState.status === 'served' || trackerState.status === 'at-gate' || trackerState.status === 'out-for-delivery';
+            waitingEl.style.display = confirmed ? 'none' : '';
+            etaWrap.style.display = confirmed ? '' : 'none';
+            if (animEl) animEl.style.display = (confirmed && !done) ? '' : 'none';
+            if (confirmed && !done) startTrackerEta();
+            else stopTrackerEta();
         }
 
         function renderTrackerEta() {
@@ -3649,9 +3721,13 @@
             if (trackerEtaInterval) { clearInterval(trackerEtaInterval); trackerEtaInterval = null; }
         }
 
-        function displayLiveTrackerScreen(billInfo, orderRef, speak, mode, placedAt) {
+        function displayLiveTrackerScreen(billInfo, orderRef, speak, mode, placedAt, confirmedAt) {
             const orderId = orderRef || '';
-            trackerState = { billInfo: billInfo, orderId: orderId, status: 'received', mode: (mode === 'delivery') ? 'delivery' : 'dine-in', liveLocation: '', placedAt: placedAt || Date.now() };
+            // A saved confirmedAt means the restaurant already confirmed
+            // this order before the reload — show it as 'preparing' at
+            // once (the live listener corrects the exact status a moment
+            // later); otherwise the order is still waiting for confirmation.
+            trackerState = { billInfo: billInfo, orderId: orderId, status: confirmedAt ? 'preparing' : 'received', mode: (mode === 'delivery') ? 'delivery' : 'dine-in', liveLocation: '', placedAt: placedAt || Date.now(), confirmedAt: confirmedAt || null };
             const container = document.getElementById('mainContainer');
             container.innerHTML = `
                 <div class="tracker-card">
@@ -3675,8 +3751,28 @@
                     <div id="riderLiveLocationBox"></div>
 
                     <div class="timer-box">
-                        <div id="trackerEtaLabel" style="font-size: 12px; color: var(--brand-gold); font-weight: 800; text-align: center;">${t('trackerEtaLabel')}</div>
-                        <div class="timer-digits" id="trackerEtaDigits" style="text-align: center;">15:00</div>
+                        <div id="trackerWaitingLine" style="font-size: 13px; color: #fbbf24; font-weight: 800; text-align: center; line-height: 1.6; padding: 6px 4px;">${t('trackerWaitingConfirm')}</div>
+                        <div id="trackerEtaWrap" style="display: none;">
+                            <div id="trackerCookAnim">
+                                <svg class="cook-anim" viewBox="0 0 120 92" aria-hidden="true">
+                                    <g>
+                                        <path class="steam s1" d="M46 40 C 43 32, 49 28, 46 20" />
+                                        <path class="steam s2" d="M60 40 C 57 30, 63 26, 60 16" />
+                                        <path class="steam s3" d="M74 40 C 71 32, 77 28, 74 20" />
+                                    </g>
+                                    <g class="pot">
+                                        <path d="M38 46 Q60 36 82 46 Z" fill="#94a3b8" />
+                                        <circle cx="60" cy="40" r="3" fill="#cbd5e1" />
+                                        <path d="M34 46 h52 l-4 34 a6 6 0 0 1 -6 5 h-32 a6 6 0 0 1 -6 -5 z" fill="#f59e0b" />
+                                        <rect x="26" y="50" width="9" height="6" rx="3" fill="#b45309" />
+                                        <rect x="85" y="50" width="9" height="6" rx="3" fill="#b45309" />
+                                    </g>
+                                </svg>
+                                <div id="trackerCookingLabel" style="font-size: 12.5px; color: #fbbf24; font-weight: 800; text-align: center;">${t('trackerCookingNow')}</div>
+                            </div>
+                            <div id="trackerEtaLabel" style="font-size: 12px; color: var(--brand-gold); font-weight: 800; text-align: center;">${t('trackerEtaLabel')}</div>
+                            <div class="timer-digits" id="trackerEtaDigits" style="text-align: center;">15:00</div>
+                        </div>
                         <div id="trackerBillLine" style="font-size: 12.5px; color: var(--accent-green); font-weight: 700;">${t('totalBillLabel')} ${escHtml(billInfo)}</div>
                     </div>
 
@@ -3698,7 +3794,7 @@
             if (speak !== false) speakGentVoice(t('thankYouSpeak'));
             renderTrackerSteps();
             attachTrackerListener(orderId);
-            startTrackerEta();
+            renderTrackerEtaState();
         }
 
         // Re-apply the selected language to the live-tracker screen (built by JS,
@@ -3707,6 +3803,8 @@
             if (!trackerState) return;
             const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
             setText('trackerTitle', t('trackerTitle'));
+            setText('trackerWaitingLine', t('trackerWaitingConfirm'));
+            setText('trackerCookingLabel', t('trackerCookingNow'));
             setText('trackerEtaLabel', t('trackerEtaLabel'));
             setText('trackerBillLine', `${t('totalBillLabel')} ${trackerState.billInfo}`);
             trackerStages().forEach(st => {
@@ -3731,7 +3829,7 @@
             let saved = null;
             try { saved = JSON.parse(localStorage.getItem(ACTIVE_ORDER_KEY) || 'null'); } catch (e) { saved = null; }
             if (!saved || !saved.orderId) return;
-            displayLiveTrackerScreen(saved.billInfo || '', saved.orderId, false, saved.mode, saved.placedAt);
+            displayLiveTrackerScreen(saved.billInfo || '', saved.orderId, false, saved.mode, saved.placedAt, saved.confirmedAt);
         }
 
         // Apply the saved language on load (no cycling) and show the CURRENT
