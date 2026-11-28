@@ -2436,6 +2436,7 @@
             refillTitle: { te: "⚡ తక్షణ అవసరాలు / రీఫిల్స్:", en: "⚡ Instant needs / refills:", hi: "⚡ तुरंत ज़रूरतें / रीफ़िल:" },
             thankYouSpeak: { te: "థాంక్యూ సర్! మీ ఆర్డర్ కిచెన్‌కు వెళ్ళింది. పదిహేను నిమిషాల్లో వేడి వేడిగా మీ టేబుల్ వద్దకు వస్తుంది. మధ్యలో ఉల్లిపాయలు, నిమ్మకాయ, పెరుగు లేదా ఏసీ అడ్జస్ట్‌మెంట్ కోసం కింద బటన్లు వాడుకోండి సర్.", en: "Thank you, sir! Your order has gone to the kitchen. It will reach your table hot in fifteen minutes. Meanwhile, use the buttons below for onions, lemon, curd or AC adjustment, sir.", hi: "धन्यवाद सर! आपका ऑर्डर किचन चला गया है। पंद्रह मिनट में गरमागरम आपकी टेबल पर आ जाएगा। बीच में प्याज़, नींबू, दही या एसी के लिए नीचे दिए गए बटन इस्तेमाल कीजिए सर।" },
             trackerTitle: { te: "లైవ్ ఆర్డర్ ట్రాకర్", en: "LIVE ORDER TRACKER", hi: "लाइव ऑर्डर ट्रैकर" },
+            trackerEtaLabel: { te: "అంచనా సమయం", en: "Estimated time", hi: "अनुमानित समय" },
             reviewsTitle: { te: "⭐ కస్టమర్ రివ్యూలు", en: "⭐ Customer Reviews", hi: "⭐ ग्राहक समीक्षाएँ" },
             reviewsWord: { te: "రివ్యూలు", en: "reviews", hi: "समीक्षाएँ" },
             rateDishBtn: { te: "⭐ రేట్ చేయండి", en: "⭐ Rate this dish", hi: "⭐ रेट कीजिए" },
@@ -3199,8 +3200,9 @@
             if (claim) loyaltySetClaimPending(false);
             // One stamp per completed order (WhatsApp confirm).
             loyaltyAddStamp();
-            saveActiveOrder(orderId, coupon ? fmtPrice(payable) : billLabel, orderMode);
-            displayLiveTrackerScreen(billLabel, orderId, undefined, orderMode);
+            const placedAt = Date.now();
+            saveActiveOrder(orderId, coupon ? fmtPrice(payable) : billLabel, orderMode, placedAt);
+            displayLiveTrackerScreen(billLabel, orderId, undefined, orderMode, placedAt);
             pushKitchenEvent('orders', { table: tableNumber, hotel: hotelName, items: pendingOrderItems || billLabel, time: new Date().toLocaleTimeString(), ref: orderId });
             // Log to Google Sheets (never blocks WhatsApp).
             sendToSheet('Orders', { source: 'Dine', hotel: hotelName, table: tableNumber, items: pendingOrderItems || billLabel, total: pendingOrderBill, ref: orderId });
@@ -3383,8 +3385,8 @@
             } catch (e) { return false; }
         }
 
-        function saveActiveOrder(orderId, billInfo, mode) {
-            try { localStorage.setItem(ACTIVE_ORDER_KEY, JSON.stringify({ orderId, billInfo, mode: mode || 'dine-in' })); } catch (e) {}
+        function saveActiveOrder(orderId, billInfo, mode, placedAt) {
+            try { localStorage.setItem(ACTIVE_ORDER_KEY, JSON.stringify({ orderId, billInfo, mode: mode || 'dine-in', placedAt: placedAt || Date.now() })); } catch (e) {}
         }
 
         function clearActiveOrder() {
@@ -3425,6 +3427,9 @@
             trackerState.status = status;
             if (liveLocation !== undefined) trackerState.liveLocation = liveLocation || '';
             renderTrackerSteps();
+            // Once the food is ready / served / at the gate, the ETA
+            // countdown has done its job — freeze it.
+            if (status === 'ready' || status === 'served' || status === 'at-gate') stopTrackerEta();
             if (announce !== false && status === 'ready' && prev !== 'ready') speakGentVoice(t('trackerReadySpeak'));
             if (announce !== false && status === 'out-for-delivery' && prev !== 'out-for-delivery') speakGentVoice(t('trackerOutForDeliverySpeak'));
             if (announce !== false && status === 'at-gate' && prev !== 'at-gate') speakGentVoice(t('trackerAtGateSpeak'));
@@ -3475,9 +3480,43 @@
             renderRiderLocationBox();
         }
 
-        function displayLiveTrackerScreen(billInfo, orderRef, speak, mode) {
+        // Tracker ETA countdown (28 Nov 2026): the order tracker shows a
+        // countdown from the moment the order is placed. SAMPLE ONLY — 15
+        // minutes is a placeholder. When a real restaurant is onboarded,
+        // ask them how long an order takes and set their time here
+        // (per-restaurant ETA replaces this default). The countdown
+        // survives a page refresh: placedAt is saved with the active order.
+        const TRACKER_ETA_MINUTES = 15;
+        let trackerEtaInterval = null;
+
+        function trackerEtaRemainingSec() {
+            if (!trackerState || !trackerState.placedAt) return TRACKER_ETA_MINUTES * 60;
+            return Math.max(0, TRACKER_ETA_MINUTES * 60 - Math.floor((Date.now() - trackerState.placedAt) / 1000));
+        }
+
+        function renderTrackerEta() {
+            const el = document.getElementById('trackerEtaDigits');
+            if (!el) return;
+            const s = trackerEtaRemainingSec();
+            el.innerText = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+        }
+
+        function startTrackerEta() {
+            stopTrackerEta();
+            renderTrackerEta();
+            trackerEtaInterval = setInterval(function () {
+                renderTrackerEta();
+                if (trackerEtaRemainingSec() <= 0) stopTrackerEta();
+            }, 1000);
+        }
+
+        function stopTrackerEta() {
+            if (trackerEtaInterval) { clearInterval(trackerEtaInterval); trackerEtaInterval = null; }
+        }
+
+        function displayLiveTrackerScreen(billInfo, orderRef, speak, mode, placedAt) {
             const orderId = orderRef || '';
-            trackerState = { billInfo: billInfo, orderId: orderId, status: 'received', mode: (mode === 'delivery') ? 'delivery' : 'dine-in', liveLocation: '' };
+            trackerState = { billInfo: billInfo, orderId: orderId, status: 'received', mode: (mode === 'delivery') ? 'delivery' : 'dine-in', liveLocation: '', placedAt: placedAt || Date.now() };
             const container = document.getElementById('mainContainer');
             container.innerHTML = `
                 <div class="tracker-card">
@@ -3501,6 +3540,8 @@
                     <div id="riderLiveLocationBox"></div>
 
                     <div class="timer-box">
+                        <div id="trackerEtaLabel" style="font-size: 12px; color: var(--brand-gold); font-weight: 800; text-align: center;">${t('trackerEtaLabel')}</div>
+                        <div class="timer-digits" id="trackerEtaDigits" style="text-align: center;">15:00</div>
                         <div id="trackerBillLine" style="font-size: 12.5px; color: var(--accent-green); font-weight: 700;">${t('totalBillLabel')} ${escHtml(billInfo)}</div>
                     </div>
 
@@ -3522,6 +3563,7 @@
             if (speak !== false) speakGentVoice(t('thankYouSpeak'));
             renderTrackerSteps();
             attachTrackerListener(orderId);
+            startTrackerEta();
         }
 
         // Re-apply the selected language to the live-tracker screen (built by JS,
@@ -3530,6 +3572,7 @@
             if (!trackerState) return;
             const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
             setText('trackerTitle', t('trackerTitle'));
+            setText('trackerEtaLabel', t('trackerEtaLabel'));
             setText('trackerBillLine', `${t('totalBillLabel')} ${trackerState.billInfo}`);
             trackerStages().forEach(st => {
                 const span = document.querySelector('#trackStep-' + st + ' span');
@@ -3553,7 +3596,7 @@
             let saved = null;
             try { saved = JSON.parse(localStorage.getItem(ACTIVE_ORDER_KEY) || 'null'); } catch (e) { saved = null; }
             if (!saved || !saved.orderId) return;
-            displayLiveTrackerScreen(saved.billInfo || '', saved.orderId, false, saved.mode);
+            displayLiveTrackerScreen(saved.billInfo || '', saved.orderId, false, saved.mode, saved.placedAt);
         }
 
         // Apply the saved language on load (no cycling) and show the CURRENT
