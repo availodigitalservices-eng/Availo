@@ -1071,7 +1071,17 @@
 
     <!-- 2. Dynamic Main Container -->
     <div class="content-wrap" id="mainContainer">
-        
+
+        <!-- Ad slot (28 Nov 2026): one quiet placeholder banner directly
+             under the restaurant name (the venue pill above). Placeholder
+             ONLY — no advertiser, no brand, no price is invented; a real
+             ad replaces this box only when the restaurant / AVAILO
+             agrees one. Kept muted so the menu design is not damaged. -->
+        <div id="dineAdSlot" style="display:block; margin:10px 0 4px; padding:8px 12px; border-radius:10px; border:1px dashed rgba(148,163,184,0.55); background:rgba(148,163,184,0.08); font-size:12.5px; line-height:1.6; color:#94a3b8; text-align:center;">
+            <span data-te="📢 మీ యాడ్ ఇక్కడ" data-en="📢 Your ad here" data-hi="📢 आपका विज्ञापन यहाँ">📢 మీ యాడ్ ఇక్కడ</span>
+            <span style="display:block; font-size:11.5px;" data-te="ఈ స్థలంలో ప్రకటన కోసం సంప్రదించండి" data-en="Contact us to advertise in this space" data-hi="इस जगह विज्ञापन के लिए संपर्क करें">ఈ స్థలంలో ప్రకటన కోసం సంప్రదించండి</span>
+        </div>
+
         <!-- Main Categories -->
         <div class="cat-scroll" id="categoryTabs"><!-- Category chips are built by buildCategoryChips() from the menu data. --></div>
 
@@ -1082,6 +1092,15 @@
             <span data-te="⭐ ఈరోజు స్పెషల్:" data-en="⭐ Today's special:" data-hi="⭐ आज का स्पेशल:">⭐ ఈరోజు స్పెషల్:</span>
             <b id="todaySpecialDish"></b>
             <span id="todaySpecialNote" style="color:#e2e8f0;"></span>
+        </div>
+
+        <!-- Most ordered today (28 Nov 2026): counted ONLY from today's
+             live orders in Firebase (dineOrders/khaleel). Hidden when
+             there are no orders today or the read fails — never a
+             guessed or yesterday's dish. -->
+        <div id="mostOrderedBanner" style="display:none; margin:4px 0; padding:10px 12px; border-radius:10px; background:linear-gradient(90deg, rgba(249,115,22,0.16), rgba(221,182,93,0.10)); border:1px solid rgba(249,115,22,0.55); font-size:14px; line-height:1.6; color:#ffedd5;">
+            <span data-te="🔥 ఈరోజు ఎక్కువగా ఆర్డర్ చేస్తున్నది:" data-en="🔥 Most ordered today:" data-hi="🔥 आज सबसे ज़्यादा ऑर्डर किया गया:">🔥 ఈరోజు ఎక్కువగా ఆర్డర్ చేస్తున్నది:</span>
+            <b id="mostOrderedDish"></b>
         </div>
 
         <!-- Live search (filters by item name in the current language) -->
@@ -1231,6 +1250,18 @@
                     <button type="button" id="payUpiBtn" class="mode-btn" onclick="setPaymentMethod('upi')" data-te="📱 UPI ద్వారా" data-en="📱 Via UPI" data-hi="📱 UPI से">📱 UPI ద్వారా</button>
                 </div>
                 <div id="payUpiNote" style="display: none; margin-top: 6px; font-size: 12.5px; color: #fbbf24;" data-te="UPI ID సెట్ చేయలేదు — AVAILO UPI ID కోసం WhatsAppలో అడగండి" data-en="UPI ID not set — please ask AVAILO on WhatsApp" data-hi="UPI ID सेट नहीं है — कृपया AVAILO से WhatsApp पर पूछें">UPI ID సెట్ చేయలేదు — AVAILO UPI ID కోసం WhatsAppలో అడగండి</div>
+            </div>
+            <!-- Spice level (28 Nov 2026): one level per whole order
+                 (not per dish). Default Normal; the choice rides on the
+                 WhatsApp KOT message and the Firebase order record. -->
+            <div style="margin-bottom: 12px;">
+                <div style="font-size: 13px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px;" data-te="🌶️ కారం స్థాయి:" data-en="🌶️ Spice level:" data-hi="🌶️ मसाले का स्तर:">🌶️ కారం స్థాయి:</div>
+                <div class="mode-btns" style="margin-bottom: 0;">
+                    <button type="button" id="spiceNormalBtn" class="mode-btn active" onclick="setSpiceLevel('normal')" data-te="నార్మల్" data-en="Normal" data-hi="नॉर्मल">నార్మల్</button>
+                    <button type="button" id="spiceMediumBtn" class="mode-btn" onclick="setSpiceLevel('medium')" data-te="మీడియం స్పైసీ" data-en="Medium Spicy" data-hi="मीडियम स्पाइसी">మీడియం స్పైసీ</button>
+                    <button type="button" id="spiceSpicyBtn" class="mode-btn" onclick="setSpiceLevel('spicy')" data-te="స్పైసీ" data-en="Spicy" data-hi="स्पाइसी">స్పైసీ</button>
+                    <button type="button" id="spiceHeavyBtn" class="mode-btn" onclick="setSpiceLevel('heavy')" data-te="హెవీ స్పైసీ" data-en="Heavy Spicy" data-hi="हैवी स्पाइसी">హెవీ స్పైసీ</button>
+                </div>
             </div>
             <div style="display: flex; gap: 10px;">
                 <button id="confirmOrderBtn" onclick="confirmOrderSend()" style="flex: 1; background: var(--accent-green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer;" data-te="✅ నిర్ధారించి పంపండి" data-en="✅ Confirm &amp; Send" data-hi="✅ कन्फ़र्म करके भेजिए">✅ నిర్ధారించి పంపండి</button>
@@ -1397,6 +1428,60 @@
             } catch (e) { /* fail-open */ }
         }
 
+        // ---- Most ordered today (28 Nov 2026) ----
+        // Same live orders node the kitchen reads:
+        // availo-kitchen-v1/dineOrders/khaleel  {orderId: {items: [{id,
+        // name, qty, price}], createdAt, ...}}. Counts ONLY today's
+        // orders (local-midnight cutoff), ranked by plates desc, then
+        // revenue desc, then name — the same ranking as index.html
+        // getPopularToday(). The banner shows ONLY the top dish and
+        // stays HIDDEN when there are no orders today, or the read
+        // fails — never a guessed or yesterday's dish. Dish names are
+        // set with textContent, never innerHTML.
+        function getPopularToday(orders, nowMs) {
+            const list = !orders ? [] : Array.isArray(orders) ? orders : Object.keys(orders).map(function (k) { return orders[k]; });
+            const start = new Date(nowMs || Date.now()); start.setHours(0, 0, 0, 0);
+            const startMs = start.getTime();
+            const byId = {};
+            list.forEach(function (o) {
+                if (!o || typeof o !== 'object') return;
+                if (typeof o.createdAt === 'number' && o.createdAt < startMs) return;
+                // Records written before structured items (or by other
+                // writers) may carry items as a string — skip those;
+                // only an items array can be counted.
+                if (!Array.isArray(o.items)) return;
+                o.items.forEach(function (it) {
+                    if (!it || !it.id || !it.name) return;
+                    const qty = Number(it.qty) || 0;
+                    if (qty <= 0) return;
+                    const price = Number(it.price) || 0;
+                    if (!byId[it.id]) byId[it.id] = { id: it.id, name: String(it.name), qty: 0, revenue: 0 };
+                    byId[it.id].qty += qty;
+                    byId[it.id].revenue += qty * price;
+                });
+            });
+            return Object.keys(byId).map(function (k) { return byId[k]; }).sort(function (a, b) {
+                return (b.qty - a.qty) || (b.revenue - a.revenue) || String(a.name).localeCompare(String(b.name));
+            }).slice(0, 5);
+        }
+        function renderMostOrderedToday(top) {
+            const banner = document.getElementById('mostOrderedBanner');
+            if (!banner) return;
+            const dish = (top && top.length) ? top[0] : null;
+            if (!dish || !dish.name) { banner.style.display = 'none'; return; }
+            const dishEl = document.getElementById('mostOrderedDish');
+            if (dishEl) dishEl.textContent = String(dish.name).slice(0, 100);
+            banner.style.display = 'block';
+        }
+        function initMostOrderedToday() {
+            try {
+                if (!kitchenDb) return; // offline / SDK missing: fail-open, banner stays hidden
+                kitchenDb.ref(DINE_ORDERS_PATH).on('value', function (snap) {
+                    renderMostOrderedToday(getPopularToday(snap.val(), Date.now()));
+                }, function () { /* read failed: fail-open, banner stays hidden */ });
+            } catch (e) { /* fail-open */ }
+        }
+
         function pushKitchenEvent(node, payload) {
             try {
                 if (!kitchenDb) return;
@@ -1486,6 +1571,48 @@
         // (same pattern as the payment line).
         function withLoyaltyClaimLine(msg) {
             const line = '%0A*Loyalty:* Reward claimed';
+            const marker = '%0A*సమయం:*';
+            if (String(msg).indexOf(marker) !== -1) return String(msg).replace(marker, line + marker);
+            return String(msg) + line;
+        }
+        // ---- Spice level (28 Nov 2026) ----
+        // One level per whole order (not per dish). Default Normal; the
+        // choice is picked in the confirm/checklist modal and rides on
+        // the WhatsApp KOT message (withSpiceLine, same insert pattern
+        // as the payment/coupon lines) and the Firebase order record
+        // (buildDineOrderRecord -> rec.spiceLevel).
+        const SPICE_LEVELS = ['normal', 'medium', 'spicy', 'heavy'];
+        const SPICE_LABEL = {
+            normal: { te: 'నార్మల్', en: 'Normal', hi: 'नॉर्मल' },
+            medium: { te: 'మీడియం స్పైసీ', en: 'Medium Spicy', hi: 'मीडियम स्पाइसी' },
+            spicy: { te: 'స్పైసీ', en: 'Spicy', hi: 'स्पाइसी' },
+            heavy: { te: 'హెవీ స్పైసీ', en: 'Heavy Spicy', hi: 'हैवी स्पाइसी' }
+        };
+        let selectedSpiceLevel = 'normal';
+        // Test seam (same reason as setHotelUpiConfig): top-level `let`
+        // bindings are not reachable from jsdom's window.eval.
+        function getSpiceLevel() { return selectedSpiceLevel; }
+        function spiceLabel(level, lang) {
+            const L = SPICE_LABEL[level] || SPICE_LABEL.normal;
+            return L[lang] || L.te;
+        }
+        function setSpiceLevel(level) {
+            if (SPICE_LEVELS.indexOf(level) === -1) level = 'normal';
+            selectedSpiceLevel = level;
+            refreshSpiceUI();
+        }
+        function refreshSpiceUI() {
+            const map = { normal: 'spiceNormalBtn', medium: 'spiceMediumBtn', spicy: 'spiceSpicyBtn', heavy: 'spiceHeavyBtn' };
+            Object.keys(map).forEach(function (k) {
+                const b = document.getElementById(map[k]);
+                if (b) b.classList.toggle('active', selectedSpiceLevel === k);
+            });
+        }
+        // Insert "*కారం స్థాయి:* <label>" before the "*సమయం:*" line of
+        // the WhatsApp KOT message (same pattern as the payment line).
+        // Kitchen-facing labels stay Telugu by design.
+        function withSpiceLine(msg, level) {
+            const line = '%0A*కారం స్థాయి:* ' + encodeURIComponent(spiceLabel(level, 'te'));
             const marker = '%0A*సమయం:*';
             if (String(msg).indexOf(marker) !== -1) return String(msg).replace(marker, line + marker);
             return String(msg) + line;
@@ -2499,6 +2626,7 @@
             renderOrderPad();
             applyTrackerLang();
             refreshPaymentUI();
+            refreshSpiceUI();
             refreshBookingUI();
         }
 
@@ -3159,6 +3287,8 @@
             const couponLine = document.getElementById('couponAppliedLine');
             if (couponLine) couponLine.style.display = 'none';
             selectedPaymentMethod = 'cash';
+            selectedSpiceLevel = 'normal';
+            refreshSpiceUI();
             document.getElementById('orderConfirmBody').innerHTML = summaryHtml;
             document.getElementById('orderConfirmOverlay').style.display = 'flex';
             refreshPaymentUI();
@@ -3173,6 +3303,7 @@
             appliedCoupon = null;
             appliedDiscount = 0;
             selectedPaymentMethod = 'cash';
+            selectedSpiceLevel = 'normal';
             document.getElementById('orderConfirmOverlay').style.display = 'none';
         }
 
@@ -3193,9 +3324,9 @@
             const orderId = pendingOrderRef || makeDineOrderId();
             let msgOut = withCouponLine(msg, coupon, discount, subtotal);
             if (claim) msgOut = withLoyaltyClaimLine(msgOut);
-            const msgWithPay = withPaymentLine(msgOut, method);
+            const msgWithPay = withSpiceLine(withPaymentLine(msgOut, method), selectedSpiceLevel);
             // Live tracker record (fail-open: WhatsApp never waits on it).
-            writeDineOrderRecord(orderId, buildDineOrderRecord(orderId, method, { coupon, discount, loyaltyClaim: claim }));
+            writeDineOrderRecord(orderId, buildDineOrderRecord(orderId, method, { coupon, discount, loyaltyClaim: claim, spiceLevel: selectedSpiceLevel }));
             // The claim is now recorded on this order — clear it.
             if (claim) loyaltySetClaimPending(false);
             // One stamp per completed order (WhatsApp confirm).
@@ -3368,6 +3499,10 @@
             }
             // Loyalty (feature 4): a claimed reward rides on this order.
             if (extras && extras.loyaltyClaim) rec.loyaltyClaim = true;
+            // Spice level (28 Nov 2026): one level per whole order;
+            // default Normal when the customer picks nothing.
+            if (extras && SPICE_LEVELS.indexOf(extras.spiceLevel) !== -1) rec.spiceLevel = extras.spiceLevel;
+            else rec.spiceLevel = 'normal';
             // Delivery only: the normalised flat lets the guard's gate
             // screen match this order (flat + order ref only — no names,
             // no phone numbers, ever).
@@ -3606,6 +3741,7 @@
         buildCategoryChips();
         initAvailability();
         initTodaySpecial();
+        initMostOrderedToday();
         initRatings();
         renderReviews();
         renderLoyalty();
